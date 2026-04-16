@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "=== MAP SAVER ==="
 
-source /opt/ros/jazzy/setup.bash
+source /opt/ros/humble/setup.bash
 source install/setup.bash
 
 # Kiem tra xem nguoi dung co nhap ten khong

@@ -2,7 +2,7 @@
 echo "=== RUNNING WAYPOINTS ==="
 
 # 1. Source môi trường (Dùng đường dẫn tuyệt đối cho chắc chắn)
-source /opt/ros/jazzy/setup.bash
+source /opt/ros/humble/setup.bash
 source ~/test_ros/ros2_ws/install/setup.bash
 
 # 2. Hàm dọn dẹp: Tự động kill tất cả tiến trình nền khi bạn nhấn Ctrl+C
