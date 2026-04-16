@@ -1,0 +1,23 @@
+[0.820s] Invoking command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors': PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors/build --no-deps symlink_data
+[0.969s] running develop
+[1.046s] running egg_info
+[1.046s] creating amr_sensors.egg-info
+[1.046s] writing amr_sensors.egg-info/PKG-INFO
+[1.046s] writing dependency_links to amr_sensors.egg-info/dependency_links.txt
+[1.046s] writing entry points to amr_sensors.egg-info/entry_points.txt
+[1.046s] writing requirements to amr_sensors.egg-info/requires.txt
+[1.046s] writing top-level names to amr_sensors.egg-info/top_level.txt
+[1.047s] writing manifest file 'amr_sensors.egg-info/SOURCES.txt'
+[1.047s] reading manifest file 'amr_sensors.egg-info/SOURCES.txt'
+[1.048s] writing manifest file 'amr_sensors.egg-info/SOURCES.txt'
+[1.048s] running build_ext
+[1.048s] Creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages/amr-sensors.egg-link (link to .)
+[1.049s] 
+[1.049s] Installed /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors
+[1.049s] running symlink_data
+[1.049s] creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/share/ament_index
+[1.050s] creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/share/ament_index/resource_index
+[1.050s] creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/share/ament_index/resource_index/packages
+[1.050s] symbolically linking /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors/resource/amr_sensors -> /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/share/ament_index/resource_index/packages
+[1.050s] symbolically linking /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors/package.xml -> /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/share/amr_sensors
+[1.087s] Invoked command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors' returned '0': PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_sensors/build --no-deps symlink_data

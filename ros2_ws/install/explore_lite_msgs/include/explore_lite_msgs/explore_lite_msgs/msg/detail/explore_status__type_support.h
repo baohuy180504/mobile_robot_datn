@@ -1,0 +1,1 @@
+/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_c/explore_lite_msgs/msg/detail/explore_status__type_support.h

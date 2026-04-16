@@ -1,0 +1,12 @@
+package.xml
+setup.cfg
+setup.py
+amr_sensors/__init__.py
+amr_sensors.egg-info/PKG-INFO
+amr_sensors.egg-info/SOURCES.txt
+amr_sensors.egg-info/dependency_links.txt
+amr_sensors.egg-info/entry_points.txt
+amr_sensors.egg-info/requires.txt
+amr_sensors.egg-info/top_level.txt
+amr_sensors.egg-info/zip-safe
+resource/amr_sensors

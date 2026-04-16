@@ -1,0 +1,1 @@
+/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/ament_cmake_environment_hooks/local_setup.zsh

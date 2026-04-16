@@ -1,0 +1,23 @@
+[0.841s] Invoking command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai': PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai/build --no-deps symlink_data
+[0.992s] running develop
+[1.068s] running egg_info
+[1.068s] creating amr_ai.egg-info
+[1.069s] writing amr_ai.egg-info/PKG-INFO
+[1.069s] writing dependency_links to amr_ai.egg-info/dependency_links.txt
+[1.069s] writing entry points to amr_ai.egg-info/entry_points.txt
+[1.069s] writing requirements to amr_ai.egg-info/requires.txt
+[1.070s] writing top-level names to amr_ai.egg-info/top_level.txt
+[1.070s] writing manifest file 'amr_ai.egg-info/SOURCES.txt'
+[1.071s] reading manifest file 'amr_ai.egg-info/SOURCES.txt'
+[1.071s] writing manifest file 'amr_ai.egg-info/SOURCES.txt'
+[1.072s] running build_ext
+[1.072s] Creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr-ai.egg-link (link to .)
+[1.073s] 
+[1.073s] Installed /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai
+[1.073s] running symlink_data
+[1.073s] creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/share/ament_index
+[1.073s] creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index
+[1.073s] creating /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index/packages
+[1.073s] symbolically linking /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai/resource/amr_ai -> /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index/packages
+[1.073s] symbolically linking /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai/package.xml -> /home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai
+[1.110s] Invoked command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai' returned '0': PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_ai/build --no-deps symlink_data

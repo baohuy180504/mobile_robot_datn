@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<robot name="amr_description">
+
+  <link name="base_footprint">
+  </link>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.0573811155499902 -3.15085001608151E-05 0.05" rpy="0 0 0" /> 
+      <!-- z:0.293014909183045 -->
+      <mass value="6.49828952342219" />
+      <inertia ixx="0.10831502493104" ixy="-4.19648528471796E-05" ixz="0.000515021477523596" iyy="0.110652299028072" iyz="-7.80001661147026E-06" izz="0.0700204562865023" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/base_link.STL" />
+      </geometry>
+      <material name="orange">
+        <color rgba="1.0 0.6 0.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="left_wheel">
+      <inertial>
+        <origin xyz="3.28239878888414E-08 -0.00552939150401838 -3.98384668136298E-07" rpy="0 0 0" />
+        <mass value="0.0684081800319178" />
+        <inertia ixx="3.82915497855633E-05" ixy="2.03623474213224E-13" ixz="6.41862752019354E-10" iyy="7.53609854989785E-05" iyz="-2.47137791906539E-12" izz="3.83203442237202E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://amr_description/meshes/left_wheel.STL" />
+        </geometry>
+        <material name="black">
+          <color rgba="0 0 0 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="1.570796 0 0" /> 
+        <geometry>
+          <cylinder radius="0.0475" length="0.015" /> 
+        </geometry>
+      </collision>
+  </link>
+
+  <link name="right_wheel">
+    <inertial>
+      <origin xyz="8.17543171216517E-08 0.00552939150401837 3.91285049070045E-07" rpy="0 0 0" />
+      <mass value="0.0684081800319177" />
+      <inertia ixx="3.82918313584627E-05" ixy="-5.07162587828131E-13" ixz="2.90524317954789E-09" iyy="7.53609854989785E-05" iyz="-2.42733544589802E-12" izz="3.83200626508208E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/right_wheel.STL" />
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0" /> 
+      <geometry>
+        <cylinder radius="0.0475" length="0.015" /> 
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="laser_frame">
+    <inertial>
+      <origin xyz="-0.0067658201369028 0.000134380447593757 -0.0224318722671597" rpy="0 0 0" />
+      <mass value="1.33076913637071" />
+      <inertia ixx="0.000614921489480325" ixy="1.36760608272215E-06" ixz="-0.000158220512756306" iyy="0.000960693786590987" iyz="4.08445441673537E-06" izz="0.00109815200027136" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/laser_frame.STL" />
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/laser_frame.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="camera_rgb_link">
+    <inertial>
+      <origin xyz="-0.0209238969984977 -0.0375031775541532 -0.00470051411325079" rpy="0 0 0" />
+      <mass value="0.220446921751041" />
+      <inertia ixx="0.000406101962757192" ixy="4.49962958154095E-08" ixz="1.58792643465021E-07" iyy="4.67237747882157E-05" iyz="2.0259466056372E-09" izz="0.000425228480269349" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/camera_rgb_link.STL" />
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/camera_rgb_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="camera_rgb_link_optical"></link>
+
+  <link name="camera_depth_link">
+    <inertial>
+      <origin xyz="-0.0209238969984977 0.0374968224458468 -0.00470051411325079" rpy="0 0 0" />
+      <mass value="0.220446921751041" />
+      <inertia ixx="0.000406101962757192" ixy="4.49962958154105E-08" ixz="1.58792643465022E-07" iyy="4.67237747882157E-05" iyz="2.02594660563752E-09" izz="0.000425228480269349" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/camera_depth_link.STL" />
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://amr_description/meshes/camera_depth_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="camera_depth_link_optical"></link>
+
+  <joint name="base_link_jt" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <!-- <origin xyz="0 -1.6357E-05 0.020026" rpy="0 0 0" /> -->
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <joint name="left_wheel_jt" type="continuous">
+    <origin xyz="0.00024987 0.1735 0.025002" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="left_wheel" />
+    <axis xyz="0 1 0" />
+    <!-- <axis xyz="0.0025766 1 0" /> -->
+    <dynamics damping="0.1" friction="0.1"/> 
+  </joint>
+
+  <joint name="right_wheel_jt" type="continuous">
+    <origin xyz="-0.000250333996295538 -0.1735 0.0249984014574222" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="right_wheel" />
+    <axis xyz="0.00257662037882855 0.999996680483112 0" />
+    <dynamics damping="0.1" friction="0.1"/> 
+  </joint>
+
+  <joint name="laser_frame_jt" type="fixed">
+    <origin xyz="0.182324380505574 -2.81953415025293E-05 0.2657" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="laser_frame" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <joint name="camera_rgb_link_jt" type="fixed">
+    <origin xyz="0.219919270408605 0.0381241135922716 0.756912963260259" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="camera_rgb_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <joint name="camera_rgb_link_optical_jt" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.5707963267949 0 -1.57079632679489" />
+    <parent link="camera_rgb_link" />
+    <child link="camera_rgb_link_optical" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <joint name="camera_depth_link_jt" type="fixed">
+    <origin xyz="0.219919270408606 -0.0368758864077283 0.756912963260259" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="camera_depth_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <joint name="camera_depth_link_optical_jt" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.5707963267949 0 -1.57079632679489" />
+    <parent link="camera_depth_link" />
+    <child link="camera_depth_link_optical" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+  </joint>
+
+</robot>

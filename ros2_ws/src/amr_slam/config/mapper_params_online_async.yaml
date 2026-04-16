@@ -1,0 +1,37 @@
+slam_toolbox:
+  ros__parameters:
+    # Bắt buộc là true khi dùng Gazebo
+    use_sim_time: false 
+    message_queue_size: 50     # Mở rộng phòng chờ lên 50 chỗ
+    transform_timeout: 0.5     # Tăng thời gian chờ TF lên 0.5s (mặc định 0.2s hơi vội)
+
+    # Khai báo các khung tọa độ chuẩn của robot
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_footprint
+    scan_topic: /scan
+    mode: mapping
+    
+    # Thông số vẽ bản đồ
+    map_update_interval: 1.0 # Cập nhật bản đồ mỗi 1 giây
+    minimum_travel_distance: 0.1
+    minimum_travel_heading: 0.1
+    resolution: 0.05 # Độ phân giải 5cm/pixel
+    
+    # Giới hạn Lidar (Để loại bỏ nhiễu nếu có)
+    max_laser_range: 12.0
+    minimum_time_interval: 0.5
+    tf_buffer_duration: 30.0
+
+    # Tần số cập nhật SLAM, hãy chắc chắn nó là 10.0-20.0
+    update_rate: 10.0 
+
+    # --- Tinh chỉnh nhiễu Odom cho xe AMR ---
+    # Tăng mức nhiễu tịnh tiến XY
+    sigma_noise_xy: 0.1 # Mặc định thường là 0.01, tăng lên 0.1
+    # Tăng mức nhiễu xoay Theta (CỰC KỲ QUAN TRỌNG CHO LIDAR 100 ĐỘ)
+    sigma_noise_theta: 0.2 # Tăng lên để thuật toán biết góc cua Odom có thể sai nhiều
+
+    # ... (các thông số khác giữ nguyên) ...
+    # Tham số so khớp ảnh
+    minimumScore: 50.0 # Có thể thử giảm nhẹ để thuật toán dễ khớp ảnh hơn

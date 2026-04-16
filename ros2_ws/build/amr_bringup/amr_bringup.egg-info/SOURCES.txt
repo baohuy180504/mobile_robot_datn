@@ -1,0 +1,12 @@
+package.xml
+setup.cfg
+setup.py
+amr_bringup/__init__.py
+amr_bringup.egg-info/PKG-INFO
+amr_bringup.egg-info/SOURCES.txt
+amr_bringup.egg-info/dependency_links.txt
+amr_bringup.egg-info/entry_points.txt
+amr_bringup.egg-info/requires.txt
+amr_bringup.egg-info/top_level.txt
+amr_bringup.egg-info/zip-safe
+resource/amr_bringup

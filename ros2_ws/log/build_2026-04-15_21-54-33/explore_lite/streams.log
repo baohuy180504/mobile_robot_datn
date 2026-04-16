@@ -1,0 +1,105 @@
+[0.224s] Invoking command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite': AMENT_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite
+[0.420s] -- The C compiler identification is GNU 11.4.0
+[1.620s] -- The CXX compiler identification is GNU 11.4.0
+[2.190s] -- Detecting C compiler ABI info
+[2.361s] -- Detecting C compiler ABI info - done
+[2.365s] -- Check for working C compiler: /usr/bin/cc - skipped
+[2.365s] -- Detecting C compile features
+[2.366s] -- Detecting C compile features - done
+[2.367s] -- Detecting CXX compiler ABI info
+[2.677s] -- Detecting CXX compiler ABI info - done
+[2.681s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.682s] -- Detecting CXX compile features
+[2.682s] -- Detecting CXX compile features - done
+[2.682s] -- BuilD for ROS2: humble
+[2.683s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[2.761s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[2.794s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.808s] -- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)
+[3.071s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[3.074s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[3.079s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[3.085s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[3.094s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[3.117s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[3.119s] -- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[4.463s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[5.944s] -- Found FastRTPS: /opt/ros/humble/include  
+[11.425s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[11.429s] -- Looking for pthread.h
+[11.550s] -- Looking for pthread.h - found
+[11.550s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[11.773s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[11.773s] -- Found Threads: TRUE  
+[11.799s] -- Found sensor_msgs: 4.9.1 (/opt/ros/humble/share/sensor_msgs/cmake)
+[11.814s] -- Found tf2_ros: 0.25.20 (/opt/ros/humble/share/tf2_ros/cmake)
+[11.861s] -- Found tf2_geometry_msgs: 0.25.20 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[11.897s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[11.898s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[11.898s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[11.902s] -- Found nav2_msgs: 1.1.20 (/opt/ros/humble/share/nav2_msgs/cmake)
+[11.930s] -- Found map_msgs: 2.1.0 (/opt/ros/humble/share/map_msgs/cmake)
+[11.941s] -- Found visualization_msgs: 4.9.1 (/opt/ros/humble/share/visualization_msgs/cmake)
+[11.960s] -- Found nav2_costmap_2d: 1.1.20 (/opt/ros/humble/share/nav2_costmap_2d/cmake)
+[14.593s] -- Found explore_lite_msgs: 1.0.0 (/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/share/explore_lite_msgs/cmake)
+[14.599s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[14.644s] -- Found ament_cmake_gtest: 1.3.14 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[14.648s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[14.658s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[14.658s] -- Configured cppcheck include dirs: /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore/include;$<BUILD_INTERFACE:/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore/include>
+[14.658s] -- Configured cppcheck exclude dirs and/or files: 
+[14.658s] -- Added test 'flake8' to check Python code syntax and style conventions
+[14.659s] -- Added test 'lint_cmake' to check CMake code style
+[14.659s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[14.660s] -- Added test 'uncrustify' to check C / C++ code style
+[14.660s] -- Configured uncrustify additional arguments: 
+[14.660s] -- Added test 'xmllint' to check XML markup files
+[14.662s] -- Configuring done
+[14.739s] -- Generating done
+[14.746s] -- Build files have been written to: /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite
+[14.756s] Invoked command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite' returned '0': AMENT_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite
+[14.760s] Invoking command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite': AMENT_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite -- -j20 -l20
+[14.788s] [ 50%] [32mBuilding CXX object CMakeFiles/explore.dir/src/costmap_client.cpp.o[0m
+[14.788s] [ 50%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[14.788s] [ 50%] [32mBuilding CXX object CMakeFiles/explore.dir/src/explore.cpp.o[0m
+[14.788s] [ 50%] [32mBuilding CXX object CMakeFiles/explore.dir/src/frontier_search.cpp.o[0m
+[14.789s] [ 50%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[15.221s] [ 60%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[15.247s] [ 60%] Built target gtest_main
+[16.607s] [ 70%] [32m[1mLinking CXX static library libgtest.a[0m
+[16.644s] [ 70%] Built target gtest
+[16.657s] [ 80%] [32mBuilding CXX object CMakeFiles/test_explore.dir/test/test_explore.cpp.o[0m
+[17.110s] [ 90%] [32m[1mLinking CXX executable test_explore[0m
+[17.382s] [ 90%] Built target test_explore
+[22.753s] [100%] [32m[1mLinking CXX executable explore[0m
+[23.706s] [100%] Built target explore
+[23.714s] Invoked command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite' returned '0': AMENT_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite -- -j20 -l20
+[23.715s] Invoking command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite': AMENT_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite
+[23.719s] -- Install configuration: ""
+[23.719s] -- Execute custom install script
+[23.720s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/include/explore//costmap_client.h
+[23.725s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/include/explore//costmap_tools.h
+[23.731s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/include/explore//explore.h
+[23.736s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/include/explore//frontier_search.h
+[23.741s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/config/params.yaml
+[23.746s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/config/params_costmap.yaml
+[23.751s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/launch/explore.launch.py
+[23.757s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/lib/explore_lite/explore
+[23.762s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/ament_index/resource_index/package_run_dependencies/explore_lite
+[23.768s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/ament_index/resource_index/parent_prefix_path/explore_lite
+[23.773s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/environment/ament_prefix_path.sh
+[23.778s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/environment/ament_prefix_path.dsv
+[23.783s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/environment/path.sh
+[23.789s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/environment/path.dsv
+[23.794s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/local_setup.bash
+[23.799s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/local_setup.sh
+[23.804s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/local_setup.zsh
+[23.809s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/local_setup.dsv
+[23.814s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/package.dsv
+[23.819s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/ament_index/resource_index/packages/explore_lite
+[23.824s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/cmake/ament_cmake_export_dependencies-extras.cmake
+[23.829s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/cmake/ament_cmake_export_include_directories-extras.cmake
+[23.834s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/cmake/explore_liteConfig.cmake
+[23.838s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/cmake/explore_liteConfig-version.cmake
+[23.843s] -- Symlinking: /home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/share/explore_lite/package.xml
+[23.849s] Invoked command in '/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite' returned '0': AMENT_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite

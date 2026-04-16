@@ -1,0 +1,1 @@
+/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation/launch/nav_fusion.launch.py
