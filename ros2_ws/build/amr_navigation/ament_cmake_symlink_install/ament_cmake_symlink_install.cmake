@@ -23,7 +23,7 @@ function(ament_cmake_symlink_install_directory cmake_current_source_dir)
 
   # make destination absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_navigation/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -128,7 +128,7 @@ function(ament_cmake_symlink_install_files cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_navigation/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -186,7 +186,7 @@ function(ament_cmake_symlink_install_programs cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_navigation/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -256,7 +256,7 @@ function(ament_cmake_symlink_install_targets)
 
     # make destination an absolute path and ensure that it exists
     if(NOT IS_ABSOLUTE "${destination}")
-      set(destination "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_navigation/${destination}")
+      set(destination "/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/${destination}")
     endif()
     if(NOT EXISTS "${destination}")
       file(MAKE_DIRECTORY "${destination}")
@@ -316,49 +316,49 @@ message(STATUS "Execute custom install script")
 # begin of custom install code
 
 # install(DIRECTORY "config" "launch" "maps" "rviz" "DESTINATION" "share/amr_navigation")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" DIRECTORY "config" "launch" "maps" "rviz" "DESTINATION" "share/amr_navigation")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" DIRECTORY "config" "launch" "maps" "rviz" "DESTINATION" "share/amr_navigation")
 
 # install(PROGRAMS "scripts/auto_map_saver.py" "scripts/init_move.py" "DESTINATION" "lib/amr_navigation")
-ament_cmake_symlink_install_programs("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" PROGRAMS "scripts/auto_map_saver.py" "scripts/init_move.py" "DESTINATION" "lib/amr_navigation")
+ament_cmake_symlink_install_programs("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" PROGRAMS "scripts/auto_map_saver.py" "scripts/init_move.py" "DESTINATION" "lib/amr_navigation")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_navigation" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_navigation" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_navigation" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_navigation" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_navigation" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_navigation" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_navigation" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_navigation" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/amr_navigation/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/amr_navigation/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/amr_navigation/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_navigation/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_navigation/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_navigation/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_navigation/environment")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/amr_navigation/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/amr_navigation/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/amr_navigation/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_navigation/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_navigation/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_navigation/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_navigation/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_navigation")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_navigation")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_navigation")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_navigation")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_navigation")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_navigation")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_navigation")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_navigation")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_navigation")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_navigation")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_navigation")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_navigation")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_navigation")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_navigation")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_navigation")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_navigation")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_navigation")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_navigation")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_navigation")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_navigation")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/packages/amr_navigation" "DESTINATION" "share/ament_index/resource_index/packages")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/packages/amr_navigation" "DESTINATION" "share/ament_index/resource_index/packages")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/packages/amr_navigation" "DESTINATION" "share/ament_index/resource_index/packages")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/packages/amr_navigation" "DESTINATION" "share/ament_index/resource_index/packages")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig-version.cmake" "DESTINATION" "share/amr_navigation/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig-version.cmake" "DESTINATION" "share/amr_navigation/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig-version.cmake" "DESTINATION" "share/amr_navigation/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_core/amr_navigationConfig-version.cmake" "DESTINATION" "share/amr_navigation/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation/package.xml" "DESTINATION" "share/amr_navigation")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation/package.xml" "DESTINATION" "share/amr_navigation")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation/package.xml" "DESTINATION" "share/amr_navigation")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation/package.xml" "DESTINATION" "share/amr_navigation")

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces
 
 # Utility rule file for amr_interfaces_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/amr_interfaces_uninstall.dir/compiler_depend.make
 include CMakeFiles/amr_interfaces_uninstall.dir/progress.make
 
 CMakeFiles/amr_interfaces_uninstall:
-	/usr/bin/cmake -P /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 amr_interfaces_uninstall: CMakeFiles/amr_interfaces_uninstall
 amr_interfaces_uninstall: CMakeFiles/amr_interfaces_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/amr_interfaces_uninstall.dir/clean:
 .PHONY : CMakeFiles/amr_interfaces_uninstall.dir/clean
 
 CMakeFiles/amr_interfaces_uninstall.dir/depend:
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/CMakeFiles/amr_interfaces_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces /home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/CMakeFiles/amr_interfaces_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/amr_interfaces_uninstall.dir/depend
 

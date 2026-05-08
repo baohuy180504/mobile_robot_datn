@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_slam
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/amr_slam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_slam
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_slam && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_slam /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_slam /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_slam /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_slam /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_slam/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huyjetson/mobile_robot/ros2_ws/src/amr_slam /home/huyjetson/mobile_robot/ros2_ws/src/amr_slam /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_control
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/amr_control
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/amr_control
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,9 +142,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles /home/huyjetson/mobile_robot/ros2_ws/build/amr_control//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -197,6 +197,43 @@ amr_control_uninstall/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/amr_control_uninstall.dir/build.make CMakeFiles/amr_control_uninstall.dir/build
 .PHONY : amr_control_uninstall/fast
 
+#=============================================================================
+# Target rules for targets named arduino_bridge
+
+# Build rule for target.
+arduino_bridge: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 arduino_bridge
+.PHONY : arduino_bridge
+
+# fast build rule for target.
+arduino_bridge/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arduino_bridge.dir/build.make CMakeFiles/arduino_bridge.dir/build
+.PHONY : arduino_bridge/fast
+
+src/arduino_bridge.o: src/arduino_bridge.cpp.o
+.PHONY : src/arduino_bridge.o
+
+# target to build an object file
+src/arduino_bridge.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arduino_bridge.dir/build.make CMakeFiles/arduino_bridge.dir/src/arduino_bridge.cpp.o
+.PHONY : src/arduino_bridge.cpp.o
+
+src/arduino_bridge.i: src/arduino_bridge.cpp.i
+.PHONY : src/arduino_bridge.i
+
+# target to preprocess a source file
+src/arduino_bridge.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arduino_bridge.dir/build.make CMakeFiles/arduino_bridge.dir/src/arduino_bridge.cpp.i
+.PHONY : src/arduino_bridge.cpp.i
+
+src/arduino_bridge.s: src/arduino_bridge.cpp.s
+.PHONY : src/arduino_bridge.s
+
+# target to generate assembly for a file
+src/arduino_bridge.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arduino_bridge.dir/build.make CMakeFiles/arduino_bridge.dir/src/arduino_bridge.cpp.s
+.PHONY : src/arduino_bridge.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -212,6 +249,10 @@ help:
 	@echo "... test"
 	@echo "... amr_control_uninstall"
 	@echo "... uninstall"
+	@echo "... arduino_bridge"
+	@echo "... src/arduino_bridge.o"
+	@echo "... src/arduino_bridge.i"
+	@echo "... src/arduino_bridge.s"
 .PHONY : help
 
 

@@ -23,7 +23,7 @@ function(ament_cmake_symlink_install_directory cmake_current_source_dir)
 
   # make destination absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_interfaces/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -128,7 +128,7 @@ function(ament_cmake_symlink_install_files cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_interfaces/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -186,7 +186,7 @@ function(ament_cmake_symlink_install_programs cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_interfaces/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -256,7 +256,7 @@ function(ament_cmake_symlink_install_targets)
 
     # make destination an absolute path and ensure that it exists
     if(NOT IS_ABSOLUTE "${destination}")
-      set(destination "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_interfaces/${destination}")
+      set(destination "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/${destination}")
     endif()
     if(NOT EXISTS "${destination}")
       file(MAKE_DIRECTORY "${destination}")
@@ -315,44 +315,44 @@ message(STATUS "Execute custom install script")
 
 # begin of custom install code
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/amr_interfaces/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/amr_interfaces/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/amr_interfaces/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_interfaces/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_interfaces/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_interfaces/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/amr_interfaces/environment")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/amr_interfaces/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/amr_interfaces/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/amr_interfaces/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_interfaces/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_interfaces/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_interfaces/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/amr_interfaces/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_interfaces")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_interfaces")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_interfaces")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/amr_interfaces")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_interfaces")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_interfaces")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_interfaces")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/amr_interfaces")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_interfaces")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_interfaces")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_interfaces")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/amr_interfaces")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_interfaces")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_interfaces")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_interfaces")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/amr_interfaces")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_interfaces")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_interfaces")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_interfaces")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/amr_interfaces")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/packages/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/packages")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/packages/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/packages")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/packages/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/packages")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_index/share/ament_index/resource_index/packages/amr_interfaces" "DESTINATION" "share/ament_index/resource_index/packages")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig-version.cmake" "DESTINATION" "share/amr_interfaces/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig-version.cmake" "DESTINATION" "share/amr_interfaces/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig-version.cmake" "DESTINATION" "share/amr_interfaces/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig-version.cmake" "DESTINATION" "share/amr_interfaces/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces/package.xml" "DESTINATION" "share/amr_interfaces")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_interfaces/package.xml" "DESTINATION" "share/amr_interfaces")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces/package.xml" "DESTINATION" "share/amr_interfaces")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces" FILES "/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces/package.xml" "DESTINATION" "share/amr_interfaces")

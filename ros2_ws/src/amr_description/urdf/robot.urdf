@@ -97,55 +97,7 @@
     </collision>
   </link>
 
-  <link name="camera_rgb_link">
-    <inertial>
-      <origin xyz="-0.0209238969984977 -0.0375031775541532 -0.00470051411325079" rpy="0 0 0" />
-      <mass value="0.220446921751041" />
-      <inertia ixx="0.000406101962757192" ixy="4.49962958154095E-08" ixz="1.58792643465021E-07" iyy="4.67237747882157E-05" iyz="2.0259466056372E-09" izz="0.000425228480269349" />
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://amr_description/meshes/camera_rgb_link.STL" />
-      </geometry>
-      <material name="black">
-        <color rgba="0 0 0 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://amr_description/meshes/camera_rgb_link.STL" />
-      </geometry>
-    </collision>
-  </link>
 
-  <link name="camera_rgb_link_optical"></link>
-
-  <link name="camera_depth_link">
-    <inertial>
-      <origin xyz="-0.0209238969984977 0.0374968224458468 -0.00470051411325079" rpy="0 0 0" />
-      <mass value="0.220446921751041" />
-      <inertia ixx="0.000406101962757192" ixy="4.49962958154105E-08" ixz="1.58792643465022E-07" iyy="4.67237747882157E-05" iyz="2.02594660563752E-09" izz="0.000425228480269349" />
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://amr_description/meshes/camera_depth_link.STL" />
-      </geometry>
-      <material name="black">
-        <color rgba="0 0 0 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://amr_description/meshes/camera_depth_link.STL" />
-      </geometry>
-    </collision>
-  </link>
-
-  <link name="camera_depth_link_optical"></link>
 
   <joint name="base_link_jt" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
@@ -173,38 +125,18 @@
   </joint>
 
   <joint name="laser_frame_jt" type="fixed">
-    <origin xyz="0.182324380505574 -2.81953415025293E-05 0.2657" rpy="0 0 0" />
+    <origin xyz="0.302324380505574 0.0 0.2657" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="laser_frame" />
     <axis xyz="0 0 0" />
   </joint>
 
-  <joint name="camera_rgb_link_jt" type="fixed">
-    <origin xyz="0.219919270408605 0.0381241135922716 0.756912963260259" rpy="0 0 0" />
+  <link name="camera_link" />
+
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="0.219919 0.038124 0.756912" rpy="0 0 0" />
     <parent link="base_link" />
-    <child link="camera_rgb_link" />
-    <axis xyz="0 0 0" />
-  </joint>
-
-  <joint name="camera_rgb_link_optical_jt" type="fixed">
-    <origin xyz="0 0 0" rpy="-1.5707963267949 0 -1.57079632679489" />
-    <parent link="camera_rgb_link" />
-    <child link="camera_rgb_link_optical" />
-    <axis xyz="0 0 0" />
-  </joint>
-
-  <joint name="camera_depth_link_jt" type="fixed">
-    <origin xyz="0.219919270408606 -0.0368758864077283 0.756912963260259" rpy="0 0 0" />
-    <parent link="base_link" />
-    <child link="camera_depth_link" />
-    <axis xyz="0 0 0" />
-  </joint>
-
-  <joint name="camera_depth_link_optical_jt" type="fixed">
-    <origin xyz="0 0 0" rpy="-1.5707963267949 0 -1.57079632679489" />
-    <parent link="camera_depth_link" />
-    <child link="camera_depth_link_optical" />
-    <axis xyz="0 0 0" />
+    <child link="camera_link" /> 
   </joint>
 
   <link name="imu_link">

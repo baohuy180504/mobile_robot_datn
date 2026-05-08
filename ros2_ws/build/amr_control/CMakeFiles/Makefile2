@@ -54,16 +54,16 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_control
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/amr_control
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/amr_control
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all:
+all: CMakeFiles/arduino_bridge.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -73,6 +73,7 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/uninstall.dir/clean
 clean: CMakeFiles/amr_control_uninstall.dir/clean
+clean: CMakeFiles/arduino_bridge.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -82,14 +83,14 @@ clean: CMakeFiles/amr_control_uninstall.dir/clean
 CMakeFiles/uninstall.dir/all: CMakeFiles/amr_control_uninstall.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles --progress-num= "Built target uninstall"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles --progress-num= "Built target uninstall"
 .PHONY : CMakeFiles/uninstall.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/uninstall.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/uninstall.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
 .PHONY : CMakeFiles/uninstall.dir/rule
 
 # Convenience name for target.
@@ -108,14 +109,14 @@ CMakeFiles/uninstall.dir/clean:
 CMakeFiles/amr_control_uninstall.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/amr_control_uninstall.dir/build.make CMakeFiles/amr_control_uninstall.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/amr_control_uninstall.dir/build.make CMakeFiles/amr_control_uninstall.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles --progress-num= "Built target amr_control_uninstall"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles --progress-num= "Built target amr_control_uninstall"
 .PHONY : CMakeFiles/amr_control_uninstall.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/amr_control_uninstall.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/amr_control_uninstall.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
 .PHONY : CMakeFiles/amr_control_uninstall.dir/rule
 
 # Convenience name for target.
@@ -126,6 +127,32 @@ amr_control_uninstall: CMakeFiles/amr_control_uninstall.dir/rule
 CMakeFiles/amr_control_uninstall.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/amr_control_uninstall.dir/build.make CMakeFiles/amr_control_uninstall.dir/clean
 .PHONY : CMakeFiles/amr_control_uninstall.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/arduino_bridge.dir
+
+# All Build rule for target.
+CMakeFiles/arduino_bridge.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arduino_bridge.dir/build.make CMakeFiles/arduino_bridge.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arduino_bridge.dir/build.make CMakeFiles/arduino_bridge.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles --progress-num=1,2 "Built target arduino_bridge"
+.PHONY : CMakeFiles/arduino_bridge.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/arduino_bridge.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/arduino_bridge.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles 0
+.PHONY : CMakeFiles/arduino_bridge.dir/rule
+
+# Convenience name for target.
+arduino_bridge: CMakeFiles/arduino_bridge.dir/rule
+.PHONY : arduino_bridge
+
+# clean rule for target.
+CMakeFiles/arduino_bridge.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arduino_bridge.dir/build.make CMakeFiles/arduino_bridge.dir/clean
+.PHONY : CMakeFiles/arduino_bridge.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -1,1 +1,1 @@
-/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig.cmake
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_core/amr_interfacesConfig.cmake

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs
 
 # Utility rule file for explore_lite_msgs__cpp.
 
@@ -89,8 +89,8 @@ rosidl_generator_cpp/explore_lite_msgs/msg/explore_status.hpp: /opt/ros/humble/s
 rosidl_generator_cpp/explore_lite_msgs/msg/explore_status.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__struct.hpp.em
 rosidl_generator_cpp/explore_lite_msgs/msg/explore_status.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__traits.hpp.em
 rosidl_generator_cpp/explore_lite_msgs/msg/explore_status.hpp: rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
-	/usr/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_cpp__arguments.json
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
+	/usr/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_cpp__arguments.json
 
 rosidl_generator_cpp/explore_lite_msgs/msg/detail/explore_status__builder.hpp: rosidl_generator_cpp/explore_lite_msgs/msg/explore_status.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/explore_lite_msgs/msg/detail/explore_status__builder.hpp
@@ -122,6 +122,6 @@ CMakeFiles/explore_lite_msgs__cpp.dir/clean:
 .PHONY : CMakeFiles/explore_lite_msgs__cpp.dir/clean
 
 CMakeFiles/explore_lite_msgs__cpp.dir/depend:
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/CMakeFiles/explore_lite_msgs__cpp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs /home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/CMakeFiles/explore_lite_msgs__cpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/explore_lite_msgs__cpp.dir/depend
 

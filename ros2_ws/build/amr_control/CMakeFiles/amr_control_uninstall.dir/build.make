@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_control
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/amr_control
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/amr_control
 
 # Utility rule file for amr_control_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/amr_control_uninstall.dir/compiler_depend.make
 include CMakeFiles/amr_control_uninstall.dir/progress.make
 
 CMakeFiles/amr_control_uninstall:
-	/usr/bin/cmake -P /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 amr_control_uninstall: CMakeFiles/amr_control_uninstall
 amr_control_uninstall: CMakeFiles/amr_control_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/amr_control_uninstall.dir/clean:
 .PHONY : CMakeFiles/amr_control_uninstall.dir/clean
 
 CMakeFiles/amr_control_uninstall.dir/depend:
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_control /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_control /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/CMakeFiles/amr_control_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/amr_control && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huyjetson/mobile_robot/ros2_ws/src/amr_control /home/huyjetson/mobile_robot/ros2_ws/src/amr_control /home/huyjetson/mobile_robot/ros2_ws/build/amr_control /home/huyjetson/mobile_robot/ros2_ws/build/amr_control /home/huyjetson/mobile_robot/ros2_ws/build/amr_control/CMakeFiles/amr_control_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/amr_control_uninstall.dir/depend
 

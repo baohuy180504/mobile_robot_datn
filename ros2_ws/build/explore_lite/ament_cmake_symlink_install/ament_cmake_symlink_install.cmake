@@ -23,7 +23,7 @@ function(ament_cmake_symlink_install_directory cmake_current_source_dir)
 
   # make destination absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -128,7 +128,7 @@ function(ament_cmake_symlink_install_files cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -186,7 +186,7 @@ function(ament_cmake_symlink_install_programs cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -256,7 +256,7 @@ function(ament_cmake_symlink_install_targets)
 
     # make destination an absolute path and ensure that it exists
     if(NOT IS_ABSOLUTE "${destination}")
-      set(destination "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite/${destination}")
+      set(destination "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite/${destination}")
     endif()
     if(NOT EXISTS "${destination}")
       file(MAKE_DIRECTORY "${destination}")
@@ -316,61 +316,61 @@ message(STATUS "Execute custom install script")
 # begin of custom install code
 
 # install(DIRECTORY "include/explore/" "DESTINATION" "include/explore/")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" DIRECTORY "include/explore/" "DESTINATION" "include/explore/")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" DIRECTORY "include/explore/" "DESTINATION" "include/explore/")
 
 # install(DIRECTORY "config" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" DIRECTORY "config" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" DIRECTORY "config" "DESTINATION" "share/explore_lite")
 
 # install(DIRECTORY "launch" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" DIRECTORY "launch" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" DIRECTORY "launch" "DESTINATION" "share/explore_lite")
 
 # install("TARGETS" "explore" "DESTINATION" "lib/explore_lite")
-include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
+include("/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/explore_lite/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/explore_lite/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/explore_lite/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite/environment")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/explore_lite/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/explore_lite/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/explore_lite/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite" "DESTINATION" "share/ament_index/resource_index/packages")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite" "DESTINATION" "share/ament_index/resource_index/packages")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite" "DESTINATION" "share/ament_index/resource_index/packages")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite" "DESTINATION" "share/ament_index/resource_index/packages")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig-version.cmake" "DESTINATION" "share/explore_lite/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig-version.cmake" "DESTINATION" "share/explore_lite/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig-version.cmake" "DESTINATION" "share/explore_lite/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_core/explore_liteConfig-version.cmake" "DESTINATION" "share/explore_lite/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore/package.xml" "DESTINATION" "share/explore_lite")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore/package.xml" "DESTINATION" "share/explore_lite")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore/package.xml" "DESTINATION" "share/explore_lite")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore" FILES "/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore/package.xml" "DESTINATION" "share/explore_lite")

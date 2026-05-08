@@ -1,1 +1,1 @@
-/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation/scripts/init_move.py
+/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation/scripts/init_move.py

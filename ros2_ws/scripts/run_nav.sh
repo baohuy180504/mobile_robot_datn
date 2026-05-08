@@ -1,25 +1,26 @@
 #!/bin/bash
-echo "=== HỆ THỐNG MÔ PHỎNG & ĐIỀU HƯỚNG AMR ==="
 
-# 1. Nạp môi trường
-source /opt/ros/jazzy/setup.bash
-source ~/test_ros/ros2_ws/install/setup.bash
+echo -e "\e[1;34m=== NAVIGATION KÍCH HOẠT ===\e[0m"
 
-# 2. Hàm dọn dẹp khi bấm Ctrl+C
-cleanup() {
-    echo -e "\n[HỆ THỐNG] Đang tắt Gazebo và Nav2..."
-    kill 0
-    exit
-}
-trap cleanup SIGINT SIGTERM
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 
-# 3. Khởi chạy song song (Tiến trình nền)
-echo "[HỆ THỐNG] 1. Đang gọi Gazebo (amr_description)..."
-ros2 launch amr_description gazebo.launch.py &
-sleep 5 # Chờ 5 giây cho vật lý ổn định
+# Mặc định là my_perfect_map nếu không truyền tham số
+MAP_NAME=${1:-my_perfect_map}
 
-echo "[HỆ THỐNG] 2. Đang gọi Navigation..."
-ros2 launch amr_navigation navigation.launch.py &
+# Trỏ thẳng vào thư mục mã nguồn chứa map (Giả định bạn chạy ở ~/ros2_ws)
+MAP_FILE="src/amr_slam/maps/$MAP_NAME.yaml"
 
-# 4. Giữ terminal không bị đóng
-wait
+if [ ! -f "$MAP_FILE" ]; then
+    echo -e "\e[1;31m[LỖI] Không tìm thấy file map: $MAP_FILE\e[0m"
+    echo "Hãy kiểm tra lại"
+    exit 1
+fi
+
+# Nav2 cần đường dẫn tuyệt đối (Absolute Path) để đọc file
+ABS_MAP_FILE="$(pwd)/$MAP_FILE"
+
+echo -e "[INFO] Đang tải bản đồ: \e[1;33m$MAP_NAME\e[0m"
+
+# Chạy launch file và truyền đường dẫn map vào
+ros2 launch amr_navigation navigation.launch.py map:="$ABS_MAP_FILE"

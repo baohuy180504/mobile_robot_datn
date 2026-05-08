@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation
 
 # Utility rule file for amr_navigation_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/amr_navigation_uninstall.dir/compiler_depend.make
 include CMakeFiles/amr_navigation_uninstall.dir/progress.make
 
 CMakeFiles/amr_navigation_uninstall:
-	/usr/bin/cmake -P /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 amr_navigation_uninstall: CMakeFiles/amr_navigation_uninstall
 amr_navigation_uninstall: CMakeFiles/amr_navigation_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/amr_navigation_uninstall.dir/clean:
 .PHONY : CMakeFiles/amr_navigation_uninstall.dir/clean
 
 CMakeFiles/amr_navigation_uninstall.dir/depend:
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation /home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_navigation/CMakeFiles/amr_navigation_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation /home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation /home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation /home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation /home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/CMakeFiles/amr_navigation_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/amr_navigation_uninstall.dir/depend
 

@@ -1,1 +1,1 @@
-/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.bash
+/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_environment_hooks/local_setup.bash

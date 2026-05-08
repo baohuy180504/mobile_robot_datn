@@ -1,0 +1,39 @@
+ukf_filter_node:
+  ros__parameters:
+    use_sim_time: false
+    clear_params: true
+    frequency: 30.0               # Tính toán tọa độ 30 lần/giây
+    sensor_timeout: 0.1
+    two_d_mode: true              # BẮT BUỘC TRUE: Ép xe chạy trên mặt phẳng 2D, bỏ qua trục Z
+        
+    publish_tf: true
+    map_frame: map
+    odom_frame: odom              # TF mà UKF sẽ phát ra
+    base_link_frame: base_footprint
+    world_frame: odom
+
+  # LỚP 1: ODOM BÁNH XE (Tin tưởng vào Vận tốc vx, vyaw)
+    odom0: /wheel/odom
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  false, false,
+                   false, false, true,
+                   false, false, false]
+
+    # LỚP 2: VISUAL ODOMETRY TỪ CAMERA (Tin tưởng vào Vị trí x, y, yaw)
+    odom1: /camera/odom
+    odom1_config: [true,  true,  false,
+                    false, false, true,
+                    false, false, false,
+                    false, false, false,
+                    false, false, false]
+    odom1_differential: false
+
+    # LỚP 3: IMU (Tin tưởng vào Vận tốc góc và Gia tốc tiến)
+    imu0: /imu/data
+    imu0_config: [false, false, false,
+                  false, false, false,
+                  false, false, false,
+                  false, false, true,
+                  true,  false, false]
+    imu0_remove_gravitational_acceleration: true

@@ -1,0 +1,61 @@
+[1.430s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake /home/huyjetson/mobile_robot/ros2_ws/src/amr_description -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/install/amr_description
+[1.602s] -- The C compiler identification is GNU 11.4.0
+[1.761s] -- The CXX compiler identification is GNU 11.4.0
+[1.783s] -- Detecting C compiler ABI info
+[2.000s] -- Detecting C compiler ABI info - done
+[2.022s] -- Check for working C compiler: /usr/bin/cc - skipped
+[2.022s] -- Detecting C compile features
+[2.022s] -- Detecting C compile features - done
+[2.030s] -- Detecting CXX compiler ABI info
+[2.280s] -- Detecting CXX compiler ABI info - done
+[2.304s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.304s] -- Detecting CXX compile features
+[2.306s] -- Detecting CXX compile features - done
+[2.314s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[2.789s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[3.017s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[3.128s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[3.541s] -- Added test 'flake8' to check Python code syntax and style conventions
+[3.543s] -- Added test 'lint_cmake' to check CMake code style
+[3.546s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[3.551s] -- Added test 'xmllint' to check XML markup files
+[3.558s] -- Configuring done
+[3.570s] -- Generating done
+[3.576s] -- Build files have been written to: /home/huyjetson/mobile_robot/ros2_ws/build/amr_description
+[3.593s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake /home/huyjetson/mobile_robot/ros2_ws/src/amr_description -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/install/amr_description
+[3.600s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_description -- -j6 -l6
+[3.935s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_description -- -j6 -l6
+[3.960s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_description
+[3.980s] -- Install configuration: ""
+[3.982s] -- Execute custom install script
+[3.983s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/urdf/robot.urdf
+[4.011s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/base_footprint.STL
+[4.037s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/base_link.STL
+[4.066s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/camera_depth_link.STL
+[4.091s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/camera_depth_link_optical.STL
+[4.116s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/camera_rgb_link.STL
+[4.140s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/camera_rgb_link_optical.STL
+[4.166s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/laser_frame.STL
+[4.192s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/left_wheel.STL
+[4.218s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/meshes/right_wheel.STL
+[4.249s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/launch/display.launch.py
+[4.284s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/launch/gazebo.launch.py
+[4.310s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/config/ekf.yaml
+[4.337s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/worlds/room.world
+[4.365s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/worlds/room_vslam.world
+[4.395s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/ament_index/resource_index/package_run_dependencies/amr_description
+[4.426s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/ament_index/resource_index/parent_prefix_path/amr_description
+[4.460s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/environment/ament_prefix_path.sh
+[4.489s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/environment/ament_prefix_path.dsv
+[4.531s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/environment/path.sh
+[4.559s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/environment/path.dsv
+[4.582s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/local_setup.bash
+[4.608s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/local_setup.sh
+[4.637s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/local_setup.zsh
+[4.674s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/local_setup.dsv
+[4.702s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/package.dsv
+[4.733s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/ament_index/resource_index/packages/amr_description
+[4.761s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/cmake/amr_descriptionConfig.cmake
+[4.786s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/cmake/amr_descriptionConfig-version.cmake
+[4.809s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_description/share/amr_description/package.xml
+[4.845s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_description

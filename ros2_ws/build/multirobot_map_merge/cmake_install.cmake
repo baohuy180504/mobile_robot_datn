@@ -1,8 +1,8 @@
-# Install script for directory: /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/map_merge
+# Install script for directory: /home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/map_merge
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/huy_ubuntu/mobile_robot/ros2_ws/install/multirobot_map_merge")
+  set(CMAKE_INSTALL_PREFIX "/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,16 +43,16 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/multirobot_map_merge/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  include("/home/huyjetson/mobile_robot/ros2_ws/build/multirobot_map_merge/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/multirobot_map_merge/libcombine_grids.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/huyjetson/mobile_robot/ros2_ws/build/multirobot_map_merge/libcombine_grids.a")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/multirobot_map_merge/gtest/cmake_install.cmake")
+  include("/home/huyjetson/mobile_robot/ros2_ws/build/multirobot_map_merge/gtest/cmake_install.cmake")
 
 endif()
 
@@ -64,5 +64,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/huy_ubuntu/mobile_robot/ros2_ws/build/multirobot_map_merge/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/huyjetson/mobile_robot/ros2_ws/build/multirobot_map_merge/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

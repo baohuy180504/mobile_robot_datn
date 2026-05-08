@@ -1,0 +1,21 @@
+[1.592s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup': PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_bringup build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/install.log --single-version-externally-managed install_data
+[2.195s] running egg_info
+[2.196s] writing ../../build/amr_bringup/amr_bringup.egg-info/PKG-INFO
+[2.197s] writing dependency_links to ../../build/amr_bringup/amr_bringup.egg-info/dependency_links.txt
+[2.197s] writing entry points to ../../build/amr_bringup/amr_bringup.egg-info/entry_points.txt
+[2.198s] writing requirements to ../../build/amr_bringup/amr_bringup.egg-info/requires.txt
+[2.198s] writing top-level names to ../../build/amr_bringup/amr_bringup.egg-info/top_level.txt
+[2.203s] reading manifest file '../../build/amr_bringup/amr_bringup.egg-info/SOURCES.txt'
+[2.209s] writing manifest file '../../build/amr_bringup/amr_bringup.egg-info/SOURCES.txt'
+[2.209s] running build
+[2.209s] running build_py
+[2.210s] running install
+[2.211s] running install_lib
+[2.214s] running install_data
+[2.214s] copying config/box_filter.yaml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/config
+[2.215s] running install_egg_info
+[2.220s] removing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages/amr_bringup-0.0.0-py3.10.egg-info' (and everything under it)
+[2.221s] Copying ../../build/amr_bringup/amr_bringup.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages/amr_bringup-0.0.0-py3.10.egg-info
+[2.223s] running install_scripts
+[2.275s] writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/install.log'
+[2.382s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup' returned '0': PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_bringup build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/install.log --single-version-externally-managed install_data

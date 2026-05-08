@@ -1,8 +1,8 @@
-# Install script for directory: /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore
+# Install script for directory: /home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite")
+  set(CMAKE_INSTALL_PREFIX "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,12 +43,12 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  include("/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/gtest/cmake_install.cmake")
+  include("/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/gtest/cmake_install.cmake")
 
 endif()
 
@@ -60,5 +60,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

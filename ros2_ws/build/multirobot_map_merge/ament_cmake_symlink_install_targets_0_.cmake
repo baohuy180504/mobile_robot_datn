@@ -1,1 +1,1 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/multirobot_map_merge/map_merge" "TARGETS" "map_merge" "DESTINATION" "lib/multirobot_map_merge")
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/huyjetson/mobile_robot/ros2_ws/build/multirobot_map_merge/map_merge" "TARGETS" "map_merge" "DESTINATION" "lib/multirobot_map_merge")

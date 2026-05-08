@@ -1,1 +1,1 @@
-/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_navigation/scripts/auto_map_saver.py
+/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation/scripts/auto_map_saver.py

@@ -23,7 +23,7 @@ function(ament_cmake_symlink_install_directory cmake_current_source_dir)
 
   # make destination absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -128,7 +128,7 @@ function(ament_cmake_symlink_install_files cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -186,7 +186,7 @@ function(ament_cmake_symlink_install_programs cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -256,7 +256,7 @@ function(ament_cmake_symlink_install_targets)
 
     # make destination an absolute path and ensure that it exists
     if(NOT IS_ABSOLUTE "${destination}")
-      set(destination "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs/${destination}")
+      set(destination "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/${destination}")
     endif()
     if(NOT EXISTS "${destination}")
       file(MAKE_DIRECTORY "${destination}")
@@ -315,125 +315,125 @@ message(STATUS "Execute custom install script")
 
 # begin of custom install code
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rosidl_interfaces/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rosidl_interfaces")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rosidl_interfaces/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rosidl_interfaces")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rosidl_interfaces/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rosidl_interfaces")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rosidl_interfaces/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rosidl_interfaces")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
 
 # install(FILES "/opt/ros/humble/lib/python3.10/site-packages/ament_package/template/environment_hook/library_path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/opt/ros/humble/lib/python3.10/site-packages/ament_package/template/environment_hook/library_path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/opt/ros/humble/lib/python3.10/site-packages/ament_package/template/environment_hook/library_path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/library_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/library_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/library_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/library_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_c/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.h")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_fastrtps_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN_EXCLUDE" "*.cpp")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_typesupport_introspection_cpp/explore_lite_msgs/" "DESTINATION" "include/explore_lite_msgs/explore_lite_msgs" "PATTERN" "*.hpp")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.sh" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.sh" "DESTINATION" "share/explore_lite_msgs/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.sh" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.sh" "DESTINATION" "share/explore_lite_msgs/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/pythonpath.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_python/explore_lite_msgs/explore_lite_msgs.egg-info/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs-1.0.0-py3.10.egg-info")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_python/explore_lite_msgs/explore_lite_msgs.egg-info/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs-1.0.0-py3.10.egg-info")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_python/explore_lite_msgs/explore_lite_msgs.egg-info/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs-1.0.0-py3.10.egg-info")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_python/explore_lite_msgs/explore_lite_msgs.egg-info/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs-1.0.0-py3.10.egg-info")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_py/explore_lite_msgs/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs" "PATTERN_EXCLUDE" "*.pyc" "PATTERN_EXCLUDE" "__pycache__")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_py/explore_lite_msgs/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs" "PATTERN_EXCLUDE" "*.pyc" "PATTERN_EXCLUDE" "__pycache__")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_py/explore_lite_msgs/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs" "PATTERN_EXCLUDE" "*.pyc" "PATTERN_EXCLUDE" "__pycache__")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_py/explore_lite_msgs/" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs" "PATTERN_EXCLUDE" "*.pyc" "PATTERN_EXCLUDE" "__pycache__")
 
 # install("TARGETS" "explore_lite_msgs__rosidl_typesupport_fastrtps_c__pyext" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs")
-include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
+include("/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
 # install("TARGETS" "explore_lite_msgs__rosidl_typesupport_introspection_c__pyext" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs")
-include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_symlink_install_targets_1_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
+include("/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_symlink_install_targets_1_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
 # install("TARGETS" "explore_lite_msgs__rosidl_typesupport_c__pyext" "DESTINATION" "local/lib/python3.10/dist-packages/explore_lite_msgs")
-include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_symlink_install_targets_2_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
+include("/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_symlink_install_targets_2_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rust_packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rust_packages")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rust_packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rust_packages")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rust_packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rust_packages")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/rust_packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/rust_packages")
 
-# install(DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_rs/explore_lite_msgs/rust" "DESTINATION" "share/explore_lite_msgs")
-ament_cmake_symlink_install_directory("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_rs/explore_lite_msgs/rust" "DESTINATION" "share/explore_lite_msgs")
+# install(DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_rs/explore_lite_msgs/rust" "DESTINATION" "share/explore_lite_msgs")
+ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" DIRECTORY "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_rs/explore_lite_msgs/rust" "DESTINATION" "share/explore_lite_msgs")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl" "DESTINATION" "share/explore_lite_msgs/msg")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl" "DESTINATION" "share/explore_lite_msgs/msg")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl" "DESTINATION" "share/explore_lite_msgs/msg")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl" "DESTINATION" "share/explore_lite_msgs/msg")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/msg/ExploreStatus.msg" "DESTINATION" "share/explore_lite_msgs/msg")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/msg/ExploreStatus.msg" "DESTINATION" "share/explore_lite_msgs/msg")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/msg/ExploreStatus.msg" "DESTINATION" "share/explore_lite_msgs/msg")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/msg/ExploreStatus.msg" "DESTINATION" "share/explore_lite_msgs/msg")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/explore_lite_msgs/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/explore_lite_msgs/environment")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite_msgs")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite_msgs")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite_msgs")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/explore_lite_msgs")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite_msgs")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite_msgs")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite_msgs")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/explore_lite_msgs")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite_msgs")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite_msgs")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite_msgs")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/explore_lite_msgs")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite_msgs")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite_msgs")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite_msgs")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/explore_lite_msgs")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite_msgs")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite_msgs")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite_msgs")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/explore_lite_msgs")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/packages")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/packages")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/packages")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_index/share/ament_index/resource_index/packages/explore_lite_msgs" "DESTINATION" "share/ament_index/resource_index/packages")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_libraries/ament_cmake_export_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_libraries/ament_cmake_export_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_libraries/ament_cmake_export_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_libraries/ament_cmake_export_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_targets/ament_cmake_export_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_targets/ament_cmake_export_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_targets/ament_cmake_export_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_targets/ament_cmake_export_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_targets-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig-version.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig.cmake" "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig-version.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig-version.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig.cmake" "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/ament_cmake_core/explore_lite_msgsConfig-version.cmake" "DESTINATION" "share/explore_lite_msgs/cmake")
 
-# install(FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/package.xml" "DESTINATION" "share/explore_lite_msgs")
-ament_cmake_symlink_install_files("/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/package.xml" "DESTINATION" "share/explore_lite_msgs")
+# install(FILES "/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/package.xml" "DESTINATION" "share/explore_lite_msgs")
+ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs" FILES "/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs/package.xml" "DESTINATION" "share/explore_lite_msgs")

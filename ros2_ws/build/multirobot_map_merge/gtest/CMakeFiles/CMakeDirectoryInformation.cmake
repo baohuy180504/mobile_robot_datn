@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/opt/ros/humble/src/gtest_vendor")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/huy_ubuntu/mobile_robot/ros2_ws/build/multirobot_map_merge")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/huyjetson/mobile_robot/ros2_ws/build/multirobot_map_merge")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

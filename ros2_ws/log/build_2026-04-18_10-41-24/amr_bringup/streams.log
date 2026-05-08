@@ -1,0 +1,29 @@
+[2.554s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup': PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build --no-deps symlink_data
+[3.291s] running develop
+[3.705s] running egg_info
+[3.706s] creating amr_bringup.egg-info
+[3.706s] writing amr_bringup.egg-info/PKG-INFO
+[3.707s] writing dependency_links to amr_bringup.egg-info/dependency_links.txt
+[3.707s] writing entry points to amr_bringup.egg-info/entry_points.txt
+[3.708s] writing requirements to amr_bringup.egg-info/requires.txt
+[3.708s] writing top-level names to amr_bringup.egg-info/top_level.txt
+[3.709s] writing manifest file 'amr_bringup.egg-info/SOURCES.txt'
+[3.718s] reading manifest file 'amr_bringup.egg-info/SOURCES.txt'
+[3.720s] writing manifest file 'amr_bringup.egg-info/SOURCES.txt'
+[3.728s] running build_ext
+[3.729s] Creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages/amr-bringup.egg-link (link to .)
+[3.733s] 
+[3.733s] Installed /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup
+[3.736s] running symlink_data
+[3.736s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/ament_index
+[3.737s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/ament_index/resource_index
+[3.737s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/ament_index/resource_index/packages
+[3.738s] symbolically linking /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/resource/amr_bringup -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/ament_index/resource_index/packages
+[3.739s] symbolically linking /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/package.xml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup
+[3.739s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/launch
+[3.740s] symbolically linking /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/launch/bringup_vslam.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/launch
+[3.740s] symbolically linking /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/launch/bringup_lidar.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/launch
+[3.741s] symbolically linking /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/launch/bringup_fusion.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/launch
+[3.742s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/config
+[3.742s] symbolically linking /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/config/box_filter.yaml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/config
+[3.996s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup' returned '0': PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build --no-deps symlink_data

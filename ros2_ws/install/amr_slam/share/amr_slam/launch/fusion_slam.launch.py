@@ -1,1 +1,1 @@
-/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_slam/launch/fusion_slam.launch.py
+/home/huyjetson/mobile_robot/ros2_ws/src/amr_slam/launch/fusion_slam.launch.py

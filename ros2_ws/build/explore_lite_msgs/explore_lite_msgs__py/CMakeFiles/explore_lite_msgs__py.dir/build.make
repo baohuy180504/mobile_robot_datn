@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs
+CMAKE_SOURCE_DIR = /home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs
+CMAKE_BINARY_DIR = /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs
 
 # Utility rule file for explore_lite_msgs__py.
 
@@ -87,8 +87,8 @@ rosidl_generator_py/explore_lite_msgs/_explore_lite_msgs_s.ep.rosidl_typesupport
 rosidl_generator_py/explore_lite_msgs/_explore_lite_msgs_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/humble/share/rosidl_generator_py/resource/_srv_pkg_typesupport_entry_point.c.em
 rosidl_generator_py/explore_lite_msgs/_explore_lite_msgs_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/humble/share/rosidl_generator_py/resource/_srv.py.em
 rosidl_generator_py/explore_lite_msgs/_explore_lite_msgs_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code for ROS interfaces"
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py && /usr/bin/python3 /opt/ros/humble/share/rosidl_generator_py/cmake/../../../lib/rosidl_generator_py/rosidl_generator_py --generator-arguments-file /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_py__arguments.json --typesupport-impls "rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c;rosidl_typesupport_c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code for ROS interfaces"
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py && /usr/bin/python3 /opt/ros/humble/share/rosidl_generator_py/cmake/../../../lib/rosidl_generator_py/rosidl_generator_py --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_py__arguments.json --typesupport-impls "rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c;rosidl_typesupport_c"
 
 rosidl_generator_py/explore_lite_msgs/_explore_lite_msgs_s.ep.rosidl_typesupport_introspection_c.c: rosidl_generator_py/explore_lite_msgs/_explore_lite_msgs_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/explore_lite_msgs/_explore_lite_msgs_s.ep.rosidl_typesupport_introspection_c.c
@@ -120,10 +120,10 @@ explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/build: explore_lite_m
 .PHONY : explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/build
 
 explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/clean:
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py && $(CMAKE_COMMAND) -P CMakeFiles/explore_lite_msgs__py.dir/cmake_clean.cmake
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py && $(CMAKE_COMMAND) -P CMakeFiles/explore_lite_msgs__py.dir/cmake_clean.cmake
 .PHONY : explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/clean
 
 explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/depend:
-	cd /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore_lite_msgs /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : explore_lite_msgs__py/CMakeFiles/explore_lite_msgs__py.dir/depend
 

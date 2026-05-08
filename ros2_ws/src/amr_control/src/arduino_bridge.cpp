@@ -14,7 +14,7 @@
 class ArduinoBridge : public rclcpp::Node
 {
 public:
-    ArduinoBridge() : Node("arduino_bridge"), x_(0.0), y_(0.0), theta_(0.0), first_read_(true)
+    ArduinoBridge() : Node("arduino_bridge"), x_(0.0), y_(0.0), theta_(0.0), first_read_(true), initial_yaw_(0.0) // KHỞI TẠO BIẾN
     {
         odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", 10);
         tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
@@ -23,7 +23,7 @@ public:
             "cmd_vel", 10, std::bind(&ArduinoBridge::cmd_vel_callback, this, std::placeholders::_1));
 
         // Mở cổng Serial kết nối Arduino Mega
-        open_serial_port("/dev/ttyACM0", B115200);
+        open_serial_port("/dev/arduino_mega", B115200);
 
         timer_ = this->create_wall_timer(
             std::chrono::milliseconds(33), // Tần số 30Hz
@@ -42,7 +42,7 @@ private:
     std::string serial_buffer_ = "";
     
     // Hệ số toán học quy đổi Encoder
-    const double D_P = 0.00011037; // Khoảng cách 1 xung (mét)
+    const double D_P = 0.000055185; // Khoảng cách 1 xung (mét)
     const double PI = 3.14159265359;
 
     // Tọa độ và trạng thái hiện tại
@@ -50,6 +50,7 @@ private:
     long last_pos_left_ = 0;
     long last_pos_right_ = 0;
     bool first_read_;
+    double initial_yaw_; // KHAI BÁO BIẾN LƯU GÓC BAN ĐẦU
 
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
@@ -121,10 +122,13 @@ private:
                     long pos_right = std::stol(payload.substr(comma1 + 1, comma2 - comma1 - 1));
                     float yaw_deg = std::stof(payload.substr(comma2 + 1));
 
-                    // Tránh xe bị "nhảy cóc" hàng chục mét ở giây đầu tiên
+                    double yaw_rad = yaw_deg * PI / 180.0; // Đổi ra Radian ngay lập tức
+
+                    // Tránh xe bị "nhảy cóc" hàng chục mét ở giây đầu tiên và thiết lập mốc 0 độ
                     if (first_read_) {
                         last_pos_left_ = pos_left;
                         last_pos_right_ = pos_right;
+                        initial_yaw_ = yaw_rad; // BẮT BUỘC: Khóa góc la bàn đầu tiên làm mốc 0
                         first_read_ = false;
                     }
 
@@ -139,16 +143,20 @@ private:
                     double d_r = delta_r * D_P;
                     double d_center = (d_l + d_r) / 2.0;
 
-                    // 4. Xử lý góc Yaw từ IMU (BNO055 trả về 0-360 độ)
-                    double yaw_rad = yaw_deg * PI / 180.0;
+                    // 4. Xử lý góc Yaw (Trừ đi mốc ban đầu)
+                    double current_yaw = yaw_rad - initial_yaw_;
+
+                    // NẾU TIA LASER VẪN XOAY THEO XE, BỎ DẤU "//" Ở DÒNG DƯỚI ĐỂ ĐẢO CHIỀU:
+                    //current_yaw = -current_yaw; 
+
                     // Chuẩn hóa góc về mốc [-PI, PI] của ROS 2
-                    while (yaw_rad > PI) yaw_rad -= 2.0 * PI;
-                    while (yaw_rad < -PI) yaw_rad += 2.0 * PI;
+                    while (current_yaw > PI) current_yaw -= 2.0 * PI;
+                    while (current_yaw < -PI) current_yaw += 2.0 * PI;
 
                     // 5. Tính Tọa độ X, Y tuyệt đối
-                    x_ += d_center * cos(yaw_rad);
-                    y_ += d_center * sin(yaw_rad);
-                    theta_ = yaw_rad; // Lấy trực tiếp từ IMU, bỏ qua bánh xe
+                    x_ += d_center * cos(current_yaw);
+                    y_ += d_center * sin(current_yaw);
+                    theta_ = current_yaw; 
 
                     // 6. Đẩy dữ liệu lên mạng lưới ROS
                     publish_tf_and_odom();

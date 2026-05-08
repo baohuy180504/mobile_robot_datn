@@ -1,8 +1,8 @@
-# Install script for directory: /home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__rs
+# Install script for directory: /home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/explore_lite_msgs__rs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/huy_ubuntu/mobile_robot/ros2_ws/install/explore_lite_msgs")
+  set(CMAKE_INSTALL_PREFIX "/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

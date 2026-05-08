@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/huy_ubuntu/mobile_robot/ros2_ws/src/m-explore-ros2/explore/include -I/opt/ros/humble/src/gtest_vendor/. -isystem /opt/ros/humble/src/gtest_vendor/include
+CXX_INCLUDES = -I/home/huyjetson/mobile_robot/ros2_ws/src/m-explore-ros2/explore/include -I/opt/ros/humble/src/gtest_vendor/. -isystem /opt/ros/humble/src/gtest_vendor/include
 
 CXX_FLAGS = -Wall -Wextra -Wpedantic -std=gnu++14
 

@@ -1,12 +1,12 @@
 {
   "package_name": "explore_lite_msgs",
-  "output_dir": "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_rs/explore_lite_msgs",
+  "output_dir": "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_generator_rs/explore_lite_msgs",
   "template_dir": "/opt/ros/humble/share/rosidl_generator_rs/cmake/../resource",
   "idl_tuples": [
-    "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs:msg/ExploreStatus.idl"
+    "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs:msg/ExploreStatus.idl"
   ],
   "ros_interface_files": [
-    "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl"
+    "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl"
   ],
   "target_dependencies": [
     "/opt/ros/humble/share/rosidl_generator_rs/cmake/../../../lib/rosidl_generator_rs/rosidl_generator_rs",
@@ -21,8 +21,8 @@
     "/opt/ros/humble/share/rosidl_generator_rs/cmake/../resource/templates/msg_rmw.rs.em",
     "/opt/ros/humble/share/rosidl_generator_rs/cmake/../resource/templates/srv_idiomatic.rs.em",
     "/opt/ros/humble/share/rosidl_generator_rs/cmake/../resource/templates/srv_rmw.rs.em",
-    "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl",
-    "/home/huy_ubuntu/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl"
+    "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl",
+    "/home/huyjetson/mobile_robot/ros2_ws/build/explore_lite_msgs/rosidl_adapter/explore_lite_msgs/msg/ExploreStatus.idl"
   ],
   "package_version": "1.0.0"
 }

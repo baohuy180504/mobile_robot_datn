@@ -1,8 +1,8 @@
-# Install script for directory: /home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_control
+# Install script for directory: /home/huyjetson/mobile_robot/ros2_ws/src/amr_control
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/huy_ubuntu/mobile_robot/ros2_ws/install/amr_control")
+  set(CMAKE_INSTALL_PREFIX "/home/huyjetson/mobile_robot/ros2_ws/install/amr_control")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,7 +43,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  include("/home/huyjetson/mobile_robot/ros2_ws/build/amr_control/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -54,5 +54,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/huy_ubuntu/mobile_robot/ros2_ws/build/amr_control/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/huyjetson/mobile_robot/ros2_ws/build/amr_control/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

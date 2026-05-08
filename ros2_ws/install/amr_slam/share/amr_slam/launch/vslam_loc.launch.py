@@ -1,1 +1,1 @@
-/home/huy_ubuntu/mobile_robot/ros2_ws/src/amr_slam/launch/vslam_loc.launch.py
+/home/huyjetson/mobile_robot/ros2_ws/src/amr_slam/launch/vslam_loc.launch.py
