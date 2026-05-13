@@ -1,0 +1,26 @@
+[0.038s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_control -- -j6 -l6
+[0.146s] [35m[1mConsolidate compiler generated dependencies of target arduino_bridge[0m
+[0.189s] [ 50%] [32mBuilding CXX object CMakeFiles/arduino_bridge.dir/src/arduino_bridge.cpp.o[0m
+[25.079s] [100%] [32m[1mLinking CXX executable arduino_bridge[0m
+[26.399s] [100%] Built target arduino_bridge
+[26.430s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_control -- -j6 -l6
+[26.435s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_control
+[26.460s] -- Install configuration: ""
+[26.461s] -- Execute custom install script
+[26.462s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/lib/amr_control/arduino_bridge
+[26.462s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/ament_index/resource_index/package_run_dependencies/amr_control
+[26.463s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/ament_index/resource_index/parent_prefix_path/amr_control
+[26.463s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/environment/ament_prefix_path.sh
+[26.464s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/environment/ament_prefix_path.dsv
+[26.464s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/environment/path.sh
+[26.464s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/environment/path.dsv
+[26.465s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/local_setup.bash
+[26.465s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/local_setup.sh
+[26.465s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/local_setup.zsh
+[26.466s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/local_setup.dsv
+[26.466s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/package.dsv
+[26.491s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/ament_index/resource_index/packages/amr_control
+[26.491s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/cmake/amr_controlConfig.cmake
+[26.491s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/cmake/amr_controlConfig-version.cmake
+[26.492s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_control/share/amr_control/package.xml
+[26.499s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_control

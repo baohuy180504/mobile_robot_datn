@@ -1,23 +1,31 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, TimerAction
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    # 1. Khai báo các đường dẫn
-    pkg_amr_description = get_package_share_directory('amr_description')
+    # 1. Khai báo các đường dẫn package
     pkg_amr_nav = get_package_share_directory('amr_navigation')
-    
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    
-    # Đường dẫn file bản đồ và cấu hình (Huy kiểm tra lại tên file đã lưu nhé)
-    map_yaml_file = os.path.join(pkg_amr_nav, 'maps', 'my_room_map.yaml')
-    octomap_bt_file = os.path.join(pkg_amr_nav, 'maps', 'my_room.bt')
-    #octomap_bt_file = '/home/huy_ubuntu/test_ros/ros2_ws/src/amr_navigation/maps/my_room.bt'
     nav2_params_file = os.path.join(pkg_amr_nav, 'config', 'nav2_params_vslam.yaml')
+
+    # 2. Khai báo các tham số đầu vào (Launch Arguments)
+    # Đây là cầu nối để nhận dữ liệu từ file run_nav.sh
+    use_sim_time = LaunchConfiguration('use_sim_time')
+    map_yaml_file = LaunchConfiguration('map')
+    octomap_bt_file = LaunchConfiguration('map_3d')
+
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time', default_value='false', description='Sử dụng thời gian mô phỏng'
+    )
+    declare_map_yaml = DeclareLaunchArgument(
+        'map', description='Đường dẫn tuyệt đối tới file map 2D (.yaml)'
+    )
+    declare_map_3d = DeclareLaunchArgument(
+        'map_3d', description='Đường dẫn tuyệt đối tới file map 3D (.bt)'
+    )
 
     # 3. Map Server (Nạp bản đồ 2D tĩnh)
     map_server_node = Node(
@@ -44,19 +52,22 @@ def generate_launch_description():
         executable='octomap_server_node',
         name='octomap_server',
         output='screen',
-        # ĐÃ XÓA DÒNG ARGUMENTS Ở ĐÂY
+        # CÁCH CHUẨN NHẤT TRONG ROS 2: Truyền file .bt qua arguments
+        arguments=[octomap_bt_file], 
         parameters=[{
             'use_sim_time': use_sim_time,
             'frame_id': 'map',
             'base_frame_id': 'base_footprint',
             'resolution': 0.05,
-            'octomap_path': octomap_bt_file,  # <--- ĐÂY LÀ CHÌA KHÓA PHÁ ÁN!
             'sensor_model.max_range': 4.0,
             'sensor_model.hit': 0.7,
             'sensor_model.miss': 0.4,
+            'latch': True  # Bắt buộc thêm: Giữ bản đồ hiển thị liên tục trong RViz
         }],
         remappings=[
-            ('cloud_in', '/camera/astra/points')
+            ('cloud_in', '/camera/astra/points'),
+            # BẮT BUỘC PHẢI CÓ: Đổi tên map 2D của Octomap để chống văng RViz2
+            ('projected_map', '/octomap_dummy_2d_map') 
         ]
     )
 
@@ -100,8 +111,10 @@ def generate_launch_description():
     nav_stack = [lifecycle_manager] + nav_nodes
     delayed_nav = TimerAction(period=5.0, actions=nav_stack)
 
-
     return LaunchDescription([
+        declare_use_sim_time,
+        declare_map_yaml,
+        declare_map_3d,
         map_server_node,
         amcl_node,
         octomap_server_node,

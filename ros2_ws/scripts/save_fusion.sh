@@ -1,25 +1,39 @@
 #!/bin/bash
 
-echo -e "\e[1;34m=== LƯU BẢN ĐỒ LAI 2D & 3D (RTAB-MAP) ===\e[0m"
+echo -e "\e[1;32m=== AMR MAP SAVER (2D & 3D) ===\e[0m"
 
-MAP_NAME=${1:-my_fusion_map}
-WS_DIR=$(pwd)
-MAP_DIR="$WS_DIR/src/amr_slam/maps"
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 
-# 1. Trích xuất bản đồ 2D từ Topic (Dành cho Nav2 & MPPI)
-echo -e "\e[1;33m[1/2] Đang trích xuất ảnh 2D (.yaml & .pgm)...\e[0m"
-ros2 run nav2_map_server map_saver_cli -f "$MAP_DIR/$MAP_NAME" --ros-args -p map_subscribe_transient_local:=true
+# 1. Đường dẫn tuyệt đối tới folder maps trong package amr_slam
+MAP_DIR="src/amr_slam/maps"
 
-# Sửa lỗi Magick tự động: Ép đường dẫn tuyệt đối vào file YAML
-sed -i "s|image: $MAP_NAME.pgm|image: $MAP_DIR/$MAP_NAME.pgm|g" "$MAP_DIR/$MAP_NAME.yaml"
-
-# 2. Sao lưu cơ sở dữ liệu 3D
-echo -e "\e[1;33m[2/2] Đang sao lưu không gian 3D (rtabmap.db)...\e[0m"
-if [ -f ~/.ros/rtabmap.db ]; then
-    cp ~/.ros/rtabmap.db "$MAP_DIR/$MAP_NAME.db"
-    echo -e "\e[1;32m[THÀNH CÔNG] Đã lưu 3D Database: $MAP_DIR/$MAP_NAME.db\e[0m"
-else
-    echo -e "\e[1;31m[LỖI] Không tìm thấy file ~/.ros/rtabmap.db. RTAB-Map đã chạy chưa?\e[0m"
+if [ ! -d "$MAP_DIR" ]; then
+    echo -e "\e[1;31m[LỖI] Không tìm thấy thư mục $MAP_DIR!\e[0m"
+    echo "Vui lòng cd về thư mục gốc của workspace (ví dụ: cd ~/ros2_ws) rồi chạy lại lệnh."
+    exit 1
 fi
 
-echo -e "\e[1;32m=== HOÀN TẤT ===\e[0m"
+# 2. Xử lý tên bản đồ
+if [ -z "$1" ]; then
+    MAP_NAME="map_$(date +%Y%m%d_%H%M%S)"
+    echo -e "[INFO] Bạn không nhập tên, tự động đặt tên là: \e[1;33m$MAP_NAME\e[0m"
+else
+    MAP_NAME=$1
+fi
+
+# 3. Lưu bản đồ 2D (từ SLAM Toolbox)
+echo "[INFO] Đang lưu bản đồ 2D (Lidar)..."
+ros2 run nav2_map_server map_saver_cli -f $MAP_DIR/$MAP_NAME
+
+# 4. Lưu bản đồ 3D (từ Octomap Server)
+echo "[INFO] Đang lưu bản đồ 3D (Octomap Voxel)..."
+ros2 run octomap_server octomap_saver $MAP_DIR/${MAP_NAME}_3d.bt
+
+# 5. Báo cáo
+echo -e "\e[1;32m-------------------------------------------\e[0m"
+echo -e "\e[1;32m[SUCCESS] Bản đồ đã được lưu an toàn tại:\e[0m"
+echo "  [2D] $MAP_DIR/$MAP_NAME.pgm "
+echo "  [2D] $MAP_DIR/$MAP_NAME.yaml "
+echo "  [3D] $MAP_DIR/${MAP_NAME}_3d.bt "
+echo -e "\e[1;32m-------------------------------------------\e[0m"

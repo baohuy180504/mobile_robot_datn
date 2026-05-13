@@ -14,7 +14,10 @@
 class ArduinoBridge : public rclcpp::Node
 {
 public:
-    ArduinoBridge() : Node("arduino_bridge"), x_(0.0), y_(0.0), theta_(0.0), first_read_(true), initial_yaw_(0.0) // KHỞI TẠO BIẾN
+    ArduinoBridge() : Node("arduino_bridge"),
+        x_(0.0), y_(0.0), theta_(0.0),
+        vx_(0.0), wz_(0.0), prev_theta_(0.0),
+        first_read_(true), initial_yaw_(0.0)
     {
         odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", 10);
         tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
@@ -47,10 +50,13 @@ private:
 
     // Tọa độ và trạng thái hiện tại
     double x_, y_, theta_;
+    double vx_, wz_;               // Vận tốc tuyến tính và góc (m/s, rad/s)
+    double prev_theta_;            // Góc trước để tính wz
+    rclcpp::Time last_odom_time_;  // Timestamp lần đọc trước
     long last_pos_left_ = 0;
     long last_pos_right_ = 0;
     bool first_read_;
-    double initial_yaw_; // KHAI BÁO BIẾN LƯU GÓC BAN ĐẦU
+    double initial_yaw_;
 
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
@@ -128,7 +134,9 @@ private:
                     if (first_read_) {
                         last_pos_left_ = pos_left;
                         last_pos_right_ = pos_right;
-                        initial_yaw_ = yaw_rad; // BẮT BUỘC: Khóa góc la bàn đầu tiên làm mốc 0
+                        initial_yaw_ = yaw_rad; // Khóa góc la bàn đầu tiên làm mốc 0
+                        prev_theta_    = 0.0;
+                        last_odom_time_ = this->get_clock()->now();
                         first_read_ = false;
                     }
 
@@ -153,10 +161,24 @@ private:
                     while (current_yaw > PI) current_yaw -= 2.0 * PI;
                     while (current_yaw < -PI) current_yaw += 2.0 * PI;
 
-                    // 5. Tính Tọa độ X, Y tuyệt đối
+                    // 5. Tính Velocity tuyến tính và góc
+                    rclcpp::Time now = this->get_clock()->now();
+                    double dt = (now - last_odom_time_).seconds();
+                    if (dt > 0.005 && dt < 1.0) {  // dt hợp lệ: 5ms - 1s
+                        vx_ = d_center / dt;
+                        // Tính delta_theta, xử lý wrap-around [-PI, PI]
+                        double delta_theta = current_yaw - prev_theta_;
+                        while (delta_theta >  PI) delta_theta -= 2.0 * PI;
+                        while (delta_theta < -PI) delta_theta += 2.0 * PI;
+                        wz_ = delta_theta / dt;
+                    }
+                    last_odom_time_ = now;
+                    prev_theta_     = current_yaw;
+
+                    // 6. Tính Tọa độ X, Y tuyệt đối
                     x_ += d_center * cos(current_yaw);
                     y_ += d_center * sin(current_yaw);
-                    theta_ = current_yaw; 
+                    theta_ = current_yaw;
 
                     // 6. Đẩy dữ liệu lên mạng lưới ROS
                     publish_tf_and_odom();
@@ -169,14 +191,17 @@ private:
 
     void publish_tf_and_odom()
     {
-        rclcpp::Time now = this->get_clock()->now();
-
+        // THAY ĐỔI QUAN TRỌNG Ở ĐÂY:
+        // Lấy thời gian hiện tại CỘNG THÊM 50 milliseconds (0.05 giây) vào tương lai
+        // Điều này bù đắp độ trễ mạng lưới và giúp Octomap không phải đợi TF 
+        rclcpp::Time current_time = this->get_clock()->now();
+        rclcpp::Time future_time = current_time + rclcpp::Duration(0, 50000000); // 50ms = 50,000,000 nanoseconds
         tf2::Quaternion q;
         q.setRPY(0, 0, theta_);
 
         // Bắn TF (Khung xương)
         geometry_msgs::msg::TransformStamped t;
-        t.header.stamp = now;
+        t.header.stamp = future_time; // SỬ DỤNG THỜI GIAN TƯƠNG LAI
         t.header.frame_id = "odom";
         t.child_frame_id = "base_footprint";
         t.transform.translation.x = x_;
@@ -190,12 +215,34 @@ private:
 
         // Bắn Odom Topic (Cho Nav2)
         nav_msgs::msg::Odometry odom;
-        odom.header.stamp = now;
+        odom.header.stamp = current_time; // Odom vẫn dùng thời gian hiện tại để tránh lỗi "Odom quá cũ"
         odom.header.frame_id = "odom";
         odom.child_frame_id = "base_footprint";
         odom.pose.pose.position.x = x_;
         odom.pose.pose.position.y = y_;
         odom.pose.pose.orientation = t.transform.rotation;
+
+        // Publish velocity (cần thiết cho velocity_smoother CLOSED_LOOP)
+        odom.twist.twist.linear.x  = vx_;
+        odom.twist.twist.linear.y  = 0.0;
+        odom.twist.twist.angular.z = wz_;
+
+        // Covariance: giúp AMCL/EKF đánh giá độ tin cậy odom
+        // [x, y, z, roll, pitch, yaw] - diagonal elements
+        odom.pose.covariance[0]  = 0.01;   // x variance
+        odom.pose.covariance[7]  = 0.01;   // y variance
+        odom.pose.covariance[14] = 1e6;    // z (không đo được)
+        odom.pose.covariance[21] = 1e6;    // roll
+        odom.pose.covariance[22] = 1e6;    // pitch
+        odom.pose.covariance[35] = 0.05;   // yaw variance (IMU + encoder)
+
+        odom.twist.covariance[0]  = 0.01;  // vx variance
+        odom.twist.covariance[7]  = 1e6;   // vy (không có)
+        odom.twist.covariance[14] = 1e6;   // vz
+        odom.twist.covariance[21] = 1e6;   // vroll
+        odom.twist.covariance[22] = 1e6;   // vpitch
+        odom.twist.covariance[35] = 0.05;  // wz variance
+
         odom_pub_->publish(odom);
     }
 };

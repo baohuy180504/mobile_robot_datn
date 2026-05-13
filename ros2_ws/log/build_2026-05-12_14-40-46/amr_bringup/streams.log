@@ -1,0 +1,17 @@
+[1.599s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup': PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build --no-deps symlink_data
+[2.256s] running develop
+[2.673s] running egg_info
+[2.673s] writing amr_bringup.egg-info/PKG-INFO
+[2.674s] writing dependency_links to amr_bringup.egg-info/dependency_links.txt
+[2.675s] writing entry points to amr_bringup.egg-info/entry_points.txt
+[2.675s] writing requirements to amr_bringup.egg-info/requires.txt
+[2.675s] writing top-level names to amr_bringup.egg-info/top_level.txt
+[2.681s] reading manifest file 'amr_bringup.egg-info/SOURCES.txt'
+[2.683s] writing manifest file 'amr_bringup.egg-info/SOURCES.txt'
+[2.687s] running build_ext
+[2.688s] Creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages/amr-bringup.egg-link (link to .)
+[2.690s] 
+[2.690s] Installed /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup
+[2.690s] running symlink_data
+[2.691s] symbolically linking /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/config/ukf_params.yaml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/share/amr_bringup/config
+[2.817s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup' returned '0': PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build --no-deps symlink_data

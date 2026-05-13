@@ -1,14 +1,15 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/config/mapper_params_online_async.yaml
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/fusion_slam.launch.py
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/fusion_slam_v1.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/manual_vslam.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/slam.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/vslam.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/vslam_loc.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/rviz/view_vslam_teleop.rviz
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map1.pgm
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map1.yaml
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map2.pgm
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map2.yaml
-/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map3.pgm
-/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map3.yaml
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/ament_index/resource_index/package_run_dependencies/amr_slam
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/ament_index/resource_index/parent_prefix_path/amr_slam
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/environment/ament_prefix_path.sh

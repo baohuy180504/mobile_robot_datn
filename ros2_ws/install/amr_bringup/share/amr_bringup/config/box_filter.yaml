@@ -1,13 +1,1 @@
-scan_to_scan_filter_chain:
-  ros__parameters:
-    filter1:
-      name: box_filter
-      type: laser_filters/LaserScanBoxFilter
-      params:
-        box_frame: laser_frame
-        max_x: 0.2
-        min_x: -0.2
-        max_y: 0.2
-        min_y: -0.2
-        max_z: 0.5
-        min_z: -0.5
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/config/box_filter.yaml
