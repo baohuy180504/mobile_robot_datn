@@ -22,3 +22,4 @@ launch/bringup_fusion.launch.py
 launch/bringup_lidar.launch.py
 launch/bringup_vslam.launch.py
 resource/amr_bringup
+scripts/cloud_qos_relay.py

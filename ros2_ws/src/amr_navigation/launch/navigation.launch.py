@@ -35,8 +35,34 @@ def generate_launch_description():
             'autostart': 'true'
         }.items()
     )
+    
+    esp32_waypoint_server = Node(
+        package='amr_navigation',
+        executable='esp32_waypoint_server.py',
+        name='esp32_waypoint_server',
+        output='screen',
+        parameters=[{
+            'host': '0.0.0.0',
+            'tcp_port': 5000,
+            'frame_id': 'map',
+
+            # Sửa lại theo tọa độ thật trên map của bạn
+            'A.x': 1.5,
+            'A.y': 0.0,
+            'A.yaw': 0.0,
+
+            'B.x': 1.5,
+            'B.y': 1.0,
+            'B.yaw': 3.14,
+
+            'H.x': 0.0,
+            'H.y': 0.0,
+            'H.yaw': 0.0,
+        }]
+    )
 
     return LaunchDescription([
         map_arg,
-        nav2_launch
+        nav2_launch,
+        esp32_waypoint_server
     ])

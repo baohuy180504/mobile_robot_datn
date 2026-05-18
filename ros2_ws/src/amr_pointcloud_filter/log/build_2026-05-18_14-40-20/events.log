@@ -1,0 +1,274 @@
+[0.000000] (-) TimerEvent: {}
+[0.000840] (amr_pointcloud_filter) JobQueued: {'identifier': 'amr_pointcloud_filter', 'dependencies': OrderedDict()}
+[0.001534] (amr_pointcloud_filter) JobStarted: {'identifier': 'amr_pointcloud_filter'}
+[0.088363] (amr_pointcloud_filter) JobProgress: {'identifier': 'amr_pointcloud_filter', 'progress': 'cmake'}
+[0.090315] (amr_pointcloud_filter) Command: {'cmd': ['/usr/bin/cmake', '/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter', '-DCMAKE_BUILD_TYPE=Release', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/install/amr_pointcloud_filter'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/build/amr_pointcloud_filter', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.224 47582 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws/src'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install:/home/huyjetson/mobile_robot/ros2_ws/src/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '2'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/build/amr_pointcloud_filter'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.224 47582 192.168.0.184 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble')]), 'shell': False}
+[0.099147] (-) TimerEvent: {}
+[0.200253] (-) TimerEvent: {}
+[0.301318] (-) TimerEvent: {}
+[0.402978] (-) TimerEvent: {}
+[0.505291] (-) TimerEvent: {}
+[0.606932] (-) TimerEvent: {}
+[0.671706] (amr_pointcloud_filter) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.707187] (-) TimerEvent: {}
+[0.808945] (-) TimerEvent: {}
+[0.910557] (-) TimerEvent: {}
+[0.973666] (amr_pointcloud_filter) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.010870] (-) TimerEvent: {}
+[1.016795] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.111663] (-) TimerEvent: {}
+[1.212941] (-) TimerEvent: {}
+[1.228293] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.257863] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.261152] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.264180] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.280586] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.313236] (-) TimerEvent: {}
+[1.414746] (-) TimerEvent: {}
+[1.495052] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.514877] (-) TimerEvent: {}
+[1.522306] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.523717] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.525638] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.563772] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.615073] (-) TimerEvent: {}
+[1.716152] (-) TimerEvent: {}
+[1.817092] (-) TimerEvent: {}
+[1.918046] (-) TimerEvent: {}
+[2.018935] (-) TimerEvent: {}
+[2.063251] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.119093] (-) TimerEvent: {}
+[2.220141] (-) TimerEvent: {}
+[2.314932] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[2.320218] (-) TimerEvent: {}
+[2.421160] (-) TimerEvent: {}
+[2.522773] (-) TimerEvent: {}
+[2.566795] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[2.623275] (-) TimerEvent: {}
+[2.724975] (-) TimerEvent: {}
+[2.827197] (-) TimerEvent: {}
+[2.896678] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[2.927278] (-) TimerEvent: {}
+[2.952519] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[3.016397] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[3.027408] (-) TimerEvent: {}
+[3.103153] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[3.127584] (-) TimerEvent: {}
+[3.177552] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.227797] (-) TimerEvent: {}
+[3.328551] (-) TimerEvent: {}
+[3.429192] (-) TimerEvent: {}
+[3.470495] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[3.496017] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)\n'}
+[3.529375] (-) TimerEvent: {}
+[3.630394] (-) TimerEvent: {}
+[3.697897] (amr_pointcloud_filter) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_cyclonedds_cpp' as default\n"}
+[3.730645] (-) TimerEvent: {}
+[3.768993] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[3.830894] (-) TimerEvent: {}
+[3.932652] (-) TimerEvent: {}
+[4.034762] (-) TimerEvent: {}
+[4.135959] (-) TimerEvent: {}
+[4.139296] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[4.140415] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[4.236232] (-) TimerEvent: {}
+[4.333420] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[4.336379] (-) TimerEvent: {}
+[4.338351] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[4.436650] (-) TimerEvent: {}
+[4.537757] (-) TimerEvent: {}
+[4.638892] (-) TimerEvent: {}
+[4.687324] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found sensor_msgs: 4.9.1 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[4.739073] (-) TimerEvent: {}
+[4.805503] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found pcl_conversions: 2.4.5 (/opt/ros/humble/share/pcl_conversions/cmake)\n'}
+[4.839299] (-) TimerEvent: {}
+[4.940268] (-) TimerEvent: {}
+[4.946546] (amr_pointcloud_filter) StdoutLine: {'line': b"-- Checking for module 'eigen3'\n"}
+[4.986252] (amr_pointcloud_filter) StdoutLine: {'line': b'--   Found eigen3, version 3.4.0\n'}
+[5.040448] (-) TimerEvent: {}
+[5.058282] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found Eigen: /usr/include/eigen3 (Required is at least version "3.1") \n'}
+[5.058908] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[5.140600] (-) TimerEvent: {}
+[5.240001] (amr_pointcloud_filter) StdoutLine: {'line': b"-- Checking for module 'flann'\n"}
+[5.240867] (-) TimerEvent: {}
+[5.286367] (amr_pointcloud_filter) StdoutLine: {'line': b'--   Found flann, version 1.9.1\n'}
+[5.340970] (-) TimerEvent: {}
+[5.393652] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found FLANN: /usr/lib/aarch64-linux-gnu/libflann_cpp.so  \n'}
+[5.394240] (amr_pointcloud_filter) StdoutLine: {'line': b'-- FLANN found (include: /usr/include, lib: /usr/lib/aarch64-linux-gnu/libflann_cpp.so)\n'}
+[5.441069] (-) TimerEvent: {}
+[5.541450] (-) TimerEvent: {}
+[5.641815] (-) TimerEvent: {}
+[5.742811] (-) TimerEvent: {}
+[5.844679] (-) TimerEvent: {}
+[5.945557] (-) TimerEvent: {}
+[6.047512] (-) TimerEvent: {}
+[6.150077] (-) TimerEvent: {}
+[6.252375] (-) TimerEvent: {}
+[6.354108] (-) TimerEvent: {}
+[6.455029] (-) TimerEvent: {}
+[6.555419] (-) TimerEvent: {}
+[6.655824] (-) TimerEvent: {}
+[6.756280] (-) TimerEvent: {}
+[6.857348] (-) TimerEvent: {}
+[6.959159] (-) TimerEvent: {}
+[7.060064] (-) TimerEvent: {}
+[7.161085] (-) TimerEvent: {}
+[7.262061] (-) TimerEvent: {}
+[7.363076] (-) TimerEvent: {}
+[7.464044] (-) TimerEvent: {}
+[7.565097] (-) TimerEvent: {}
+[7.665981] (-) TimerEvent: {}
+[7.767148] (-) TimerEvent: {}
+[7.868892] (-) TimerEvent: {}
+[7.970964] (-) TimerEvent: {}
+[8.072389] (-) TimerEvent: {}
+[8.174079] (-) TimerEvent: {}
+[8.274787] (-) TimerEvent: {}
+[8.363555] (amr_pointcloud_filter) StdoutLine: {'line': b"-- Checking for module 'libusb-1.0'\n"}
+[8.374854] (-) TimerEvent: {}
+[8.402994] (amr_pointcloud_filter) StdoutLine: {'line': b'--   Found libusb-1.0, version 1.0.25\n'}
+[8.474982] (-) TimerEvent: {}
+[8.485689] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found libusb: /usr/lib/aarch64-linux-gnu/libusb-1.0.so  \n'}
+[8.492056] (amr_pointcloud_filter) StdoutLine: {'line': b'-- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)\n'}
+[8.575224] (-) TimerEvent: {}
+[8.631344] (amr_pointcloud_filter) StdoutLine: {'line': b'-- OpenNI2 found (version: 2.3.0.85, include: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/include/openni2, lib: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib/libOpenNI2.so;libusb::libusb)\n'}
+[8.675288] (-) TimerEvent: {}
+[8.775751] (-) TimerEvent: {}
+[8.876196] (-) TimerEvent: {}
+[8.988145] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[8.988688] (-) TimerEvent: {}
+[9.002115] (amr_pointcloud_filter) StdoutLine: {'line': b'-- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)\n'}
+[9.015210] (amr_pointcloud_filter) StdoutLine: {'line': b'-- OpenNI2 found (version: 2.3.0.85, include: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/include/openni2, lib: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib/libOpenNI2.so;libusb::libusb)\n'}
+[9.088796] (-) TimerEvent: {}
+[9.189209] (-) TimerEvent: {}
+[9.289593] (-) TimerEvent: {}
+[9.355597] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found Qhull version 8.0.2\n'}
+[9.389716] (-) TimerEvent: {}
+[9.490309] (-) TimerEvent: {}
+[9.590717] (-) TimerEvent: {}
+[9.690884] (amr_pointcloud_filter) StdoutLine: {'line': b'-- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)\n'}
+[9.691391] (-) TimerEvent: {}
+[9.791809] (-) TimerEvent: {}
+[9.892236] (-) TimerEvent: {}
+[9.992812] (-) TimerEvent: {}
+[10.025757] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_COMMON: /usr/lib/aarch64-linux-gnu/libpcl_common.so  \n'}
+[10.027544] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_KDTREE: /usr/lib/aarch64-linux-gnu/libpcl_kdtree.so  \n'}
+[10.029409] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_OCTREE: /usr/lib/aarch64-linux-gnu/libpcl_octree.so  \n'}
+[10.031197] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_SEARCH: /usr/lib/aarch64-linux-gnu/libpcl_search.so  \n'}
+[10.033093] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_SAMPLE_CONSENSUS: /usr/lib/aarch64-linux-gnu/libpcl_sample_consensus.so  \n'}
+[10.035354] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_FILTERS: /usr/lib/aarch64-linux-gnu/libpcl_filters.so  \n'}
+[10.036205] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_2D: /usr/include/pcl-1.12  \n'}
+[10.037050] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_GEOMETRY: /usr/include/pcl-1.12  \n'}
+[10.038846] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_IO: /usr/lib/aarch64-linux-gnu/libpcl_io.so  \n'}
+[10.041027] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_FEATURES: /usr/lib/aarch64-linux-gnu/libpcl_features.so  \n'}
+[10.042980] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_ML: /usr/lib/aarch64-linux-gnu/libpcl_ml.so  \n'}
+[10.044829] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_SEGMENTATION: /usr/lib/aarch64-linux-gnu/libpcl_segmentation.so  \n'}
+[10.046920] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_VISUALIZATION: /usr/lib/aarch64-linux-gnu/libpcl_visualization.so  \n'}
+[10.049008] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_SURFACE: /usr/lib/aarch64-linux-gnu/libpcl_surface.so  \n'}
+[10.050978] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_REGISTRATION: /usr/lib/aarch64-linux-gnu/libpcl_registration.so  \n'}
+[10.053015] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_KEYPOINTS: /usr/lib/aarch64-linux-gnu/libpcl_keypoints.so  \n'}
+[10.054973] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_TRACKING: /usr/lib/aarch64-linux-gnu/libpcl_tracking.so  \n'}
+[10.056906] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_RECOGNITION: /usr/lib/aarch64-linux-gnu/libpcl_recognition.so  \n'}
+[10.059010] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_STEREO: /usr/lib/aarch64-linux-gnu/libpcl_stereo.so  \n'}
+[10.060925] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_APPS: /usr/lib/aarch64-linux-gnu/libpcl_apps.so  \n'}
+[10.062604] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_IN_HAND_SCANNER: /usr/include/pcl-1.12  \n'}
+[10.063351] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_MODELER: /usr/include/pcl-1.12  \n'}
+[10.064367] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_POINT_CLOUD_EDITOR: /usr/include/pcl-1.12  \n'}
+[10.066396] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_OUTOFCORE: /usr/lib/aarch64-linux-gnu/libpcl_outofcore.so  \n'}
+[10.068404] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Found PCL_PEOPLE: /usr/lib/aarch64-linux-gnu/libpcl_people.so  \n'}
+[10.073007] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at CMakeLists.txt:12 (find_package):\n'}
+[10.073371] (amr_pointcloud_filter) StderrLine: {'line': b'  Policy CMP0074 is not set: find_package uses <PackageName>_ROOT variables.\n'}
+[10.073621] (amr_pointcloud_filter) StderrLine: {'line': b'  Run "cmake --help-policy CMP0074" for policy details.  Use the cmake_policy\n'}
+[10.073852] (amr_pointcloud_filter) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[10.074082] (amr_pointcloud_filter) StderrLine: {'line': b'\n'}
+[10.074306] (amr_pointcloud_filter) StderrLine: {'line': b'  CMake variable PCL_ROOT is set to:\n'}
+[10.074523] (amr_pointcloud_filter) StderrLine: {'line': b'\n'}
+[10.074735] (amr_pointcloud_filter) StderrLine: {'line': b'    /usr\n'}
+[10.074946] (amr_pointcloud_filter) StderrLine: {'line': b'\n'}
+[10.075155] (amr_pointcloud_filter) StderrLine: {'line': b'  For compatibility, CMake is ignoring the variable.\n'}
+[10.075365] (amr_pointcloud_filter) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[10.075573] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[0m\n'}
+[10.092925] (-) TimerEvent: {}
+[10.193753] (-) TimerEvent: {}
+[10.295468] (-) TimerEvent: {}
+[10.396492] (-) TimerEvent: {}
+[10.497334] (-) TimerEvent: {}
+[10.597838] (-) TimerEvent: {}
+[10.698269] (-) TimerEvent: {}
+[10.798757] (-) TimerEvent: {}
+[10.899732] (-) TimerEvent: {}
+[11.001655] (-) TimerEvent: {}
+[11.102669] (-) TimerEvent: {}
+[11.200147] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Configuring done\n'}
+[11.202790] (-) TimerEvent: {}
+[11.304014] (-) TimerEvent: {}
+[11.405687] (-) TimerEvent: {}
+[11.475160] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Generating done\n'}
+[11.505661] (-) TimerEvent: {}
+[11.519988] (amr_pointcloud_filter) StdoutLine: {'line': b'-- Build files have been written to: /home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/build/amr_pointcloud_filter\n'}
+[11.588938] (amr_pointcloud_filter) CommandEnded: {'returncode': 0}
+[11.591575] (amr_pointcloud_filter) JobProgress: {'identifier': 'amr_pointcloud_filter', 'progress': 'build'}
+[11.594703] (amr_pointcloud_filter) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/build/amr_pointcloud_filter', '--', '-j6', '-l6'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/build/amr_pointcloud_filter', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.224 47582 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws/src'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install:/home/huyjetson/mobile_robot/ros2_ws/src/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '2'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/build/amr_pointcloud_filter'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.224 47582 192.168.0.184 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble')]), 'shell': False}
+[11.605748] (-) TimerEvent: {}
+[11.706635] (-) TimerEvent: {}
+[11.742629] (amr_pointcloud_filter) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/depth_cloud_filter.dir/src/depth_cloud_filter.cpp.o\x1b[0m\n'}
+[11.806698] (-) TimerEvent: {}
+[11.907838] (-) TimerEvent: {}
+[12.009674] (-) TimerEvent: {}
+[12.110214] (-) TimerEvent: {}
+[12.210635] (-) TimerEvent: {}
+[12.311046] (-) TimerEvent: {}
+[12.411671] (-) TimerEvent: {}
+[12.512770] (-) TimerEvent: {}
+[12.613450] (-) TimerEvent: {}
+[12.713892] (-) TimerEvent: {}
+[12.814367] (-) TimerEvent: {}
+[12.914930] (-) TimerEvent: {}
+[13.015497] (-) TimerEvent: {}
+[13.116427] (-) TimerEvent: {}
+[13.217061] (-) TimerEvent: {}
+[13.317482] (-) TimerEvent: {}
+[13.417990] (-) TimerEvent: {}
+[13.518681] (-) TimerEvent: {}
+[13.619333] (-) TimerEvent: {}
+[13.719731] (-) TimerEvent: {}
+[13.820139] (-) TimerEvent: {}
+[13.920607] (-) TimerEvent: {}
+[14.021014] (-) TimerEvent: {}
+[14.121435] (-) TimerEvent: {}
+[14.221847] (-) TimerEvent: {}
+[14.322276] (-) TimerEvent: {}
+[14.422762] (-) TimerEvent: {}
+[14.523401] (-) TimerEvent: {}
+[14.623892] (-) TimerEvent: {}
+[14.724333] (-) TimerEvent: {}
+[14.824709] (-) TimerEvent: {}
+[14.925319] (-) TimerEvent: {}
+[15.026420] (-) TimerEvent: {}
+[15.127358] (-) TimerEvent: {}
+[15.227783] (-) TimerEvent: {}
+[15.328148] (-) TimerEvent: {}
+[15.428516] (-) TimerEvent: {}
+[15.529094] (-) TimerEvent: {}
+[15.629956] (-) TimerEvent: {}
+[15.730387] (-) TimerEvent: {}
+[15.830754] (-) TimerEvent: {}
+[15.931334] (-) TimerEvent: {}
+[16.032167] (-) TimerEvent: {}
+[16.132750] (-) TimerEvent: {}
+[16.233260] (-) TimerEvent: {}
+[16.333653] (-) TimerEvent: {}
+[16.434067] (-) TimerEvent: {}
+[16.534576] (-) TimerEvent: {}
+[16.635234] (-) TimerEvent: {}
+[16.735665] (-) TimerEvent: {}
+[16.836123] (-) TimerEvent: {}
+[16.959516] (-) TimerEvent: {}
+[17.060257] (amr_pointcloud_filter) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/depth_cloud_filter.dir/build.make:76: CMakeFiles/depth_cloud_filter.dir/src/depth_cloud_filter.cpp.o] Interrupt\n'}
+[17.061529] (-) TimerEvent: {}
+[17.062485] (amr_pointcloud_filter) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/depth_cloud_filter.dir/all] Interrupt\n'}
+[17.062879] (amr_pointcloud_filter) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Interrupt\n'}
+[17.095627] (amr_pointcloud_filter) CommandEnded: {'returncode': -2}
+[17.161752] (-) TimerEvent: {}
+[17.206896] (amr_pointcloud_filter) JobEnded: {'identifier': 'amr_pointcloud_filter', 'rc': 'SIGINT'}
+[17.219060] (-) EventReactorShutdown: {}

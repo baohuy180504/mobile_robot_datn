@@ -1,0 +1,15 @@
+[33mCMake Warning (dev) at CMakeLists.txt:12 (find_package):
+  Policy CMP0074 is not set: find_package uses <PackageName>_ROOT variables.
+  Run "cmake --help-policy CMP0074" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+
+  CMake variable PCL_ROOT is set to:
+
+    /usr
+
+  For compatibility, CMake is ignoring the variable.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+gmake[2]: *** [CMakeFiles/depth_cloud_filter.dir/build.make:76: CMakeFiles/depth_cloud_filter.dir/src/depth_cloud_filter.cpp.o] Interrupt
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/depth_cloud_filter.dir/all] Interrupt
+gmake: *** [Makefile:146: all] Interrupt

@@ -318,8 +318,8 @@ message(STATUS "Execute custom install script")
 # install(DIRECTORY "config" "launch" "maps" "rviz" "DESTINATION" "share/amr_navigation")
 ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" DIRECTORY "config" "launch" "maps" "rviz" "DESTINATION" "share/amr_navigation")
 
-# install(PROGRAMS "scripts/auto_map_saver.py" "scripts/init_move.py" "DESTINATION" "lib/amr_navigation")
-ament_cmake_symlink_install_programs("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" PROGRAMS "scripts/auto_map_saver.py" "scripts/init_move.py" "DESTINATION" "lib/amr_navigation")
+# install(PROGRAMS "scripts/auto_map_saver.py" "scripts/init_move.py" "scripts/esp32_waypoint_server.py" "DESTINATION" "lib/amr_navigation")
+ament_cmake_symlink_install_programs("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" PROGRAMS "scripts/auto_map_saver.py" "scripts/init_move.py" "scripts/esp32_waypoint_server.py" "DESTINATION" "lib/amr_navigation")
 
 # install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_navigation" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_navigation" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")

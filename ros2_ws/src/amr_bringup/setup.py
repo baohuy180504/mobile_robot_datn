@@ -27,6 +27,11 @@ setup(
             'pytest',
         ],
     },
+
+    scripts=[
+        'scripts/cloud_qos_relay.py',
+    ],
+
     entry_points={
         'console_scripts': [
         ],

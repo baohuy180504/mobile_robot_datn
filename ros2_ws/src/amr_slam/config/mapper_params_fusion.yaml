@@ -1,0 +1,32 @@
+slam_toolbox:
+  ros__parameters:
+    use_sim_time: false
+
+    # TF chuẩn cho robot thật
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_footprint
+
+    # Launch file sẽ override thành /scan_filtered hoặc /scan_merged
+    scan_topic: /scan_filtered
+    mode: mapping
+
+    # Ổn định TF khi chạy đồng thời camera + LiDAR
+    transform_timeout: 0.5
+    tf_buffer_duration: 30.0
+    message_queue_size: 100
+
+    # Tạo map 2D
+    resolution: 0.05
+    map_update_interval: 1.0
+    minimum_time_interval: 0.10
+    minimum_travel_distance: 0.08
+    minimum_travel_heading: 0.08
+    max_laser_range: 10.0
+
+    # Xe dùng LiDAR 180 độ nên cho phép odom nhiễu hơn một chút
+    sigma_noise_xy: 0.08
+    sigma_noise_theta: 0.18
+
+    # Scan matching
+    minimumScore: 50.0

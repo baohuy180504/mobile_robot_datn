@@ -134,8 +134,8 @@
   <link name="camera_link" />
 
   <joint name="camera_joint" type="fixed">
-    <origin xyz="0.219919 0.038124 0.79" rpy="0 0.15 0" /> 
-    <!-- <origin xyz="0.219919 0.038124 0.75" rpy="0 0 0" /> -->
+    <!-- <origin xyz="0.219919 0.038124 0.79" rpy="0 0.15 0" />  -->
+    <origin xyz="0.219919 0.038124 0.79" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="camera_link" /> 
   </joint>

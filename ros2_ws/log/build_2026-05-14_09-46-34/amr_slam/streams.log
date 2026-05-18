@@ -1,0 +1,27 @@
+[0.785s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_slam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam -- -j6 -l6
+[0.971s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_slam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam -- -j6 -l6
+[1.001s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_slam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam
+[1.025s] -- Install configuration: ""
+[1.026s] -- Execute custom install script
+[1.027s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/config/mapper_params_online_async.yaml
+[1.029s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/fusion_slam.launch.py
+[1.030s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/slam.launch.py
+[1.031s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/rviz/view_vslam_teleop.rviz
+[1.031s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map1.pgm
+[1.032s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map1.yaml
+[1.034s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/ament_index/resource_index/package_run_dependencies/amr_slam
+[1.035s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/ament_index/resource_index/parent_prefix_path/amr_slam
+[1.036s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/environment/ament_prefix_path.sh
+[1.037s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/environment/ament_prefix_path.dsv
+[1.039s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/environment/path.sh
+[1.040s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/environment/path.dsv
+[1.041s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/local_setup.bash
+[1.041s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/local_setup.sh
+[1.043s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/local_setup.zsh
+[1.044s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/local_setup.dsv
+[1.044s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/package.dsv
+[1.058s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/ament_index/resource_index/packages/amr_slam
+[1.058s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/cmake/amr_slamConfig.cmake
+[1.059s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/cmake/amr_slamConfig-version.cmake
+[1.060s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/package.xml
+[1.065s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_slam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_slam

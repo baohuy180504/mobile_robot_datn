@@ -1,0 +1,52 @@
+[0.019s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/huyjetson/mobile_robot/ros2_ws/src/amr_slam -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam
+[0.983s] -- The C compiler identification is GNU 11.4.0
+[1.459s] -- The CXX compiler identification is GNU 11.4.0
+[1.500s] -- Detecting C compiler ABI info
+[1.686s] -- Detecting C compiler ABI info - done
+[1.710s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.714s] -- Detecting C compile features
+[1.717s] -- Detecting C compile features - done
+[1.733s] -- Detecting CXX compiler ABI info
+[1.935s] -- Detecting CXX compiler ABI info - done
+[1.963s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.964s] -- Detecting CXX compile features
+[1.966s] -- Detecting CXX compile features - done
+[1.983s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[2.381s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[2.571s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.716s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.971s] -- Added test 'flake8' to check Python code syntax and style conventions
+[2.973s] -- Added test 'lint_cmake' to check CMake code style
+[2.976s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[2.982s] -- Added test 'xmllint' to check XML markup files
+[2.991s] -- Configuring done
+[3.007s] -- Generating done
+[3.014s] -- Build files have been written to: /home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam
+[3.040s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/huyjetson/mobile_robot/ros2_ws/src/amr_slam -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam
+[3.045s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam -- -j6 -l6
+[3.142s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam -- -j6 -l6
+[3.176s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam
+[3.202s] -- Install configuration: ""
+[3.203s] -- Execute custom install script
+[3.204s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/config/mapper_params_online_async.yaml
+[3.226s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/launch/fusion_slam.launch.py
+[3.247s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/launch/slam.launch.py
+[3.272s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/rviz/view_vslam_teleop.rviz
+[3.294s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/maps/map1.pgm
+[3.319s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/maps/map1.yaml
+[3.341s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/ament_index/resource_index/package_run_dependencies/amr_slam
+[3.362s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/ament_index/resource_index/parent_prefix_path/amr_slam
+[3.384s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/environment/ament_prefix_path.sh
+[3.405s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/environment/ament_prefix_path.dsv
+[3.427s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/environment/path.sh
+[3.449s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/environment/path.dsv
+[3.517s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/local_setup.bash
+[3.539s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/local_setup.sh
+[3.560s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/local_setup.zsh
+[3.588s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/local_setup.dsv
+[3.609s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/package.dsv
+[3.632s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/ament_index/resource_index/packages/amr_slam
+[3.654s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/cmake/amr_slamConfig.cmake
+[3.677s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/cmake/amr_slamConfig-version.cmake
+[3.705s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/src/install/amr_slam/share/amr_slam/package.xml
+[3.739s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam

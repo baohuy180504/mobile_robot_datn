@@ -1,0 +1,45 @@
+running egg_info
+creating build/amr_bringup/amr_bringup.egg-info
+writing build/amr_bringup/amr_bringup.egg-info/PKG-INFO
+writing dependency_links to build/amr_bringup/amr_bringup.egg-info/dependency_links.txt
+writing entry points to build/amr_bringup/amr_bringup.egg-info/entry_points.txt
+writing requirements to build/amr_bringup/amr_bringup.egg-info/requires.txt
+writing top-level names to build/amr_bringup/amr_bringup.egg-info/top_level.txt
+writing manifest file 'build/amr_bringup/amr_bringup.egg-info/SOURCES.txt'
+reading manifest file 'build/amr_bringup/amr_bringup.egg-info/SOURCES.txt'
+writing manifest file 'build/amr_bringup/amr_bringup.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/lib
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/lib/amr_bringup
+copying amr_bringup/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/lib/amr_bringup
+running build_scripts
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/scripts-3.10
+copying and adjusting scripts/cloud_qos_relay.py -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/scripts-3.10
+changing mode of /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/scripts-3.10/cloud_qos_relay.py from 664 to 775
+running install
+running install_lib
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/lib/python3.10/site-packages/amr_bringup
+copying /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/lib/amr_bringup/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/lib/python3.10/site-packages/amr_bringup
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/lib/python3.10/site-packages/amr_bringup/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/ament_index
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/ament_index/resource_index
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/ament_index/resource_index/packages
+copying resource/amr_bringup -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/ament_index/resource_index/packages
+copying package.xml -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup/launch
+copying launch/bringup_vslam.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup/launch
+copying launch/bringup_lidar.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup/launch
+copying launch/bringup_fusion.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup/launch
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup/config
+copying config/box_filter.yaml -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup/config
+copying config/ukf_params.yaml -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/share/amr_bringup/config
+running install_egg_info
+Copying build/amr_bringup/amr_bringup.egg-info to /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/lib/python3.10/site-packages/amr_bringup-0.0.0-py3.10.egg-info
+running install_scripts
+creating /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/lib/amr_bringup
+copying /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/build/scripts-3.10/cloud_qos_relay.py -> /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/lib/amr_bringup
+changing mode of /home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/install/amr_bringup/lib/amr_bringup/cloud_qos_relay.py to 775
+writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/build/amr_bringup/install.log'

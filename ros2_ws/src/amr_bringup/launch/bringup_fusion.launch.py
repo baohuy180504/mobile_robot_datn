@@ -1,94 +1,154 @@
+"""
+bringup_fusion.launch.py — package: amr_bringup
+
+Mục tiêu:
+  - Khởi động phần cứng robot, KHÔNG dùng UKF.
+  - Arduino bridge là nguồn duy nhất publish /odom và TF odom -> base_footprint.
+  - robot_state_publisher publish TF cố định từ URDF.
+  - Astra chỉ chạy depth, driver KHÔNG publish TF để tránh trùng TF.
+  - TF camera_depth_optical_frame được publish bằng static_transform_publisher.
+
+Chạy:
+  ros2 launch amr_bringup bringup_fusion.launch.py
+"""
+
 import os
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import AnyLaunchDescriptionSource
-from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import LogInfo
 from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
+
 
 def generate_launch_description():
     desc_pkg = get_package_share_directory('amr_description')
-    urdf_file = os.path.join(desc_pkg, 'urdf', 'robot.urdf')
+    bringup_pkg = get_package_share_directory('amr_bringup')
 
-    # Đọc nội dung URDF
+    urdf_file = os.path.join(desc_pkg, 'urdf', 'robot.urdf')
     with open(urdf_file, 'r') as f:
         robot_description = f.read()
 
-    # 1. Phát tán khung xương
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name='robot_state_publisher',
         output='screen',
-        parameters=[{'robot_description': robot_description, 'use_sim_time': False}]
+        parameters=[{
+            'robot_description': robot_description,
+            'use_sim_time': False,
+        }]
     )
 
-    # 2. Lidar 2D
     lidar_node = Node(
         package='sllidar_ros2',
         executable='sllidar_node',
         name='sllidar_node',
+        output='screen',
         parameters=[{
             'channel_type': 'serial',
-            'serial_port': '/dev/rplidar', 
+            'serial_port': '/dev/rplidar',
             'serial_baudrate': 115200,
             'frame_id': 'laser_frame',
             'inverted': False,
             'angle_compensate': True,
             'scan_mode': 'Sensitivity',
-            # GÓC QUÉT: Đơn vị Radian (3.14159 rad = 180 độ)
-            'angle_min': 1.570796, 
-            'angle_max': 4.712389
-        }],
-        output='screen'
+
+            # Giữ đúng cấu hình LiDAR hiện tại của bạn: 180 độ.
+            # Nếu RViz cho thấy hướng quét không đúng phía cần dùng, chỉ chỉnh tại đây.
+            'angle_min': 1.570796,
+            'angle_max': 4.712389,
+        }]
     )
 
-    # 3. Camera 3D
-    astra_pkg = get_package_share_directory('astra_camera')
-    camera_node = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource(os.path.join(astra_pkg, 'launch', 'astra.launch.xml'))
-    )
-
-    # 3. Giao tiếp với não dưới (Arduino)
     arduino_driver = Node(
         package='amr_control',
-        executable='arduino_bridge', 
+        executable='arduino_bridge',
         name='arduino_bridge',
         output='screen'
-        # ĐÃ THÊM: Ép Arduino đổi tên luồng dữ liệu thành /wheel/odom
-        remappings=[
-            ('/odom', '/wheel/odom')
-        ]
     )
 
-    filter_node = Node(
+    scan_filter_node = Node(
         package='laser_filters',
         executable='scan_to_scan_filter_chain',
-        parameters=[os.path.join(
-            get_package_share_directory('amr_bringup'),
-            'config', 'box_filter.yaml'
-        )],
+        name='scan_to_scan_filter_chain',
+        output='screen',
+        parameters=[
+            os.path.join(bringup_pkg, 'config', 'box_filter.yaml')
+        ],
         remappings=[
             ('scan', '/scan'),
-            ('scan_filtered', '/scan_filtered')
+            ('scan_filtered', '/scan_filtered'),
         ]
     )
-    # 6. Khởi động bộ lọc UKF 3 Lớp
-    ukf_node = Node(
-        package='robot_localization',
-        executable='ukf_node',
-        name='ukf_filter_node',
+
+    astra_camera_node = Node(
+        package='astra_camera',
+        executable='astra_camera_node',
+        name='astra_camera',
         output='screen',
-        parameters=[os.path.join(get_package_share_directory('amr_bringup'), 'config', 'ukf_params.yaml')],
-        remappings=[('/odometry/filtered', '/odom')] # Đẩy kết quả đã lọc trở lại topic /odom chuẩn
+        parameters=[{
+            # Depth-only để giảm tải USB/CPU.
+            'enable_depth': True,
+            'enable_color': False,
+            'enable_ir': False,
+            'depth_width': 640,
+            'depth_height': 480,
+            'depth_fps': 15,
+            # 'depth_width': 320,
+            # 'depth_height': 240,
+            # 'depth_fps': 10,
+
+            # Frame ID thống nhất với URDF + static TF bên dưới.
+            'camera_link_frame_id': 'camera_link',
+            'depth_frame_id': 'camera_depth_frame',
+            'depth_optical_frame_id': 'camera_depth_optical_frame',
+
+            # Rất quan trọng: tắt TF từ driver để chỉ còn 1 nguồn TF camera optical.
+            'publish_tf': False,
+
+            'depth_align': False,
+            'use_uvc_camera': False,
+            'use_sim_time': False,
+        }],
+        remappings=[
+            ('depth/points', '/camera/depth/points'),
+            ('depth/image_raw', '/camera/depth/image_raw'),
+        ]
     )
 
+    # Quaternion của RPY = roll -pi/2, pitch 0, yaw -pi/2.
+    # camera_link: X forward, Y left, Z up
+    # optical:     X right,   Y down, Z forward
+    static_tf_camera_optical = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='camera_depth_optical_tf',
+        output='screen',
+        arguments=[
+            '0', '0', '0',
+            '-0.5', '0.5', '-0.5', '0.5',
+            'camera_link',
+            'camera_depth_optical_frame',
+        ]
+    )
+
+    log_start = LogInfo(msg=[
+        '\n',
+        '╔════════════════════════════════════════════════════════════╗\n',
+        '║ BRINGUP FUSION - NO UKF                                   ║\n',
+        '╠════════════════════════════════════════════════════════════╣\n',
+        '║ TF dynamic : arduino_bridge  odom -> base_footprint       ║\n',
+        '║ TF fixed   : robot_state_publisher + camera optical TF    ║\n',
+        '║ LiDAR      : /scan -> /scan_filtered                      ║\n',
+        '║ Camera     : /camera/depth/points, depth-only 15 fps      ║\n',
+        '╚════════════════════════════════════════════════════════════╝\n'
+    ])
+
     return LaunchDescription([
+        log_start,
         robot_state_publisher,
         lidar_node,
-        camera_node,
-        filter_node,
-        ukf_node,
-        arduino_driver
-
+        arduino_driver,
+        scan_filter_node,
+        astra_camera_node,
+        static_tf_camera_optical,
     ])

@@ -30,6 +30,7 @@ install(
 install(PROGRAMS
   scripts/auto_map_saver.py
   scripts/init_move.py
+  scripts/esp32_waypoint_server.py
   DESTINATION lib/${PROJECT_NAME}
 )
 ament_package()

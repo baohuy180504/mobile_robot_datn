@@ -1,1 +1,1 @@
-ament_lint_auto;ament_lint_common
+rclpy;nav2_msgs;geometry_msgs;action_msgs;launch;launch_ros;ament_index_python;nav2_bringup;amr_slam;ament_lint_auto;ament_lint_common

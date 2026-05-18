@@ -318,6 +318,9 @@ message(STATUS "Execute custom install script")
 # install(DIRECTORY "config" "launch" "rviz" "maps" "DESTINATION" "share/amr_slam")
 ament_cmake_symlink_install_directory("/home/huyjetson/mobile_robot/ros2_ws/src/amr_slam" DIRECTORY "config" "launch" "rviz" "maps" "DESTINATION" "share/amr_slam")
 
+# install(PROGRAMS "scripts/scan_merger.py" "DESTINATION" "lib/amr_slam")
+ament_cmake_symlink_install_programs("/home/huyjetson/mobile_robot/ros2_ws/src/amr_slam" PROGRAMS "scripts/scan_merger.py" "DESTINATION" "lib/amr_slam")
+
 # install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_slam/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_slam" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/huyjetson/mobile_robot/ros2_ws/src/amr_slam" FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_slam/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_slam" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 

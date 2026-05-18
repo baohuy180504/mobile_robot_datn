@@ -1,0 +1,1 @@
+/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation/launch/nav_fusion_live_octomap.launch.py

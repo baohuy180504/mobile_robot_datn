@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/build/amr_pointcloud_filter/depth_cloud_filter" "TARGETS" "depth_cloud_filter" "DESTINATION" "lib/amr_pointcloud_filter")

@@ -3,11 +3,26 @@
 <package format="3">
   <name>amr_navigation</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>AMR navigation package with Nav2 and ESP32 waypoint command interface</description>
   <maintainer email="huy_ubuntu@todo.todo">huy_ubuntu</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Runtime dependencies for Python waypoint node -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>nav2_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>action_msgs</exec_depend>
+
+  <!-- Runtime dependencies for launch files -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+
+  <!-- Packages used by navigation.launch.py -->
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>amr_slam</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

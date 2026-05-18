@@ -34,6 +34,6 @@ echo -e "[INFO] Đang tải bản đồ 3D: \e[1;33m$ABS_MAP_3D\e[0m"
 
 # 6. Chạy launch file và truyền cả 2 tham số bản đồ
 # Lưu ý: Bạn cần cấu hình file navigation.launch.py để nhận thêm tham số 'map_3d'
-ros2 launch amr_navigation navigation.launch.py \
+ros2 launch amr_navigation nav_fusion.launch.py \
     map:="$ABS_MAP_2D" \
-    map_3d:="$ABS_MAP_3D"
+    octomap:="$ABS_MAP_3D"

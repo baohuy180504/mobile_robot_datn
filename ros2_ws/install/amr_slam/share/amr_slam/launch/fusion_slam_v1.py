@@ -1,1 +1,0 @@
-/home/huyjetson/mobile_robot/ros2_ws/src/amr_slam/launch/fusion_slam_v1.py
