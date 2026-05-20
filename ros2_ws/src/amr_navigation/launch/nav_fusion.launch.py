@@ -47,18 +47,96 @@ def generate_launch_description():
         description='Autostart Nav2 lifecycle nodes'
     )
 
-    # 3D OctoMap realtime giống logic mô phỏng:
+    depth_cloud_filter = Node(
+        package='amr_pointcloud_filter',
+        executable='depth_cloud_filter',
+        name='depth_cloud_filter',
+        output='screen',
+        parameters=[{
+            'input_topic': '/camera/depth/points',
+
+            'nav_output_topic': '/camera/depth/points_filtered',
+            'nav_publish_hz': 5.0,
+            'nav_leaf_size': 0.06,
+            'nav_pixel_step': 3,
+
+            'octomap_output_topic': '/octomap_cloud',
+            'octomap_publish_hz': 2.0,
+            'octomap_leaf_size': 0.08,
+            'octomap_pixel_step': 3,
+
+            # Dùng crop rộng trước để đảm bảo có dữ liệu 3D
+            'min_depth': 0.25,
+            'max_depth': 3.20,
+
+            'min_x': -2.00,
+            'max_x': 2.00,
+
+            'min_y': -1.50,
+            'max_y': 1.50,
+
+            'restamp': True,
+            'output_frame_id': '',
+            'log_debug': False,
+            'use_sim_time': False,
+        }]
+    )
+
+    # 3D OctoMap realtime:
     # - load bản đồ .bt đã lưu
-    # - tiếp tục nhận cloud live từ Astra depth camera
+    # - nhận cloud live qua /octomap_cloud
     # - publish /octomap_binary, /octomap_full, /occupied_cells_vis_array, /map3d
-    octomap_server = Node(
+    # octomap_server = Node(
+    #     package='octomap_server',
+    #     executable='octomap_server_node',
+    #     name='octomap_server',
+    #     output='screen',
+    #     remappings=[
+    #         ('cloud_in', '/octomap_cloud'),
+    #         ('projected_map', '/map3d'),
+    #     ],
+    #     parameters=[{
+    #         'use_sim_time': False,
+    #         'frame_id': 'map',
+    #         'base_frame_id': 'base_footprint',
+    #         'resolution': 0.05,
+    #         'octomap_path': LaunchConfiguration('octomap'),
+
+    #         'pointcloud_min_z': 0.05,
+    #         'pointcloud_max_z': 2.00,
+    #         'occupancy_min_z': 0.05,
+    #         'occupancy_max_z': 2.00,
+
+    #         'sensor_model.max_range': 3.2,
+    #         'sensor_model.hit': 0.7,
+    #         'sensor_model.miss': 0.4,
+    #         'sensor_model.min': 0.12,
+    #         'sensor_model.max': 0.97,
+
+    #         # Giữ thêm dạng slash để tương thích một số build ROS2 Humble.
+    #         'sensor_model/max_range': 3.2,
+    #         'sensor_model/hit': 0.7,
+    #         'sensor_model/miss': 0.4,
+    #         'sensor_model/min': 0.12,
+    #         'sensor_model/max': 0.97,
+
+    #         'occupancy_threshold': 0.5,
+    #         'compress_map': True,
+    #         'filter_ground': False,
+    #     }]
+    # )
+
+    static_octomap_server = Node(
         package='octomap_server',
         executable='octomap_server_node',
-        name='octomap_server',
+        name='static_octomap_server',
+        namespace='static_octomap',
         output='screen',
         remappings=[
-            ('cloud_in', '/camera/depth/points'),
-            ('projected_map', '/map3d'),
+            ('projected_map', '/static_map3d'),
+            ('octomap_binary', '/static_octomap_binary'),
+            ('octomap_full', '/static_octomap_full'),
+            ('occupied_cells_vis_array', '/static_occupied_cells_vis_array'),
         ],
         parameters=[{
             'use_sim_time': False,
@@ -67,32 +145,14 @@ def generate_launch_description():
             'resolution': 0.05,
             'octomap_path': LaunchConfiguration('octomap'),
 
-            # Giới hạn chiều cao giống lúc SLAM 3D.
             'pointcloud_min_z': 0.05,
             'pointcloud_max_z': 2.00,
             'occupancy_min_z': 0.05,
             'occupancy_max_z': 2.00,
 
-            # Sensor model giống fusion_slam/mô phỏng.
-            'sensor_model.max_range': 4.5,
-            'sensor_model.hit': 0.7,
-            'sensor_model.miss': 0.4,
-            'sensor_model.min': 0.12,
-            'sensor_model.max': 0.97,
-
-            # Một số bản octomap_server ROS2 Humble dùng key dạng slash.
-            'sensor_model/max_range': 4.5,
-            'sensor_model/hit': 0.7,
-            'sensor_model/miss': 0.4,
-            'sensor_model/min': 0.12,
-            'sensor_model/max': 0.97,
-
-            'occupancy_threshold': 0.5,
-            'compress_map': True,
-
-            # Nếu vật cao bị loại nhầm, đổi filter_ground:=false khi launch để test riêng.
-            # Ở bản mặc định để False để tránh lọc nhầm tấm bìa/người/vật mỏng.
+            # Không cần cloud live cho static map.
             'filter_ground': False,
+            'compress_map': True,
         }]
     )
 
@@ -111,12 +171,12 @@ def generate_launch_description():
     log_info = LogInfo(msg=[
         '\n',
         '╔════════════════════════════════════════════════════════════╗\n',
-        '║ AMR NAV FUSION v15 - LIKE VIDEO                           ║\n',
+        '║ AMR NAV FUSION - LIVE OCTOMAP                             ║\n',
         '╠════════════════════════════════════════════════════════════╣\n',
-        '║ Nav2       : giữ thông số MPPI 2D gốc                     ║\n',
-        '║ Costmap    : LiDAR + Astra VoxelLayer                     ║\n',
-        '║ OctoMap    : load .bt + update live /camera/depth/points  ║\n',
-        '║ 3D topics  : /octomap_binary /occupied_cells_vis_array    ║\n',
+        '║ Nav2       : giữ thông số MPPI + VoxelLayer hiện tại      ║\n',
+        '║ Cloud relay: /camera/depth/points -> /octomap_cloud       ║\n',
+        '║ OctoMap    : load .bt + update live từ /octomap_cloud     ║\n',
+        '║ RViz       : ưu tiên xem /occupied_cells_vis_array        ║\n',
         '╚════════════════════════════════════════════════════════════╝\n',
     ])
 
@@ -127,6 +187,8 @@ def generate_launch_description():
         use_sim_time_arg,
         autostart_arg,
         log_info,
-        octomap_server,
+        depth_cloud_filter,
+        #octomap_server,
+        static_octomap_server,
         nav2_launch,
     ])

@@ -1,0 +1,5 @@
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_adapter/amr_interfaces:msg/AiAlert.idl
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_adapter/amr_interfaces:msg/AiMode.idl
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_adapter/amr_interfaces:msg/PersonTarget.idl
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_adapter/amr_interfaces:srv/SetAiMode.idl
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_adapter/amr_interfaces:srv/SelectZone.idl

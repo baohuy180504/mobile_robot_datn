@@ -1,0 +1,20 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from amr_interfaces/srv/SelectZone.srv
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/PoseStamped.idl"
+
+module amr_interfaces {
+  module srv {
+    struct SelectZone_Request {
+      string zone_name;
+    };
+    struct SelectZone_Response {
+      boolean accepted;
+
+      string message;
+
+      geometry_msgs::msg::PoseStamped goal;
+    };
+  };
+};

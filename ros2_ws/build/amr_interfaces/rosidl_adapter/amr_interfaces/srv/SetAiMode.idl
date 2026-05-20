@@ -1,0 +1,21 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from amr_interfaces/srv/SetAiMode.srv
+// generated code does not contain a copyright notice
+
+
+module amr_interfaces {
+  module srv {
+    struct SetAiMode_Request {
+      uint8 mode;
+
+      string command;
+    };
+    struct SetAiMode_Response {
+      boolean success;
+
+      string message;
+
+      uint8 current_mode;
+    };
+  };
+};

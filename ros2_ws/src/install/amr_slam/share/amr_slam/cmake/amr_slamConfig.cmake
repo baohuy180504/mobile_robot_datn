@@ -1,1 +1,0 @@
-/home/huyjetson/mobile_robot/ros2_ws/src/build/amr_slam/ament_cmake_core/amr_slamConfig.cmake

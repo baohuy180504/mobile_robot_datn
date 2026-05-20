@@ -1,0 +1,138 @@
+ai_mode_manager:
+  ros__parameters:
+    use_sim_time: false
+
+    frame_id: "map"
+
+    A.x: 1.5
+    A.y: 0.0
+    A.yaw: 0.0
+
+    B.x: 1.5
+    B.y: 1.0
+    B.yaw: 3.14
+
+    H.x: 0.0
+    H.y: 0.0
+    H.yaw: 0.0
+
+
+amr_ai:
+  ros__parameters:
+    use_sim_time: false
+
+    # Camera topics
+    color_topic: "/camera/color/image_raw"
+    depth_topic: "/camera/depth/image_raw"
+    camera_info_topic: "/camera/color/camera_info"
+    depth_camera_info_topic: "/camera/depth/camera_info"
+
+    # TF frames
+    camera_frame: "camera_color_optical_frame"
+    depth_frame: "camera_depth_optical_frame"
+    base_frame: "base_footprint"
+    odom_frame: "odom"
+    map_frame: "map"
+
+    # Model paths
+    person_model_path: "models/yolo26n.engine"
+    pose_model_path: "models/yolo26n-pose.engine"
+    fire_smoke_model_path: "models/fire_smoke_s.engine"
+
+    # Person following
+    follow_distance_m: 2.0
+    follow_distance_tolerance_m: 0.3
+    detect_lock_time_s: 4.0
+    target_lost_timeout_s: 3.0
+    goal_update_period_s: 0.5
+    min_goal_update_distance_m: 0.3
+
+    # Safety
+    enable_fall_alert: true
+    enable_fire_smoke_alert: true
+    alert_confidence_threshold: 0.5
+
+    # Zone names
+    home_zone_name: "HOME"
+    zone_a_name: "A"
+    zone_b_name: "B"
+
+ai_image_probe:
+  ros__parameters:
+    color_topic: "/camera/color/image_raw"
+    depth_topic: "/camera/depth/image_raw"
+    camera_info_topic: "/camera/color/camera_info"
+    print_period_sec: 1.0
+
+person_tracker_node:
+  ros__parameters:
+    color_topic: "/camera/color/image_raw"
+    depth_topic: "/camera/depth/image_raw"
+    camera_info_topic: "/camera/color/camera_info"
+    
+    person_model_path: "models/yolo26n.engine"
+    camera_frame: "camera_color_optical_frame"
+
+    detect_conf: 0.4
+    detect_lock_time_s: 4.0
+    enroll_frames: 30
+    target_lost_timeout_s: 3.0
+
+    process_every_n_frames: 1
+
+    enable_debug_image: true
+    debug_image_topic: "/amr_ai/debug/person_tracker/image"
+    debug_image_publish_hz: 3.0
+    debug_image_scale: 0.5
+
+follow_servo_node:
+  ros__parameters:
+    follow_distance_m: 2.0
+    distance_tolerance_m: 0.22
+
+    k_linear: 0.28
+    k_angular: 0.55
+
+    max_linear_x: 0.22
+    min_linear_x: 0.04
+    max_angular_z: 0.35
+
+    angle_deadband_rad: 0.08
+
+    slow_angle_rad: 0.70
+    min_angle_speed_scale: 0.25
+    hard_rotate_angle_rad: 0.85
+
+    angular_sign: -1.0
+
+    target_timeout_s: 0.7
+    command_rate_hz: 15.0
+    cmd_vel_follow_topic: "/cmd_vel_follow"
+
+    enable_smoothing: true
+    smoothing_alpha: 0.30
+
+
+cmd_vel_safety_mux_node:
+  ros__parameters:
+    nav_cmd_topic: "/cmd_vel"
+    follow_cmd_topic: "/cmd_vel_follow"
+    output_cmd_topic: "/cmd_vel_safe"
+
+    mode_topic: "/amr_ai/mode"
+    target_topic: "/amr_ai/person_target"
+    scan_topic: "/scan_filtered"
+
+    mux_rate_hz: 20.0
+
+    target_timeout_s: 0.7
+    command_timeout_s: 0.5
+    scan_timeout_s: 0.5
+    require_scan_for_motion: true
+
+    # Nếu LiDAR front sector không đúng, sẽ chỉnh thông số này sau khi test.
+    front_center_angle_rad: 0.0
+    front_angle_deg: 35.0
+
+    emergency_stop_distance_m: 0.45
+    slowdown_distance_m: 0.80

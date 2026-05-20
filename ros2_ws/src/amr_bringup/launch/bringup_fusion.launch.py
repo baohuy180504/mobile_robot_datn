@@ -63,7 +63,10 @@ def generate_launch_description():
         package='amr_control',
         executable='arduino_bridge',
         name='arduino_bridge',
-        output='screen'
+        output='screen',
+        remappings=[
+            ('cmd_vel', '/cmd_vel_safe'),
+        ]
     )
 
     scan_filter_node = Node(
@@ -86,32 +89,48 @@ def generate_launch_description():
         name='astra_camera',
         output='screen',
         parameters=[{
-            # Depth-only để giảm tải USB/CPU.
+            # Bật cả color + depth để amr_ai dùng RGB cho YOLO/ReID,
+            # depth dùng để tính khoảng cách người và phục vụ pointcloud/octomap.
             'enable_depth': True,
-            'enable_color': False,
+            'enable_color': True,
             'enable_ir': False,
+
+            # Giữ 640x480 để đồng bộ với code AI cũ và model test.
+            # Nếu Jetson/USB tải nặng, giảm fps xuống 10.
             'depth_width': 640,
             'depth_height': 480,
             'depth_fps': 15,
-            # 'depth_width': 320,
-            # 'depth_height': 240,
-            # 'depth_fps': 10,
 
-            # Frame ID thống nhất với URDF + static TF bên dưới.
+            'color_width': 640,
+            'color_height': 480,
+            'color_fps': 15,
+
+            # Frame ID thống nhất với URDF + static TF.
             'camera_link_frame_id': 'camera_link',
             'depth_frame_id': 'camera_depth_frame',
             'depth_optical_frame_id': 'camera_depth_optical_frame',
+            'color_frame_id': 'camera_color_frame',
+            'color_optical_frame_id': 'camera_color_optical_frame',
 
-            # Rất quan trọng: tắt TF từ driver để chỉ còn 1 nguồn TF camera optical.
+            # Rất quan trọng: tắt TF từ driver để tránh trùng TF.
+            # TF chính vẫn do robot_state_publisher + static_transform_publisher quản lý.
             'publish_tf': False,
 
-            'depth_align': False,
+            # Nếu driver hỗ trợ depth_align:
+            # True giúp depth cùng hệ tọa độ ảnh màu, thuận lợi lấy depth theo bbox YOLO.
+            # Nếu chạy bị lỗi hoặc pointcloud bất thường, đổi lại False.
+            'depth_align': True,
+
             'use_uvc_camera': False,
             'use_sim_time': False,
         }],
         remappings=[
             ('depth/points', '/camera/depth/points'),
             ('depth/image_raw', '/camera/depth/image_raw'),
+            ('depth/camera_info', '/camera/depth/camera_info'),
+
+            ('color/image_raw', '/camera/color/image_raw'),
+            ('color/camera_info', '/camera/color/camera_info'),
         ]
     )
 
@@ -131,16 +150,29 @@ def generate_launch_description():
         ]
     )
 
+    static_tf_camera_color_optical = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='camera_color_optical_tf',
+        output='screen',
+        arguments=[
+            '0', '0', '0',
+            '-0.5', '0.5', '-0.5', '0.5',
+            'camera_link',
+            'camera_color_optical_frame',
+        ]
+    )
+
     log_start = LogInfo(msg=[
         '\n',
-        '╔════════════════════════════════════════════════════════════╗\n',
+        '╔═══════════════════════════════════════════════════════════╗\n',
         '║ BRINGUP FUSION - NO UKF                                   ║\n',
-        '╠════════════════════════════════════════════════════════════╣\n',
+        '╠═══════════════════════════════════════════════════════════╣\n',
         '║ TF dynamic : arduino_bridge  odom -> base_footprint       ║\n',
         '║ TF fixed   : robot_state_publisher + camera optical TF    ║\n',
         '║ LiDAR      : /scan -> /scan_filtered                      ║\n',
-        '║ Camera     : /camera/depth/points, depth-only 15 fps      ║\n',
-        '╚════════════════════════════════════════════════════════════╝\n'
+        '║ Camera     : color + depth + pointcloud, 640x480 @15fps   ║\n',
+        '╚═══════════════════════════════════════════════════════════╝\n'
     ])
 
     return LaunchDescription([
@@ -151,4 +183,5 @@ def generate_launch_description():
         scan_filter_node,
         astra_camera_node,
         static_tf_camera_optical,
+        static_tf_camera_color_optical,
     ])

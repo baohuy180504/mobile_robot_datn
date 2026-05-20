@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "amr_interfaces__rs",
+		"source" : "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/amr_interfaces__rs"
+	}
+}

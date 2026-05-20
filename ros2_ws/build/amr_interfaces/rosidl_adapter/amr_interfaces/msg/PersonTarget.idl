@@ -1,0 +1,46 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from amr_interfaces/msg/PersonTarget.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/PointStamped.idl"
+#include "std_msgs/msg/Header.idl"
+
+module amr_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "Locked person target for following behavior")
+    struct PersonTarget {
+      std_msgs::msg::Header header;
+
+      int32 target_id;
+
+      boolean locked;
+
+      boolean lost;
+
+      float confidence;
+
+      @verbatim (language="comment", text=
+        "Bounding box on RGB image")
+      int32 bbox_x;
+
+      int32 bbox_y;
+
+      int32 bbox_w;
+
+      int32 bbox_h;
+
+      @verbatim (language="comment", text=
+        "Estimated target position")
+      geometry_msgs::msg::PointStamped position_camera;
+
+      geometry_msgs::msg::PointStamped position_base;
+
+      geometry_msgs::msg::PointStamped position_map;
+
+      float distance_m;
+
+      float angle_rad;
+    };
+  };
+};

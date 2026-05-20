@@ -16,7 +16,7 @@ set(_amr_interfaces_CONFIG_INCLUDED TRUE)
 
 # output package information
 if(NOT amr_interfaces_FIND_QUIETLY)
-  message(STATUS "Found amr_interfaces: 0.0.0 (${amr_interfaces_DIR})")
+  message(STATUS "Found amr_interfaces: 0.0.1 (${amr_interfaces_DIR})")
 endif()
 
 # warn when using a deprecated package
@@ -36,7 +36,7 @@ endif()
 set(amr_interfaces_FOUND_AMENT_PACKAGE TRUE)
 
 # include all config extra files
-set(_extras "")
+set(_extras "rosidl_cmake-extras.cmake;ament_cmake_export_dependencies-extras.cmake;ament_cmake_export_include_directories-extras.cmake;ament_cmake_export_libraries-extras.cmake;ament_cmake_export_targets-extras.cmake;rosidl_cmake_export_typesupport_targets-extras.cmake;rosidl_cmake_export_typesupport_libraries-extras.cmake")
 foreach(_extra ${_extras})
   include("${amr_interfaces_DIR}/${_extra}")
 endforeach()

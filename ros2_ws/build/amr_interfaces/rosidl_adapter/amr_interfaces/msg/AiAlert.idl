@@ -1,0 +1,30 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from amr_interfaces/msg/AiAlert.msg
+// generated code does not contain a copyright notice
+
+#include "builtin_interfaces/msg/Time.idl"
+#include "geometry_msgs/msg/PoseStamped.idl"
+
+module amr_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "AI alert message: fall, fire, smoke")
+    struct AiAlert {
+      builtin_interfaces::msg::Time stamp;
+
+      @verbatim (language="comment", text=
+        "FALL / FIRE / SMOKE / PERSON / UNKNOWN")
+      string alert_type;
+
+      float confidence;
+
+      string message;
+
+      boolean active;
+
+      geometry_msgs::msg::PoseStamped robot_pose;
+
+      string image_path;
+    };
+  };
+};

@@ -1,0 +1,23 @@
+[1.653s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai': AMENT_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces CMAKE_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces LD_LIBRARY_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_ai build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log --single-version-externally-managed install_data
+[2.274s] running egg_info
+[2.275s] writing ../../build/amr_ai/amr_ai.egg-info/PKG-INFO
+[2.276s] writing dependency_links to ../../build/amr_ai/amr_ai.egg-info/dependency_links.txt
+[2.276s] writing entry points to ../../build/amr_ai/amr_ai.egg-info/entry_points.txt
+[2.277s] writing requirements to ../../build/amr_ai/amr_ai.egg-info/requires.txt
+[2.277s] writing top-level names to ../../build/amr_ai/amr_ai.egg-info/top_level.txt
+[2.284s] reading manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+[2.286s] writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+[2.287s] running build
+[2.287s] running build_py
+[2.291s] running install
+[2.292s] running install_lib
+[2.298s] running install_data
+[2.298s] running install_egg_info
+[2.303s] removing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info' (and everything under it)
+[2.304s] Copying ../../build/amr_ai/amr_ai.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info
+[2.306s] running install_scripts
+[2.358s] Installing ai_image_probe script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.359s] Installing ai_mode_manager script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.359s] Installing person_tracker script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.362s] writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log'
+[2.475s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai' returned '0': AMENT_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces CMAKE_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces LD_LIBRARY_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_ai build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log --single-version-externally-managed install_data

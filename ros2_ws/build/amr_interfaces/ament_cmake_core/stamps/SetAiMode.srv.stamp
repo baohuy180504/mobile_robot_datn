@@ -1,0 +1,6 @@
+uint8 mode
+string command
+---
+bool success
+string message
+uint8 current_mode

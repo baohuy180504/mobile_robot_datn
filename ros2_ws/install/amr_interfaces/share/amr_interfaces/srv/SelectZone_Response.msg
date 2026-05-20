@@ -1,0 +1,4 @@
+
+bool accepted
+string message
+geometry_msgs/PoseStamped goal

@@ -1,0 +1,30 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from amr_interfaces/msg/AiMode.msg
+// generated code does not contain a copyright notice
+
+#include "builtin_interfaces/msg/Time.idl"
+
+module amr_interfaces {
+  module msg {
+    module AiMode_Constants {
+      const uint8 IDLE = 0;
+      const uint8 NAV_TO_ZONE = 1;
+      const uint8 FOLLOW_DETECTING = 2;
+      const uint8 FOLLOW_ACTIVE = 3;
+      const uint8 FOLLOW_STOPPED = 4;
+      const uint8 RETURN_TO_ZONE = 5;
+      const uint8 EMERGENCY_STOP = 6;
+    };
+    @verbatim (language="comment", text=
+      "AMR operation mode")
+    struct AiMode {
+      builtin_interfaces::msg::Time stamp;
+
+      uint8 mode;
+
+      string mode_name;
+
+      string detail;
+    };
+  };
+};

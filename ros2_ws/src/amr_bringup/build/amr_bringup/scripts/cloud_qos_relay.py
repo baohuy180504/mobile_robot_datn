@@ -1,1 +1,0 @@
-/home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/scripts/cloud_qos_relay.py

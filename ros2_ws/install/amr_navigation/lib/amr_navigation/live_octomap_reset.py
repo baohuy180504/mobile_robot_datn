@@ -1,0 +1,1 @@
+/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation/scripts/live_octomap_reset.py
