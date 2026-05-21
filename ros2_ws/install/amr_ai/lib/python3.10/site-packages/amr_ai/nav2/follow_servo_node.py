@@ -62,6 +62,7 @@ class FollowServoNode(Node):
 
         self.declare_parameter('enable_smoothing', True)
         self.declare_parameter('smoothing_alpha', 0.65)
+        self.declare_parameter('enable_turn_forward_bias', True)
 
         self.follow_distance_m = float(self.get_parameter('follow_distance_m').value)
         self.distance_tolerance_m = float(self.get_parameter('distance_tolerance_m').value)

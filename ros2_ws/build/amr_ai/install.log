@@ -19,6 +19,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__init__.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/config.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/utils.py
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/backup.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/follow_servo_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/follow_goal_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__init__.py
@@ -43,6 +44,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/__init__.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/config.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/utils.cpython-310.pyc
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__pycache__/backup.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__pycache__/follow_servo_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__pycache__/follow_goal_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__pycache__/__init__.cpython-310.pyc

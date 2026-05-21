@@ -1,0 +1,1 @@
+/home/huyjetson/mobile_robot/ros2_ws/src/amr_bringup/launch/bringup_fusion_direct.launch.py
