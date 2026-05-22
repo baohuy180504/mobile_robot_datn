@@ -1,0 +1,137 @@
+[1.651s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai': CMAKE_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control LD_LIBRARY_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_ai build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log --single-version-externally-managed install_data
+[2.281s] running egg_info
+[2.283s] creating ../../build/amr_ai/amr_ai.egg-info
+[2.283s] writing ../../build/amr_ai/amr_ai.egg-info/PKG-INFO
+[2.284s] writing dependency_links to ../../build/amr_ai/amr_ai.egg-info/dependency_links.txt
+[2.284s] writing entry points to ../../build/amr_ai/amr_ai.egg-info/entry_points.txt
+[2.285s] writing requirements to ../../build/amr_ai/amr_ai.egg-info/requires.txt
+[2.285s] writing top-level names to ../../build/amr_ai/amr_ai.egg-info/top_level.txt
+[2.285s] writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+[2.291s] reading manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+[2.294s] writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+[2.294s] running build
+[2.294s] running build_py
+[2.295s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build
+[2.295s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib
+[2.295s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai
+[2.295s] copying amr_ai/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai
+[2.296s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+[2.296s] copying amr_ai/tracking/reid.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+[2.296s] copying amr_ai/tracking/person_tracker_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+[2.297s] copying amr_ai/tracking/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+[2.297s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+[2.297s] copying amr_ai/detectors/fire_smoke_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+[2.298s] copying amr_ai/detectors/fall_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+[2.298s] copying amr_ai/detectors/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+[2.298s] copying amr_ai/detectors/ai_detector_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+[2.299s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+[2.300s] copying amr_ai/safety/ai_alert_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+[2.300s] copying amr_ai/safety/cmd_vel_safety_mux_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+[2.300s] copying amr_ai/safety/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+[2.301s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+[2.301s] copying amr_ai/gui/ai_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+[2.301s] copying amr_ai/gui/gui_astra_jetson.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+[2.302s] copying amr_ai/gui/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+[2.302s] copying amr_ai/gui/operator_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+[2.302s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.303s] copying amr_ai/core/image_probe_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.303s] copying amr_ai/core/ai_mode_manager_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.303s] copying amr_ai/core/original_ai_main_reference.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.304s] copying amr_ai/core/camera_openni.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.304s] copying amr_ai/core/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.304s] copying amr_ai/core/config.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.304s] copying amr_ai/core/utils.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+[2.305s] creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+[2.305s] copying amr_ai/nav2/backup.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+[2.306s] copying amr_ai/nav2/follow_servo_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+[2.306s] copying amr_ai/nav2/follow_goal_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+[2.306s] copying amr_ai/nav2/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+[2.308s] running install
+[2.309s] running install_lib
+[2.311s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai
+[2.311s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+[2.311s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking/reid.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+[2.311s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking/person_tracker_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+[2.312s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+[2.312s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+[2.312s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/fire_smoke_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+[2.313s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/fall_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+[2.313s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+[2.313s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/ai_detector_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+[2.314s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+[2.314s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety/ai_alert_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+[2.314s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety/cmd_vel_safety_mux_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+[2.315s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+[2.315s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+[2.315s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/ai_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+[2.315s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/gui_astra_jetson.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+[2.316s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+[2.316s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/operator_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+[2.316s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.316s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/image_probe_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.317s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/ai_mode_manager_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.317s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/original_ai_main_reference.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.318s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/camera_openni.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.318s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.318s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/config.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.318s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/utils.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+[2.319s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai
+[2.319s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+[2.319s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/backup.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+[2.319s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/follow_servo_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+[2.320s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/follow_goal_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+[2.320s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+[2.322s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/reid.py to reid.cpython-310.pyc
+[2.329s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/person_tracker_node.py to person_tracker_node.cpython-310.pyc
+[2.337s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/__init__.py to __init__.cpython-310.pyc
+[2.338s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/fire_smoke_detector.py to fire_smoke_detector.cpython-310.pyc
+[2.340s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/fall_detector.py to fall_detector.cpython-310.pyc
+[2.347s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/__init__.py to __init__.cpython-310.pyc
+[2.348s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/ai_detector_node.py to ai_detector_node.cpython-310.pyc
+[2.354s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety/ai_alert_node.py to ai_alert_node.cpython-310.pyc
+[2.354s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety/cmd_vel_safety_mux_node.py to cmd_vel_safety_mux_node.cpython-310.pyc
+[2.358s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety/__init__.py to __init__.cpython-310.pyc
+[2.358s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/ai_gui_node.py to ai_gui_node.cpython-310.pyc
+[2.359s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/gui_astra_jetson.py to gui_astra_jetson.cpython-310.pyc
+[2.367s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__init__.py to __init__.cpython-310.pyc
+[2.368s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/operator_gui_node.py to operator_gui_node.cpython-310.pyc
+[2.374s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/image_probe_node.py to image_probe_node.cpython-310.pyc
+[2.376s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/ai_mode_manager_node.py to ai_mode_manager_node.cpython-310.pyc
+[2.380s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/original_ai_main_reference.py to original_ai_main_reference.cpython-310.pyc
+[2.383s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/camera_openni.py to camera_openni.cpython-310.pyc
+[2.384s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__init__.py to __init__.cpython-310.pyc
+[2.385s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/config.py to config.cpython-310.pyc
+[2.386s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/utils.py to utils.cpython-310.pyc
+[2.389s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/__init__.py to __init__.cpython-310.pyc
+[2.390s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/backup.py to backup.cpython-310.pyc
+[2.394s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/follow_servo_node.py to follow_servo_node.cpython-310.pyc
+[2.396s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/follow_goal_node.py to follow_goal_node.cpython-310.pyc
+[2.400s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__init__.py to __init__.cpython-310.pyc
+[2.401s] running install_data
+[2.401s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index
+[2.401s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index
+[2.402s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index/packages
+[2.402s] copying resource/amr_ai -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index/packages
+[2.402s] copying package.xml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai
+[2.402s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/launch
+[2.402s] copying launch/amr_ai.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/launch
+[2.403s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/config
+[2.403s] copying config/ai_params.yaml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/config
+[2.403s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+[2.403s] copying models/fire_smoke_s.engine -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+[2.454s] copying models/yolo26n-pose.engine -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+[2.474s] copying models/yolo26n.engine -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+[2.492s] creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/trackers
+[2.492s] running install_egg_info
+[2.498s] Copying ../../build/amr_ai/amr_ai.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info
+[2.501s] running install_scripts
+[2.553s] Installing ai_detector script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.554s] Installing ai_image_probe script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.554s] Installing ai_mode_manager script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.554s] Installing cmd_vel_safety_mux script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.554s] Installing follow_goal script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.555s] Installing follow_servo script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.555s] Installing operator_gui script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.555s] Installing person_tracker script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.558s] writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log'
+[2.667s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai' returned '0': CMAKE_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control LD_LIBRARY_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_ai build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log --single-version-externally-managed install_data

@@ -50,7 +50,7 @@ class FollowServoNode(Node):
 
         # Chỉ khi lệch quá lớn mới xoay tại chỗ.
         self.declare_parameter('hard_rotate_angle_rad', 0.85)
-
+        
         # Với camera optical frame: angle_rad > 0 thường là target lệch sang phải ảnh.
         # Robot ROS angular.z > 0 là quay trái, nên mặc định angular_sign = -1.0.
         # Nếu test thấy xe quay ngược hướng, đổi thành +1.0 trong yaml.

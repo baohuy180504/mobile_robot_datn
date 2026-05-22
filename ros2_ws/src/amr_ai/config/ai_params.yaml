@@ -149,3 +149,35 @@ cmd_vel_safety_mux_node:
 
     emergency_stop_distance_m: 0.45
     slowdown_distance_m: 0.80
+
+ai_detector_node:
+  ros__parameters:
+    color_topic: "/camera/color/image_raw"
+    depth_topic: "/camera/depth/image_raw"
+
+    person_model_path: "models/yolo26n.engine"
+    pose_model_path: "models/yolo26n-pose.engine"
+    fire_smoke_model_path: "models/fire_smoke_s.engine"
+
+    detect_conf: 0.4
+    process_every_n_frames: 2
+
+    enable_fall_alert: true
+    enable_fire_smoke_alert: true
+
+    fire_smoke_run_interval: 5
+    fire_alert_hold_sec: 2.0
+    smoke_alert_hold_sec: 2.0
+
+    fire_conf: 0.5
+    smoke_conf: 0.8
+    fire_smoke_imgsz: 640
+
+    alert_topic: "/amr_ai/alert"
+    publish_normal_status: true
+    normal_status_period_s: 1.0
+
+    publish_debug_image: true
+    debug_image_topic: "/amr_ai/debug/alert/image"
+    debug_image_publish_hz: 3.0
+    debug_image_scale: 0.5

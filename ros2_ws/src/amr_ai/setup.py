@@ -34,13 +34,12 @@ setup(
             # Sẽ thêm sau khi node đã có main()
             'ai_mode_manager = amr_ai.core.ai_mode_manager_node:main',
             'ai_image_probe = amr_ai.core.image_probe_node:main',
-            #'ai_detector = amr_ai.detectors.ai_detector_node:main',
+            'ai_detector = amr_ai.detectors.ai_detector_node:main',
             'person_tracker = amr_ai.tracking.person_tracker_node:main',
             'follow_goal = amr_ai.nav2.follow_goal_node:main',
             'follow_servo = amr_ai.nav2.follow_servo_node:main',
             'cmd_vel_safety_mux = amr_ai.safety.cmd_vel_safety_mux_node:main',
-            # 'ai_alert = amr_ai.safety.ai_alert_node:main',
-            # 'ai_gui = amr_ai.gui.ai_gui_node:main',
+            'operator_gui = amr_ai.gui.operator_gui_node:main',
 
         ],
     },

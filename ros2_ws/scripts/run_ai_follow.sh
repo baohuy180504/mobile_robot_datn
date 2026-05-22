@@ -12,4 +12,5 @@ ros2 launch amr_ai amr_ai.launch.py \
   start_follow_goal:=false \
   start_follow_servo:=true \
   start_cmd_vel_safety_mux:=true \
+  start_ai_detector:=true\
   start_esp32_gateway:=true

@@ -12,6 +12,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/ai_gui_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/gui_astra_jetson.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__init__.py
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/operator_gui_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/image_probe_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/ai_mode_manager_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/original_ai_main_reference.py
@@ -37,6 +38,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__pycache__/ai_gui_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__pycache__/gui_astra_jetson.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__pycache__/__init__.cpython-310.pyc
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__pycache__/operator_gui_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/image_probe_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/ai_mode_manager_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/original_ai_main_reference.cpython-310.pyc
@@ -63,9 +65,11 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info/PKG-INFO
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info/dependency_links.txt
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info/top_level.txt
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/ai_detector
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/ai_image_probe
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/ai_mode_manager
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/cmd_vel_safety_mux
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/follow_goal
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/follow_servo
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/operator_gui
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/person_tracker

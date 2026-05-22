@@ -23,6 +23,7 @@ amr_ai/detectors/fire_smoke_detector.py
 amr_ai/gui/__init__.py
 amr_ai/gui/ai_gui_node.py
 amr_ai/gui/gui_astra_jetson.py
+amr_ai/gui/operator_gui_node.py
 amr_ai/nav2/__init__.py
 amr_ai/nav2/backup.py
 amr_ai/nav2/follow_goal_node.py

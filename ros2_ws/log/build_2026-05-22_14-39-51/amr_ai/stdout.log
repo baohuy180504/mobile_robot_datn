@@ -1,0 +1,135 @@
+running egg_info
+creating ../../build/amr_ai/amr_ai.egg-info
+writing ../../build/amr_ai/amr_ai.egg-info/PKG-INFO
+writing dependency_links to ../../build/amr_ai/amr_ai.egg-info/dependency_links.txt
+writing entry points to ../../build/amr_ai/amr_ai.egg-info/entry_points.txt
+writing requirements to ../../build/amr_ai/amr_ai.egg-info/requires.txt
+writing top-level names to ../../build/amr_ai/amr_ai.egg-info/top_level.txt
+writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+reading manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai
+copying amr_ai/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+copying amr_ai/tracking/reid.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+copying amr_ai/tracking/person_tracker_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+copying amr_ai/tracking/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+copying amr_ai/detectors/fire_smoke_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+copying amr_ai/detectors/fall_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+copying amr_ai/detectors/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+copying amr_ai/detectors/ai_detector_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+copying amr_ai/safety/ai_alert_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+copying amr_ai/safety/cmd_vel_safety_mux_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+copying amr_ai/safety/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+copying amr_ai/gui/ai_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+copying amr_ai/gui/gui_astra_jetson.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+copying amr_ai/gui/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+copying amr_ai/gui/operator_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+copying amr_ai/core/image_probe_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+copying amr_ai/core/ai_mode_manager_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+copying amr_ai/core/original_ai_main_reference.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+copying amr_ai/core/camera_openni.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+copying amr_ai/core/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+copying amr_ai/core/config.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+copying amr_ai/core/utils.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+creating /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+copying amr_ai/nav2/backup.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+copying amr_ai/nav2/follow_servo_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+copying amr_ai/nav2/follow_goal_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+copying amr_ai/nav2/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2
+running install
+running install_lib
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking/reid.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking/person_tracker_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/tracking/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/fire_smoke_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/fall_detector.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/detectors/ai_detector_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety/ai_alert_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety/cmd_vel_safety_mux_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/safety/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/ai_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/gui_astra_jetson.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/gui/operator_gui_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/image_probe_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/ai_mode_manager_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/original_ai_main_reference.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/camera_openni.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/config.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/utils.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/backup.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/follow_servo_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/follow_goal_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/nav2/__init__.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/reid.py to reid.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/person_tracker_node.py to person_tracker_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/fire_smoke_detector.py to fire_smoke_detector.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/fall_detector.py to fall_detector.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/detectors/ai_detector_node.py to ai_detector_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety/ai_alert_node.py to ai_alert_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety/cmd_vel_safety_mux_node.py to cmd_vel_safety_mux_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/safety/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/ai_gui_node.py to ai_gui_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/gui_astra_jetson.py to gui_astra_jetson.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/operator_gui_node.py to operator_gui_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/image_probe_node.py to image_probe_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/ai_mode_manager_node.py to ai_mode_manager_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/original_ai_main_reference.py to original_ai_main_reference.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/camera_openni.py to camera_openni.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/config.py to config.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/utils.py to utils.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/backup.py to backup.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/follow_servo_node.py to follow_servo_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/follow_goal_node.py to follow_goal_node.cpython-310.pyc
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index/packages
+copying resource/amr_ai -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/ament_index/resource_index/packages
+copying package.xml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/launch
+copying launch/amr_ai.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/launch
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/config
+copying config/ai_params.yaml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/config
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+copying models/fire_smoke_s.engine -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+copying models/yolo26n-pose.engine -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+copying models/yolo26n.engine -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/models
+creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/trackers
+running install_egg_info
+Copying ../../build/amr_ai/amr_ai.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info
+running install_scripts
+Installing ai_detector script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing ai_image_probe script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing ai_mode_manager script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing cmd_vel_safety_mux script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing follow_goal script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing follow_servo script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing operator_gui script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing person_tracker script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log'

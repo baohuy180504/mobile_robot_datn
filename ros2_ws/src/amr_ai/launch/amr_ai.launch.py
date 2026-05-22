@@ -55,6 +55,12 @@ def generate_launch_description():
         description='Start cmd_vel safety mux node'
     )
 
+    start_ai_detector_arg = DeclareLaunchArgument(
+        'start_ai_detector',
+        default_value='true',
+        description='Start AI fall/fire/smoke detector node'
+    )
+
     start_esp32_gateway_arg = DeclareLaunchArgument(
         'start_esp32_gateway',
         default_value='true',
@@ -108,6 +114,14 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration('start_cmd_vel_safety_mux'))
     )
 
+    ai_detector = Node(
+        package='amr_ai',
+        executable='ai_detector',
+        name='ai_detector_node',
+        output='screen',
+        parameters=[params_file],
+        condition=IfCondition(LaunchConfiguration('start_ai_detector'))
+    )
 
     esp32_gateway = Node(
         package='amr_navigation',
@@ -136,6 +150,7 @@ def generate_launch_description():
         start_follow_goal_arg,
         start_follow_servo_arg,
         start_cmd_vel_safety_mux_arg,
+        start_ai_detector_arg,
         start_esp32_gateway_arg,
 
         log_info,
@@ -145,5 +160,6 @@ def generate_launch_description():
         follow_goal,
         follow_servo,
         cmd_vel_safety_mux,
+        ai_detector,
         esp32_gateway,
     ])
