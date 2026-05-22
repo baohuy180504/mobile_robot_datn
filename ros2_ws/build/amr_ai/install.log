@@ -14,6 +14,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__init__.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/operator_gui_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/image_probe_node.py
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/auto_initial_pose_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/ai_mode_manager_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/original_ai_main_reference.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/camera_openni.py
@@ -40,6 +41,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__pycache__/__init__.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/gui/__pycache__/operator_gui_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/image_probe_node.cpython-310.pyc
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/auto_initial_pose_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/ai_mode_manager_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/original_ai_main_reference.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/__pycache__/camera_openni.cpython-310.pyc
@@ -68,6 +70,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/ai_detector
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/ai_image_probe
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/ai_mode_manager
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/auto_initial_pose
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/cmd_vel_safety_mux
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/follow_goal
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/follow_servo

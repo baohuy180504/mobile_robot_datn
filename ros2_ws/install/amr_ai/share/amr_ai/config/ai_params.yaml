@@ -181,3 +181,26 @@ ai_detector_node:
     debug_image_topic: "/amr_ai/debug/alert/image"
     debug_image_publish_hz: 3.0
     debug_image_scale: 0.5
+
+auto_initial_pose_node:
+  ros__parameters:
+    enabled: true
+
+    initial_pose_topic: "/initialpose"
+    frame_id: "map"
+
+    # HOME pose mặc định
+    initial_x: 0.0
+    initial_y: 0.0
+    initial_yaw: 0.0
+
+    # Covariance nhỏ vì giả định xe thật sự đang ở HOME khi START
+    covariance_x: 0.05
+    covariance_y: 0.05
+    covariance_yaw: 0.05
+
+    # Đợi Nav2/AMCL lên rồi mới publish
+    start_delay_s: 2.0
+    publish_count: 10
+    publish_period_s: 0.3
+

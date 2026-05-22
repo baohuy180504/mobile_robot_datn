@@ -227,15 +227,18 @@ class OperatorGuiNode(Node):
             self.get_logger().error(f'set_mode failed: {exc}')
 
     def select_zone(self, zone: str):
-        with self.lock:
-            mode = self.current_mode
+        zone = str(zone).strip().upper()
 
-        if mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]:
-            self.set_status('STOP FOLLOW FIRST', '#f97316')
-            return
+        self.get_logger().warn(f'GUI zone button pressed: {zone}')
+        self.set_status(f'SEND {zone}', '#2563eb')
 
-        if not self.select_zone_client.wait_for_service(timeout_sec=0.3):
+        # Không tự chặn ở GUI nữa.
+        # ai_mode_manager sẽ là tầng quyết định cuối cùng:
+        # - nếu đang FOLLOW_ACTIVE/FOLLOW_DETECTING thì reject
+        # - nếu IDLE/FOLLOW_STOPPED thì accept
+        if not self.select_zone_client.wait_for_service(timeout_sec=2.0):
             self.set_status('SELECT_ZONE NOT READY', '#dc2626')
+            self.get_logger().error('/amr_ai/select_zone service not ready')
             return
 
         req = SelectZone.Request()
@@ -247,13 +250,20 @@ class OperatorGuiNode(Node):
     def select_zone_done(self, future, zone: str):
         try:
             res = future.result()
+            self.get_logger().warn(
+                f'GUI select_zone response: zone={zone}, '
+                f'accepted={res.accepted}, message={res.message}'
+            )
+
             if res.accepted:
                 self.set_status(f'GO TO {zone}', '#2563eb')
             else:
                 self.set_status(f'{zone} REJECTED', '#dc2626')
+
         except Exception as exc:
             self.set_status('ZONE ERROR', '#dc2626')
             self.get_logger().error(f'select_zone failed: {exc}')
+
 
 
 class OperatorGuiApp:

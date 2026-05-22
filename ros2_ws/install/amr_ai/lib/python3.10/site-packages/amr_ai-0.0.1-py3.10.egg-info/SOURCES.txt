@@ -11,6 +11,7 @@ setup.py
 amr_ai/__init__.py
 amr_ai/core/__init__.py
 amr_ai/core/ai_mode_manager_node.py
+amr_ai/core/auto_initial_pose_node.py
 amr_ai/core/camera_openni.py
 amr_ai/core/config.py
 amr_ai/core/image_probe_node.py
