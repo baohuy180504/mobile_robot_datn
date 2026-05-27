@@ -1466,8 +1466,8 @@ VIEWER_HTML = r'''
     <input id="rosbridgeUrl" value="">
 
     <div class="row">
-      <button class="green" onclick="connectRos()">CONNECT</button>
-      <button class="red" onclick="disconnectRos()">DISCONNECT</button>
+      <button class="green" id="connectBtn" onclick="connectRos()">CONNECT</button>
+      <button class="red" id="disconnectBtn" onclick="disconnectRos()">DISCONNECT</button>
     </div>
 
     <div class="section-title">Map Tool</div>
@@ -1626,6 +1626,56 @@ function log(msg){
 `+logBox.textContent;
 }
 
+
+let viewerRosConnected = false;
+
+function setViewerControlsEnabled(enabled){
+  viewerRosConnected = !!enabled;
+
+  const allowIds = new Set([
+    "rosbridgeUrl",
+    "connectBtn",
+    "disconnectBtn"
+  ]);
+
+  const controls = document.querySelectorAll(
+    "main button, main input, main select, main textarea"
+  );
+
+  controls.forEach(el => {
+    if(allowIds.has(el.id)){
+      el.disabled = false;
+      el.style.opacity = 1.0;
+      return;
+    }
+
+    el.disabled = !viewerRosConnected;
+    el.style.opacity = viewerRosConnected ? 1.0 : 0.45;
+  });
+
+  const manualStatus = document.getElementById("manualStatus");
+  if(manualStatus && !viewerRosConnected){
+    manualStatus.textContent = "Teleop: hãy CONNECT ROSBridge trước.";
+  }
+
+  const modeText = document.getElementById("viewerModeText");
+  if(modeText && !viewerRosConnected){
+    modeText.textContent = "Viewer: chưa CONNECT ROSBridge. Các chức năng đang bị khóa.";
+    modeText.style.color = "#f97316";
+  }
+
+  // Quan trọng:
+  // setViewerControlsEnabled(true) sẽ mở các control chung,
+  // nhưng Manual Control phải tuân theo START CONTROL riêng.
+  if(typeof setManualUiEnabled === "function"){
+    setManualUiEnabled(manualControlStarted);
+  }
+
+  if(typeof updateWaypointActionButtons === "function"){
+    updateWaypointActionButtons();
+  }
+}
+
 function defaultWsUrl(){
   return `ws://${window.location.hostname}:9090`;
 }
@@ -1677,6 +1727,13 @@ function connectRos(){
     connState.textContent = "Connected: " + url;
     connState.style.color = "#22c55e";
     log("Connected to " + url);
+    setViewerControlsEnabled(true);
+
+    // Sau CONNECT chỉ mở nút START CONTROL.
+    // Nút lái + slider vẫn khóa cho đến khi START CONTROL được bấm.
+    if(!manualControlStarted){
+      setManualUiEnabled(false);
+    }
 
     await refreshTopicList();
     await refreshViewerSaveState();
@@ -1692,14 +1749,27 @@ function connectRos(){
   ros.on("close", ()=>{
     connState.textContent = "Disconnected";
     connState.style.color = "#e5e7eb";
+    if(typeof stopManualControlSystem === "function" && manualControlStarted){
+      stopManualControlSystem();
+    }
+
+    setViewerControlsEnabled(false);
     log("Connection closed");
   });
 }
 
 function disconnectRos(){
   stopManualControl();
+
+  if(typeof stopManualControlSystem === "function" && manualControlStarted){
+    stopManualControlSystem();
+  }
+
   autoPresetLoaded=false;
   Object.keys(layers).forEach(id=>removeLayer(id));
+
+  setViewerControlsEnabled(false);
+
   if(ros){ ros.close(); }
 }
 
@@ -1760,23 +1830,52 @@ function setManualUiEnabled(enabled){
   const btn=document.getElementById("manualStartBtn");
   const status=document.getElementById("manualStatus");
 
+  // START CONTROL chỉ được bấm sau khi CONNECT.
+  // Các nút lái + slider chỉ được bấm khi đã START CONTROL.
+  const startButtonEnabled = viewerRosConnected;
+  const driveEnabled = viewerRosConnected && manualControlStarted;
+
   document.querySelectorAll(".manual-btn").forEach(b=>{
-    b.disabled=!enabled;
+    b.disabled = !driveEnabled;
+    b.style.opacity = driveEnabled ? 1.0 : 0.45;
   });
 
   const lin=document.getElementById("manualLinearSlider");
   const ang=document.getElementById("manualAngularSlider");
-  if(lin) lin.disabled=!enabled;
-  if(ang) ang.disabled=!enabled;
 
-  if(btn){
-    btn.textContent=enabled ? "STOP CONTROL" : "START CONTROL";
-    btn.classList.toggle("active", enabled);
-    btn.classList.toggle("ready", enabled);
+  if(lin){
+    lin.disabled = !driveEnabled;
+    lin.style.opacity = driveEnabled ? 1.0 : 0.45;
   }
 
-  if(status && !enabled){
-    status.textContent="Teleop: nhấn START CONTROL để bật điều khiển. Khi bật có thể dùng nút web hoặc phím mặc định i/j/k/l/, . Space/k = dừng.";
+  if(ang){
+    ang.disabled = !driveEnabled;
+    ang.style.opacity = driveEnabled ? 1.0 : 0.45;
+  }
+
+  if(btn){
+    btn.disabled = !startButtonEnabled;
+    btn.style.opacity = startButtonEnabled ? 1.0 : 0.45;
+
+    if(manualControlStarted){
+      btn.textContent = "STOP CONTROL";
+      btn.classList.add("active");
+      btn.classList.add("ready");
+    }else{
+      btn.textContent = "START CONTROL";
+      btn.classList.remove("active");
+      btn.classList.remove("ready");
+    }
+  }
+
+  if(status){
+    if(!viewerRosConnected){
+      status.textContent = "Teleop: hãy CONNECT ROSBridge trước.";
+    }else if(!manualControlStarted){
+      status.textContent = "Teleop: nhấn START CONTROL để bật điều khiển.";
+    }else{
+      status.textContent = "Teleop: đã bật. Giữ nút web hoặc dùng phím i/j/k/l, W/A/S/D, mũi tên.";
+    }
   }
 }
 
@@ -1854,25 +1953,41 @@ function burstStopZero(count=8){
 
 function getManualKeyPublisher(){
   if(!ros){ return null; }
+
   if(!manualKeyPub){
-    manualKeyPub=new ROSLIB.Topic({
-      ros,
-      name:"/amr_web_teleop/key",
-      messageType:"std_msgs/String"
+    manualKeyPub = new ROSLIB.Topic({
+      ros: ros,
+      name: "/amr_web_teleop/key",
+      messageType: "std_msgs/msg/String"
     });
+
+    if(typeof manualKeyPub.advertise === "function"){
+      manualKeyPub.advertise();
+    }
+
+    log("Manual key publisher ready: /amr_web_teleop/key");
   }
+
   return manualKeyPub;
 }
 
 function getManualSpeedPublisher(){
   if(!ros){ return null; }
+
   if(!manualSpeedPub){
-    manualSpeedPub=new ROSLIB.Topic({
-      ros,
-      name:"/amr_web_teleop/speed",
-      messageType:"geometry_msgs/Twist"
+    manualSpeedPub = new ROSLIB.Topic({
+      ros: ros,
+      name: "/amr_web_teleop/speed",
+      messageType: "geometry_msgs/msg/Twist"
     });
+
+    if(typeof manualSpeedPub.advertise === "function"){
+      manualSpeedPub.advertise();
+    }
+
+    log("Manual speed publisher ready: /amr_web_teleop/speed");
   }
+
   return manualSpeedPub;
 }
 
@@ -1986,15 +2101,23 @@ function teleopKeyForDirection(direction){
 }
 
 async function sendTeleopKey(key){
-  if(!manualControlStarted && key!=="k") return;
+  if(!manualControlStarted && key !== "k"){
+    return;
+  }
 
-  const pub=getManualKeyPublisher();
+  const pub = getManualKeyPublisher();
+
   if(!pub){
     log("Manual key publish ignored: ROSBridge chưa CONNECT");
     return;
   }
 
-  pub.publish(new ROSLIB.Message({data:key}));
+  const msg = new ROSLIB.Message({
+    data: String(key)
+  });
+
+  pub.publish(msg);
+  log("Teleop key sent: " + key);
 }
 
 function ensureManualLoop(){
@@ -2165,14 +2288,17 @@ setManualUiEnabled(false);
 function updateWaypointActionButtons(){
   const setBtn=document.getElementById("waypointSetBtn");
   const addBtn=document.getElementById("waypointAddBtn");
-  const enabled = activeMapTool === "WAYPOINT";
+
+  const enabled = viewerRosConnected && activeMapTool === "WAYPOINT";
 
   if(setBtn){
     setBtn.disabled = !enabled;
+    setBtn.style.opacity = enabled ? 1.0 : 0.45;
   }
 
   if(addBtn){
     addBtn.disabled = !enabled;
+    addBtn.style.opacity = enabled ? 1.0 : 0.45;
   }
 }
 
@@ -3388,20 +3514,38 @@ async function getSystemStateForViewer(){
 }
 
 async function refreshViewerSaveState(){
-  const data=await getSystemStateForViewer();
-
   const saveBtn=document.getElementById("saveFusionMapBtn");
   const modeText=document.getElementById("viewerModeText");
 
+  if(!viewerRosConnected){
+    if(saveBtn){
+      saveBtn.disabled = true;
+      saveBtn.style.opacity = 0.45;
+    }
+
+    if(modeText){
+      modeText.textContent = "Viewer: chưa CONNECT ROSBridge. Các chức năng đang bị khóa.";
+      modeText.style.color = "#f97316";
+    }
+
+    return;
+  }
+
+  const data=await getSystemStateForViewer();
   const isSlam=!!data.slam;
 
-  saveBtn.disabled=!isSlam;
+  if(saveBtn){
+    saveBtn.disabled=!isSlam;
+    saveBtn.style.opacity = isSlam ? 1.0 : 0.45;
+  }
 
-  modeText.textContent =
-    `Mode: ${data.active_mode || "UNKNOWN"} | ` +
-    `SAVE MAP: ${isSlam ? "ENABLED" : "DISABLED - chỉ lưu khi đang SLAM"}`;
+  if(modeText){
+    modeText.textContent =
+      `Mode: ${data.active_mode || "UNKNOWN"} | ` +
+      `SAVE MAP: ${isSlam ? "ENABLED" : "DISABLED - chỉ lưu khi đang SLAM"}`;
 
-  modeText.style.color=isSlam ? "#22c55e" : "#f97316";
+    modeText.style.color=isSlam ? "#22c55e" : "#f97316";
+  }
 }
 
 async function saveFusionMap() {
@@ -3456,6 +3600,8 @@ setInterval(refreshViewerSaveState,2500);
 
 function initViewerPage(){
   setDefaultRosbridgeUrl();
+
+  setViewerControlsEnabled(false);
 
   if(typeof setupCanvasInteraction === "function" && !window.__amrCanvasInteractionReady){
     setupCanvasInteraction();

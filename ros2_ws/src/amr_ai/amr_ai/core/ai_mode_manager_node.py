@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import math
+import os
+import json
+from pathlib import Path
 from typing import Optional
 
 import rclpy
@@ -39,6 +42,10 @@ class AiModeManager(Node):
         # Parameters
         # =========================
         self.declare_parameter('frame_id', 'map')
+        self.declare_parameter(
+            'waypoint_file',
+            '~/mobile_robot/ros2_ws/config/waypoints_runtime.json'
+        )
 
         # Waypoint A
         self.declare_parameter('A.x', 1.5)
@@ -57,7 +64,7 @@ class AiModeManager(Node):
 
         self.frame_id = self.get_parameter('frame_id').value
 
-        self.waypoints = {
+        self.default_waypoints = {
             'A': (
                 self.get_parameter('A.x').value,
                 self.get_parameter('A.y').value,
@@ -79,6 +86,13 @@ class AiModeManager(Node):
                 self.get_parameter('H.yaw').value
             ),
         }
+
+        self.waypoint_file = Path(
+            os.path.expanduser(str(self.get_parameter('waypoint_file').value))
+        )
+        self.waypoints = dict(self.default_waypoints)
+        self.ensure_waypoint_file()
+        self.load_waypoints_from_file()
 
         # =========================
         # State
@@ -122,6 +136,115 @@ class AiModeManager(Node):
         self.publish_mode()
 
     # ==========================================================
+    # Runtime waypoint file
+    # ==========================================================
+    def ensure_waypoint_file(self):
+        """
+        Tạo file waypoint runtime nếu chưa có.
+        File này cho phép Web Engineer chỉnh A/B/H mà không cần sửa ai_params.yaml.
+        """
+        try:
+            self.waypoint_file.parent.mkdir(parents=True, exist_ok=True)
+
+            if self.waypoint_file.exists():
+                return
+
+            zones = []
+            for name in ['A', 'B', 'H']:
+                x, y, yaw = self.default_waypoints[name]
+                zones.append({
+                    'name': name,
+                    'x': float(x),
+                    'y': float(y),
+                    'yaw': float(yaw),
+                })
+
+            data = {
+                'frame_id': self.frame_id,
+                'zones': zones,
+            }
+
+            self.waypoint_file.write_text(
+                json.dumps(data, indent=2, ensure_ascii=False)
+            )
+
+            self.get_logger().warn(
+                f'Created runtime waypoint file: {self.waypoint_file}'
+            )
+
+        except Exception as exc:
+            self.get_logger().error(
+                f'Failed to create runtime waypoint file {self.waypoint_file}: {exc}'
+            )
+
+    def load_waypoints_from_file(self):
+        """
+        Load lại waypoint runtime.
+        Hàm này được gọi trước mỗi lệnh /amr_ai/select_zone để tọa độ mới từ web
+        có hiệu lực ngay, không cần restart ai_mode_manager.
+        """
+        self.waypoints = dict(self.default_waypoints)
+
+        try:
+            if not self.waypoint_file.exists():
+                self.ensure_waypoint_file()
+
+            data = json.loads(self.waypoint_file.read_text())
+
+            frame_id = str(data.get('frame_id', self.frame_id)).strip()
+            if frame_id:
+                self.frame_id = frame_id
+
+            zones = data.get('zones', [])
+
+            # Hỗ trợ cả dạng list và dict để sau này dễ mở rộng.
+            if isinstance(zones, dict):
+                items = []
+                for name, pose in zones.items():
+                    item = dict(pose)
+                    item['name'] = name
+                    items.append(item)
+                zones = items
+
+            loaded = {}
+
+            for item in zones:
+                if not isinstance(item, dict):
+                    continue
+
+                name = str(item.get('name', '')).strip().upper()
+                if not name:
+                    continue
+
+                try:
+                    x = float(item.get('x', 0.0))
+                    y = float(item.get('y', 0.0))
+                    yaw = float(item.get('yaw', 0.0))
+                except Exception:
+                    self.get_logger().warn(f'Invalid waypoint item ignored: {item}')
+                    continue
+
+                loaded[name] = (x, y, yaw)
+
+            self.waypoints.update(loaded)
+
+            # HOME/H dùng chung tọa độ để ESP32 gửi H hoặc service gửi HOME đều đúng.
+            if 'HOME' in self.waypoints and 'H' not in loaded:
+                self.waypoints['H'] = self.waypoints['HOME']
+            if 'H' in self.waypoints:
+                self.waypoints['HOME'] = self.waypoints['H']
+
+            self.get_logger().info(
+                f'Runtime waypoints loaded from {self.waypoint_file}: {self.waypoints}'
+            )
+
+        except Exception as exc:
+            self.get_logger().error(
+                f'Failed to load runtime waypoints from {self.waypoint_file}: {exc}. '
+                'Using ai_params.yaml fallback.'
+            )
+
+    # ==========================================================
     # Mode helpers
     # ==========================================================
     def mode_name(self, mode: int) -> str:
@@ -133,7 +256,6 @@ class AiModeManager(Node):
             AiMode.FOLLOW_STOPPED: 'FOLLOW_STOPPED',
             AiMode.RETURN_TO_ZONE: 'RETURN_TO_ZONE',
             AiMode.EMERGENCY_STOP: 'EMERGENCY_STOP',
-            AiMode.LOCALIZING: 'LOCALIZING',
         }
         return names.get(mode, f'UNKNOWN_{mode}')
 
@@ -179,13 +301,17 @@ class AiModeManager(Node):
     def normalize_zone_name(self, zone_name: str) -> Optional[str]:
         z = zone_name.strip().upper()
 
-        if z == 'HOME':
-            return 'HOME'
+        if not z:
+            return None
 
         if z == 'H':
             return 'HOME'
 
-        if z in ['A', 'B']:
+        if z == 'HOME':
+            return 'HOME' if 'HOME' in self.waypoints else None
+
+        # Cho phép A/B và các waypoint mở rộng trong file runtime, ví dụ WP3, C, D...
+        if z in self.waypoints:
             return z
 
         return None
@@ -214,18 +340,6 @@ class AiModeManager(Node):
         if command in ['STOP_FOLLOW', 'FOLLOW_STOP']:
             return self.stop_follow(response)
 
-        if command in ['START_LOCALIZE', 'START_LOCALIZATION', 'LOCALIZE', 'LOCALIZATION']:
-            return self.start_localize(response)
-
-        if command in ['STOP_LOCALIZE', 'STOP_LOCALIZATION', 'CANCEL_LOCALIZE']:
-            return self.stop_localize(response)
-
-        if command in ['LOCALIZE_DONE', 'LOCALIZATION_DONE']:
-            return self.localize_done(response)
-
-        if command in ['LOCALIZE_FAILED', 'LOCALIZATION_FAILED']:
-            return self.localize_failed(response)
-
         if command in ['STOP', 'CANCEL', 'S']:
             return self.stop_or_cancel(response)
 
@@ -245,7 +359,6 @@ class AiModeManager(Node):
             AiMode.FOLLOW_ACTIVE,
             AiMode.FOLLOW_STOPPED,
             AiMode.EMERGENCY_STOP,
-            AiMode.LOCALIZING,
         ]:
             self.set_mode(requested_mode, f'Set directly by service command={command}')
             response.success = True
@@ -364,86 +477,11 @@ class AiModeManager(Node):
         response.current_mode = int(self.current_mode)
         return response
 
-    def start_localize(self, response):
-        # Không cho localize khi đang chạy Nav2 hoặc đang follow
-        if self.current_mode in [
-            AiMode.NAV_TO_ZONE,
-            AiMode.RETURN_TO_ZONE,
-            AiMode.FOLLOW_DETECTING,
-            AiMode.FOLLOW_ACTIVE,
-        ]:
-            response.success = False
-            response.message = f'Cannot start localization while robot is in {self.mode_name(self.current_mode)}'
-            response.current_mode = int(self.current_mode)
-            return response
-
-        if self.current_mode == AiMode.EMERGENCY_STOP:
-            response.success = False
-            response.message = 'Cannot start localization while EMERGENCY_STOP is active'
-            response.current_mode = int(self.current_mode)
-            return response
-
-        self.cancel_current_nav_goal()
-        self.set_mode(
-            AiMode.LOCALIZING,
-            'Auto localization started. Robot will rotate in place.'
-        )
-
-        response.success = True
-        response.message = 'Auto localization started'
-        response.current_mode = int(self.current_mode)
-        return response
-
-    def stop_localize(self, response):
-        if self.current_mode == AiMode.LOCALIZING:
-            self.set_mode(
-                AiMode.IDLE,
-                'Auto localization stopped by command'
-            )
-
-            response.success = True
-            response.message = 'Auto localization stopped'
-            response.current_mode = int(self.current_mode)
-            return response
-
-        response.success = False
-        response.message = f'Robot is not LOCALIZING. Current mode={self.mode_name(self.current_mode)}'
-        response.current_mode = int(self.current_mode)
-        return response
-
-    def localize_done(self, response):
-        if self.current_mode == AiMode.LOCALIZING:
-            self.set_mode(
-                AiMode.IDLE,
-                'Auto localization done'
-            )
-        else:
-            self.set_mode(
-                AiMode.IDLE,
-                'Localization done command received'
-            )
-
-        response.success = True
-        response.message = 'Auto localization done'
-        response.current_mode = int(self.current_mode)
-        return response
-
-    def localize_failed(self, response):
-        if self.current_mode == AiMode.LOCALIZING:
-            self.set_mode(
-                AiMode.IDLE,
-                'Auto localization failed'
-            )
-
-        response.success = True
-        response.message = 'Auto localization failed'
-        response.current_mode = int(self.current_mode)
-        return response
-
     # ==========================================================
     # Select zone service
     # ==========================================================
     def handle_select_zone(self, request, response):
+        self.load_waypoints_from_file()
         zone = self.normalize_zone_name(request.zone_name)
 
         if zone is None:
@@ -473,13 +511,6 @@ class AiModeManager(Node):
         if self.current_mode == AiMode.EMERGENCY_STOP:
             response.accepted = False
             response.message = 'Reject zone command: robot is in EMERGENCY_STOP'
-            self.get_logger().warn(response.message)
-            return response
-
-        # Đang tự định vị thì không nhận lệnh A/B/H
-        if self.current_mode == AiMode.LOCALIZING:
-            response.accepted = False
-            response.message = 'Reject zone command: robot is LOCALIZING'
             self.get_logger().warn(response.message)
             return response
 
