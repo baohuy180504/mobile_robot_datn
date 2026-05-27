@@ -1,24 +1,68 @@
 {
   "frame_id": "map",
-  "zones": [
+  "updated_at": "2026-05-27 17:28:32",
+  "mapping_note": "WP0=HOME=(0,0,0) fixed. ESP32 sends WP1/WP2/WP3/... directly.",
+  "home": {
+    "name": "WP0",
+    "x": 0.0,
+    "y": 0.0,
+    "yaw": 0.0,
+    "locked": true,
+    "source": "fixed_home"
+  },
+  "waypoints": [
     {
-      "name": "A",
-      "x": 0.8,
-      "y": 0.2,
-      "yaw": 0.0
+      "name": "WP1",
+      "x": 0.0,
+      "y": 1.5,
+      "yaw": 1.57,
+      "locked": false,
+      "source": "WP1"
     },
     {
-      "name": "B",
+      "name": "WP2",
       "x": 1.5,
-      "y": 1.0,
-      "yaw": 3.14
-    },
-    
+      "y": 1.5,
+      "yaw": -2.356,
+      "locked": false,
+      "source": "WP2"
+    }
+  ],
+  "zones": [
     {
       "name": "H",
       "x": 0.0,
       "y": 0.0,
-      "yaw": 0.0
+      "yaw": 0.0,
+      "source": "WP0"
+    },
+    {
+      "name": "HOME",
+      "x": 0.0,
+      "y": 0.0,
+      "yaw": 0.0,
+      "source": "WP0"
+    },
+    {
+      "name": "WP0",
+      "x": 0.0,
+      "y": 0.0,
+      "yaw": 0.0,
+      "source": "WP0"
+    },
+    {
+      "name": "WP1",
+      "x": 0.0,
+      "y": 1.5,
+      "yaw": 1.57,
+      "source": "WP1"
+    },
+    {
+      "name": "WP2",
+      "x": 1.5,
+      "y": 1.5,
+      "yaw": -2.356,
+      "source": "WP2"
     }
   ]
 }

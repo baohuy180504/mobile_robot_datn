@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import socket
+import re
 import threading
 import time
 
@@ -15,11 +16,11 @@ class Esp32WaypointServer(Node):
     ESP32 TCP gateway.
 
     Vai trò mới:
-    - Nhận TCP command từ ESP32: A / B / H / S
+    - Nhận TCP command từ ESP32: WP1 / WP2 / ... / WP0 / S
     - Không gửi Nav2 trực tiếp nữa
     - Gửi yêu cầu sang ai_mode_manager:
-        A/B/H -> /amr_ai/select_zone
-        S     -> /amr_ai/set_mode command STOP
+        WPn/WP0 -> /amr_ai/select_zone
+        S/STOP -> /amr_ai/set_mode command STOP
     """
 
     def __init__(self):
@@ -64,7 +65,7 @@ class Esp32WaypointServer(Node):
             f'ESP32 TCP gateway started at {self.host}:{self.tcp_port}'
         )
         self.get_logger().info(
-            'Commands: A/B/H -> /amr_ai/select_zone, S -> /amr_ai/set_mode STOP'
+            'Commands: WP0/WP1/WP2/... -> /amr_ai/select_zone, S/STOP -> /amr_ai/set_mode STOP'
         )
 
     # ==========================================================
@@ -112,15 +113,35 @@ class Esp32WaypointServer(Node):
                     break
 
                 text = data.decode(errors='ignore').upper().strip()
+                commands = self.parse_commands(text)
 
-                for ch in text:
-                    if ch in ['A', 'B', 'H']:
-                        self.handle_zone_command(ch)
-                    elif ch == 'S':
+                for cmd in commands:
+                    if cmd in ['S', 'STOP']:
                         self.handle_stop_command()
+                    elif self.is_waypoint_command(cmd):
+                        self.handle_zone_command(cmd)
                     else:
-                        if ch not in ['\n', '\r', ' ', '\t']:
-                            self.get_logger().warn(f'Unknown ESP32 command: {ch}')
+                        self.get_logger().warn(f'Unknown ESP32 command: {cmd}')
+
+    def parse_commands(self, text: str):
+        """
+        ESP32 gửi chuẩn: WP1, WP2, WP3..., WP0 hoặc S/STOP.
+        Hàm này vẫn chịu được trường hợp có \n, dấu phẩy hoặc nhiều token trong một packet.
+        """
+        if not text:
+            return []
+
+        cleaned = text.replace(',', ' ').replace(';', ' ').replace('\r', ' ').replace('\n', ' ')
+        parts = [p.strip().upper() for p in cleaned.split() if p.strip()]
+
+        if parts:
+            return parts
+
+        # Fallback nếu ESP32 gửi dính chuỗi, ví dụ WP1WP2S
+        return re.findall(r'WP[0-9]+|STOP|S', text.upper())
+
+    def is_waypoint_command(self, cmd: str) -> bool:
+        return re.fullmatch(r'WP[0-9]+', cmd.strip().upper()) is not None
 
     # ==========================================================
     # Common debounce
@@ -137,13 +158,13 @@ class Esp32WaypointServer(Node):
         return True
 
     # ==========================================================
-    # Zone command A/B/H
+    # Waypoint command WP0/WP1/WP2/...
     # ==========================================================
     def handle_zone_command(self, cmd: str):
         if not self.is_debounced(cmd):
             return
 
-        zone_name = 'HOME' if cmd == 'H' else cmd
+        zone_name = cmd.strip().upper()
 
         if not self.select_zone_client.wait_for_service(timeout_sec=0.5):
             self.get_logger().error(

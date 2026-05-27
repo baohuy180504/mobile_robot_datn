@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import math
+import re
 import os
 import json
+from typing import Optional, Dict, Any, Tuple
 from pathlib import Path
-from typing import Optional
 
 import rclpy
 from rclpy.node import Node
@@ -42,10 +43,7 @@ class AiModeManager(Node):
         # Parameters
         # =========================
         self.declare_parameter('frame_id', 'map')
-        self.declare_parameter(
-            'waypoint_file',
-            '~/mobile_robot/ros2_ws/config/waypoints_runtime.json'
-        )
+        self.declare_parameter('runtime_waypoints_file', '~/mobile_robot/ros2_ws/config/waypoints_runtime.json')
 
         # Waypoint A
         self.declare_parameter('A.x', 1.5)
@@ -64,7 +62,7 @@ class AiModeManager(Node):
 
         self.frame_id = self.get_parameter('frame_id').value
 
-        self.default_waypoints = {
+        self.fallback_waypoints = {
             'A': (
                 self.get_parameter('A.x').value,
                 self.get_parameter('A.y').value,
@@ -75,24 +73,10 @@ class AiModeManager(Node):
                 self.get_parameter('B.y').value,
                 self.get_parameter('B.yaw').value
             ),
-            'H': (
-                self.get_parameter('H.x').value,
-                self.get_parameter('H.y').value,
-                self.get_parameter('H.yaw').value
-            ),
-            'HOME': (
-                self.get_parameter('H.x').value,
-                self.get_parameter('H.y').value,
-                self.get_parameter('H.yaw').value
-            ),
         }
 
-        self.waypoint_file = Path(
-            os.path.expanduser(str(self.get_parameter('waypoint_file').value))
-        )
-        self.waypoints = dict(self.default_waypoints)
-        self.ensure_waypoint_file()
-        self.load_waypoints_from_file()
+        runtime_file = str(self.get_parameter('runtime_waypoints_file').value)
+        self.runtime_waypoints_file = Path(os.path.expanduser(runtime_file))
 
         # =========================
         # State
@@ -132,117 +116,8 @@ class AiModeManager(Node):
         self.mode_timer = self.create_timer(0.5, self.publish_mode)
 
         self.get_logger().info('AI Mode Manager started')
-        self.get_logger().info(f'Waypoints: {self.waypoints}')
+        self.get_logger().info(f'Runtime waypoint file: {self.runtime_waypoints_file}')
         self.publish_mode()
-
-    # ==========================================================
-    # Runtime waypoint file
-    # ==========================================================
-    def ensure_waypoint_file(self):
-        """
-        Tạo file waypoint runtime nếu chưa có.
-        File này cho phép Web Engineer chỉnh A/B/H mà không cần sửa ai_params.yaml.
-        """
-        try:
-            self.waypoint_file.parent.mkdir(parents=True, exist_ok=True)
-
-            if self.waypoint_file.exists():
-                return
-
-            zones = []
-            for name in ['A', 'B', 'H']:
-                x, y, yaw = self.default_waypoints[name]
-                zones.append({
-                    'name': name,
-                    'x': float(x),
-                    'y': float(y),
-                    'yaw': float(yaw),
-                })
-
-            data = {
-                'frame_id': self.frame_id,
-                'zones': zones,
-            }
-
-            self.waypoint_file.write_text(
-                json.dumps(data, indent=2, ensure_ascii=False)
-            )
-
-            self.get_logger().warn(
-                f'Created runtime waypoint file: {self.waypoint_file}'
-            )
-
-        except Exception as exc:
-            self.get_logger().error(
-                f'Failed to create runtime waypoint file {self.waypoint_file}: {exc}'
-            )
-
-    def load_waypoints_from_file(self):
-        """
-        Load lại waypoint runtime.
-        Hàm này được gọi trước mỗi lệnh /amr_ai/select_zone để tọa độ mới từ web
-        có hiệu lực ngay, không cần restart ai_mode_manager.
-        """
-        self.waypoints = dict(self.default_waypoints)
-
-        try:
-            if not self.waypoint_file.exists():
-                self.ensure_waypoint_file()
-
-            data = json.loads(self.waypoint_file.read_text())
-
-            frame_id = str(data.get('frame_id', self.frame_id)).strip()
-            if frame_id:
-                self.frame_id = frame_id
-
-            zones = data.get('zones', [])
-
-            # Hỗ trợ cả dạng list và dict để sau này dễ mở rộng.
-            if isinstance(zones, dict):
-                items = []
-                for name, pose in zones.items():
-                    item = dict(pose)
-                    item['name'] = name
-                    items.append(item)
-                zones = items
-
-            loaded = {}
-
-            for item in zones:
-                if not isinstance(item, dict):
-                    continue
-
-                name = str(item.get('name', '')).strip().upper()
-                if not name:
-                    continue
-
-                try:
-                    x = float(item.get('x', 0.0))
-                    y = float(item.get('y', 0.0))
-                    yaw = float(item.get('yaw', 0.0))
-                except Exception:
-                    self.get_logger().warn(f'Invalid waypoint item ignored: {item}')
-                    continue
-
-                loaded[name] = (x, y, yaw)
-
-            self.waypoints.update(loaded)
-
-            # HOME/H dùng chung tọa độ để ESP32 gửi H hoặc service gửi HOME đều đúng.
-            if 'HOME' in self.waypoints and 'H' not in loaded:
-                self.waypoints['H'] = self.waypoints['HOME']
-            if 'H' in self.waypoints:
-                self.waypoints['HOME'] = self.waypoints['H']
-
-            self.get_logger().info(
-                f'Runtime waypoints loaded from {self.waypoint_file}: {self.waypoints}'
-            )
-
-        except Exception as exc:
-            self.get_logger().error(
-                f'Failed to load runtime waypoints from {self.waypoint_file}: {exc}. '
-                'Using ai_params.yaml fallback.'
-            )
 
     # ==========================================================
     # Mode helpers
@@ -279,8 +154,109 @@ class AiModeManager(Node):
         msg.detail = self.mode_detail
         self.mode_pub.publish(msg)
 
+    def load_runtime_waypoints(self) -> Dict[str, Tuple[float, float, float]]:
+        """
+        Đọc waypoint runtime mỗi lần nhận lệnh.
+        Quy chuẩn thống nhất:
+          WP0/H/HOME = (0,0,0), cố định
+          WP1, WP2, WP3... đọc từ waypoints_runtime.json
+        Không map A/B/C nữa. ESP32 gửi trực tiếp WP1/WP2/... để tránh nhầm alias.
+        """
+        lookup: Dict[str, Tuple[float, float, float]] = {
+            'WP0': (0.0, 0.0, 0.0),
+            'H': (0.0, 0.0, 0.0),
+            'HOME': (0.0, 0.0, 0.0),
+        }
+
+        data: Dict[str, Any] = {}
+
+        if self.runtime_waypoints_file.exists():
+            try:
+                data = json.loads(self.runtime_waypoints_file.read_text())
+                if not isinstance(data, dict):
+                    data = {}
+            except Exception as exc:
+                self.get_logger().error(
+                    f'Failed to read runtime waypoint file {self.runtime_waypoints_file}: {exc}'
+                )
+                data = {}
+
+        raw_waypoints = data.get('waypoints', [])
+        if isinstance(raw_waypoints, list):
+            for item in raw_waypoints:
+                if not isinstance(item, dict):
+                    continue
+
+                name = str(item.get('name', '')).strip().upper()
+                match = re.fullmatch(r'WP([1-9][0-9]*)', name)
+                if not match:
+                    continue
+
+                idx = int(match.group(1))
+
+                try:
+                    lookup[f'WP{idx}'] = (
+                        float(item.get('x', 0.0)),
+                        float(item.get('y', 0.0)),
+                        float(item.get('yaw', 0.0)),
+                    )
+                except Exception:
+                    continue
+
+        # Đọc tương thích format cũ key zones, nhưng chỉ lấy tên WPn.
+        # Các alias A/B/C cũ không còn được dùng nữa.
+        raw_zones = data.get('zones', [])
+        if isinstance(raw_zones, list):
+            for item in raw_zones:
+                if not isinstance(item, dict):
+                    continue
+
+                name = str(item.get('name', '')).strip().upper()
+                match = re.fullmatch(r'WP([1-9][0-9]*)', name)
+                if not match:
+                    continue
+
+                wp_name = f'WP{int(match.group(1))}'
+                if wp_name in lookup:
+                    continue
+
+                try:
+                    lookup[wp_name] = (
+                        float(item.get('x', 0.0)),
+                        float(item.get('y', 0.0)),
+                        float(item.get('yaw', 0.0)),
+                    )
+                except Exception:
+                    continue
+
+        return lookup
+
+    def resolve_zone_pose(self, zone_name: str) -> Optional[Tuple[str, Tuple[float, float, float]]]:
+        z = zone_name.strip().upper()
+
+        if not z:
+            return None
+
+        if z in ['H', 'HOME', 'WP0']:
+            return 'WP0', (0.0, 0.0, 0.0)
+
+        if not re.fullmatch(r'WP([1-9][0-9]*)', z):
+            return None
+
+        lookup = self.load_runtime_waypoints()
+
+        if z in lookup:
+            return z, lookup[z]
+
+        return None
+
     def build_pose(self, zone_name: str) -> PoseStamped:
-        x, y, yaw = self.waypoints[zone_name]
+        resolved = self.resolve_zone_pose(zone_name)
+
+        if resolved is None:
+            raise KeyError(zone_name)
+
+        _, (x, y, yaw) = resolved
 
         pose = PoseStamped()
         pose.header.stamp = self.get_clock().now().to_msg()
@@ -299,22 +275,13 @@ class AiModeManager(Node):
         return pose
 
     def normalize_zone_name(self, zone_name: str) -> Optional[str]:
-        z = zone_name.strip().upper()
+        resolved = self.resolve_zone_pose(zone_name)
 
-        if not z:
+        if resolved is None:
             return None
 
-        if z == 'H':
-            return 'HOME'
-
-        if z == 'HOME':
-            return 'HOME' if 'HOME' in self.waypoints else None
-
-        # Cho phép A/B và các waypoint mở rộng trong file runtime, ví dụ WP3, C, D...
-        if z in self.waypoints:
-            return z
-
-        return None
+        canonical, _ = resolved
+        return canonical
 
     def is_follow_related_mode(self) -> bool:
         return self.current_mode in [
@@ -481,7 +448,6 @@ class AiModeManager(Node):
     # Select zone service
     # ==========================================================
     def handle_select_zone(self, request, response):
-        self.load_waypoints_from_file()
         zone = self.normalize_zone_name(request.zone_name)
 
         if zone is None:
@@ -523,7 +489,7 @@ class AiModeManager(Node):
             self.get_logger().warn(response.message)
             return response
 
-        # FOLLOW_STOPPED: cho phép chọn A/B/Home để quay về sau khi nhận hàng
+        # FOLLOW_STOPPED: cho phép chọn WPn/WP0 để quay về sau khi nhận hàng
         if self.current_mode == AiMode.FOLLOW_STOPPED:
             next_mode = AiMode.RETURN_TO_ZONE
             detail = f'Return to zone {zone} after follow stopped'
