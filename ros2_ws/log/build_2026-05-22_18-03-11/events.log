@@ -1,0 +1,676 @@
+[0.000000] (-) TimerEvent: {}
+[0.000849] (-) JobUnselected: {'identifier': 'amr_bringup'}
+[0.001588] (-) JobUnselected: {'identifier': 'amr_control'}
+[0.001891] (-) JobUnselected: {'identifier': 'amr_description'}
+[0.002201] (-) JobUnselected: {'identifier': 'amr_pointcloud_filter'}
+[0.002317] (-) JobUnselected: {'identifier': 'amr_sensors'}
+[0.002405] (-) JobUnselected: {'identifier': 'amr_slam'}
+[0.002482] (-) JobUnselected: {'identifier': 'astra_camera'}
+[0.002558] (-) JobUnselected: {'identifier': 'astra_camera_msgs'}
+[0.002633] (-) JobUnselected: {'identifier': 'explore_lite'}
+[0.002704] (-) JobUnselected: {'identifier': 'explore_lite_msgs'}
+[0.002775] (-) JobUnselected: {'identifier': 'multirobot_map_merge'}
+[0.002846] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.002929] (amr_interfaces) JobQueued: {'identifier': 'amr_interfaces', 'dependencies': OrderedDict()}
+[0.003016] (amr_ai) JobQueued: {'identifier': 'amr_ai', 'dependencies': OrderedDict([('amr_interfaces', '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces')])}
+[0.003109] (amr_navigation) JobQueued: {'identifier': 'amr_navigation', 'dependencies': OrderedDict([('amr_slam', '/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam')])}
+[0.003193] (amr_interfaces) JobStarted: {'identifier': 'amr_interfaces'}
+[0.020337] (amr_navigation) JobStarted: {'identifier': 'amr_navigation'}
+[0.034932] (amr_interfaces) JobProgress: {'identifier': 'amr_interfaces', 'progress': 'cmake'}
+[0.039804] (amr_interfaces) JobProgress: {'identifier': 'amr_interfaces', 'progress': 'build'}
+[0.041493] (amr_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces', '--', '-j6', '-l6'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.224 47912 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '6'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.224 47912 192.168.0.184 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[0.050703] (amr_navigation) JobProgress: {'identifier': 'amr_navigation', 'progress': 'cmake'}
+[0.053856] (amr_navigation) JobProgress: {'identifier': 'amr_navigation', 'progress': 'build'}
+[0.054370] (amr_navigation) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation', '--', '-j6', '-l6'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.224 47912 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '6'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.224 47912 192.168.0.184 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[0.099065] (-) TimerEvent: {}
+[0.184119] (amr_interfaces) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.199172] (-) TimerEvent: {}
+[0.206903] (amr_navigation) CommandEnded: {'returncode': 0}
+[0.233453] (amr_navigation) JobProgress: {'identifier': 'amr_navigation', 'progress': 'install'}
+[0.259203] (amr_navigation) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.224 47912 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '6'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_navigation'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.224 47912 192.168.0.184 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[0.285700] (amr_navigation) StdoutLine: {'line': b'-- Install configuration: "Release"\n'}
+[0.287739] (amr_navigation) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[0.288874] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/explore.yaml\n'}
+[0.289381] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/nav2_params_MPPI.yaml\n'}
+[0.289772] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/nav2_params_fusion.yaml\n'}
+[0.290039] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/auto_fusion.launch.py\n'}
+[0.290480] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/explore.launch.py\n'}
+[0.290911] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/nav_fusion.launch.py\n'}
+[0.291100] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/navigation.launch.py\n'}
+[0.291430] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/rviz/view_robot.rviz\n'}
+[0.291888] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/lib/amr_navigation/auto_map_saver.py\n'}
+[0.292312] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/lib/amr_navigation/init_move.py\n'}
+[0.292775] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/lib/amr_navigation/esp32_waypoint_server.py\n'}
+[0.293620] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/lib/amr_navigation/live_octomap_reset.py\n'}
+[0.294384] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/lib/amr_navigation/live_octomap_manager.py\n'}
+[0.294765] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/ament_index/resource_index/package_run_dependencies/amr_navigation\n'}
+[0.295138] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/ament_index/resource_index/parent_prefix_path/amr_navigation\n'}
+[0.295554] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/environment/ament_prefix_path.sh\n'}
+[0.295897] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/environment/ament_prefix_path.dsv\n'}
+[0.296286] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/environment/path.sh\n'}
+[0.296841] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/environment/path.dsv\n'}
+[0.297350] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/local_setup.bash\n'}
+[0.297670] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/local_setup.sh\n'}
+[0.297964] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/local_setup.zsh\n'}
+[0.298269] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/local_setup.dsv\n'}
+[0.298537] (amr_navigation) StdoutLine: {'line': b'-- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/package.dsv\n'}
+[0.299277] (-) TimerEvent: {}
+[0.325288] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/ament_index/resource_index/packages/amr_navigation\n'}
+[0.326074] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/cmake/amr_navigationConfig.cmake\n'}
+[0.326359] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/cmake/amr_navigationConfig-version.cmake\n'}
+[0.326556] (amr_navigation) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/package.xml\n'}
+[0.332339] (amr_navigation) CommandEnded: {'returncode': 0}
+[0.389215] (amr_navigation) JobEnded: {'identifier': 'amr_navigation', 'rc': 0}
+[0.399420] (-) TimerEvent: {}
+[0.500057] (-) TimerEvent: {}
+[0.600971] (-) TimerEvent: {}
+[0.690289] (amr_interfaces) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.1 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[0.701062] (-) TimerEvent: {}
+[0.709666] (amr_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.725637] (amr_interfaces) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.801395] (-) TimerEvent: {}
+[0.856815] (amr_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.901541] (-) TimerEvent: {}
+[0.948548] (amr_interfaces) StdoutLine: {'line': b'-- Found std_msgs: 4.9.1 (/opt/ros/humble/share/std_msgs/cmake)\n'}
+[1.001686] (-) TimerEvent: {}
+[1.023738] (amr_interfaces) StdoutLine: {'line': b'-- Found geometry_msgs: 4.9.1 (/opt/ros/humble/share/geometry_msgs/cmake)\n'}
+[1.061791] (amr_interfaces) StdoutLine: {'line': b'-- Found sensor_msgs: 4.9.1 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[1.101853] (-) TimerEvent: {}
+[1.202656] (-) TimerEvent: {}
+[1.303597] (-) TimerEvent: {}
+[1.404531] (-) TimerEvent: {}
+[1.505481] (-) TimerEvent: {}
+[1.606508] (-) TimerEvent: {}
+[1.707642] (-) TimerEvent: {}
+[1.808678] (-) TimerEvent: {}
+[1.909985] (-) TimerEvent: {}
+[2.010889] (-) TimerEvent: {}
+[2.060058] (amr_interfaces) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[2.111034] (-) TimerEvent: {}
+[2.211773] (-) TimerEvent: {}
+[2.312673] (-) TimerEvent: {}
+[2.413690] (-) TimerEvent: {}
+[2.514736] (-) TimerEvent: {}
+[2.615748] (-) TimerEvent: {}
+[2.716712] (-) TimerEvent: {}
+[2.817532] (-) TimerEvent: {}
+[2.852798] (amr_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.917739] (-) TimerEvent: {}
+[3.018554] (-) TimerEvent: {}
+[3.119553] (-) TimerEvent: {}
+[3.220513] (-) TimerEvent: {}
+[3.321260] (-) TimerEvent: {}
+[3.422319] (-) TimerEvent: {}
+[3.523353] (-) TimerEvent: {}
+[3.624308] (-) TimerEvent: {}
+[3.725351] (-) TimerEvent: {}
+[3.826338] (-) TimerEvent: {}
+[3.904481] (amr_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.926473] (-) TimerEvent: {}
+[3.973814] (amr_interfaces) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[4.026623] (-) TimerEvent: {}
+[4.042018] (amr_interfaces) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[4.042599] (amr_interfaces) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[4.042916] (amr_interfaces) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.10.so\n'}
+[4.126859] (-) TimerEvent: {}
+[4.227663] (-) TimerEvent: {}
+[4.328494] (-) TimerEvent: {}
+[4.429572] (-) TimerEvent: {}
+[4.530593] (-) TimerEvent: {}
+[4.541618] (amr_interfaces) StdoutLine: {'line': b'-- Configuring done\n'}
+[4.630944] (-) TimerEvent: {}
+[4.731863] (-) TimerEvent: {}
+[4.832804] (-) TimerEvent: {}
+[4.905715] (amr_interfaces) StdoutLine: {'line': b'-- Generating done\n'}
+[4.932998] (-) TimerEvent: {}
+[4.951505] (amr_interfaces) StdoutLine: {'line': b'-- Build files have been written to: /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces\n'}
+[5.033375] (-) TimerEvent: {}
+[5.039279] (amr_interfaces) StdoutLine: {'line': b'[  1%] \x1b[34m\x1b[1mGenerating C code for ROS interfaces\x1b[0m\n'}
+[5.072618] (amr_interfaces) StdoutLine: {'line': b'[  3%] \x1b[34m\x1b[1mGenerating Rust code for ROS interfaces\x1b[0m\n'}
+[5.073562] (amr_interfaces) StdoutLine: {'line': b'[  4%] \x1b[34m\x1b[1mGenerating C++ code for ROS interfaces\x1b[0m\n'}
+[5.126625] (amr_interfaces) StdoutLine: {'line': b'[  4%] Built target ament_cmake_python_copy_amr_interfaces\n'}
+[5.133555] (-) TimerEvent: {}
+[5.234474] (-) TimerEvent: {}
+[5.335449] (-) TimerEvent: {}
+[5.436444] (-) TimerEvent: {}
+[5.537457] (-) TimerEvent: {}
+[5.638457] (-) TimerEvent: {}
+[5.739333] (-) TimerEvent: {}
+[5.827825] (amr_interfaces) StdoutLine: {'line': b'running egg_info\n'}
+[5.830165] (amr_interfaces) StdoutLine: {'line': b'writing amr_interfaces.egg-info/PKG-INFO\n'}
+[5.830898] (amr_interfaces) StdoutLine: {'line': b'writing dependency_links to amr_interfaces.egg-info/dependency_links.txt\n'}
+[5.831711] (amr_interfaces) StdoutLine: {'line': b'writing top-level names to amr_interfaces.egg-info/top_level.txt\n'}
+[5.839154] (amr_interfaces) StdoutLine: {'line': b"reading manifest file 'amr_interfaces.egg-info/SOURCES.txt'\n"}
+[5.839530] (-) TimerEvent: {}
+[5.842097] (amr_interfaces) StdoutLine: {'line': b"writing manifest file 'amr_interfaces.egg-info/SOURCES.txt'\n"}
+[5.939824] (-) TimerEvent: {}
+[5.968294] (amr_interfaces) StdoutLine: {'line': b'[  4%] Built target ament_cmake_python_build_amr_interfaces_egg\n'}
+[6.040004] (-) TimerEvent: {}
+[6.140980] (-) TimerEvent: {}
+[6.198926] (amr_interfaces) StdoutLine: {'line': b'[  4%] Built target amr_interfaces__rs\n'}
+[6.241225] (-) TimerEvent: {}
+[6.342143] (-) TimerEvent: {}
+[6.442997] (-) TimerEvent: {}
+[6.543892] (-) TimerEvent: {}
+[6.645112] (-) TimerEvent: {}
+[6.746521] (-) TimerEvent: {}
+[6.770097] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_generator_c\x1b[0m\n'}
+[6.822139] (amr_interfaces) StdoutLine: {'line': b'[  4%] Built target amr_interfaces__cpp\n'}
+[6.824359] (amr_interfaces) StdoutLine: {'line': b'[  6%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/msg/detail/ai_mode__functions.c.o\x1b[0m\n'}
+[6.831813] (amr_interfaces) StdoutLine: {'line': b'[  7%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/srv/detail/set_ai_mode__functions.c.o\x1b[0m\n'}
+[6.834821] (amr_interfaces) StdoutLine: {'line': b'[  9%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/msg/detail/ai_alert__functions.c.o\x1b[0m\n'}
+[6.837611] (amr_interfaces) StdoutLine: {'line': b'[ 10%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/srv/detail/select_zone__functions.c.o\x1b[0m\n'}
+[6.838625] (amr_interfaces) StdoutLine: {'line': b'[ 12%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/msg/detail/person_target__functions.c.o\x1b[0m\n'}
+[6.846684] (-) TimerEvent: {}
+[6.864398] (amr_interfaces) StdoutLine: {'line': b'[ 14%] \x1b[34m\x1b[1mGenerating C++ type support for eProsima Fast-RTPS\x1b[0m\n'}
+[6.946919] (-) TimerEvent: {}
+[7.048292] (-) TimerEvent: {}
+[7.150289] (-) TimerEvent: {}
+[7.246050] (amr_interfaces) StdoutLine: {'line': b'[ 15%] \x1b[34m\x1b[1mGenerating C++ introspection for ROS interfaces\x1b[0m\n'}
+[7.248531] (amr_interfaces) StdoutLine: {'line': b'[ 17%] \x1b[34m\x1b[1mGenerating C++ type support dispatch for ROS interfaces\x1b[0m\n'}
+[7.250372] (-) TimerEvent: {}
+[7.256077] (amr_interfaces) StdoutLine: {'line': b'[ 18%] \x1b[32m\x1b[1mLinking C shared library libamr_interfaces__rosidl_generator_c.so\x1b[0m\n'}
+[7.350650] (-) TimerEvent: {}
+[7.451705] (-) TimerEvent: {}
+[7.500173] (amr_interfaces) StdoutLine: {'line': b'[ 18%] Built target amr_interfaces__rosidl_generator_c\n'}
+[7.531506] (amr_interfaces) StdoutLine: {'line': b'[ 20%] \x1b[34m\x1b[1mGenerating C type support dispatch for ROS interfaces\x1b[0m\n'}
+[7.533157] (amr_interfaces) StdoutLine: {'line': b'[ 21%] \x1b[34m\x1b[1mGenerating C introspection for ROS interfaces\x1b[0m\n'}
+[7.548693] (amr_interfaces) StdoutLine: {'line': b'[ 23%] \x1b[34m\x1b[1mGenerating C type support for eProsima Fast-RTPS\x1b[0m\n'}
+[7.551834] (-) TimerEvent: {}
+[7.652685] (-) TimerEvent: {}
+[7.753705] (-) TimerEvent: {}
+[7.854755] (-) TimerEvent: {}
+[7.955818] (-) TimerEvent: {}
+[8.056854] (-) TimerEvent: {}
+[8.157934] (-) TimerEvent: {}
+[8.259111] (-) TimerEvent: {}
+[8.360262] (-) TimerEvent: {}
+[8.461311] (-) TimerEvent: {}
+[8.562463] (-) TimerEvent: {}
+[8.622754] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_cpp\x1b[0m\n'}
+[8.662710] (-) TimerEvent: {}
+[8.701482] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_fastrtps_cpp\x1b[0m\n'}
+[8.762942] (-) TimerEvent: {}
+[8.772733] (amr_interfaces) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/msg/ai_alert__type_support.cpp.o\x1b[0m\n'}
+[8.804126] (amr_interfaces) StdoutLine: {'line': b'[ 26%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/msg/detail/dds_fastrtps/ai_alert__type_support.cpp.o\x1b[0m\n'}
+[8.863239] (-) TimerEvent: {}
+[8.964440] (-) TimerEvent: {}
+[9.027037] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_introspection_cpp\x1b[0m\n'}
+[9.063259] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_c\x1b[0m\n'}
+[9.064610] (-) TimerEvent: {}
+[9.103994] (amr_interfaces) StdoutLine: {'line': b'[ 28%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_alert__type_support.cpp.o\x1b[0m\n'}
+[9.135215] (amr_interfaces) StdoutLine: {'line': b'[ 29%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/msg/ai_alert__type_support.cpp.o\x1b[0m\n'}
+[9.164979] (-) TimerEvent: {}
+[9.266344] (-) TimerEvent: {}
+[9.308146] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_introspection_c\x1b[0m\n'}
+[9.357361] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_fastrtps_c\x1b[0m\n'}
+[9.366613] (-) TimerEvent: {}
+[9.368636] (amr_interfaces) StdoutLine: {'line': b'[ 32%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/msg/ai_mode__type_support.cpp.o\x1b[0m\n'}
+[9.369355] (amr_interfaces) StdoutLine: {'line': b'[ 32%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/msg/detail/ai_alert__type_support.c.o\x1b[0m\n'}
+[9.450317] (amr_interfaces) StdoutLine: {'line': b'[ 34%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__type_support_c.cpp.o\x1b[0m\n'}
+[9.465172] (amr_interfaces) StdoutLine: {'line': b'[ 35%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/msg/person_target__type_support.cpp.o\x1b[0m\n'}
+[9.467275] (-) TimerEvent: {}
+[9.563695] (amr_interfaces) StdoutLine: {'line': b'[ 37%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/msg/detail/ai_mode__type_support.c.o\x1b[0m\n'}
+[9.567511] (-) TimerEvent: {}
+[9.595697] (amr_interfaces) StdoutLine: {'line': b'[ 39%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/srv/set_ai_mode__type_support.cpp.o\x1b[0m\n'}
+[9.667820] (-) TimerEvent: {}
+[9.769523] (-) TimerEvent: {}
+[9.782833] (amr_interfaces) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/msg/detail/person_target__type_support.c.o\x1b[0m\n'}
+[9.861645] (amr_interfaces) StdoutLine: {'line': b'[ 42%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/srv/select_zone__type_support.cpp.o\x1b[0m\n'}
+[9.869374] (-) TimerEvent: {}
+[9.971854] (-) TimerEvent: {}
+[10.073914] (-) TimerEvent: {}
+[10.175120] (-) TimerEvent: {}
+[10.276282] (-) TimerEvent: {}
+[10.315069] (amr_interfaces) StdoutLine: {'line': b'[ 45%] \x1b[32m\x1b[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_c.so\x1b[0m\n'}
+[10.316356] (amr_interfaces) StdoutLine: {'line': b'[ 45%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/msg/ai_mode__type_support.cpp.o\x1b[0m\n'}
+[10.362376] (amr_interfaces) StdoutLine: {'line': b'[ 46%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/srv/detail/set_ai_mode__type_support.c.o\x1b[0m\n'}
+[10.376660] (-) TimerEvent: {}
+[10.478723] (-) TimerEvent: {}
+[10.500042] (amr_interfaces) StdoutLine: {'line': b'[ 46%] Built target amr_interfaces__rosidl_typesupport_c\n'}
+[10.534902] (amr_interfaces) StdoutLine: {'line': b'[ 48%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/msg/person_target__type_support.cpp.o\x1b[0m\n'}
+[10.551634] (amr_interfaces) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_mode__type_support.cpp.o\x1b[0m\n'}
+[10.555895] (amr_interfaces) StdoutLine: {'line': b'[ 51%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/srv/detail/select_zone__type_support.c.o\x1b[0m\n'}
+[10.579013] (-) TimerEvent: {}
+[10.580908] (amr_interfaces) StdoutLine: {'line': b'[ 53%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_mode__type_support_c.cpp.o\x1b[0m\n'}
+[10.667066] (amr_interfaces) StdoutLine: {'line': b'[ 54%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/msg/detail/dds_fastrtps/ai_mode__type_support.cpp.o\x1b[0m\n'}
+[10.679324] (-) TimerEvent: {}
+[10.700343] (amr_interfaces) StdoutLine: {'line': b'[ 56%] \x1b[32m\x1b[1mLinking C shared library libamr_interfaces__rosidl_typesupport_introspection_c.so\x1b[0m\n'}
+[10.779610] (-) TimerEvent: {}
+[10.862438] (amr_interfaces) StdoutLine: {'line': b'[ 56%] Built target amr_interfaces__rosidl_typesupport_introspection_c\n'}
+[10.880158] (-) TimerEvent: {}
+[10.936373] (amr_interfaces) StdoutLine: {'line': b'[ 57%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/person_target__type_support_c.cpp.o\x1b[0m\n'}
+[10.980559] (-) TimerEvent: {}
+[11.083071] (-) TimerEvent: {}
+[11.185528] (-) TimerEvent: {}
+[11.287801] (-) TimerEvent: {}
+[11.292513] (amr_interfaces) StdoutLine: {'line': b'[ 59%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/msg/detail/dds_fastrtps/person_target__type_support.cpp.o\x1b[0m\n'}
+[11.388149] (-) TimerEvent: {}
+[11.490175] (-) TimerEvent: {}
+[11.531449] (amr_interfaces) StdoutLine: {'line': b'[ 60%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/srv/set_ai_mode__type_support.cpp.o\x1b[0m\n'}
+[11.590511] (-) TimerEvent: {}
+[11.692337] (-) TimerEvent: {}
+[11.727195] (amr_interfaces) StdoutLine: {'line': b'[ 62%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/srv/detail/dds_fastrtps/set_ai_mode__type_support.cpp.o\x1b[0m\n'}
+[11.792704] (-) TimerEvent: {}
+[11.894685] (-) TimerEvent: {}
+[11.924708] (amr_interfaces) StdoutLine: {'line': b'[ 64%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/person_target__type_support.cpp.o\x1b[0m\n'}
+[11.995000] (-) TimerEvent: {}
+[12.092216] (amr_interfaces) StdoutLine: {'line': b'[ 65%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/srv/detail/set_ai_mode__type_support.cpp.o\x1b[0m\n'}
+[12.095493] (-) TimerEvent: {}
+[12.198291] (-) TimerEvent: {}
+[12.199860] (amr_interfaces) StdoutLine: {'line': b'[ 67%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/srv/detail/set_ai_mode__type_support_c.cpp.o\x1b[0m\n'}
+[12.298590] (-) TimerEvent: {}
+[12.403843] (-) TimerEvent: {}
+[12.505915] (-) TimerEvent: {}
+[12.588277] (amr_interfaces) StdoutLine: {'line': b'[ 68%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/srv/detail/select_zone__type_support_c.cpp.o\x1b[0m\n'}
+[12.606198] (-) TimerEvent: {}
+[12.690361] (amr_interfaces) StdoutLine: {'line': b'[ 70%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/srv/select_zone__type_support.cpp.o\x1b[0m\n'}
+[12.706526] (-) TimerEvent: {}
+[12.807783] (-) TimerEvent: {}
+[12.909034] (-) TimerEvent: {}
+[13.011397] (-) TimerEvent: {}
+[13.113693] (-) TimerEvent: {}
+[13.207691] (amr_interfaces) StdoutLine: {'line': b'[ 71%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/srv/detail/select_zone__type_support.cpp.o\x1b[0m\n'}
+[13.213995] (-) TimerEvent: {}
+[13.315237] (-) TimerEvent: {}
+[13.348829] (amr_interfaces) StdoutLine: {'line': b'[ 73%] \x1b[32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/srv/detail/dds_fastrtps/select_zone__type_support.cpp.o\x1b[0m\n'}
+[13.415574] (-) TimerEvent: {}
+[13.516798] (-) TimerEvent: {}
+[13.572829] (amr_interfaces) StdoutLine: {'line': b'[ 75%] \x1b[32m\x1b[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_cpp.so\x1b[0m\n'}
+[13.617082] (-) TimerEvent: {}
+[13.716504] (amr_interfaces) StdoutLine: {'line': b'[ 75%] Built target amr_interfaces__rosidl_typesupport_cpp\n'}
+[13.717793] (-) TimerEvent: {}
+[13.784570] (amr_interfaces) StdoutLine: {'line': b'[ 76%] \x1b[32m\x1b[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_fastrtps_c.so\x1b[0m\n'}
+[13.818121] (-) TimerEvent: {}
+[13.919501] (-) TimerEvent: {}
+[14.020761] (-) TimerEvent: {}
+[14.023164] (amr_interfaces) StdoutLine: {'line': b'[ 76%] Built target amr_interfaces__rosidl_typesupport_fastrtps_c\n'}
+[14.121032] (-) TimerEvent: {}
+[14.222265] (-) TimerEvent: {}
+[14.323450] (-) TimerEvent: {}
+[14.400924] (amr_interfaces) StdoutLine: {'line': b'[ 78%] \x1b[32m\x1b[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_introspection_cpp.so\x1b[0m\n'}
+[14.423736] (-) TimerEvent: {}
+[14.524906] (-) TimerEvent: {}
+[14.584841] (amr_interfaces) StdoutLine: {'line': b'[ 79%] \x1b[32m\x1b[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_fastrtps_cpp.so\x1b[0m\n'}
+[14.592615] (amr_interfaces) StdoutLine: {'line': b'[ 79%] Built target amr_interfaces__rosidl_typesupport_introspection_cpp\n'}
+[14.625078] (-) TimerEvent: {}
+[14.726685] (-) TimerEvent: {}
+[14.827810] (-) TimerEvent: {}
+[14.838211] (amr_interfaces) StdoutLine: {'line': b'[ 79%] Built target amr_interfaces__rosidl_typesupport_fastrtps_cpp\n'}
+[14.894839] (amr_interfaces) StdoutLine: {'line': b'[ 79%] Built target amr_interfaces\n'}
+[14.928033] (-) TimerEvent: {}
+[14.951644] (amr_interfaces) StdoutLine: {'line': b'[ 81%] \x1b[34m\x1b[1mGenerating Python code for ROS interfaces\x1b[0m\n'}
+[15.028171] (-) TimerEvent: {}
+[15.129088] (-) TimerEvent: {}
+[15.230160] (-) TimerEvent: {}
+[15.331198] (-) TimerEvent: {}
+[15.432192] (-) TimerEvent: {}
+[15.533190] (-) TimerEvent: {}
+[15.634080] (-) TimerEvent: {}
+[15.734989] (-) TimerEvent: {}
+[15.835885] (-) TimerEvent: {}
+[15.936646] (-) TimerEvent: {}
+[16.037591] (-) TimerEvent: {}
+[16.138489] (-) TimerEvent: {}
+[16.239380] (-) TimerEvent: {}
+[16.340255] (-) TimerEvent: {}
+[16.441162] (-) TimerEvent: {}
+[16.542066] (-) TimerEvent: {}
+[16.642965] (-) TimerEvent: {}
+[16.743939] (-) TimerEvent: {}
+[16.844942] (-) TimerEvent: {}
+[16.945979] (-) TimerEvent: {}
+[17.046943] (-) TimerEvent: {}
+[17.147884] (-) TimerEvent: {}
+[17.248907] (-) TimerEvent: {}
+[17.313804] (amr_interfaces) StdoutLine: {'line': b'[ 81%] Built target amr_interfaces__py\n'}
+[17.349123] (-) TimerEvent: {}
+[17.363431] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_generator_py\x1b[0m\n'}
+[17.409623] (amr_interfaces) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/msg/_person_target_s.c.o\x1b[0m\n'}
+[17.410714] (amr_interfaces) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/msg/_ai_mode_s.c.o\x1b[0m\n'}
+[17.410982] (amr_interfaces) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/srv/_set_ai_mode_s.c.o\x1b[0m\n'}
+[17.411183] (amr_interfaces) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/msg/_ai_alert_s.c.o\x1b[0m\n'}
+[17.421478] (amr_interfaces) StdoutLine: {'line': b'[ 89%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/srv/_select_zone_s.c.o\x1b[0m\n'}
+[17.449422] (-) TimerEvent: {}
+[17.550595] (-) TimerEvent: {}
+[17.651809] (-) TimerEvent: {}
+[17.753006] (-) TimerEvent: {}
+[17.854285] (-) TimerEvent: {}
+[17.858542] (amr_interfaces) StdoutLine: {'line': b'[ 90%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/amr_interfaces/libamr_interfaces__rosidl_generator_py.so\x1b[0m\n'}
+[17.954544] (-) TimerEvent: {}
+[17.971372] (amr_interfaces) StdoutLine: {'line': b'[ 90%] Built target amr_interfaces__rosidl_generator_py\n'}
+[18.003634] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_fastrtps_c__pyext\x1b[0m\n'}
+[18.004268] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_introspection_c__pyext\x1b[0m\n'}
+[18.007306] (amr_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_c__pyext\x1b[0m\n'}
+[18.039848] (amr_interfaces) StdoutLine: {'line': b'[ 95%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_c.c.o\x1b[0m\n'}
+[18.040797] (amr_interfaces) StdoutLine: {'line': b'[ 95%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o\x1b[0m\n'}
+[18.041076] (amr_interfaces) StdoutLine: {'line': b'[ 95%] \x1b[32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o\x1b[0m\n'}
+[18.054820] (-) TimerEvent: {}
+[18.156943] (-) TimerEvent: {}
+[18.258190] (-) TimerEvent: {}
+[18.353852] (amr_interfaces) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/amr_interfaces/amr_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\x1b[0m\n'}
+[18.354702] (amr_interfaces) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\x1b[0m\n'}
+[18.354942] (amr_interfaces) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/amr_interfaces/amr_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\x1b[0m\n'}
+[18.358341] (-) TimerEvent: {}
+[18.459398] (-) TimerEvent: {}
+[18.472233] (amr_interfaces) StdoutLine: {'line': b'[100%] Built target amr_interfaces__rosidl_typesupport_introspection_c__pyext\n'}
+[18.473054] (amr_interfaces) StdoutLine: {'line': b'[100%] Built target amr_interfaces__rosidl_typesupport_fastrtps_c__pyext\n'}
+[18.473335] (amr_interfaces) StdoutLine: {'line': b'[100%] Built target amr_interfaces__rosidl_typesupport_c__pyext\n'}
+[18.509008] (amr_interfaces) CommandEnded: {'returncode': 0}
+[18.513156] (amr_interfaces) JobProgress: {'identifier': 'amr_interfaces', 'progress': 'install'}
+[18.514050] (amr_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.224 47912 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '6'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.224 47912 192.168.0.184 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[18.538887] (amr_interfaces) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[18.539795] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/rosidl_interfaces/amr_interfaces\n'}
+[18.540124] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces\n'}
+[18.540325] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg\n'}
+[18.540576] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_generator_c__visibility_control.h\n'}
+[18.540752] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_mode.h\n'}
+[18.541000] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail\n'}
+[18.541246] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__functions.c\n'}
+[18.541419] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__functions.h\n'}
+[18.541654] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__struct.h\n'}
+[18.541878] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__struct.h\n'}
+[18.542036] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__functions.h\n'}
+[18.542260] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__functions.c\n'}
+[18.542762] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__struct.h\n'}
+[18.543088] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__type_support.h\n'}
+[18.543356] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__type_support.h\n'}
+[18.543629] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__functions.c\n'}
+[18.544317] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__type_support.h\n'}
+[18.544622] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__functions.h\n'}
+[18.544949] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_alert.h\n'}
+[18.545855] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/person_target.h\n'}
+[18.546269] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv\n'}
+[18.546709] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/select_zone.h\n'}
+[18.546997] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/set_ai_mode.h\n'}
+[18.547197] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail\n'}
+[18.547363] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__functions.c\n'}
+[18.547554] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__functions.h\n'}
+[18.547807] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__functions.h\n'}
+[18.548159] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__functions.c\n'}
+[18.548509] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__type_support.h\n'}
+[18.548823] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__type_support.h\n'}
+[18.549180] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__struct.h\n'}
+[18.549657] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__struct.h\n'}
+[18.549980] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/library_path.sh\n'}
+[18.550213] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/library_path.dsv\n'}
+[18.550829] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_c.so\n'}
+[18.551849] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_c.so" to ""\n'}
+[18.552064] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces\n'}
+[18.552293] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg\n'}
+[18.552505] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[18.552679] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail\n'}
+[18.552867] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_fastrtps_c.h\n'}
+[18.553046] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_fastrtps_c.h\n'}
+[18.553238] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_fastrtps_c.h\n'}
+[18.553458] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv\n'}
+[18.553626] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail\n'}
+[18.553779] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_fastrtps_c.h\n'}
+[18.553965] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_fastrtps_c.h\n'}
+[18.554442] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_c.so\n'}
+[18.555400] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[18.555604] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces\n'}
+[18.555811] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg\n'}
+[18.556025] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[18.556186] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail\n'}
+[18.556372] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__type_support.c\n'}
+[18.556528] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_introspection_c.h\n'}
+[18.556721] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_introspection_c.h\n'}
+[18.556923] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__type_support.c\n'}
+[18.557291] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__type_support.c\n'}
+[18.557640] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_introspection_c.h\n'}
+[18.557932] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv\n'}
+[18.558146] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail\n'}
+[18.558310] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_introspection_c.h\n'}
+[18.558495] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__type_support.c\n'}
+[18.558811] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__type_support.c\n'}
+[18.559216] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_introspection_c.h\n'}
+[18.559383] (-) TimerEvent: {}
+[18.559878] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_c.so\n'}
+[18.560726] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_c.so" to ""\n'}
+[18.561034] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_c.so\n'}
+[18.561868] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_c.so" to ""\n'}
+[18.562138] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces\n'}
+[18.562331] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg\n'}
+[18.562497] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_mode.hpp\n'}
+[18.562693] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_alert.hpp\n'}
+[18.562864] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[18.563058] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail\n'}
+[18.563222] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__traits.hpp\n'}
+[18.563419] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__struct.hpp\n'}
+[18.563683] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__builder.hpp\n'}
+[18.564188] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__type_support.hpp\n'}
+[18.564521] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__builder.hpp\n'}
+[18.564844] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__traits.hpp\n'}
+[18.565183] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__type_support.hpp\n'}
+[18.565493] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__struct.hpp\n'}
+[18.565845] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__type_support.hpp\n'}
+[18.566184] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__struct.hpp\n'}
+[18.566518] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__builder.hpp\n'}
+[18.566843] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__traits.hpp\n'}
+[18.567184] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/person_target.hpp\n'}
+[18.567477] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv\n'}
+[18.567661] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/set_ai_mode.hpp\n'}
+[18.567904] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/select_zone.hpp\n'}
+[18.568190] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail\n'}
+[18.568371] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__builder.hpp\n'}
+[18.568603] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__type_support.hpp\n'}
+[18.568914] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__builder.hpp\n'}
+[18.569236] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__traits.hpp\n'}
+[18.569868] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__traits.hpp\n'}
+[18.570210] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__type_support.hpp\n'}
+[18.570517] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__struct.hpp\n'}
+[18.570854] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__struct.hpp\n'}
+[18.571413] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces\n'}
+[18.571685] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg\n'}
+[18.571855] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail\n'}
+[18.572053] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[18.572208] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[18.572420] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/dds_fastrtps\n'}
+[18.572578] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[18.572771] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[18.572999] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv\n'}
+[18.573210] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail\n'}
+[18.573409] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[18.573587] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[18.573743] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/dds_fastrtps\n'}
+[18.583120] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_cpp.so\n'}
+[18.584545] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[18.584863] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces\n'}
+[18.585058] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg\n'}
+[18.585298] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail\n'}
+[18.585473] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_introspection_cpp.hpp\n'}
+[18.585701] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__type_support.cpp\n'}
+[18.585906] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__type_support.cpp\n'}
+[18.586069] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_introspection_cpp.hpp\n'}
+[18.586270] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_introspection_cpp.hpp\n'}
+[18.586476] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__type_support.cpp\n'}
+[18.586774] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv\n'}
+[18.586961] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail\n'}
+[18.587147] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_introspection_cpp.hpp\n'}
+[18.587327] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_introspection_cpp.hpp\n'}
+[18.587626] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__type_support.cpp\n'}
+[18.587993] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__type_support.cpp\n'}
+[18.608938] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_cpp.so\n'}
+[18.609925] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[18.611204] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_cpp.so\n'}
+[18.612313] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_cpp.so" to ""\n'}
+[18.612679] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/pythonpath.sh\n'}
+[18.612924] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/pythonpath.dsv\n'}
+[18.613194] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces-0.0.1-py3.10.egg-info\n'}
+[18.613451] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces-0.0.1-py3.10.egg-info/SOURCES.txt\n'}
+[18.613686] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces-0.0.1-py3.10.egg-info/PKG-INFO\n'}
+[18.613954] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces-0.0.1-py3.10.egg-info/dependency_links.txt\n'}
+[18.614301] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces-0.0.1-py3.10.egg-info/top_level.txt\n'}
+[18.614736] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces\n'}
+[18.614950] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[18.615463] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[18.615962] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[18.616442] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg\n'}
+[18.616662] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_person_target_s.c\n'}
+[18.616971] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_ai_mode_s.c\n'}
+[18.617396] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_ai_mode.py\n'}
+[18.617795] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_ai_alert.py\n'}
+[18.618225] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_ai_alert_s.c\n'}
+[18.618606] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/__init__.py\n'}
+[18.618998] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_person_target.py\n'}
+[18.619311] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv\n'}
+[18.619556] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/_select_zone.py\n'}
+[18.619879] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/_set_ai_mode.py\n'}
+[18.620452] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/_set_ai_mode_s.c\n'}
+[18.620910] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/__init__.py\n'}
+[18.621217] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/_select_zone_s.c\n'}
+[18.621595] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[18.622062] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_c.c\n'}
+[18.622551] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/libamr_interfaces__rosidl_generator_py.so\n'}
+[18.623116] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[18.623569] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/__init__.py\n'}
+[18.659584] (-) TimerEvent: {}
+[18.748242] (amr_interfaces) StdoutLine: {'line': b"Listing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces'...\n"}
+[18.748985] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/__init__.py'...\n"}
+[18.749258] (amr_interfaces) StdoutLine: {'line': b"Listing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg'...\n"}
+[18.749452] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/__init__.py'...\n"}
+[18.749686] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_ai_alert.py'...\n"}
+[18.749856] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_ai_mode.py'...\n"}
+[18.750021] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/msg/_person_target.py'...\n"}
+[18.750182] (amr_interfaces) StdoutLine: {'line': b"Listing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv'...\n"}
+[18.750344] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/__init__.py'...\n"}
+[18.750505] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/_select_zone.py'...\n"}
+[18.750663] (amr_interfaces) StdoutLine: {'line': b"Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/srv/_set_ai_mode.py'...\n"}
+[18.759706] (-) TimerEvent: {}
+[18.768659] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[18.769749] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[18.770212] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[18.771017] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[18.771450] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[18.772260] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[18.772626] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_py.so\n'}
+[18.773703] (amr_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_py.so" to ""\n'}
+[18.773965] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/rust_packages/amr_interfaces\n'}
+[18.774224] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust\n'}
+[18.774406] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/Cargo.toml\n'}
+[18.774617] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/build.rs\n'}
+[18.774917] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src\n'}
+[18.775191] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/msg\n'}
+[18.775380] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/msg/rmw.rs\n'}
+[18.775639] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/srv\n'}
+[18.775810] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/srv/rmw.rs\n'}
+[18.776016] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/srv.rs\n'}
+[18.776272] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/lib.rs\n'}
+[18.776566] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/msg.rs\n'}
+[18.777042] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiAlert.idl\n'}
+[18.777305] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiMode.idl\n'}
+[18.777707] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/PersonTarget.idl\n'}
+[18.777945] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode.idl\n'}
+[18.778174] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone.idl\n'}
+[18.778364] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiAlert.msg\n'}
+[18.778525] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiMode.msg\n'}
+[18.778761] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/PersonTarget.msg\n'}
+[18.778958] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode.srv\n'}
+[18.779151] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode_Request.msg\n'}
+[18.779360] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode_Response.msg\n'}
+[18.779556] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone.srv\n'}
+[18.779744] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone_Request.msg\n'}
+[18.779894] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone_Response.msg\n'}
+[18.780073] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/package_run_dependencies/amr_interfaces\n'}
+[18.780267] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/parent_prefix_path/amr_interfaces\n'}
+[18.780460] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/ament_prefix_path.sh\n'}
+[18.780657] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/ament_prefix_path.dsv\n'}
+[18.780881] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/path.sh\n'}
+[18.781042] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/path.dsv\n'}
+[18.781417] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.bash\n'}
+[18.781620] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.sh\n'}
+[18.781797] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.zsh\n'}
+[18.781988] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.dsv\n'}
+[18.782146] (amr_interfaces) StdoutLine: {'line': b'-- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/package.dsv\n'}
+[18.782391] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/packages/amr_interfaces\n'}
+[18.783687] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_cExport.cmake\n'}
+[18.783942] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_cExport-noconfig.cmake\n'}
+[18.784725] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[18.784974] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake\n'}
+[18.785571] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cExport.cmake\n'}
+[18.785814] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[18.792853] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cExport.cmake\n'}
+[18.793694] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[18.794732] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_cppExport.cmake\n'}
+[18.795494] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[18.795935] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake\n'}
+[18.796679] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[18.797050] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[18.797814] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cppExport.cmake\n'}
+[18.798197] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[18.799066] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_pyExport.cmake\n'}
+[18.800153] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_pyExport-noconfig.cmake\n'}
+[18.800449] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/rosidl_cmake-extras.cmake\n'}
+[18.800726] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[18.800985] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[18.801329] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[18.801653] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[18.801922] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[18.802175] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[18.802429] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfacesConfig.cmake\n'}
+[18.802678] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfacesConfig-version.cmake\n'}
+[18.802922] (amr_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/package.xml\n'}
+[18.807213] (amr_interfaces) CommandEnded: {'returncode': 0}
+[18.857606] (amr_interfaces) JobEnded: {'identifier': 'amr_interfaces', 'rc': 0}
+[18.861222] (-) TimerEvent: {}
+[18.861745] (amr_ai) JobStarted: {'identifier': 'amr_ai'}
+[18.961572] (-) TimerEvent: {}
+[19.062638] (-) TimerEvent: {}
+[19.163586] (-) TimerEvent: {}
+[19.264480] (-) TimerEvent: {}
+[19.365406] (-) TimerEvent: {}
+[19.466282] (-) TimerEvent: {}
+[19.567205] (-) TimerEvent: {}
+[19.668211] (-) TimerEvent: {}
+[19.769203] (-) TimerEvent: {}
+[19.870204] (-) TimerEvent: {}
+[19.971216] (-) TimerEvent: {}
+[20.072265] (-) TimerEvent: {}
+[20.173247] (-) TimerEvent: {}
+[20.274187] (-) TimerEvent: {}
+[20.375185] (-) TimerEvent: {}
+[20.476208] (-) TimerEvent: {}
+[20.548616] (amr_ai) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/amr_ai', 'build', '--build-base', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build', 'install', '--record', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'huyjetson', 'SSH_CLIENT': '192.168.0.224 47912 22', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'MOTD_SHOWN': 'pam', 'HOME': '/home/huyjetson', 'OLDPWD': '/home/huyjetson/mobile_robot/ros2_ws', 'SSH_TTY': '/dev/pts/0', 'ROS_PYTHON_VERSION': '3', 'PS1': '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$', 'LC_MONETARY': 'vi_VN', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLCON_PREFIX_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install', 'ROS_DISTRO': 'humble', 'LOGNAME': 'huyjetson', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '6', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'LC_ADDRESS': 'vi_VN', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'en_US.UTF-8', 'LC_TELEPHONE': 'vi_VN', 'VIRTUAL_ENV_PROMPT': '(ai_ros_venv)', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_DOMAIN_ID': '0', 'AMENT_PREFIX_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'VIRTUAL_ENV': '/home/huyjetson/mobile_robot/ai_ros_venv', 'PWD': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '192.168.0.224 47912 192.168.0.184 22', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control'}, 'shell': False}
+[20.576362] (-) TimerEvent: {}
+[20.677293] (-) TimerEvent: {}
+[20.778284] (-) TimerEvent: {}
+[20.879288] (-) TimerEvent: {}
+[20.980291] (-) TimerEvent: {}
+[21.081195] (-) TimerEvent: {}
+[21.181960] (-) TimerEvent: {}
+[21.183537] (amr_ai) StdoutLine: {'line': b'running egg_info\n'}
+[21.185468] (amr_ai) StdoutLine: {'line': b'writing ../../build/amr_ai/amr_ai.egg-info/PKG-INFO\n'}
+[21.186463] (amr_ai) StdoutLine: {'line': b'writing dependency_links to ../../build/amr_ai/amr_ai.egg-info/dependency_links.txt\n'}
+[21.186947] (amr_ai) StdoutLine: {'line': b'writing entry points to ../../build/amr_ai/amr_ai.egg-info/entry_points.txt\n'}
+[21.187356] (amr_ai) StdoutLine: {'line': b'writing requirements to ../../build/amr_ai/amr_ai.egg-info/requires.txt\n'}
+[21.187604] (amr_ai) StdoutLine: {'line': b'writing top-level names to ../../build/amr_ai/amr_ai.egg-info/top_level.txt\n'}
+[21.194442] (amr_ai) StdoutLine: {'line': b"reading manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'\n"}
+[21.197452] (amr_ai) StdoutLine: {'line': b"writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'\n"}
+[21.197949] (amr_ai) StdoutLine: {'line': b'running build\n'}
+[21.198146] (amr_ai) StdoutLine: {'line': b'running build_py\n'}
+[21.200363] (amr_ai) StdoutLine: {'line': b'copying amr_ai/core/ai_mode_manager_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core\n'}
+[21.203257] (amr_ai) StdoutLine: {'line': b'running install\n'}
+[21.204134] (amr_ai) StdoutLine: {'line': b'running install_lib\n'}
+[21.207313] (amr_ai) StdoutLine: {'line': b'copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/ai_mode_manager_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core\n'}
+[21.210636] (amr_ai) StdoutLine: {'line': b'byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/ai_mode_manager_node.py to ai_mode_manager_node.cpython-310.pyc\n'}
+[21.218927] (amr_ai) StdoutLine: {'line': b'running install_data\n'}
+[21.219632] (amr_ai) StdoutLine: {'line': b'running install_egg_info\n'}
+[21.224899] (amr_ai) StdoutLine: {'line': b"removing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info' (and everything under it)\n"}
+[21.225938] (amr_ai) StdoutLine: {'line': b'Copying ../../build/amr_ai/amr_ai.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info\n'}
+[21.228335] (amr_ai) StdoutLine: {'line': b'running install_scripts\n'}
+[21.280598] (amr_ai) StdoutLine: {'line': b'Installing ai_detector script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.281494] (amr_ai) StdoutLine: {'line': b'Installing ai_image_probe script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.282028] (-) TimerEvent: {}
+[21.282616] (amr_ai) StdoutLine: {'line': b'Installing ai_mode_manager script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.282955] (amr_ai) StdoutLine: {'line': b'Installing auto_initial_pose script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.283468] (amr_ai) StdoutLine: {'line': b'Installing cmd_vel_safety_mux script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.283741] (amr_ai) StdoutLine: {'line': b'Installing follow_goal script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.283921] (amr_ai) StdoutLine: {'line': b'Installing follow_servo script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.284146] (amr_ai) StdoutLine: {'line': b'Installing operator_gui script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.284403] (amr_ai) StdoutLine: {'line': b'Installing person_tracker script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[21.287043] (amr_ai) StdoutLine: {'line': b"writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log'\n"}
+[21.382314] (-) TimerEvent: {}
+[21.397808] (amr_ai) CommandEnded: {'returncode': 0}
+[21.428782] (amr_ai) JobEnded: {'identifier': 'amr_ai', 'rc': 0}
+[21.431813] (-) EventReactorShutdown: {}

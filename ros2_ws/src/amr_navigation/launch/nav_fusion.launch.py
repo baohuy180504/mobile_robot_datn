@@ -82,50 +82,6 @@ def generate_launch_description():
         }]
     )
 
-    # 3D OctoMap realtime:
-    # - load bản đồ .bt đã lưu
-    # - nhận cloud live qua /octomap_cloud
-    # - publish /octomap_binary, /octomap_full, /occupied_cells_vis_array, /map3d
-    # octomap_server = Node(
-    #     package='octomap_server',
-    #     executable='octomap_server_node',
-    #     name='octomap_server',
-    #     output='screen',
-    #     remappings=[
-    #         ('cloud_in', '/octomap_cloud'),
-    #         ('projected_map', '/map3d'),
-    #     ],
-    #     parameters=[{
-    #         'use_sim_time': False,
-    #         'frame_id': 'map',
-    #         'base_frame_id': 'base_footprint',
-    #         'resolution': 0.05,
-    #         'octomap_path': LaunchConfiguration('octomap'),
-
-    #         'pointcloud_min_z': 0.05,
-    #         'pointcloud_max_z': 2.00,
-    #         'occupancy_min_z': 0.05,
-    #         'occupancy_max_z': 2.00,
-
-    #         'sensor_model.max_range': 3.2,
-    #         'sensor_model.hit': 0.7,
-    #         'sensor_model.miss': 0.4,
-    #         'sensor_model.min': 0.12,
-    #         'sensor_model.max': 0.97,
-
-    #         # Giữ thêm dạng slash để tương thích một số build ROS2 Humble.
-    #         'sensor_model/max_range': 3.2,
-    #         'sensor_model/hit': 0.7,
-    #         'sensor_model/miss': 0.4,
-    #         'sensor_model/min': 0.12,
-    #         'sensor_model/max': 0.97,
-
-    #         'occupancy_threshold': 0.5,
-    #         'compress_map': True,
-    #         'filter_ground': False,
-    #     }]
-    # )
-
     static_octomap_server = Node(
         package='octomap_server',
         executable='octomap_server_node',
@@ -170,14 +126,14 @@ def generate_launch_description():
 
     log_info = LogInfo(msg=[
         '\n',
-        '╔════════════════════════════════════════════════════════════╗\n',
+        '╔═══════════════════════════════════════════════════════════╗\n',
         '║ AMR NAV FUSION - LIVE OCTOMAP                             ║\n',
-        '╠════════════════════════════════════════════════════════════╣\n',
+        '╠═══════════════════════════════════════════════════════════╣\n',
         '║ Nav2       : giữ thông số MPPI + VoxelLayer hiện tại      ║\n',
         '║ Cloud relay: /camera/depth/points -> /octomap_cloud       ║\n',
         '║ OctoMap    : load .bt + update live từ /octomap_cloud     ║\n',
         '║ RViz       : ưu tiên xem /occupied_cells_vis_array        ║\n',
-        '╚════════════════════════════════════════════════════════════╝\n',
+        '╚═══════════════════════════════════════════════════════════╝\n',
     ])
 
     return LaunchDescription([

@@ -119,6 +119,8 @@ struct AiMode_
     5u;
   static constexpr uint8_t EMERGENCY_STOP =
     6u;
+  static constexpr uint8_t LOCALIZING =
+    7u;
 
   // pointer types
   using RawPtr =
@@ -219,6 +221,11 @@ constexpr uint8_t AiMode_<ContainerAllocator>::RETURN_TO_ZONE;
 // static constexpr member variable definitions are only needed in C++14 and below, deprecated in C++17
 template<typename ContainerAllocator>
 constexpr uint8_t AiMode_<ContainerAllocator>::EMERGENCY_STOP;
+#endif  // __cplusplus < 201703L
+#if __cplusplus < 201703L
+// static constexpr member variable definitions are only needed in C++14 and below, deprecated in C++17
+template<typename ContainerAllocator>
+constexpr uint8_t AiMode_<ContainerAllocator>::LOCALIZING;
 #endif  // __cplusplus < 201703L
 
 }  // namespace msg

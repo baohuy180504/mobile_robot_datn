@@ -1,0 +1,78 @@
+[0.000000] (-) TimerEvent: {}
+[0.001331] (-) JobUnselected: {'identifier': 'amr_bringup'}
+[0.001596] (-) JobUnselected: {'identifier': 'amr_control'}
+[0.001960] (-) JobUnselected: {'identifier': 'amr_description'}
+[0.002024] (-) JobUnselected: {'identifier': 'amr_interfaces'}
+[0.002769] (-) JobUnselected: {'identifier': 'amr_navigation'}
+[0.003218] (-) JobUnselected: {'identifier': 'amr_pointcloud_filter'}
+[0.003667] (-) JobUnselected: {'identifier': 'amr_sensors'}
+[0.003886] (-) JobUnselected: {'identifier': 'amr_slam'}
+[0.003982] (-) JobUnselected: {'identifier': 'astra_camera'}
+[0.004075] (-) JobUnselected: {'identifier': 'astra_camera_msgs'}
+[0.004280] (-) JobUnselected: {'identifier': 'explore_lite'}
+[0.004454] (-) JobUnselected: {'identifier': 'explore_lite_msgs'}
+[0.004545] (-) JobUnselected: {'identifier': 'multirobot_map_merge'}
+[0.004625] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.004716] (amr_ai) JobQueued: {'identifier': 'amr_ai', 'dependencies': OrderedDict([('amr_interfaces', '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces')])}
+[0.004832] (amr_ai) JobStarted: {'identifier': 'amr_ai'}
+[0.099832] (-) TimerEvent: {}
+[0.200729] (-) TimerEvent: {}
+[0.301660] (-) TimerEvent: {}
+[0.402583] (-) TimerEvent: {}
+[0.503543] (-) TimerEvent: {}
+[0.604593] (-) TimerEvent: {}
+[0.705586] (-) TimerEvent: {}
+[0.806597] (-) TimerEvent: {}
+[0.907499] (-) TimerEvent: {}
+[1.008445] (-) TimerEvent: {}
+[1.109425] (-) TimerEvent: {}
+[1.210269] (-) TimerEvent: {}
+[1.311036] (-) TimerEvent: {}
+[1.411986] (-) TimerEvent: {}
+[1.512850] (-) TimerEvent: {}
+[1.613650] (-) TimerEvent: {}
+[1.685928] (amr_ai) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/amr_ai', 'build', '--build-base', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build', 'install', '--record', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'huyjetson', 'SSH_CLIENT': '192.168.0.224 47070 22', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'MOTD_SHOWN': 'pam', 'HOME': '/home/huyjetson', 'OLDPWD': '/home/huyjetson/mobile_robot/ros2_ws', 'SSH_TTY': '/dev/pts/0', 'ROS_PYTHON_VERSION': '3', 'PS1': '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$', 'LC_MONETARY': 'vi_VN', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLCON_PREFIX_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install', 'ROS_DISTRO': 'humble', 'LOGNAME': 'huyjetson', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '2', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'LC_ADDRESS': 'vi_VN', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'en_US.UTF-8', 'LC_TELEPHONE': 'vi_VN', 'VIRTUAL_ENV_PROMPT': '(ai_ros_venv)', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_DOMAIN_ID': '0', 'AMENT_PREFIX_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'VIRTUAL_ENV': '/home/huyjetson/mobile_robot/ai_ros_venv', 'PWD': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '192.168.0.224 47070 192.168.0.184 22', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control'}, 'shell': False}
+[1.713748] (-) TimerEvent: {}
+[1.814609] (-) TimerEvent: {}
+[1.915928] (-) TimerEvent: {}
+[2.016964] (-) TimerEvent: {}
+[2.117939] (-) TimerEvent: {}
+[2.218855] (-) TimerEvent: {}
+[2.319763] (-) TimerEvent: {}
+[2.336278] (amr_ai) StdoutLine: {'line': b'running egg_info\n'}
+[2.337999] (amr_ai) StdoutLine: {'line': b'writing ../../build/amr_ai/amr_ai.egg-info/PKG-INFO\n'}
+[2.338947] (amr_ai) StdoutLine: {'line': b'writing dependency_links to ../../build/amr_ai/amr_ai.egg-info/dependency_links.txt\n'}
+[2.339379] (amr_ai) StdoutLine: {'line': b'writing entry points to ../../build/amr_ai/amr_ai.egg-info/entry_points.txt\n'}
+[2.340185] (amr_ai) StdoutLine: {'line': b'writing requirements to ../../build/amr_ai/amr_ai.egg-info/requires.txt\n'}
+[2.340537] (amr_ai) StdoutLine: {'line': b'writing top-level names to ../../build/amr_ai/amr_ai.egg-info/top_level.txt\n'}
+[2.347583] (amr_ai) StdoutLine: {'line': b"reading manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'\n"}
+[2.350574] (amr_ai) StdoutLine: {'line': b"writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'\n"}
+[2.351018] (amr_ai) StdoutLine: {'line': b'running build\n'}
+[2.351222] (amr_ai) StdoutLine: {'line': b'running build_py\n'}
+[2.352792] (amr_ai) StdoutLine: {'line': b'copying amr_ai/web/engineer_web_server.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/web\n'}
+[2.357590] (amr_ai) StdoutLine: {'line': b'running install\n'}
+[2.358485] (amr_ai) StdoutLine: {'line': b'running install_lib\n'}
+[2.361102] (amr_ai) StdoutLine: {'line': b'copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/web/engineer_web_server.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/web\n'}
+[2.364970] (amr_ai) StdoutLine: {'line': b'byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/web/engineer_web_server.py to engineer_web_server.cpython-310.pyc\n'}
+[2.371917] (amr_ai) StdoutLine: {'line': b'running install_data\n'}
+[2.372661] (amr_ai) StdoutLine: {'line': b'running install_egg_info\n'}
+[2.377472] (amr_ai) StdoutLine: {'line': b"removing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info' (and everything under it)\n"}
+[2.378475] (amr_ai) StdoutLine: {'line': b'Copying ../../build/amr_ai/amr_ai.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info\n'}
+[2.381444] (amr_ai) StdoutLine: {'line': b'running install_scripts\n'}
+[2.419904] (-) TimerEvent: {}
+[2.435125] (amr_ai) StdoutLine: {'line': b'Installing ai_detector script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.435864] (amr_ai) StdoutLine: {'line': b'Installing ai_image_probe script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.436468] (amr_ai) StdoutLine: {'line': b'Installing ai_mode_manager script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.436830] (amr_ai) StdoutLine: {'line': b'Installing auto_initial_pose script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.437144] (amr_ai) StdoutLine: {'line': b'Installing auto_localizer script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.437447] (amr_ai) StdoutLine: {'line': b'Installing cmd_vel_safety_mux script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.437734] (amr_ai) StdoutLine: {'line': b'Installing engineer_web script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.438037] (amr_ai) StdoutLine: {'line': b'Installing follow_goal script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.438328] (amr_ai) StdoutLine: {'line': b'Installing follow_servo script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.438610] (amr_ai) StdoutLine: {'line': b'Installing operator_gui script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.439089] (amr_ai) StdoutLine: {'line': b'Installing person_tracker script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai\n'}
+[2.442153] (amr_ai) StdoutLine: {'line': b"writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log'\n"}
+[2.520216] (-) TimerEvent: {}
+[2.550706] (amr_ai) CommandEnded: {'returncode': 0}
+[2.610794] (amr_ai) JobEnded: {'identifier': 'amr_ai', 'rc': 0}
+[2.615945] (-) EventReactorShutdown: {}

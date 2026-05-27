@@ -375,7 +375,7 @@ global_costmap:
       #     raytrace_max_range: 4.0
       #     raytrace_min_range: 0.4
       #     obstacle_max_range: 3.5
-      #     obstacle_min_range: 0.4
+      #     obstacle_min_range: 0.4 
 
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"

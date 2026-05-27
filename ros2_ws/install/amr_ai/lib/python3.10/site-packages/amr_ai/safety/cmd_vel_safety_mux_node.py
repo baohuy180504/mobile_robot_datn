@@ -50,6 +50,7 @@ class CmdVelSafetyMuxNode(Node):
 
         self.declare_parameter('nav_cmd_topic', '/cmd_vel')
         self.declare_parameter('follow_cmd_topic', '/cmd_vel_follow')
+        self.declare_parameter('localize_cmd_topic', '/cmd_vel_localize')
         self.declare_parameter('output_cmd_topic', '/cmd_vel_safe')
 
         self.declare_parameter('mode_topic', '/amr_ai/mode')
@@ -70,6 +71,7 @@ class CmdVelSafetyMuxNode(Node):
 
         self.nav_cmd_topic = self.get_parameter('nav_cmd_topic').value
         self.follow_cmd_topic = self.get_parameter('follow_cmd_topic').value
+        self.localize_cmd_topic = self.get_parameter('localize_cmd_topic').value
         self.output_cmd_topic = self.get_parameter('output_cmd_topic').value
 
         self.mode_topic = self.get_parameter('mode_topic').value
@@ -95,6 +97,9 @@ class CmdVelSafetyMuxNode(Node):
 
         self.last_follow_cmd: Optional[Twist] = None
         self.last_follow_cmd_time = 0.0
+
+        self.last_localize_cmd: Optional[Twist] = None
+        self.last_localize_cmd_time = 0.0
 
         self.last_target: Optional[PersonTarget] = None
         self.last_target_time = 0.0
@@ -136,6 +141,13 @@ class CmdVelSafetyMuxNode(Node):
             10
         )
 
+        self.localize_cmd_sub = self.create_subscription(
+            Twist,
+            self.localize_cmd_topic,
+            self.localize_cmd_callback,
+            10
+        )
+
         self.scan_sub = self.create_subscription(
             LaserScan,
             self.scan_topic,
@@ -147,9 +159,10 @@ class CmdVelSafetyMuxNode(Node):
         self.timer = self.create_timer(period, self.timer_callback)
 
         self.get_logger().warn('Cmd Vel Safety Mux started')
-        self.get_logger().warn(f'Nav2 cmd    : {self.nav_cmd_topic}')
-        self.get_logger().warn(f'Follow cmd  : {self.follow_cmd_topic}')
-        self.get_logger().warn(f'Output cmd  : {self.output_cmd_topic}')
+        self.get_logger().warn(f'Nav2 cmd      : {self.nav_cmd_topic}')
+        self.get_logger().warn(f'Follow cmd    : {self.follow_cmd_topic}')
+        self.get_logger().warn(f'Localize cmd  : {self.localize_cmd_topic}')
+        self.get_logger().warn(f'Output cmd    : {self.output_cmd_topic}')
         self.get_logger().warn(f'Scan topic  : {self.scan_topic}')
         self.get_logger().warn(f'front_center_angle_rad={self.front_center_angle_rad:.2f}')
 
@@ -200,6 +213,10 @@ class CmdVelSafetyMuxNode(Node):
         self.last_follow_cmd = msg
         self.last_follow_cmd_time = time.time()
 
+    def localize_cmd_callback(self, msg: Twist):
+        self.last_localize_cmd = msg
+        self.last_localize_cmd_time = time.time()
+
     def scan_callback(self, msg: LaserScan):
         self.front_min_distance = self.compute_front_min_distance(msg)
         self.last_scan_time = time.time()
@@ -230,6 +247,15 @@ class CmdVelSafetyMuxNode(Node):
                 selected_cmd = self.copy_twist(self.last_nav_cmd)
                 source = 'nav2'
             else:
+                self.publish_zero()
+                return
+
+        elif self.current_mode == AiMode.LOCALIZING:
+            if self.is_command_recent(self.last_localize_cmd_time, now):
+                selected_cmd = self.copy_twist(self.last_localize_cmd)
+                source = 'localize'
+            else:
+                self.log_warn_throttle(0.5, 'Localize cmd timeout: stop')
                 self.publish_zero()
                 return
 

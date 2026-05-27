@@ -181,6 +181,11 @@ impl AiMode {
     #[allow(missing_docs)]
     pub const EMERGENCY_STOP: u8 = 6;
 
+
+    // This constant is not documented.
+    #[allow(missing_docs)]
+    pub const LOCALIZING: u8 = 7;
+
 }
 
 

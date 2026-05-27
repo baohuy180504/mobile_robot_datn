@@ -130,6 +130,7 @@ cmd_vel_safety_mux_node:
   ros__parameters:
     nav_cmd_topic: "/cmd_vel"
     follow_cmd_topic: "/cmd_vel_follow"
+    localize_cmd_topic: "/cmd_vel_localize"
     output_cmd_topic: "/cmd_vel_safe"
 
     mode_topic: "/amr_ai/mode"
@@ -204,3 +205,21 @@ auto_initial_pose_node:
     publish_count: 10
     publish_period_s: 0.3
 
+auto_localizer_node:
+  ros__parameters:
+    global_localization_service: "/reinitialize_global_localization"
+    amcl_pose_topic: "/amcl_pose"
+    cmd_vel_localize_topic: "/cmd_vel_localize"
+    set_mode_service: "/amr_ai/set_mode"
+
+    spin_angular_z: 0.25
+    min_spin_time_s: 8.0
+    max_spin_time_s: 45.0
+    control_rate_hz: 10.0
+
+    cov_x_threshold: 0.25
+    cov_y_threshold: 0.25
+    cov_yaw_threshold: 0.35
+    stable_required_count: 10
+
+    stop_publish_count: 10

@@ -41,7 +41,8 @@ setup(
             'cmd_vel_safety_mux = amr_ai.safety.cmd_vel_safety_mux_node:main',
             'operator_gui = amr_ai.gui.operator_gui_node:main',
             'auto_initial_pose = amr_ai.core.auto_initial_pose_node:main',
-
+            'auto_localizer = amr_ai.core.auto_localizer_node:main',
+            'engineer_web = amr_ai.web.engineer_web_server:main',
         ],
     },
 )

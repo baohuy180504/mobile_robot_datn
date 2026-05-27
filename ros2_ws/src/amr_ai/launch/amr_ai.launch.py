@@ -67,6 +67,12 @@ def generate_launch_description():
         description='Publish HOME initial pose for AMCL on startup'
     )
 
+    start_auto_localizer_arg = DeclareLaunchArgument(
+        'start_auto_localizer',
+        default_value='true',
+        description='Start auto global localizer node'
+    )
+
     start_esp32_gateway_arg = DeclareLaunchArgument(
         'start_esp32_gateway',
         default_value='true',
@@ -138,6 +144,15 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration('start_auto_initial_pose'))
     )
 
+    auto_localizer = Node(
+        package='amr_ai',
+        executable='auto_localizer',
+        name='auto_localizer_node',
+        output='screen',
+        parameters=[params_file],
+        condition=IfCondition(LaunchConfiguration('start_auto_localizer'))
+    )
+
     esp32_gateway = Node(
         package='amr_navigation',
         executable='esp32_waypoint_server.py',
@@ -167,6 +182,7 @@ def generate_launch_description():
         start_cmd_vel_safety_mux_arg,
         start_ai_detector_arg,
         start_auto_initial_pose_arg,
+        start_auto_localizer_arg,
         start_esp32_gateway_arg,
 
         log_info,
@@ -178,5 +194,6 @@ def generate_launch_description():
         cmd_vel_safety_mux,
         ai_detector,
         auto_initial_pose,
+        auto_localizer,
         esp32_gateway,
     ])

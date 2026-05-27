@@ -130,6 +130,11 @@ class OperatorGuiNode(Node):
                 self.follow_button_color = '#ffff00'
                 self.status_text = 'NAVIGATION'
                 self.status_color = '#2563eb'
+            elif mode == AiMode.LOCALIZING:
+                self.follow_button_text = 'FOLLOW'
+                self.follow_button_color = '#ffff00'
+                self.status_text = 'LOCALIZING'
+                self.status_color = '#9333ea'
             elif mode == AiMode.EMERGENCY_STOP:
                 self.follow_button_text = 'FOLLOW'
                 self.follow_button_color = '#ffff00'
@@ -150,6 +155,7 @@ class OperatorGuiNode(Node):
             AiMode.FOLLOW_STOPPED: 'FOLLOW_STOPPED',
             AiMode.RETURN_TO_ZONE: 'RETURN_TO_ZONE',
             AiMode.EMERGENCY_STOP: 'EMERGENCY_STOP',
+            AiMode.LOCALIZING: 'LOCALIZING',
         }
         return mapping.get(mode, f'MODE_{mode}')
 
@@ -189,6 +195,20 @@ class OperatorGuiNode(Node):
             self.cmd_vel_pub.publish(msg)
             time.sleep(0.03)
 
+    def toggle_localization(self):
+        with self.lock:
+            mode = self.current_mode
+
+        self.get_logger().warn(f'LOCALIZATION button pressed. current_mode={mode}')
+        print(f'[GUI] LOCALIZATION button pressed. current_mode={mode}', flush=True)
+
+        if mode == AiMode.LOCALIZING:
+            self.set_status('STOP LOCALIZING', '#f97316')
+            self.call_set_mode('STOP_LOCALIZE')
+        else:
+            self.set_status('START LOCALIZING', '#9333ea')
+            self.call_set_mode('START_LOCALIZE')
+
     def toggle_follow(self):
         with self.lock:
             mode = self.current_mode
@@ -218,6 +238,10 @@ class OperatorGuiNode(Node):
                     self.set_status('FOLLOW STARTED', '#16a34a')
                 elif command == 'STOP_FOLLOW':
                     self.set_status('FOLLOW STOPPED', '#f97316')
+                elif command == 'START_LOCALIZE':
+                    self.set_status('LOCALIZING', '#9333ea')
+                elif command == 'STOP_LOCALIZE':
+                    self.set_status('LOCALIZE STOPPED', '#f97316')
                 else:
                     self.set_status('MODE OK', '#16a34a')
             else:
@@ -384,6 +408,14 @@ class OperatorGuiApp:
             lambda: self.node.select_zone('H')
         )
 
+        self.localization_btn = self.make_button(
+            self.right,
+            'LOCALIZATION',
+            '#9333ea',
+            self.node.toggle_localization,
+            fg='#ffffff'
+        )
+
         self.follow_btn = self.make_button(
             self.right,
             'FOLLOW',
@@ -522,14 +554,29 @@ class OperatorGuiApp:
             height=zone_h
         )
 
-        follow_w = int(rp_w * 0.42)
-        follow_h = 60
+        # LOCALIZATION và FOLLOW nằm cùng một hàng
+        bottom_y = int(rp_h * 0.72)
+        bottom_h = 58
+        bottom_gap = int(rp_w * 0.04)
+
+        local_w = int(rp_w * 0.52)
+        follow_w = int(rp_w * 0.34)
+
+        total_w = local_w + bottom_gap + follow_w
+        start_x = int((rp_w - total_w) / 2)
+
+        self.localization_btn.place(
+            x=start_x,
+            y=bottom_y,
+            width=local_w,
+            height=bottom_h
+        )
 
         self.follow_btn.place(
-            x=int((rp_w - follow_w) / 2),
-            y=int(rp_h * 0.72),
+            x=start_x + local_w + bottom_gap,
+            y=bottom_y,
             width=follow_w,
-            height=follow_h
+            height=bottom_h
         )
 
     def toggle_fullscreen(self):
@@ -589,12 +636,23 @@ class OperatorGuiApp:
         self.status_label.configure(text=status_text, bg=status_color)
         self.follow_btn.configure(text=follow_text, bg=follow_color, activebackground=follow_color)
 
-        # Disable zone buttons while following/detecting
-        zone_enabled = mode not in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]
-        state = tk.NORMAL if zone_enabled else tk.DISABLED
+        # Disable zone buttons while following/detecting/localizing
+        zone_enabled = mode not in [
+            AiMode.FOLLOW_DETECTING,
+            AiMode.FOLLOW_ACTIVE,
+            AiMode.LOCALIZING,
+        ]
+        zone_state = tk.NORMAL if zone_enabled else tk.DISABLED
 
         for btn in [self.zone_a_btn, self.zone_b_btn, self.zone_h_btn]:
-            btn.configure(state=state)
+            btn.configure(state=zone_state)
+
+        # Khi LOCALIZING: khóa FOLLOW, nhưng vẫn cho nhấn LOCALIZATION để STOP_LOCALIZE
+        follow_state = tk.DISABLED if mode == AiMode.LOCALIZING else tk.NORMAL
+        self.follow_btn.configure(state=follow_state)
+
+        if hasattr(self, 'localization_btn'):
+            self.localization_btn.configure(state=tk.NORMAL)
 
     def update_image(self):
         with self.node.lock:

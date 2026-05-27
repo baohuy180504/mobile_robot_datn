@@ -12,6 +12,7 @@ amr_ai/__init__.py
 amr_ai/core/__init__.py
 amr_ai/core/ai_mode_manager_node.py
 amr_ai/core/auto_initial_pose_node.py
+amr_ai/core/auto_localizer_node.py
 amr_ai/core/camera_openni.py
 amr_ai/core/config.py
 amr_ai/core/image_probe_node.py
@@ -35,6 +36,8 @@ amr_ai/safety/cmd_vel_safety_mux_node.py
 amr_ai/tracking/__init__.py
 amr_ai/tracking/person_tracker_node.py
 amr_ai/tracking/reid.py
+amr_ai/web/__init__.py
+amr_ai/web/engineer_web_server.py
 config/ai_params.yaml
 launch/amr_ai.launch.py
 models/fire_smoke_s.engine

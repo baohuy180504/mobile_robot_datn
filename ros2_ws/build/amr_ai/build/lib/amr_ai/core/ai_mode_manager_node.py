@@ -133,6 +133,7 @@ class AiModeManager(Node):
             AiMode.FOLLOW_STOPPED: 'FOLLOW_STOPPED',
             AiMode.RETURN_TO_ZONE: 'RETURN_TO_ZONE',
             AiMode.EMERGENCY_STOP: 'EMERGENCY_STOP',
+            AiMode.LOCALIZING: 'LOCALIZING',
         }
         return names.get(mode, f'UNKNOWN_{mode}')
 
@@ -213,6 +214,18 @@ class AiModeManager(Node):
         if command in ['STOP_FOLLOW', 'FOLLOW_STOP']:
             return self.stop_follow(response)
 
+        if command in ['START_LOCALIZE', 'START_LOCALIZATION', 'LOCALIZE', 'LOCALIZATION']:
+            return self.start_localize(response)
+
+        if command in ['STOP_LOCALIZE', 'STOP_LOCALIZATION', 'CANCEL_LOCALIZE']:
+            return self.stop_localize(response)
+
+        if command in ['LOCALIZE_DONE', 'LOCALIZATION_DONE']:
+            return self.localize_done(response)
+
+        if command in ['LOCALIZE_FAILED', 'LOCALIZATION_FAILED']:
+            return self.localize_failed(response)
+
         if command in ['STOP', 'CANCEL', 'S']:
             return self.stop_or_cancel(response)
 
@@ -232,6 +245,7 @@ class AiModeManager(Node):
             AiMode.FOLLOW_ACTIVE,
             AiMode.FOLLOW_STOPPED,
             AiMode.EMERGENCY_STOP,
+            AiMode.LOCALIZING,
         ]:
             self.set_mode(requested_mode, f'Set directly by service command={command}')
             response.success = True
@@ -350,6 +364,82 @@ class AiModeManager(Node):
         response.current_mode = int(self.current_mode)
         return response
 
+    def start_localize(self, response):
+        # Không cho localize khi đang chạy Nav2 hoặc đang follow
+        if self.current_mode in [
+            AiMode.NAV_TO_ZONE,
+            AiMode.RETURN_TO_ZONE,
+            AiMode.FOLLOW_DETECTING,
+            AiMode.FOLLOW_ACTIVE,
+        ]:
+            response.success = False
+            response.message = f'Cannot start localization while robot is in {self.mode_name(self.current_mode)}'
+            response.current_mode = int(self.current_mode)
+            return response
+
+        if self.current_mode == AiMode.EMERGENCY_STOP:
+            response.success = False
+            response.message = 'Cannot start localization while EMERGENCY_STOP is active'
+            response.current_mode = int(self.current_mode)
+            return response
+
+        self.cancel_current_nav_goal()
+        self.set_mode(
+            AiMode.LOCALIZING,
+            'Auto localization started. Robot will rotate in place.'
+        )
+
+        response.success = True
+        response.message = 'Auto localization started'
+        response.current_mode = int(self.current_mode)
+        return response
+
+    def stop_localize(self, response):
+        if self.current_mode == AiMode.LOCALIZING:
+            self.set_mode(
+                AiMode.IDLE,
+                'Auto localization stopped by command'
+            )
+
+            response.success = True
+            response.message = 'Auto localization stopped'
+            response.current_mode = int(self.current_mode)
+            return response
+
+        response.success = False
+        response.message = f'Robot is not LOCALIZING. Current mode={self.mode_name(self.current_mode)}'
+        response.current_mode = int(self.current_mode)
+        return response
+
+    def localize_done(self, response):
+        if self.current_mode == AiMode.LOCALIZING:
+            self.set_mode(
+                AiMode.IDLE,
+                'Auto localization done'
+            )
+        else:
+            self.set_mode(
+                AiMode.IDLE,
+                'Localization done command received'
+            )
+
+        response.success = True
+        response.message = 'Auto localization done'
+        response.current_mode = int(self.current_mode)
+        return response
+
+    def localize_failed(self, response):
+        if self.current_mode == AiMode.LOCALIZING:
+            self.set_mode(
+                AiMode.IDLE,
+                'Auto localization failed'
+            )
+
+        response.success = True
+        response.message = 'Auto localization failed'
+        response.current_mode = int(self.current_mode)
+        return response
+
     # ==========================================================
     # Select zone service
     # ==========================================================
@@ -383,6 +473,13 @@ class AiModeManager(Node):
         if self.current_mode == AiMode.EMERGENCY_STOP:
             response.accepted = False
             response.message = 'Reject zone command: robot is in EMERGENCY_STOP'
+            self.get_logger().warn(response.message)
+            return response
+
+        # Đang tự định vị thì không nhận lệnh A/B/H
+        if self.current_mode == AiMode.LOCALIZING:
+            response.accepted = False
+            response.message = 'Reject zone command: robot is LOCALIZING'
             self.get_logger().warn(response.message)
             return response
 

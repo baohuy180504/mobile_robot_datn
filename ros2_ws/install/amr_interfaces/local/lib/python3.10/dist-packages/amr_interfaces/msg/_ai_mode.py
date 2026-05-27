@@ -27,6 +27,7 @@ class Metaclass_AiMode(type):
         'FOLLOW_STOPPED': 4,
         'RETURN_TO_ZONE': 5,
         'EMERGENCY_STOP': 6,
+        'LOCALIZING': 7,
     }
 
     @classmethod
@@ -66,6 +67,7 @@ class Metaclass_AiMode(type):
             'FOLLOW_STOPPED': cls.__constants['FOLLOW_STOPPED'],
             'RETURN_TO_ZONE': cls.__constants['RETURN_TO_ZONE'],
             'EMERGENCY_STOP': cls.__constants['EMERGENCY_STOP'],
+            'LOCALIZING': cls.__constants['LOCALIZING'],
         }
 
     @property
@@ -103,6 +105,11 @@ class Metaclass_AiMode(type):
         """Message constant 'EMERGENCY_STOP'."""
         return Metaclass_AiMode.__constants['EMERGENCY_STOP']
 
+    @property
+    def LOCALIZING(self):
+        """Message constant 'LOCALIZING'."""
+        return Metaclass_AiMode.__constants['LOCALIZING']
+
 
 class AiMode(metaclass=Metaclass_AiMode):
     """
@@ -116,6 +123,7 @@ class AiMode(metaclass=Metaclass_AiMode):
       FOLLOW_STOPPED
       RETURN_TO_ZONE
       EMERGENCY_STOP
+      LOCALIZING
     """
 
     __slots__ = [

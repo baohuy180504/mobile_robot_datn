@@ -14,6 +14,7 @@ module amr_interfaces {
       const uint8 FOLLOW_STOPPED = 4;
       const uint8 RETURN_TO_ZONE = 5;
       const uint8 EMERGENCY_STOP = 6;
+      const uint8 LOCALIZING = 7;
     };
     @verbatim (language="comment", text=
       "AMR operation mode")

@@ -1,0 +1,33 @@
+running egg_info
+writing ../../build/amr_ai/amr_ai.egg-info/PKG-INFO
+writing dependency_links to ../../build/amr_ai/amr_ai.egg-info/dependency_links.txt
+writing entry points to ../../build/amr_ai/amr_ai.egg-info/entry_points.txt
+writing requirements to ../../build/amr_ai/amr_ai.egg-info/requires.txt
+writing top-level names to ../../build/amr_ai/amr_ai.egg-info/top_level.txt
+reading manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+running build
+running build_py
+copying amr_ai/core/auto_localizer_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core
+running install
+running install_lib
+copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/core/auto_localizer_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core
+byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/core/auto_localizer_node.py to auto_localizer_node.cpython-310.pyc
+running install_data
+copying launch/amr_ai.launch.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/launch
+copying config/ai_params.yaml -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/share/amr_ai/config
+running install_egg_info
+removing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info' (and everything under it)
+Copying ../../build/amr_ai/amr_ai.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info
+running install_scripts
+Installing ai_detector script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing ai_image_probe script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing ai_mode_manager script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing auto_initial_pose script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing auto_localizer script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing cmd_vel_safety_mux script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing follow_goal script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing follow_servo script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing operator_gui script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+Installing person_tracker script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log'
