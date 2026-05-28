@@ -1580,13 +1580,122 @@ VIEWER_HTML = r'''
       min-width:0;
       overflow:hidden;
     }
-    #mapCanvas {
-      width:100%;
+    .viewer-display-grid {
+      display:grid;
+      grid-template-columns: 60fr 40fr;
+      gap:10px;
       height:calc(100vh - 190px);
+      min-height:420px;
+    }
+    .display-card {
       background:#020617;
       border:1px solid var(--border);
       border-radius:12px;
+      overflow:hidden;
+      min-width:0;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+    }
+    .display-title {
+      position:absolute;
+      top:8px;
+      left:10px;
+      z-index:3;
+      background:rgba(2,6,23,0.72);
+      color:#e5e7eb;
+      border:1px solid rgba(148,163,184,0.28);
+      border-radius:8px;
+      padding:4px 8px;
+      font-size:12px;
+      font-weight:bold;
+      pointer-events:none;
+    }
+    #mapCanvas {
+      width:100%;
+      height:100%;
+      background:#020617;
+      border:0;
+      border-radius:0;
       flex:1;
+    }
+    .camera-panel {
+      display:flex;
+      flex-direction:column;
+      height:100%;
+      background:#020617;
+    }
+    .camera-toolbar {
+      display:grid;
+      grid-template-columns:1fr 92px 92px;
+      gap:8px;
+      padding:10px;
+      border-bottom:1px solid var(--border);
+      background:#111827;
+      z-index:2;
+    }
+    .camera-toolbar input {
+      height:38px;
+      margin:0;
+      font-size:12px;
+    }
+    .camera-toolbar button {
+      height:38px;
+      padding:6px;
+      margin:0;
+      font-size:12px;
+    }
+    .camera-view {
+      position:relative;
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:0;
+      overflow:hidden;
+    }
+    #cameraImage, #cameraCanvas {
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+      display:none;
+    }
+    #cameraStatus {
+      position:absolute;
+      left:10px;
+      bottom:10px;
+      right:10px;
+      color:#facc15;
+      background:rgba(2,6,23,0.72);
+      border:1px solid rgba(148,163,184,0.28);
+      border-radius:8px;
+      padding:6px 8px;
+      font-size:12px;
+      line-height:1.35;
+    }
+
+    .camera-card .display-title {
+      position:static;
+      top:auto;
+      left:auto;
+      margin:10px 10px 0;
+      align-self:flex-start;
+      pointer-events:none;
+    }
+    .camera-toolbar select {
+      height:38px;
+      margin:0;
+      font-size:12px;
+      background:#020617;
+      color:#e5e7eb;
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:0 8px;
+      min-width:0;
+    }
+    @media (max-width:1100px){
+      .viewer-display-grid { grid-template-columns:1fr; height:auto; }
+      .display-card { min-height:360px; }
     }
     .save-bar {
       margin-top:10px;
@@ -1773,7 +1882,28 @@ yaw: -</pre>
   </section>
 
   <section class="right-panel">
-    <canvas id="mapCanvas" width="1200" height="800"></canvas>
+    <div class="viewer-display-grid">
+      <div class="display-card map-card">
+        <div class="display-title">MAP / COSTMAP / TF</div>
+        <canvas id="mapCanvas" width="900" height="720"></canvas>
+      </div>
+
+      <div class="display-card camera-card">
+        <div class="display-title">CAMERA STREAM</div>
+        <div class="camera-panel">
+          <div class="camera-toolbar">
+            <select id="cameraTopicSelect"></select>
+            <button id="startCameraBtn" class="green" onclick="startCameraStream()">CAMERA</button>
+            <button id="stopCameraBtn" class="red" onclick="stopCameraStream()">STOP</button>
+          </div>
+          <div class="camera-view">
+            <img id="cameraImage" alt="camera stream">
+            <canvas id="cameraCanvas" width="640" height="480"></canvas>
+            <div id="cameraStatus">Camera: chưa CONNECT hoặc chưa chọn topic ảnh.</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="save-bar">
       <div id="viewerModeText">Mode: checking...</div>
@@ -1823,6 +1953,16 @@ let manualZeroBurstTimer=null;
 let manualKeyPub=null;
 let manualSpeedPub=null;
 
+// Camera stream state
+let cameraSub=null;
+let cameraActive=false;
+let cameraFrameCount=0;
+let cameraLastTopic="";
+let cameraLastType="";
+let cameraLastRenderMs=0;
+let cameraRawMinIntervalMs=160;
+let cameraCompressedMinIntervalMs=80;
+
 // Keyboard teleop state
 let manualKeySet=new Set();
 let manualKeyboardReady=false;
@@ -1838,6 +1978,12 @@ const logBox=document.getElementById("logBox");
 const poseBox=document.getElementById("poseBox");
 const connState=document.getElementById("connState");
 const loadedTopicList=document.getElementById("loadedTopicList");
+const cameraTopicSelect=document.getElementById("cameraTopicSelect");
+const cameraTopicInput=document.getElementById("cameraTopicInput") || cameraTopicSelect;
+const cameraImage=document.getElementById("cameraImage");
+const cameraCanvas=document.getElementById("cameraCanvas");
+const cameraCtx=cameraCanvas ? cameraCanvas.getContext("2d") : null;
+const cameraStatus=document.getElementById("cameraStatus");
 
 function log(msg){
   const t=new Date().toLocaleTimeString();
@@ -2011,6 +2157,8 @@ async function refreshTopicList(){
   });
 
   log("Loaded "+availableTopics.length+" topics");
+  refreshCameraTopicSelect();
+  autoFillCameraTopic();
 }
 
 function getSelectedTopicInfo(){
@@ -2021,6 +2169,284 @@ function getSelectedTopicInfo(){
 
 
 
+
+
+function isCameraTopicType(type){
+  return ["sensor_msgs/msg/CompressedImage", "sensor_msgs/msg/Image"].includes(type);
+}
+
+function isLikelyCameraTopicName(name){
+  if(!name) return false;
+  const n=name.toLowerCase();
+  return n.includes("image") || n.includes("rgb") || n.includes("color") || n.includes("camera") || n.includes("tracker") || n.includes("alert");
+}
+
+function findCameraTopicInfo(topicName){
+  if(!topicName) return null;
+  return availableTopics.find(t=>t.name===topicName) || null;
+}
+
+function cameraTopicPriority(t){
+  const n=(t.name || "").toLowerCase();
+  const compressed=t.type==="sensor_msgs/msg/CompressedImage" ? 0 : 100;
+  let p=compressed;
+
+  if(n.includes("person_tracker")) p += 0;
+  else if(n.includes("alert")) p += 2;
+  else if(n.includes("color") || n.includes("rgb")) p += 5;
+  else if(n.includes("depth")) p += 50;
+  else p += 20;
+
+  return p;
+}
+
+function getCameraTopicOptions(){
+  return availableTopics
+    .filter(t=>isCameraTopicType(t.type) && isLikelyCameraTopicName(t.name))
+    .sort((a,b)=>cameraTopicPriority(a)-cameraTopicPriority(b) || a.name.localeCompare(b.name));
+}
+
+function refreshCameraTopicSelect(){
+  if(!cameraTopicSelect) return;
+
+  const oldValue=cameraTopicSelect.value;
+  const opts=getCameraTopicOptions();
+  cameraTopicSelect.innerHTML="";
+
+  if(opts.length===0){
+    const opt=document.createElement("option");
+    opt.value="";
+    opt.textContent="Không có Image topic";
+    cameraTopicSelect.appendChild(opt);
+    return;
+  }
+
+  opts.forEach(t=>{
+    const opt=document.createElement("option");
+    opt.value=t.name;
+    opt.textContent=`${t.name} [${t.type.split('/').pop()}]`;
+    cameraTopicSelect.appendChild(opt);
+  });
+
+  if(oldValue && opts.find(t=>t.name===oldValue)){
+    cameraTopicSelect.value=oldValue;
+  }
+}
+
+function autoFillCameraTopic(){
+  refreshCameraTopicSelect();
+
+  if(!cameraTopicInput) return;
+  if(cameraTopicInput.value && cameraTopicInput.value.trim()) return;
+
+  const preferred=[
+    "/amr_ai/debug/person_tracker/image/compressed",
+    "/amr_ai/debug/alert/image/compressed",
+    "/camera/color/image_raw_web/compressed",
+    "/camera/color/image_raw/compressed",
+    "/camera/rgb/image_raw/compressed",
+    "/camera/image_raw/compressed",
+    "/amr_ai/debug/person_tracker/image",
+    "/amr_ai/debug/alert/image",
+    "/camera/color/image_raw",
+    "/camera/rgb/image_raw",
+    "/camera/image_raw"
+  ];
+
+  for(const name of preferred){
+    const info=findCameraTopicInfo(name);
+    if(info && isCameraTopicType(info.type)){
+      cameraTopicInput.value=name;
+      setCameraStatus("Camera topic tự chọn: "+name);
+      return;
+    }
+  }
+
+  const opts=getCameraTopicOptions();
+  if(opts.length>0){
+    cameraTopicInput.value=opts[0].name;
+    const rawNote=opts[0].type==="sensor_msgs/msg/Image" ? ". Topic raw có thể lag, nên dùng topic compressed." : "";
+    setCameraStatus("Camera topic tự chọn: "+opts[0].name+rawNote);
+  }
+}
+
+function setCameraStatus(text){
+  if(cameraStatus){ cameraStatus.textContent=text; }
+}
+
+function bytesToBase64(data){
+  if(!data) return "";
+  if(typeof data === "string") return data;
+
+  let binary="";
+  const chunkSize=0x8000;
+  for(let i=0;i<data.length;i+=chunkSize){
+    binary += String.fromCharCode.apply(null, data.slice(i,i+chunkSize));
+  }
+  return btoa(binary);
+}
+
+function bytesToUint8(data){
+  if(!data) return new Uint8Array(0);
+  if(typeof data === "string"){
+    const bin=atob(data);
+    const out=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) out[i]=bin.charCodeAt(i);
+    return out;
+  }
+  return new Uint8Array(data);
+}
+
+function shouldRenderCameraFrame(isCompressed){
+  const now=performance.now();
+  const minInterval=isCompressed ? cameraCompressedMinIntervalMs : cameraRawMinIntervalMs;
+  if(now-cameraLastRenderMs < minInterval){
+    return false;
+  }
+  cameraLastRenderMs=now;
+  return true;
+}
+
+function renderCompressedCamera(msg){
+  const format=(msg.format || "jpeg").toLowerCase();
+  const mime=format.includes("png") ? "image/png" : "image/jpeg";
+  const b64=bytesToBase64(msg.data);
+
+  if(cameraCanvas){ cameraCanvas.style.display="none"; }
+  if(cameraImage){
+    cameraImage.style.display="block";
+    cameraImage.src=`data:${mime};base64,${b64}`;
+  }
+}
+
+function renderRawCamera(msg){
+  if(!cameraCanvas || !cameraCtx) return;
+
+  const w=msg.width;
+  const h=msg.height;
+  const enc=(msg.encoding || "rgb8").toLowerCase();
+  const src=bytesToUint8(msg.data);
+
+  cameraCanvas.width=w;
+  cameraCanvas.height=h;
+
+  const img=cameraCtx.createImageData(w,h);
+  const step=msg.step || (w*3);
+
+  for(let y=0;y<h;y++){
+    for(let x=0;x<w;x++){
+      const dst=(y*w+x)*4;
+      let r=0,g=0,b=0,a=255;
+
+      if(enc==="rgb8"){
+        const i=y*step+x*3;
+        r=src[i]; g=src[i+1]; b=src[i+2];
+      }else if(enc==="bgr8"){
+        const i=y*step+x*3;
+        b=src[i]; g=src[i+1]; r=src[i+2];
+      }else if(enc==="rgba8"){
+        const i=y*step+x*4;
+        r=src[i]; g=src[i+1]; b=src[i+2]; a=src[i+3];
+      }else if(enc==="bgra8"){
+        const i=y*step+x*4;
+        b=src[i]; g=src[i+1]; r=src[i+2]; a=src[i+3];
+      }else if(enc==="mono8"){
+        const v=src[y*step+x];
+        r=v; g=v; b=v;
+      }else{
+        if(cameraFrameCount%30===0){
+          setCameraStatus("Camera raw encoding chưa hỗ trợ: "+enc+". Nên dùng topic compressed.");
+        }
+        return;
+      }
+
+      img.data[dst]=r;
+      img.data[dst+1]=g;
+      img.data[dst+2]=b;
+      img.data[dst+3]=a;
+    }
+  }
+
+  if(cameraImage){ cameraImage.style.display="none"; }
+  cameraCanvas.style.display="block";
+  cameraCtx.putImageData(img,0,0);
+}
+
+function startCameraStream(){
+  if(!ros){
+    setCameraStatus("Camera: hãy CONNECT ROSBridge trước.");
+    return;
+  }
+
+  refreshCameraTopicSelect();
+
+  const topicName=(cameraTopicInput ? cameraTopicInput.value.trim() : "");
+  if(!topicName){
+    setCameraStatus("Camera: chưa có topic ảnh. Bấm REFRESH LIST hoặc kiểm tra node camera.");
+    return;
+  }
+
+  const info=findCameraTopicInfo(topicName) || {
+    name:topicName,
+    type: topicName.includes("compressed") ? "sensor_msgs/msg/CompressedImage" : "sensor_msgs/msg/Image"
+  };
+
+  if(!isCameraTopicType(info.type)){
+    setCameraStatus(`Camera: topic ${topicName} không phải Image/CompressedImage. Type=${info.type || "unknown"}`);
+    return;
+  }
+
+  stopCameraStream(false);
+
+  cameraLastTopic=topicName;
+  cameraLastType=info.type;
+  cameraFrameCount=0;
+  cameraLastRenderMs=0;
+  cameraActive=true;
+
+  cameraSub=new ROSLIB.Topic({
+    ros:ros,
+    name:topicName,
+    messageType:rosTypeToRoslibType(info.type),
+    throttle_rate: info.type==="sensor_msgs/msg/CompressedImage" ? 80 : 160,
+    queue_length: 1,
+    queue_size: 1
+  });
+
+  cameraSub.subscribe((msg)=>{
+    cameraFrameCount += 1;
+    const isCompressed=cameraLastType==="sensor_msgs/msg/CompressedImage";
+    if(!shouldRenderCameraFrame(isCompressed)) return;
+
+    try{
+      if(isCompressed) renderCompressedCamera(msg);
+      else renderRawCamera(msg);
+
+      if(cameraFrameCount===1 || cameraFrameCount%30===0){
+        const typeLabel=isCompressed ? "compressed" : "raw";
+        setCameraStatus(`Camera: ${cameraLastTopic} | ${typeLabel} | frame ${cameraFrameCount}`);
+      }
+    }catch(e){
+      setCameraStatus("Camera render error: "+e);
+    }
+  });
+
+  const rawNote=info.type==="sensor_msgs/msg/Image" ? " | RAW: dễ lag, nên dùng compressed" : "";
+  setCameraStatus("Camera: đang subscribe "+topicName+rawNote);
+  log("Camera subscribed: "+topicName+" ["+info.type+"]");
+}
+
+function stopCameraStream(updateStatus=true){
+  if(cameraSub){
+    try{ cameraSub.unsubscribe(); }catch(e){}
+  }
+  cameraSub=null;
+  cameraActive=false;
+
+  if(updateStatus){
+    setCameraStatus("Camera: stopped.");
+  }
+}
 
 function updateManualSliderLabels(){
   const lin=document.getElementById("manualLinearSlider");
