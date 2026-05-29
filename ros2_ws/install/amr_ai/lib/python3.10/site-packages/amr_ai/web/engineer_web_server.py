@@ -196,6 +196,60 @@ def viewer():
     return HTMLResponse(VIEWER_HTML)
 
 
+
+@app.post("/api/toggle_follow")
+async def api_toggle_follow(request: Request):
+    """
+    Toggle FOLLOW from web viewer camera panel.
+
+    If current mode is FOLLOW_DETECTING/FOLLOW_ACTIVE -> STOP_FOLLOW
+    Otherwise -> START_FOLLOW
+
+    Service:
+      /amr_ai/set_mode amr_interfaces/srv/SetAiMode
+      request: {mode: 0, command: "..."}
+    """
+    state = get_system_state()
+
+    if not state.get("navigation", False):
+        return JSONResponse({
+            "ok": False,
+            "command": "",
+            "message": "FOLLOW chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.",
+            "state": state,
+        })
+
+    mode_text = get_mode()
+    is_following = (
+        "FOLLOW_DETECTING" in mode_text
+        or "FOLLOW_ACTIVE" in mode_text
+    )
+
+    command = "STOP_FOLLOW" if is_following else "START_FOLLOW"
+
+    service_cmd = (
+        "ros2 service call /amr_ai/set_mode "
+        "amr_interfaces/srv/SetAiMode "
+        f"\"{{mode: 0, command: '{command}'}}\""
+    )
+
+    code, out = run_cmd(service_cmd, timeout=8.0)
+
+    ok = (code == 0) and (
+        "success=True" in out
+        or "success: true" in out
+        or "response:" in out
+        or "SetAiMode_Response" in out
+    )
+
+    return JSONResponse({
+        "ok": ok,
+        "command": command,
+        "message": out if out else ("FOLLOW command sent" if ok else "FOLLOW command failed"),
+        "before_mode": mode_text,
+        "state": state,
+    })
+
 @app.get("/api/status")
 def api_status():
     state = get_system_state()
@@ -1627,7 +1681,7 @@ VIEWER_HTML = r'''
     }
     .camera-toolbar {
       display:grid;
-      grid-template-columns:1fr 92px 92px;
+      grid-template-columns: 1fr;
       gap:8px;
       padding:10px;
       border-bottom:1px solid var(--border);
@@ -1692,6 +1746,25 @@ VIEWER_HTML = r'''
       border-radius:8px;
       padding:0 8px;
       min-width:0;
+    }
+
+    .camera-button-row {
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:8px;
+      width:100%;
+    }
+    .camera-button-row button {
+      width:100%;
+      min-width:0;
+    }
+    #followCameraBtn {
+      background:#facc15;
+      color:#111827;
+    }
+    #followCameraBtn.following {
+      background:#22c55e;
+      color:#ffffff;
     }
     @media (max-width:1100px){
       .viewer-display-grid { grid-template-columns:1fr; height:auto; }
@@ -1893,8 +1966,11 @@ yaw: -</pre>
         <div class="camera-panel">
           <div class="camera-toolbar">
             <select id="cameraTopicSelect"></select>
+            <div class="camera-button-row">
             <button id="startCameraBtn" class="green" onclick="startCameraStream()">CAMERA</button>
             <button id="stopCameraBtn" class="red" onclick="stopCameraStream()">STOP</button>
+            <button id="followCameraBtn" class="yellow" onclick="toggleFollowMode()">FOLLOW</button>
+          </div>
           </div>
           <div class="camera-view">
             <img id="cameraImage" alt="camera stream">
@@ -2371,6 +2447,72 @@ function renderRawCamera(msg){
   cameraCanvas.style.display="block";
   cameraCtx.putImageData(img,0,0);
 }
+
+
+async function toggleFollowMode(){
+  const btn=document.getElementById("followCameraBtn");
+
+  if(!viewerRosConnected){
+    setCameraStatus("FOLLOW: hãy CONNECT ROSBridge trước.");
+    return;
+  }
+
+  if(btn){
+    btn.disabled=true;
+    btn.textContent="WAIT...";
+  }
+
+  setCameraStatus("FOLLOW: đang gửi lệnh tới /amr_ai/set_mode...");
+
+  try{
+    const res=await fetch("/api/toggle_follow",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({})
+    });
+
+    const data=await res.json();
+
+    if(data.ok){
+      if(data.command==="START_FOLLOW"){
+        setCameraStatus("FOLLOW: đã gửi START_FOLLOW. Robot đang chuẩn bị nhận diện/bám người.");
+        if(btn){
+          btn.textContent="FOLLOWING";
+          btn.classList.add("following");
+        }
+      }else if(data.command==="STOP_FOLLOW"){
+        setCameraStatus("FOLLOW: đã gửi STOP_FOLLOW.");
+        if(btn){
+          btn.textContent="FOLLOW";
+          btn.classList.remove("following");
+        }
+      }else{
+        setCameraStatus("FOLLOW: đã gửi lệnh.");
+      }
+      log("FOLLOW command: "+data.command);
+    }else{
+      setCameraStatus("FOLLOW lỗi: "+(data.message || "unknown error"));
+      if(btn){
+        btn.textContent="FOLLOW";
+        btn.classList.remove("following");
+      }
+      log("FOLLOW failed: "+(data.message || "unknown error"));
+    }
+
+  }catch(e){
+    setCameraStatus("FOLLOW lỗi kết nối webserver: "+e);
+    log("FOLLOW error: "+e);
+
+  }finally{
+    if(btn){
+      btn.disabled=false;
+      if(btn.textContent==="WAIT..."){
+        btn.textContent="FOLLOW";
+      }
+    }
+  }
+}
+
 
 function startCameraStream(){
   if(!ros){

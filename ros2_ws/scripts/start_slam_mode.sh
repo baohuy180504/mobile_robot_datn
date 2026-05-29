@@ -12,6 +12,10 @@ export ROS_DOMAIN_ID=0
 export ROS_LOCALHOST_ONLY=0
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
+# SLAM không dùng alert/tracker web streams
+tmux kill-session -t amr_alert_web 2>/dev/null || true
+tmux kill-session -t amr_tracker_web 2>/dev/null || true
+
 if ! tmux has-session -t amr_device 2>/dev/null; then
   echo "Device is not running. Press START first."
   exit 2

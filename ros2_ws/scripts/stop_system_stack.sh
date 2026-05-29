@@ -18,7 +18,10 @@ tmux kill-session -t amr_navigation 2>/dev/null || true
 tmux kill-session -t amr_slam 2>/dev/null || true
 tmux kill-session -t amr_web_teleop 2>/dev/null || true
 tmux kill-session -t amr_device 2>/dev/null || true
-
+# Web camera streams
+tmux kill-session -t amr_camera_web 2>/dev/null || true
+tmux kill-session -t amr_alert_web 2>/dev/null || true
+tmux kill-session -t amr_tracker_web 2>/dev/null || true
 timeout 1 ros2 topic pub /cmd_vel_safe geometry_msgs/msg/Twist "{}" --once >/dev/null 2>&1 || true
 timeout 1 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{}" --once >/dev/null 2>&1 || true
 

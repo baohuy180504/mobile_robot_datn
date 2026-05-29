@@ -98,4 +98,22 @@ start_auto_initial_pose:=true \
 start_auto_localizer:=true \
 start_esp32_gateway:=true" C-m
 
+# ==========================================================
+# Alert / Tracker web streams: chỉ chạy trong NAVIGATION
+# ==========================================================
+
+if ! tmux has-session -t amr_alert_web 2>/dev/null; then
+  tmux new-session -d -s amr_alert_web "$HOME/mobile_robot/ros2_ws/scripts/run_alert_web.sh"
+  echo "[INFO] Started amr_alert_web"
+else
+  echo "[INFO] amr_alert_web already running"
+fi
+
+if ! tmux has-session -t amr_tracker_web 2>/dev/null; then
+  tmux new-session -d -s amr_tracker_web "$HOME/mobile_robot/ros2_ws/scripts/run_tracker_web.sh"
+  echo "[INFO] Started amr_tracker_web"
+else
+  echo "[INFO] amr_tracker_web already running"
+fi
+
 echo "Navigation mode started."
