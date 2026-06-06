@@ -24,15 +24,13 @@ if(BUILD_TESTING)
 endif()
 
 install(
-  DIRECTORY config launch maps rviz
+  DIRECTORY config launch rviz
   DESTINATION share/${PROJECT_NAME}
 )
 install(PROGRAMS
   scripts/auto_map_saver.py
   scripts/init_move.py
   scripts/esp32_waypoint_server.py
-  scripts/live_octomap_reset.py
-  scripts/live_octomap_manager.py
   DESTINATION lib/${PROJECT_NAME}
 )
 ament_package()

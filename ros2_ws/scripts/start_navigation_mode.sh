@@ -28,31 +28,64 @@ if tmux has-session -t "$SESSION" 2>/dev/null; then
   exit 0
 fi
 
-# Mặc định nếu chưa chọn map
-MAP_NAME="map3"
-MAP_YAML="$WS/src/amr_slam/maps/map3.yaml"
-OCTOMAP_BT="$WS/src/amr_slam/maps/map3_3d.bt"
+MAP_DIR="$WS/src/amr_slam/maps"
 PARAMS_FILE="$WS/src/amr_navigation/config/nav2_params_fusion.yaml"
 
-# Nếu web đã chọn map thì nạp file active map
+# Nạp map active do web chọn hoặc do lần SAVE MAP gần nhất ghi lại.
+MAP_NAME=""
+MAP_YAML=""
+OCTOMAP_BT=""
+
 if [ -f "$ACTIVE_MAP_FILE" ]; then
   source "$ACTIVE_MAP_FILE"
 fi
 
-if [ ! -f "$MAP_YAML" ]; then
-  echo "2D map yaml not found: $MAP_YAML"
-  exit 4
+valid_map() {
+  [ -n "$MAP_NAME" ] && [ -f "$MAP_YAML" ] && [ -f "$OCTOMAP_BT" ]
+}
+
+# Nếu active map không tồn tại nữa hoặc chưa chọn, tự chọn map 2D+3D mới nhất.
+# Điều này xử lý trường hợp xóa hết map cũ rồi quét/lưu map mới.
+if ! valid_map; then
+  echo "[WARN] Active map missing/invalid. Searching newest valid 2D+3D map in $MAP_DIR"
+
+  MAP_NAME=""
+  MAP_YAML=""
+  OCTOMAP_BT=""
+
+  while IFS= read -r yaml_file; do
+    name="$(basename "$yaml_file" .yaml)"
+    pgm_file="$MAP_DIR/${name}.pgm"
+    bt_file="$MAP_DIR/${name}_3d.bt"
+
+    if [ -f "$pgm_file" ] && [ -f "$bt_file" ]; then
+      MAP_NAME="$name"
+      MAP_YAML="$yaml_file"
+      OCTOMAP_BT="$bt_file"
+      break
+    fi
+  done < <(find "$MAP_DIR" -maxdepth 1 -name "*.yaml" -printf "%T@ %p\n" 2>/dev/null | sort -nr | cut -d' ' -f2-)
 fi
 
-if [ ! -f "$OCTOMAP_BT" ]; then
-  echo "3D octomap bt not found: $OCTOMAP_BT"
-  exit 5
+if ! valid_map; then
+  echo "No valid fusion map found in $MAP_DIR"
+  echo "Need files: <map>.yaml, <map>.pgm, <map>_3d.bt"
+  exit 4
 fi
 
 if [ ! -f "$PARAMS_FILE" ]; then
   echo "Nav2 params file not found: $PARAMS_FILE"
   exit 6
 fi
+
+# Ghi lại active map thật sự được chọn để web và lần chạy sau đồng bộ.
+mkdir -p "$(dirname "$ACTIVE_MAP_FILE")"
+cat > "$ACTIVE_MAP_FILE" <<EOF_ACTIVE
+MAP_NAME="$MAP_NAME"
+MAP_YAML="$MAP_YAML"
+OCTOMAP_BT="$OCTOMAP_BT"
+PARAMS_FILE="$PARAMS_FILE"
+EOF_ACTIVE
 
 echo "Starting navigation with fusion map:"
 echo "  MAP_NAME   = $MAP_NAME"

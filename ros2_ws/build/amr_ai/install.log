@@ -1,4 +1,5 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/__init__.py
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/esp32_alert_bridge_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/reid.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/person_tracker_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/__init__.py
@@ -29,6 +30,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/follow_goal_node.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/nav2/__init__.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/__pycache__/__init__.cpython-310.pyc
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/__pycache__/esp32_alert_bridge_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/__pycache__/reid.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/__pycache__/person_tracker_node.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/tracking/__pycache__/__init__.cpython-310.pyc
@@ -80,6 +82,7 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/auto_localizer
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/cmd_vel_safety_mux
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/engineer_web
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/esp32_alert_bridge
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/follow_goal
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/follow_servo
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai/operator_gui

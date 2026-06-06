@@ -10,9 +10,11 @@ amr_bringup.egg-info/requires.txt
 amr_bringup.egg-info/top_level.txt
 amr_bringup.egg-info/zip-safe
 config/box_filter.yaml
+config/ekf_odom.yaml
 config/ukf_params.yaml
 launch/bringup_fusion.launch.py
 launch/bringup_fusion_direct.launch.py
 launch/bringup_lidar.launch.py
+launch/ekf_odom.launch.py
 resource/amr_bringup
 scripts/cloud_qos_relay.py

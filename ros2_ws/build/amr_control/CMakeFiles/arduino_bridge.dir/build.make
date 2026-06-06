@@ -98,9 +98,17 @@ arduino_bridge: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_introspectio
 arduino_bridge: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_introspection_cpp.so
 arduino_bridge: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_cpp.so
 arduino_bridge: /opt/ros/humble/lib/libnav_msgs__rosidl_generator_py.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_fastrtps_c.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_fastrtps_cpp.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_introspection_c.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_introspection_cpp.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_generator_py.so
 arduino_bridge: /opt/ros/humble/lib/libstatic_transform_broadcaster_node.so
 arduino_bridge: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_c.so
 arduino_bridge: /opt/ros/humble/lib/libnav_msgs__rosidl_generator_c.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_c.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_generator_c.so
+arduino_bridge: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_cpp.so
 arduino_bridge: /opt/ros/humble/lib/libtf2_ros.so
 arduino_bridge: /opt/ros/humble/lib/libtf2.so
 arduino_bridge: /opt/ros/humble/lib/libmessage_filters.so

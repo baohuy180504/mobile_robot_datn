@@ -22,6 +22,7 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     desc_pkg = get_package_share_directory('amr_description')
     bringup_pkg = get_package_share_directory('amr_bringup')
+    ekf_params_file = os.path.join(bringup_pkg, 'config', 'ekf_odom.yaml')
 
     urdf_file = os.path.join(desc_pkg, 'urdf', 'robot.urdf')
     with open(urdf_file, 'r') as f:
@@ -64,8 +65,29 @@ def generate_launch_description():
         executable='arduino_bridge',
         name='arduino_bridge',
         output='screen',
+        parameters=[{
+            'distance_per_tick': 0.000055185,
+            'wheel_separation': 0.322,
+            'encoder_yaw_sign': 1.0,
+            'imu_yaw_filter_alpha': 0.25,
+            'imu_yaw_deadband_rad': 0.0015,
+        }],
         remappings=[
             ('cmd_vel', '/cmd_vel_safe'),
+        ]
+    )
+
+    # EKF odometry:
+    # arduino_bridge mới chỉ publish /wheel/odom + /imu/data, không publish /odom và không publish TF.
+    # ekf_filter_node là nguồn duy nhất publish /odom và TF odom -> base_footprint.
+    ekf_filter_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[ekf_params_file],
+        remappings=[
+            ('odometry/filtered', '/odom'),
         ]
     )
 
@@ -166,9 +188,10 @@ def generate_launch_description():
     log_start = LogInfo(msg=[
         '\n',
         '╔═══════════════════════════════════════════════════════════╗\n',
-        '║ BRINGUP FUSION - NO UKF                                   ║\n',
+        '║ BRINGUP FUSION - EKF ODOM                                 ║\n',
         '╠═══════════════════════════════════════════════════════════╣\n',
-        '║ TF dynamic : arduino_bridge  odom -> base_footprint       ║\n',
+        '║ TF dynamic : ekf_filter_node odom -> base_footprint       ║\n',
+        '║ Arduino    : /wheel/odom + /imu/data, no dynamic TF       ║\n',
         '║ TF fixed   : robot_state_publisher + camera optical TF    ║\n',
         '║ LiDAR      : /scan -> /scan_filtered                      ║\n',
         '║ Camera     : color + depth + pointcloud, 640x480 @15fps   ║\n',
@@ -180,6 +203,7 @@ def generate_launch_description():
         robot_state_publisher,
         lidar_node,
         arduino_driver,
+        ekf_filter_node,
         scan_filter_node,
         astra_camera_node,
         static_tf_camera_optical,

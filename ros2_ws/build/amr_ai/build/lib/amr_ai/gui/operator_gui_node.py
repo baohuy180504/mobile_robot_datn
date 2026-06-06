@@ -27,7 +27,7 @@ class OperatorGuiNode(Node):
     def __init__(self):
         super().__init__('operator_gui_node')
 
-        self.declare_parameter('debug_image_topic', '/amr_ai/debug/alert/image')
+        self.declare_parameter('debug_image_topic', '/amr_ai/debug/person_tracker/image')
         self.declare_parameter('mode_topic', '/amr_ai/mode')
         self.declare_parameter('person_target_topic', '/amr_ai/person_target')
 
@@ -130,11 +130,6 @@ class OperatorGuiNode(Node):
                 self.follow_button_color = '#ffff00'
                 self.status_text = 'NAVIGATION'
                 self.status_color = '#2563eb'
-            elif mode == AiMode.LOCALIZING:
-                self.follow_button_text = 'FOLLOW'
-                self.follow_button_color = '#ffff00'
-                self.status_text = 'LOCALIZING'
-                self.status_color = '#9333ea'
             elif mode == AiMode.EMERGENCY_STOP:
                 self.follow_button_text = 'FOLLOW'
                 self.follow_button_color = '#ffff00'
@@ -150,12 +145,12 @@ class OperatorGuiNode(Node):
     def mode_to_name(mode: int) -> str:
         mapping = {
             AiMode.IDLE: 'IDLE',
+            AiMode.NAV_TO_ZONE: 'NAV_TO_ZONE',
             AiMode.FOLLOW_DETECTING: 'FOLLOW_DETECTING',
             AiMode.FOLLOW_ACTIVE: 'FOLLOW_ACTIVE',
             AiMode.FOLLOW_STOPPED: 'FOLLOW_STOPPED',
             AiMode.RETURN_TO_ZONE: 'RETURN_TO_ZONE',
             AiMode.EMERGENCY_STOP: 'EMERGENCY_STOP',
-            AiMode.LOCALIZING: 'LOCALIZING',
         }
         return mapping.get(mode, f'MODE_{mode}')
 
@@ -172,10 +167,21 @@ class OperatorGuiNode(Node):
             self.get_logger().error(f'{label} script not found: {script}')
             return
 
+        log_file = f'/tmp/amr_operator_{label.lower()}.log'
+
         try:
-            subprocess.Popen(['bash', '-lc', script])
+            with open(log_file, 'a') as log:
+                subprocess.Popen(
+                    ['bash', script],
+                    stdout=log,
+                    stderr=log,
+                    stdin=subprocess.DEVNULL,
+                    start_new_session=True,
+                )
+
             self.set_status(label, '#0ea5e9')
-            self.get_logger().warn(f'Run script: {script}')
+            self.get_logger().warn(f'Run script: {script}, log={log_file}')
+
         except Exception as exc:
             self.set_status(f'{label} ERROR', '#dc2626')
             self.get_logger().error(f'Failed to run {script}: {exc}')
@@ -195,32 +201,28 @@ class OperatorGuiNode(Node):
             self.cmd_vel_pub.publish(msg)
             time.sleep(0.03)
 
-    def toggle_localization(self):
-        with self.lock:
-            mode = self.current_mode
-
-        self.get_logger().warn(f'LOCALIZATION button pressed. current_mode={mode}')
-        print(f'[GUI] LOCALIZATION button pressed. current_mode={mode}', flush=True)
-
-        if mode == AiMode.LOCALIZING:
-            self.set_status('STOP LOCALIZING', '#f97316')
-            self.call_set_mode('STOP_LOCALIZE')
-        else:
-            self.set_status('START LOCALIZING', '#9333ea')
-            self.call_set_mode('START_LOCALIZE')
-
     def toggle_follow(self):
         with self.lock:
             mode = self.current_mode
 
+        self.get_logger().warn(
+            f'FOLLOW button pressed. current_mode={mode} ({self.mode_to_name(mode)})'
+        )
+
         if mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]:
+            self.set_status('SEND STOP FOLLOW', '#f97316')
             self.call_set_mode('STOP_FOLLOW')
         else:
+            self.set_status('SEND START FOLLOW', '#f59e0b')
             self.call_set_mode('START_FOLLOW')
 
     def call_set_mode(self, command: str):
-        if not self.set_mode_client.wait_for_service(timeout_sec=0.3):
+        self.get_logger().warn(f'Calling /amr_ai/set_mode command={command}')
+
+        # 0.3s hơi ngắn khi Nav2/AI vừa khởi động. Dùng 2s để nút FOLLOW ổn định hơn.
+        if not self.set_mode_client.wait_for_service(timeout_sec=2.0):
             self.set_status('SET_MODE NOT READY', '#dc2626')
+            self.get_logger().error('/amr_ai/set_mode service not ready')
             return
 
         req = SetAiMode.Request()
@@ -233,36 +235,36 @@ class OperatorGuiNode(Node):
     def set_mode_done(self, future, command: str):
         try:
             res = future.result()
+            self.get_logger().warn(
+                f'set_mode response: command={command}, success={res.success}, '
+                f'message={res.message}, current_mode={res.current_mode}'
+            )
+
             if res.success:
                 if command == 'START_FOLLOW':
                     self.set_status('FOLLOW STARTED', '#16a34a')
                 elif command == 'STOP_FOLLOW':
                     self.set_status('FOLLOW STOPPED', '#f97316')
-                elif command == 'START_LOCALIZE':
-                    self.set_status('LOCALIZING', '#9333ea')
-                elif command == 'STOP_LOCALIZE':
-                    self.set_status('LOCALIZE STOPPED', '#f97316')
                 else:
                     self.set_status('MODE OK', '#16a34a')
             else:
-                self.set_status('MODE REJECTED', '#dc2626')
+                # Hiển thị lý do reject để công nhân/kỹ sư biết ngay.
+                msg = str(res.message).strip()
+                self.set_status(msg[:28] if msg else 'MODE REJECTED', '#dc2626')
         except Exception as exc:
             self.set_status('MODE ERROR', '#dc2626')
             self.get_logger().error(f'set_mode failed: {exc}')
 
     def select_zone(self, zone: str):
-        zone = str(zone).strip().upper()
+        with self.lock:
+            mode = self.current_mode
 
-        self.get_logger().warn(f'GUI zone button pressed: {zone}')
-        self.set_status(f'SEND {zone}', '#2563eb')
+        if mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]:
+            self.set_status('STOP FOLLOW FIRST', '#f97316')
+            return
 
-        # Không tự chặn ở GUI nữa.
-        # ai_mode_manager sẽ là tầng quyết định cuối cùng:
-        # - nếu đang FOLLOW_ACTIVE/FOLLOW_DETECTING thì reject
-        # - nếu IDLE/FOLLOW_STOPPED thì accept
-        if not self.select_zone_client.wait_for_service(timeout_sec=2.0):
+        if not self.select_zone_client.wait_for_service(timeout_sec=1.0):
             self.set_status('SELECT_ZONE NOT READY', '#dc2626')
-            self.get_logger().error('/amr_ai/select_zone service not ready')
             return
 
         req = SelectZone.Request()
@@ -274,20 +276,13 @@ class OperatorGuiNode(Node):
     def select_zone_done(self, future, zone: str):
         try:
             res = future.result()
-            self.get_logger().warn(
-                f'GUI select_zone response: zone={zone}, '
-                f'accepted={res.accepted}, message={res.message}'
-            )
-
             if res.accepted:
                 self.set_status(f'GO TO {zone}', '#2563eb')
             else:
                 self.set_status(f'{zone} REJECTED', '#dc2626')
-
         except Exception as exc:
             self.set_status('ZONE ERROR', '#dc2626')
             self.get_logger().error(f'select_zone failed: {exc}')
-
 
 
 class OperatorGuiApp:
@@ -389,31 +384,23 @@ class OperatorGuiApp:
 
         self.zone_a_btn = self.make_button(
             self.right,
-            'A',
+            'WP1',
             '#4472c4',
-            lambda: self.node.select_zone('A')
+            lambda: self.node.select_zone('WP1')
         )
 
         self.zone_b_btn = self.make_button(
             self.right,
-            'B',
+            'WP2',
             '#4472c4',
-            lambda: self.node.select_zone('B')
+            lambda: self.node.select_zone('WP2')
         )
 
         self.zone_h_btn = self.make_button(
             self.right,
-            'H',
+            'HOME',
             '#4472c4',
-            lambda: self.node.select_zone('H')
-        )
-
-        self.localization_btn = self.make_button(
-            self.right,
-            'LOCALIZATION',
-            '#9333ea',
-            self.node.toggle_localization,
-            fg='#ffffff'
+            lambda: self.node.select_zone('WP0')
         )
 
         self.follow_btn = self.make_button(
@@ -554,29 +541,14 @@ class OperatorGuiApp:
             height=zone_h
         )
 
-        # LOCALIZATION và FOLLOW nằm cùng một hàng
-        bottom_y = int(rp_h * 0.72)
-        bottom_h = 58
-        bottom_gap = int(rp_w * 0.04)
-
-        local_w = int(rp_w * 0.52)
-        follow_w = int(rp_w * 0.34)
-
-        total_w = local_w + bottom_gap + follow_w
-        start_x = int((rp_w - total_w) / 2)
-
-        self.localization_btn.place(
-            x=start_x,
-            y=bottom_y,
-            width=local_w,
-            height=bottom_h
-        )
+        follow_w = int(rp_w * 0.42)
+        follow_h = 60
 
         self.follow_btn.place(
-            x=start_x + local_w + bottom_gap,
-            y=bottom_y,
+            x=int((rp_w - follow_w) / 2),
+            y=int(rp_h * 0.72),
             width=follow_w,
-            height=bottom_h
+            height=follow_h
         )
 
     def toggle_fullscreen(self):
@@ -636,23 +608,12 @@ class OperatorGuiApp:
         self.status_label.configure(text=status_text, bg=status_color)
         self.follow_btn.configure(text=follow_text, bg=follow_color, activebackground=follow_color)
 
-        # Disable zone buttons while following/detecting/localizing
-        zone_enabled = mode not in [
-            AiMode.FOLLOW_DETECTING,
-            AiMode.FOLLOW_ACTIVE,
-            AiMode.LOCALIZING,
-        ]
-        zone_state = tk.NORMAL if zone_enabled else tk.DISABLED
+        # Disable zone buttons while following/detecting
+        zone_enabled = mode not in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]
+        state = tk.NORMAL if zone_enabled else tk.DISABLED
 
         for btn in [self.zone_a_btn, self.zone_b_btn, self.zone_h_btn]:
-            btn.configure(state=zone_state)
-
-        # Khi LOCALIZING: khóa FOLLOW, nhưng vẫn cho nhấn LOCALIZATION để STOP_LOCALIZE
-        follow_state = tk.DISABLED if mode == AiMode.LOCALIZING else tk.NORMAL
-        self.follow_btn.configure(state=follow_state)
-
-        if hasattr(self, 'localization_btn'):
-            self.localization_btn.configure(state=tk.NORMAL)
+            btn.configure(state=state)
 
     def update_image(self):
         with self.node.lock:
@@ -662,6 +623,9 @@ class OperatorGuiApp:
         if frame is None or age > 2.0:
             self.show_no_image()
             return
+
+        # Sửa hướng hiển thị trái/phải cho màn hình công nhân
+        frame = cv2.flip(frame, 1)
 
         # Convert BGR to RGB
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)

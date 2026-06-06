@@ -8,11 +8,14 @@ import math
 import json
 import subprocess
 import time
+import secrets
 from pathlib import Path
+from urllib.parse import quote
 from typing import Dict, Any, Tuple
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, FileResponse, Response
 
 
 APP_TITLE = "AMR Engineer Web"
@@ -53,6 +56,334 @@ ROS_SETUP = (
 )
 
 app = FastAPI(title=APP_TITLE)
+
+
+# ==========================================================
+# Static assets + password gate
+# ==========================================================
+STATIC_DIR = WORKSPACE / "src" / "amr_ai" / "amr_ai" / "web" / "static"
+STATIC_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+# Password can be changed from the run script:
+#   export AMR_WEB_PASSWORD="your_password"
+WEB_PASSWORD = os.environ.get("AMR_WEB_PASSWORD", "123")
+
+# Token is random by default, so old cookies become invalid after webserver restart.
+# If you want cookies to remain valid across restarts, set AMR_WEB_AUTH_TOKEN manually.
+AUTH_COOKIE_NAME = "amr_web_auth"
+AUTH_COOKIE_VALUE = os.environ.get("AMR_WEB_AUTH_TOKEN", secrets.token_urlsafe(32))
+AUTH_PUBLIC_PATHS = {
+    "/login",
+    "/api/login",
+    "/api/logout",
+    "/login_background",
+    "/favicon.ico",
+}
+
+# Login background image path. Change without editing code by setting:
+#   export AMR_LOGIN_BG_PATH="/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai/amr_ai/web/static/login_bg.png"
+LOGIN_BG_PATH = Path(
+    os.environ.get("AMR_LOGIN_BG_PATH", str(STATIC_DIR / "pic2.png"))
+).expanduser()
+
+
+def is_authenticated(request: Request) -> bool:
+    return request.cookies.get(AUTH_COOKIE_NAME) == AUTH_COOKIE_VALUE
+
+
+LOGIN_HTML = r'''
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AMR Access Gate</title>
+  <style>
+    :root{
+      --bg0:#020617;
+      --bg1:#0f172a;
+      --card:rgba(15,23,42,.84);
+      --border:#334155;
+      --blue:#38bdf8;
+      --green:#22c55e;
+      --red:#ef4444;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+      overflow:hidden;
+
+      /* Ưu tiên hiển thị đầy đủ ảnh, không phóng cắt mép như cover */
+      background-color:#020617;
+      background-image:url('/login_background');
+      background-size:contain;
+      background-position:center center;
+      background-repeat:no-repeat;
+    }
+
+    /* Tắt lớp lưới xanh đang phủ lên background */
+    body:before{
+      display:none;
+    }
+
+    /* Tắt lớp radial đen đang làm ảnh nền bị tối */
+    body:after{
+      display:none;
+    }
+    @keyframes gridMove{from{background-position:0 0}to{background-position:84px 42px}}
+    .gate{
+      position:relative;
+      z-index:1;
+
+      /* Nhỏ hơn khung cũ */
+      width:min(430px,88vw);
+      padding:22px 24px 20px;
+
+      border:1px solid rgba(148,163,184,.26);
+      border-radius:20px;
+
+      /* Tăng độ trong suốt vùng login */
+      background:rgba(15,23,42,.48);
+
+      /* Giảm bóng và giảm blur để không che ảnh nền quá nhiều */
+      box-shadow:0 14px 42px rgba(0,0,0,.34), inset 0 0 22px rgba(56,189,248,.035);
+      backdrop-filter:blur(4px);
+    }
+
+    .logo{
+      width:84px;
+      height:84px;
+      margin:0 auto 8px;
+      border-radius:22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(8,47,73,.46);
+      border:1px solid rgba(56,189,248,.34);
+      box-shadow:0 0 22px rgba(56,189,248,.16), inset 0 0 14px rgba(34,197,94,.06);
+      overflow:hidden;
+    }
+
+    .logo img{
+      width:74px;
+      height:74px;
+      max-width:74px;
+      max-height:74px;
+      object-fit:contain;
+      display:block;
+    }
+
+    h1{
+      margin:0;
+      text-align:center;
+      font-size:27px;
+      letter-spacing:.35px;
+    }
+
+    .sub{
+      text-align:center;
+      color:#cbd5e1;
+      margin:8px 0 20px;
+      font-size:14px;
+      line-height:1.35;
+    }
+
+    label{
+      display:block;
+      color:#e5e7eb;
+      font-size:14px;
+      margin-bottom:8px;
+      font-weight:bold;
+    }
+
+    input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:13px;
+      border:1px solid rgba(148,163,184,.46);
+      background:rgba(2,6,23,.62);
+      color:white;
+      font-size:17px;
+      outline:none;
+    }
+
+    input:focus{
+      border-color:var(--blue);
+      box-shadow:0 0 0 3px rgba(56,189,248,.22);
+    }
+
+    button{
+      width:100%;
+      margin-top:14px;
+      padding:13px 14px;
+      border:0;
+      border-radius:13px;
+      background:linear-gradient(90deg,#16a34a,#22c55e);
+      color:white;
+      font-weight:900;
+      font-size:16px;
+      cursor:pointer;
+      letter-spacing:.6px;
+    }
+
+    button:hover{
+      filter:brightness(1.08);
+    }
+
+    .status{
+      min-height:20px;
+      margin-top:12px;
+      text-align:center;
+      color:#facc15;
+      font-size:14px;
+    }
+
+    .foot{
+      margin-top:18px;
+      text-align:center;
+      color:#cbd5e1;
+      font-size:12px;
+    }
+
+    .scanline{
+      height:2px;
+      width:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,transparent,var(--blue),var(--green),transparent);
+      margin:0 0 20px;
+      opacity:.62;
+    }
+  </style>
+</head>
+<body>
+  <div class="gate">
+    <div class="logo">
+      <img src="/static/pic1.png" alt="AMR Logo">
+    </div>
+    <h1>AMR ACCESS GATE</h1>
+    <div class="sub">Web Control · Map Viewer · Navigation Stack</div>
+    <div class="scanline"></div>
+    <label for="password">Mật khẩu truy cập</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu">
+    <button onclick="login()">LOGIN</button>
+    <div class="status" id="status"></div>
+    <div class="foot">Autonomous Mobile Robot · Secure Local Panel</div>
+  </div>
+<script>
+async function login(){
+  const status=document.getElementById("status");
+  const password=document.getElementById("password").value;
+  status.textContent="Đang xác thực...";
+  try{
+    const res=await fetch("/api/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({password})
+    });
+    const data=await res.json();
+    if(data.ok){
+      const next=new URLSearchParams(window.location.search).get("next") || "/";
+      window.location.href=next;
+    }else{
+      status.textContent=data.message || "Sai mật khẩu.";
+      document.getElementById("password").focus();
+    }
+  }catch(e){
+    status.textContent="Không kết nối được webserver.";
+  }
+}
+document.getElementById("password").addEventListener("keydown",e=>{
+  if(e.key==="Enter") login();
+});
+document.getElementById("password").focus();
+</script>
+</body>
+</html>
+'''
+
+
+@app.middleware("http")
+async def auth_middleware(request: Request, call_next):
+    path = request.url.path
+
+    if path in AUTH_PUBLIC_PATHS or path.startswith("/static/"):
+        return await call_next(request)
+
+    if is_authenticated(request):
+        return await call_next(request)
+
+    if path.startswith("/api/"):
+        return JSONResponse({
+            "ok": False,
+            "message": "Unauthorized. Please login first.",
+        }, status_code=401)
+
+    next_path = path
+    if request.url.query:
+        next_path += "?" + request.url.query
+
+    return RedirectResponse(url=f"/login?next={quote(next_path, safe='')}", status_code=302)
+
+
+@app.get("/login", response_class=HTMLResponse)
+def login_page():
+    return HTMLResponse(LOGIN_HTML)
+
+
+@app.get("/login_background")
+def login_background():
+    if LOGIN_BG_PATH.exists() and LOGIN_BG_PATH.is_file():
+        return FileResponse(str(LOGIN_BG_PATH))
+    return Response(status_code=404)
+
+
+@app.post("/api/login")
+async def api_login(request: Request):
+    try:
+        data = await request.json()
+    except Exception:
+        data = {}
+
+    password = str(data.get("password", ""))
+
+    if password != WEB_PASSWORD:
+        return JSONResponse({
+            "ok": False,
+            "message": "Sai mật khẩu truy cập.",
+        }, status_code=401)
+
+    response = JSONResponse({
+        "ok": True,
+        "message": "Authenticated.",
+    })
+    response.set_cookie(
+        key=AUTH_COOKIE_NAME,
+        value=AUTH_COOKIE_VALUE,
+        httponly=True,
+        samesite="lax",
+        secure=False,
+    )
+    return response
+
+
+@app.post("/api/logout")
+def api_logout():
+    response = JSONResponse({
+        "ok": True,
+        "message": "Logged out.",
+    })
+    response.delete_cookie(AUTH_COOKIE_NAME)
+    return response
 
 
 def run_cmd(cmd: str, timeout: float = 15.0, source_ros: bool = True) -> Tuple[int, str]:
@@ -186,6 +517,135 @@ def get_lifecycle_status() -> str:
     return "\n".join(lines)
 
 
+# ==========================================================
+# Fusion map active-map helpers
+# ==========================================================
+def sanitize_map_name(raw_name: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_-]", "", str(raw_name).strip())
+
+
+def get_file_mtime(path: Path) -> float:
+    try:
+        return path.stat().st_mtime if path.exists() else 0.0
+    except Exception:
+        return 0.0
+
+
+def get_active_fusion_map_name() -> str:
+    if not ACTIVE_MAP_FILE.exists():
+        return ""
+
+    try:
+        content = ACTIVE_MAP_FILE.read_text()
+    except Exception:
+        return ""
+
+    match = re.search(r'^MAP_NAME="?([^"\n]+)"?', content, flags=re.MULTILINE)
+    return match.group(1).strip() if match else ""
+
+
+def build_fusion_map_entry(name: str) -> Dict[str, Any]:
+    safe_name = sanitize_map_name(name)
+
+    yaml_file = MAP_DIR / f"{safe_name}.yaml"
+    pgm_file = MAP_DIR / f"{safe_name}.pgm"
+    bt_file = MAP_DIR / f"{safe_name}_3d.bt"
+
+    newest_mtime = max(
+        get_file_mtime(yaml_file),
+        get_file_mtime(pgm_file),
+        get_file_mtime(bt_file),
+    )
+
+    return {
+        "name": safe_name,
+        "yaml": str(yaml_file),
+        "pgm": str(pgm_file),
+        "pgm_exists": pgm_file.exists(),
+        "octomap": str(bt_file),
+        "octomap_exists": bt_file.exists(),
+        "valid": yaml_file.exists() and pgm_file.exists() and bt_file.exists(),
+        "valid_2d": yaml_file.exists() and pgm_file.exists(),
+        "modified_ts": newest_mtime,
+        "modified_at": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(newest_mtime)) if newest_mtime > 0 else "",
+    }
+
+
+def write_active_fusion_map_env(map_name: str) -> Dict[str, Any]:
+    safe_name = sanitize_map_name(map_name)
+
+    if not safe_name:
+        return {
+            "ok": False,
+            "message": "Map name is empty or invalid.",
+        }
+
+    entry = build_fusion_map_entry(safe_name)
+
+    if not Path(entry["yaml"]).exists():
+        return {
+            "ok": False,
+            "message": f"Missing 2D yaml: {entry['yaml']}",
+            "map_name": safe_name,
+            "entry": entry,
+        }
+
+    if not Path(entry["pgm"]).exists():
+        return {
+            "ok": False,
+            "message": f"Missing 2D pgm: {entry['pgm']}",
+            "map_name": safe_name,
+            "entry": entry,
+        }
+
+    if not Path(entry["octomap"]).exists():
+        return {
+            "ok": False,
+            "message": f"Missing 3D octomap: {entry['octomap']}",
+            "map_name": safe_name,
+            "entry": entry,
+        }
+
+    ACTIVE_MAP_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    env_text = (
+        f'MAP_NAME="{safe_name}"\n'
+        f'MAP_YAML="{entry["yaml"]}"\n'
+        f'OCTOMAP_BT="{entry["octomap"]}"\n'
+        f'PARAMS_FILE="{NAV2_FUSION_PARAMS_FILE}"\n'
+    )
+
+    ACTIVE_MAP_FILE.write_text(env_text)
+
+    return {
+        "ok": True,
+        "message": f"Active fusion map set to: {safe_name}",
+        "map_name": safe_name,
+        "yaml": entry["yaml"],
+        "octomap": entry["octomap"],
+        "active_map_file": str(ACTIVE_MAP_FILE),
+        "active_map_env": env_text,
+        "entry": entry,
+    }
+
+
+def list_fusion_map_entries() -> list:
+    MAP_DIR.mkdir(parents=True, exist_ok=True)
+
+    entries = []
+    for yaml_file in MAP_DIR.glob("*.yaml"):
+        entries.append(build_fusion_map_entry(yaml_file.stem))
+
+    entries.sort(key=lambda item: item.get("modified_ts", 0.0), reverse=True)
+
+    active_name = get_active_fusion_map_name()
+    for item in entries:
+        item["active"] = bool(active_name and item["name"] == active_name)
+
+    return entries
+
+
+
 @app.get("/", response_class=HTMLResponse)
 def index():
     return HTMLResponse(INDEX_HTML)
@@ -276,34 +736,15 @@ def api_status():
 
 @app.get("/api/list_fusion_maps")
 def api_list_fusion_maps():
-    MAP_DIR.mkdir(parents=True, exist_ok=True)
-
-    maps = []
-
-    for yaml_file in sorted(MAP_DIR.glob("*.yaml")):
-        name = yaml_file.stem
-        pgm_file = yaml_file.with_suffix(".pgm")
-        bt_file = MAP_DIR / f"{name}_3d.bt"
-
-        maps.append({
-            "name": name,
-            "yaml": str(yaml_file),
-            "pgm": str(pgm_file),
-            "pgm_exists": pgm_file.exists(),
-            "octomap": str(bt_file),
-            "octomap_exists": bt_file.exists(),
-            "valid": yaml_file.exists() and pgm_file.exists() and bt_file.exists(),
-        })
-
-    active = None
-    if ACTIVE_MAP_FILE.exists():
-        active = ACTIVE_MAP_FILE.read_text()
+    active = ACTIVE_MAP_FILE.read_text() if ACTIVE_MAP_FILE.exists() else None
+    active_name = get_active_fusion_map_name()
 
     return JSONResponse({
         "map_dir": str(MAP_DIR),
         "active_map_file": str(ACTIVE_MAP_FILE),
+        "active_map_name": active_name,
         "active_map_env": active,
-        "maps": maps,
+        "maps": list_fusion_map_entries(),
     })
 
 
@@ -311,10 +752,17 @@ def api_list_fusion_maps():
 async def api_set_active_fusion_map(request: Request):
     state = get_system_state()
 
-    if not state.get("navigation", False):
+    if not state.get("device", False):
         return JSONResponse({
             "ok": False,
-            "message": "SET ACTIVE MAP chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.",
+            "message": "SET ACTIVE MAP chỉ hoạt động sau khi START.",
+            "state": state,
+        })
+
+    if state.get("slam", False):
+        return JSONResponse({
+            "ok": False,
+            "message": "SET ACTIVE MAP đang khóa khi SLAM chạy. Nếu vừa quét map, hãy dùng SAVE MAP để map mới tự thành active.",
             "state": state,
         })
 
@@ -323,56 +771,32 @@ async def api_set_active_fusion_map(request: Request):
     except Exception:
         data = {}
 
-    raw_name = str(data.get("map_name", "")).strip()
-    safe_name = re.sub(r"[^A-Za-z0-9_-]", "", raw_name)
+    previous_active = get_active_fusion_map_name()
+    result = write_active_fusion_map_env(data.get("map_name", ""))
 
-    if not safe_name:
-        return JSONResponse({
-            "ok": False,
-            "message": "Map name is empty or invalid.",
-        })
+    if result.get("ok"):
+        if state.get("navigation", False):
+            if previous_active and previous_active != result["map_name"]:
+                result["message"] = (
+                    f"Active map changed to: {result['map_name']}. "
+                    f"NAVIGATION đang chạy với map cũ ({previous_active}); "
+                    "map mới chỉ áp dụng sau khi restart Navigation."
+                )
+            else:
+                result["message"] = (
+                    f"Active map set to: {result['map_name']}. "
+                    "Nếu NAVIGATION đang chạy, map này chỉ áp dụng sau khi restart Navigation."
+                )
+            result["applies_after_restart"] = True
+        else:
+            result["message"] = (
+                f"Active map set to: {result['map_name']}. "
+                "Nhấn NAVIGATION để chạy map này."
+            )
+            result["applies_after_restart"] = False
 
-    yaml_file = MAP_DIR / f"{safe_name}.yaml"
-    pgm_file = MAP_DIR / f"{safe_name}.pgm"
-    bt_file = MAP_DIR / f"{safe_name}_3d.bt"
-
-    if not yaml_file.exists():
-        return JSONResponse({
-            "ok": False,
-            "message": f"Missing 2D yaml: {yaml_file}",
-        })
-
-    if not pgm_file.exists():
-        return JSONResponse({
-            "ok": False,
-            "message": f"Missing 2D pgm: {pgm_file}",
-        })
-
-    if not bt_file.exists():
-        return JSONResponse({
-            "ok": False,
-            "message": f"Missing 3D octomap: {bt_file}",
-        })
-
-    ACTIVE_MAP_FILE.parent.mkdir(parents=True, exist_ok=True)
-
-    env_text = (
-        f'MAP_NAME="{safe_name}"\n'
-        f'MAP_YAML="{yaml_file}"\n'
-        f'OCTOMAP_BT="{bt_file}"\n'
-        f'PARAMS_FILE="{NAV2_FUSION_PARAMS_FILE}"\n'
-    )
-
-    ACTIVE_MAP_FILE.write_text(env_text)
-
-    return JSONResponse({
-        "ok": True,
-        "message": f"Active fusion map set to: {safe_name}",
-        "map_name": safe_name,
-        "yaml": str(yaml_file),
-        "octomap": str(bt_file),
-        "active_map_file": str(ACTIVE_MAP_FILE),
-    })
+    result["state"] = get_system_state()
+    return JSONResponse(result)
 
 
 @app.get("/api/active_fusion_map")
@@ -817,7 +1241,7 @@ def api_stop_system():
 
 
 @app.post("/api/start_navigation_mode")
-def api_start_navigation_mode():
+async def api_start_navigation_mode(request: Request):
     state = get_system_state()
 
     if not state["device"]:
@@ -841,10 +1265,65 @@ def api_start_navigation_mode():
             "state": state,
         })
 
+    try:
+        payload = await request.json()
+    except Exception:
+        payload = {}
+
+    active_result = None
+    selected_map = sanitize_map_name(payload.get("map_name", ""))
+
+    # Yêu cầu: khi nhấn NAVIGATION, web ghi map đang chọn vào active_fusion_map.env trước,
+    # rồi mới chạy script Navigation.
+    if selected_map:
+        active_result = write_active_fusion_map_env(selected_map)
+        if not active_result.get("ok"):
+            return JSONResponse({
+                "ok": False,
+                "message": "Không thể set active map trước khi chạy NAVIGATION: " + active_result.get("message", ""),
+                "active_map": active_result,
+                "state": get_system_state(),
+            })
+    else:
+        # Nếu giao diện chưa gửi map_name nhưng đã có active map cũ thì dùng active map đó.
+        # Nếu chưa có active map, tự chọn map hợp lệ mới nhất để tránh rơi về map mặc định cũ trong script.
+        active_name = get_active_fusion_map_name()
+        if active_name:
+            active_result = {
+                "ok": True,
+                "map_name": active_name,
+                "message": f"Using existing active map: {active_name}",
+                "active_map_file": str(ACTIVE_MAP_FILE),
+            }
+        else:
+            newest_valid = next((m for m in list_fusion_map_entries() if m.get("valid")), None)
+            if newest_valid:
+                active_result = write_active_fusion_map_env(newest_valid["name"])
+                if not active_result.get("ok"):
+                    return JSONResponse({
+                        "ok": False,
+                        "message": "Không thể tự chọn active map mới nhất: " + active_result.get("message", ""),
+                        "active_map": active_result,
+                        "state": get_system_state(),
+                    })
+            else:
+                return JSONResponse({
+                    "ok": False,
+                    "message": "Chưa có active map và không tìm thấy map hợp lệ 2D+3D. Hãy LIST MAPS hoặc SAVE MAP trước.",
+                    "active_map": None,
+                    "state": get_system_state(),
+                })
+
     result = run_script(START_NAVIGATION_SCRIPT, timeout=20.0)
+
+    message = result.get("message", "Navigation mode requested.")
+    if active_result and active_result.get("ok"):
+        message = f"Active map prepared: {active_result['map_name']}. {message}"
+
     return JSONResponse({
         **result,
-        "message": result.get("message", "Navigation mode requested."),
+        "message": message,
+        "active_map": active_result,
         "state": get_system_state(),
     })
 
@@ -922,12 +1401,34 @@ async def api_save_map(request: Request):
     cmd = f"bash {shlex.quote(str(script))} {shlex.quote(map_name)}"
     code, out = run_cmd(cmd, timeout=120.0, source_ros=False)
 
+    active_result = None
+    active_map_ok = False
+    message = "SAVE MAP thành công."
+
+    if code == 0:
+        # Yêu cầu: SAVE MAP thành công thì map vừa lưu tự được chọn làm active map cho Navigation.
+        active_result = write_active_fusion_map_env(map_name)
+        active_map_ok = bool(active_result.get("ok")) if active_result else False
+
+        if active_map_ok:
+            message = f"SAVE MAP thành công. Active map cho Navigation: {map_name}"
+        else:
+            message = (
+                "SAVE MAP thành công nhưng chưa set được active map: "
+                + (active_result.get("message", "unknown error") if active_result else "unknown error")
+            )
+    else:
+        message = "SAVE MAP thất bại. Kiểm tra output/log hệ thống."
+
     return JSONResponse({
         "ok": code == 0,
         "returncode": code,
         "map_name": map_name,
         "script": str(script),
         "output": out,
+        "active_map_ok": active_map_ok,
+        "active_map": active_result,
+        "message": message,
         "state": get_system_state(),
     })
 
@@ -1160,9 +1661,16 @@ async function postJson(url){
 async function listFusionMaps() {
   const state = await getJson("/api/status");
 
-  if (!state.navigation) {
-    output.textContent = "LIST MAPS chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.";
-    showMessage("LIST MAPS disabled outside NAVIGATION");
+  if (!state.device) {
+    output.textContent = "LIST MAPS chỉ hoạt động sau khi START.";
+    showMessage("Press START before LIST MAPS");
+    updateButtons(state);
+    return;
+  }
+
+  if (state.slam) {
+    output.textContent = "LIST MAPS đang khóa khi SLAM chạy. Nếu vừa quét map, hãy SAVE MAP trước.";
+    showMessage("LIST MAPS disabled while SLAM is active");
     updateButtons(state);
     return;
   }
@@ -1176,16 +1684,30 @@ async function listFusionMaps() {
     data.maps.forEach(m => {
       const opt = document.createElement("option");
       opt.value = m.name;
-      opt.textContent = m.valid
-        ? `${m.name} [2D+3D OK]`
-        : `${m.name} [missing file]`;
+
+      const tags = [];
+      if (m.active) tags.push("ACTIVE");
+      if (m.valid) tags.push("OK");
+      else if (m.valid_2d) tags.push("missing 3D");
+      else tags.push("missing file");
+      if (m.modified_at) tags.push(m.modified_at);
+
+      opt.textContent = `${m.name} [${tags.join(" | ")}]`;
       opt.disabled = !m.valid;
+      opt.selected = !!m.active;
       sel.appendChild(opt);
     });
+
+    if (!sel.value) {
+      const firstValid = Array.from(sel.options).find(o => !o.disabled);
+      if (firstValid) {
+        sel.value = firstValid.value;
+      }
+    }
   }
 
   output.textContent = pretty(data);
-  showMessage("Fusion map list loaded");
+  showMessage("Fusion map list loaded, newest map is on top");
   updateButtons(state);
 }
 
@@ -1193,9 +1715,16 @@ async function listFusionMaps() {
 async function setActiveFusionMap() {
   const state = await getJson("/api/status");
 
-  if (!state.navigation) {
-    output.textContent = "SET ACTIVE MAP chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.";
-    showMessage("SET ACTIVE MAP disabled outside NAVIGATION");
+  if (!state.device) {
+    output.textContent = "SET ACTIVE MAP chỉ hoạt động sau khi START.";
+    showMessage("Press START before SET ACTIVE MAP");
+    updateButtons(state);
+    return;
+  }
+
+  if (state.slam) {
+    output.textContent = "SET ACTIVE MAP đang khóa khi SLAM chạy. Nếu vừa quét map, hãy SAVE MAP để map mới tự active.";
+    showMessage("SET ACTIVE MAP disabled while SLAM is active");
     updateButtons(state);
     return;
   }
@@ -1219,16 +1748,47 @@ async function setActiveFusionMap() {
 
   const data = await res.json();
   output.textContent = pretty(data);
-  showMessage(data.ok ? "Active map selected" : "Set active map failed");
+  showMessage(data.message || (data.ok ? "Active map selected" : "Set active map failed"));
 
   const newState = await getJson("/api/status");
   updateButtons(newState);
 }
 
 
-async function startSystem(){ await postJson('/api/start_system'); }
+async function startSystem(){
+  await postJson('/api/start_system');
+  setTimeout(listFusionMaps,1800);
+}
 async function stopSystem(){ await postJson('/api/stop_system'); }
-async function startNavigationMode(){ await postJson('/api/start_navigation_mode'); }
+async function startNavigationMode(){
+  showMessage('Preparing active map before NAVIGATION...');
+
+  let sel = document.getElementById("fusionMapSelect");
+  let mapName = sel && sel.value ? sel.value : "";
+
+  if (!mapName) {
+    await listFusionMaps();
+    sel = document.getElementById("fusionMapSelect");
+    mapName = sel && sel.value ? sel.value : "";
+  }
+
+  if (!mapName) {
+    output.textContent = "Không có map hợp lệ để chạy NAVIGATION. Hãy SAVE MAP hoặc kiểm tra thiếu file .yaml/.pgm/_3d.bt.";
+    showMessage("No valid map selected");
+    return;
+  }
+
+  const res = await fetch('/api/start_navigation_mode',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({map_name:mapName})
+  });
+
+  const data = await res.json();
+  output.textContent = pretty(data);
+  showMessage(data.message || 'Navigation mode requested.');
+  setTimeout(loadStatus,1500);
+}
 async function startSlamMode(){ await postJson('/api/start_slam_mode'); }
 async function saveMap(){ output.textContent='SAVE MAP đã được chuyển sang trang Viewer.'; showMessage('Open Viewer để lưu map khi đang SLAM'); }
 
@@ -1265,8 +1825,9 @@ function updateButtons(data) {
     slamBtn.style.opacity = slamBtn.disabled ? 0.45 : 1.0;
   }
 
-  // LIST MAPS / SET ACTIVE MAP chỉ có hiệu lực khi đang NAVIGATION
-  const mapControlEnabled = navigation && !slam;
+  // LIST MAPS / SET ACTIVE MAP dùng được ngay sau START, trước khi nhấn NAVIGATION.
+  // Nếu NAVIGATION đang chạy, đổi active map chỉ có hiệu lực sau khi restart Navigation.
+  const mapControlEnabled = device && !slam;
 
   if (fusionMapSelect) {
     fusionMapSelect.disabled = !mapControlEnabled;
@@ -4630,9 +5191,11 @@ async function saveFusionMap() {
 
     if (data.ok) {
       if (resultBox) {
-        resultBox.textContent = "Đã lưu map thành công.";
+        resultBox.textContent = data.active_map_ok
+          ? "Đã lưu map thành công và đã đặt làm active map cho Navigation."
+          : "Đã lưu map thành công nhưng chưa đặt được active map. Kiểm tra thiếu file 2D/3D.";
       }
-      log("Save map success: " + data.map_name);
+      log("Save map success: " + data.map_name + " | active=" + (data.active_map_ok ? "yes" : "no"));
     } else {
       if (resultBox) {
         resultBox.textContent = "Lưu map thất bại. Kiểm tra terminal/log hệ thống.";

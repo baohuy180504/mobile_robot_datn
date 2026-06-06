@@ -1,0 +1,38 @@
+[1.978s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai': CMAKE_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control LD_LIBRARY_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_ai build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log --single-version-externally-managed install_data
+[2.616s] running egg_info
+[2.617s] writing ../../build/amr_ai/amr_ai.egg-info/PKG-INFO
+[2.618s] writing dependency_links to ../../build/amr_ai/amr_ai.egg-info/dependency_links.txt
+[2.619s] writing entry points to ../../build/amr_ai/amr_ai.egg-info/entry_points.txt
+[2.619s] writing requirements to ../../build/amr_ai/amr_ai.egg-info/requires.txt
+[2.619s] writing top-level names to ../../build/amr_ai/amr_ai.egg-info/top_level.txt
+[2.626s] reading manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+[2.636s] writing manifest file '../../build/amr_ai/amr_ai.egg-info/SOURCES.txt'
+[2.636s] running build
+[2.636s] running build_py
+[2.637s] copying amr_ai/esp32_alert_bridge_node.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai
+[2.638s] copying amr_ai/web/engineer_web_server.py -> /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/web
+[2.644s] running install
+[2.644s] running install_lib
+[2.647s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/web/engineer_web_server.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/web
+[2.650s] copying /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build/lib/amr_ai/esp32_alert_bridge_node.py -> /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai
+[2.651s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/web/engineer_web_server.py to engineer_web_server.cpython-310.pyc
+[2.670s] byte-compiling /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai/esp32_alert_bridge_node.py to esp32_alert_bridge_node.cpython-310.pyc
+[2.674s] running install_data
+[2.674s] running install_egg_info
+[2.680s] removing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info' (and everything under it)
+[2.680s] Copying ../../build/amr_ai/amr_ai.egg-info to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages/amr_ai-0.0.1-py3.10.egg-info
+[2.720s] running install_scripts
+[2.772s] Installing ai_detector script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.773s] Installing ai_image_probe script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.773s] Installing ai_mode_manager script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.774s] Installing auto_initial_pose script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.774s] Installing auto_localizer script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.774s] Installing cmd_vel_safety_mux script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.775s] Installing engineer_web script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.775s] Installing esp32_alert_bridge script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.775s] Installing follow_goal script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.776s] Installing follow_servo script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.776s] Installing operator_gui script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.776s] Installing person_tracker script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/amr_ai
+[2.779s] writing list of installed files to '/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log'
+[2.886s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai' returned '0': CMAKE_PREFIX_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control LD_LIBRARY_PATH=/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/amr_ai build --build-base /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/build install --record /home/huyjetson/mobile_robot/ros2_ws/build/amr_ai/install.log --single-version-externally-managed install_data

@@ -1,0 +1,89 @@
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: false
+
+    # EKF chạy trong mặt phẳng 2D cho robot vi sai.
+    frequency: 30.0
+    sensor_timeout: 0.20
+    two_d_mode: true
+
+    # TF output: EKF là nguồn duy nhất publish odom -> base_footprint.
+    publish_tf: true
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_footprint
+    world_frame: odom
+
+    # Không bù thời gian tương lai ở giai đoạn đầu.
+    transform_time_offset: 0.0
+    transform_timeout: 0.20
+
+    print_diagnostics: true
+    debug: false
+    publish_acceleration: false
+
+    # ------------------------------------------------------------------
+    # Input 1: wheel odometry từ encoder thuần.
+    # Topic này do arduino_bridge mới publish.
+    #
+    # Thứ tự config:
+    # [x, y, z,
+    #  roll, pitch, yaw,
+    #  vx, vy, vz,
+    #  vroll, vpitch, vyaw,
+    #  ax, ay, az]
+    #
+    # Dùng vx, vy=0 constraint, và vyaw từ encoder.
+    # Không dùng pose x/y/yaw của wheel odom để tránh tin quá mức odom tích phân.
+    # ------------------------------------------------------------------
+    odom0: /wheel/odom
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  true,  false,
+                   false, false, true,
+                   false, false, false]
+    odom0_queue_size: 10
+    odom0_nodelay: false
+    odom0_differential: false
+    odom0_relative: false
+
+    # ------------------------------------------------------------------
+    # Input 2: BNO055 yaw từ /imu/data.
+    #
+    # Giai đoạn 1 chỉ dùng yaw orientation.
+    # Chưa dùng angular_velocity.z vì hiện tại bridge đang suy ra từ đạo hàm yaw,
+    # chưa phải gyro_z thật từ BNO055.
+    # Khi Arduino gửi gyro_z thật, sẽ bật thêm vyaw ở imu0_config.
+    # ------------------------------------------------------------------
+    imu0: /imu/data
+    imu0_config: [false, false, false,
+                  false, false, true,
+                  false, false, false,
+                  false, false, false,
+                  false, false, false]
+    imu0_queue_size: 10
+    imu0_nodelay: false
+    imu0_differential: false
+    imu0_relative: false
+    imu0_remove_gravitational_acceleration: false
+
+    # Tránh warning khi một số field covariance rất lớn.
+    reset_on_time_jump: true
+
+    # Process noise: bảo thủ để odom không giật.
+    # Nếu EKF phản ứng quá chậm khi quay, tăng nhẹ các giá trị yaw/vyaw ở đây.
+    process_noise_covariance: [0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6]

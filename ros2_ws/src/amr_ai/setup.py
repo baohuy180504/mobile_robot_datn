@@ -43,6 +43,7 @@ setup(
             'auto_initial_pose = amr_ai.core.auto_initial_pose_node:main',
             'auto_localizer = amr_ai.core.auto_localizer_node:main',
             'engineer_web = amr_ai.web.engineer_web_server:main',
+            'esp32_alert_bridge = amr_ai.esp32_alert_bridge_node:main',
         ],
     },
 )

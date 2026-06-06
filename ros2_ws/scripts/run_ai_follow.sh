@@ -15,3 +15,4 @@ ros2 launch amr_ai amr_ai.launch.py \
   start_ai_detector:=true\
   start_auto_localizer:=true\
   start_esp32_gateway:=true
+

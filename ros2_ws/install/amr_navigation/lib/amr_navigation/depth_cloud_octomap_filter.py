@@ -1,1 +1,0 @@
-/home/huyjetson/mobile_robot/ros2_ws/src/amr_navigation/scripts/depth_cloud_octomap_filter.py

@@ -130,6 +130,44 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
+    depth_cloud_filter = Node(
+        package='amr_pointcloud_filter',
+        executable='depth_cloud_filter',
+        name='depth_cloud_filter',
+        output='screen',
+        parameters=[{
+            'input_topic': '/camera/depth/points',
+
+            # SLAM 2D nếu cần camera scan thì dùng cloud lọc nhẹ hơn
+            'nav_output_topic': '/camera/depth/points_filtered',
+            'nav_publish_hz': 5.0,
+            'nav_leaf_size': 0.06,
+            'nav_pixel_step': 3,
+
+            # OctoMap 3D
+            'octomap_output_topic': '/octomap_cloud',
+            'octomap_publish_hz': 3.0,
+            'octomap_leaf_size': 0.06,
+            'octomap_pixel_step': 2,
+
+            'min_depth': 0.25,
+            'max_depth': 3.20,
+
+            'min_x': -2.00,
+            'max_x': 2.00,
+
+            'min_y': -1.50,
+            'max_y': 1.50,
+
+            'restamp': True,
+            'output_frame_id': '',
+            'log_debug': True,
+            'use_sim_time': False,
+        }]
+    )
+
+    nodes.append(depth_cloud_filter)
+
     # 4) OctoMap 3D
     if enable_octomap:
         nodes.append(
@@ -139,7 +177,7 @@ def launch_setup(context, *args, **kwargs):
                 name="octomap_server",
                 output="screen",
                 remappings=[
-                    ("cloud_in", "/camera/depth/points"),
+                    ("cloud_in", "/octomap_cloud"),
                     ("projected_map", "/map3d"),
                 ],
                 parameters=[{
@@ -154,14 +192,20 @@ def launch_setup(context, *args, **kwargs):
                     "occupancy_max_z": 2.00,
 
                     # Tên tham số dạng dấu chấm phù hợp octomap_server ROS2.
-                    "sensor_model.max_range": 4.50,
+                    "sensor_model.max_range": 3.2,
                     "sensor_model.hit": 0.70,
                     "sensor_model.miss": 0.40,
                     "sensor_model.min": 0.12,
                     "sensor_model.max": 0.97,
 
+                    "sensor_model/max_range": 3.20,
+                    "sensor_model/hit": 0.70,
+                    "sensor_model/miss": 0.40,
+                    "sensor_model/min": 0.12,
+                    "sensor_model/max": 0.97,
+
                     "compress_map": True,
-                    "filter_ground": True,
+                    "filter_ground": False,
                     "ground_filter.distance": 0.04,
                     "ground_filter.angle": 0.15,
                     "ground_filter.plane_distance": 0.07,

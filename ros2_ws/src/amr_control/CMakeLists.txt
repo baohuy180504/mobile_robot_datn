@@ -12,9 +12,11 @@ find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
+  
   # the following line skips the linter which checks for copyrights
   # comment the line when a copyright and license is added to all source files
   set(ament_cmake_copyright_FOUND TRUE)
@@ -26,7 +28,7 @@ if(BUILD_TESTING)
 endif()
 
 add_executable(arduino_bridge src/arduino_bridge.cpp)
-ament_target_dependencies(arduino_bridge rclcpp geometry_msgs nav_msgs tf2 tf2_ros)
+ament_target_dependencies(arduino_bridge rclcpp geometry_msgs nav_msgs sensor_msgs tf2 tf2_ros)
 
 install(TARGETS
   arduino_bridge

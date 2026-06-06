@@ -1,10 +1,9 @@
 # =============================
 # fall_detector.py
-# Tách riêng nhánh phát hiện té ngã bằng YOLO pose
-# Bản fix ngã dọc theo hướng camera cho Jetson Orin
+# ROS2 AMR fall detector
+# Adapted from fall_detector_fix.py for amr_ai package
 # =============================
 
-import time
 import math
 import numpy as np
 from ultralytics import YOLO
@@ -33,53 +32,87 @@ class FallDetector:
         self.fall_states = {}
         self.box_motion_states = {}
 
+    def create_fall_state(self, det_box, now):
+        return {
+            "prev_hip_y": None,
+            "prev_shoulder_y": None,
+            "prev_box_h": None,
+            "prev_center_y": None,
+            "stand_box_h": None,
+            "stand_hip_y": None,
+            "stand_shoulder_y": None,
+            "stand_center_y": None,
+            "stand_count": 0,
+            "fall_count": 0,
+            "clear_count": 0,
+            "recover_count": 0,
+            "fallen": False,
+            "alert_until": 0.0,
+            "last_seen": now,
+            "last_box": det_box.copy(),
+            "last_fall_mode": None
+        }
+
     def get_keypoint(self, xy, conf, idx, conf_th=cfg.POSE_KPT_CONF):
         if xy is None or idx < 0 or idx >= len(xy):
             return None
+
         if conf is not None:
             if idx >= len(conf) or float(conf[idx]) < conf_th:
                 return None
+
         return (float(xy[idx][0]), float(xy[idx][1]))
 
     @staticmethod
     def midpoint(p1, p2):
         if p1 is None or p2 is None:
             return None
+
         return ((p1[0] + p2[0]) * 0.5, (p1[1] + p2[1]) * 0.5)
 
     @staticmethod
     def point_y_ratio(p, frame_h):
         if p is None:
             return None
+
         return p[1] / float(frame_h)
 
     @staticmethod
     def torso_angle_deg_from_horizontal(shoulder_mid, hip_mid):
         if shoulder_mid is None or hip_mid is None:
             return None
+
         dx = abs(hip_mid[0] - shoulder_mid[0])
         dy = abs(hip_mid[1] - shoulder_mid[1])
+
         return math.degrees(math.atan2(dy, dx + 1e-6))
 
     @staticmethod
     def expand_box(box, frame_w, frame_h, scale_x=0.18, scale_y=0.12):
         x1, y1, x2, y2 = map(int, box)
+
         bw = max(1, x2 - x1)
         bh = max(1, y2 - y1)
+
         pad_x = int(bw * scale_x)
         pad_y = int(bh * scale_y)
+
         nx1 = max(0, x1 - pad_x)
         ny1 = max(0, y1 - pad_y)
         nx2 = min(frame_w - 1, x2 + pad_x)
         ny2 = min(frame_h - 1, y2 + pad_y)
+
         return np.array([nx1, ny1, nx2, ny2], dtype=np.float32)
 
     def get_box_motion_features(self, track_id, box, frame_h, now):
         x1, y1, x2, y2 = map(int, box)
+
         bw = max(1, x2 - x1)
         bh = max(1, y2 - y1)
+
         cy = (y1 + y2) * 0.5
         bottom = y2
+
         center_y_ratio = cy / float(frame_h)
         bottom_ratio = bottom / float(frame_h)
         aspect_ratio = bw / float(bh)
@@ -92,8 +125,10 @@ class FallDetector:
             }
 
         st = self.box_motion_states[track_id]
+
         drop_px = cy - st["prev_cy"]
         height_ratio = bh / float(max(1, st["prev_h"]))
+
         st["prev_cy"] = cy
         st["prev_h"] = bh
         st["last_seen"] = now
@@ -113,18 +148,19 @@ class FallDetector:
         feats = self.get_box_motion_features(track_id, box, frame_h, now)
 
         side_like = (
-            feats["aspect_ratio"] >= 1.05 and
-            feats["bottom_ratio"] >= 0.72
+            feats["aspect_ratio"] >= 1.05
+            and feats["bottom_ratio"] >= 0.72
         )
 
         forward_like = (
-            feats["drop_px"] >= 8 and
-            feats["center_y_ratio"] >= 0.48 and
-            feats["height_ratio"] <= 0.88
+            feats["drop_px"] >= 8
+            and feats["center_y_ratio"] >= 0.48
+            and feats["height_ratio"] <= 0.88
         )
 
         already_alert = False
         baseline_not_ready = True
+
         if track_id in self.fall_states:
             st = self.fall_states[track_id]
             already_alert = st["fallen"] or (now < st["alert_until"])
@@ -134,6 +170,7 @@ class FallDetector:
 
     def choose_pose_targets(self, detections, center_x, center_y, frame_h, now, frame_count):
         candidates = []
+
         pose_scan_every = self.cfg_value("FORWARD_POSE_SCAN_EVERY", 2)
         scan_period = max(1, cfg.POSE_RUN_INTERVAL * pose_scan_every)
         force_scan = (frame_count % scan_period) == 0
@@ -141,6 +178,7 @@ class FallDetector:
         for det in detections:
             tid = det["id"]
             box = det["box"]
+
             if not self.is_pose_needed_fast(tid, box, frame_h, now, force_scan=force_scan):
                 continue
 
@@ -148,10 +186,13 @@ class FallDetector:
             dist2 = center_distance_sq(box, center_x, center_y)
 
             suspect_bonus = 0.0
+
             if tid in self.fall_states:
                 st = self.fall_states[tid]
+
                 if st["fallen"] or now < st["alert_until"] or st["fall_count"] > 0:
                     suspect_bonus = 500000.0
+
                 if st.get("stand_count", 0) < self.cfg_value("FORWARD_MIN_STAND_FRAMES", 6):
                     suspect_bonus += 200000.0
 
@@ -159,6 +200,7 @@ class FallDetector:
             candidates.append((score, det))
 
         candidates.sort(key=lambda x: x[0], reverse=True)
+
         return [item[1] for item in candidates[:cfg.MAX_POSE_PEOPLE]]
 
     def run_pose_on_crop(self, crop_bgr, det_box):
@@ -178,10 +220,12 @@ class FallDetector:
             return None
 
         result = results[0]
+
         if result.keypoints is None or result.boxes is None or result.keypoints.xy is None:
             return None
 
         boxes = result.boxes.xyxy.cpu().numpy()
+
         if len(boxes) == 0:
             return None
 
@@ -193,26 +237,35 @@ class FallDetector:
             best_idx = int(np.argmax(areas))
 
         kpts_xy = result.keypoints.xy.cpu().numpy()[best_idx]
+
         if result.keypoints.conf is not None:
             kpts_conf = result.keypoints.conf.cpu().numpy()[best_idx]
         else:
             kpts_conf = np.ones((kpts_xy.shape[0],), dtype=np.float32)
 
         x1, y1, _, _ = map(int, det_box)
+
         kpts_xy_global = kpts_xy.copy()
         kpts_xy_global[:, 0] += x1
         kpts_xy_global[:, 1] += y1
 
-        return {"kpts_xy": kpts_xy_global, "kpts_conf": kpts_conf}
+        return {
+            "kpts_xy": kpts_xy_global,
+            "kpts_conf": kpts_conf
+        }
 
     def compute_pose_features_from_kpts(self, kpts_xy, kpts_conf, det_box, frame_h, depth_map=None):
         nose = self.get_keypoint(kpts_xy, kpts_conf, 0)
+
         left_shoulder = self.get_keypoint(kpts_xy, kpts_conf, 5)
         right_shoulder = self.get_keypoint(kpts_xy, kpts_conf, 6)
+
         left_hip = self.get_keypoint(kpts_xy, kpts_conf, 11)
         right_hip = self.get_keypoint(kpts_xy, kpts_conf, 12)
+
         left_knee = self.get_keypoint(kpts_xy, kpts_conf, 13)
         right_knee = self.get_keypoint(kpts_xy, kpts_conf, 14)
+
         left_ankle = self.get_keypoint(kpts_xy, kpts_conf, 15)
         right_ankle = self.get_keypoint(kpts_xy, kpts_conf, 16)
 
@@ -222,10 +275,15 @@ class FallDetector:
         ankle_mid = self.midpoint(left_ankle, right_ankle)
 
         if shoulder_mid is None and nose is not None and hip_mid is not None:
-            shoulder_mid = ((nose[0] + hip_mid[0]) * 0.5, (nose[1] + hip_mid[1]) * 0.5)
+            shoulder_mid = (
+                (nose[0] + hip_mid[0]) * 0.5,
+                (nose[1] + hip_mid[1]) * 0.5
+            )
 
         torso_angle = self.torso_angle_deg_from_horizontal(shoulder_mid, hip_mid)
+
         bw, bh = box_width_height(det_box)
+
         box_aspect = bw / float(max(1, bh))
         box_center_y = (float(det_box[1]) + float(det_box[3])) * 0.5
         center_y_ratio = box_center_y / float(frame_h)
@@ -235,16 +293,19 @@ class FallDetector:
         shoulder_ratio = self.point_y_ratio(shoulder_mid, frame_h)
 
         hip_above_knee = None
+
         if hip_mid is not None and knee_mid is not None:
             hip_above_knee = hip_mid[1] < (knee_mid[1] - cfg.KNEE_MARGIN_PX)
 
         body_axis_len = None
+
         if shoulder_mid is not None and ankle_mid is not None:
             body_axis_len = point_dist(shoulder_mid, ankle_mid)
         elif hip_mid is not None and ankle_mid is not None:
             body_axis_len = point_dist(hip_mid, ankle_mid)
 
         compact_ratio = None
+
         if body_axis_len is not None and bh > 0:
             compact_ratio = body_axis_len / float(bh)
 
@@ -253,6 +314,7 @@ class FallDetector:
         ankle_z = sample_depth_at_point(depth_map, ankle_mid)
 
         torso_depth_tilt = None
+
         if shoulder_z is not None and ankle_z is not None:
             torso_depth_tilt = abs(shoulder_z - ankle_z)
         elif hip_z is not None and ankle_z is not None:
@@ -270,37 +332,56 @@ class FallDetector:
             "shoulder_ratio": shoulder_ratio,
             "hip_above_knee": hip_above_knee,
             "compact_ratio": compact_ratio,
-            "torso_depth_tilt": torso_depth_tilt,
+            "torso_depth_tilt": torso_depth_tilt
         }
 
     def ensure_fall_state(self, track_id, det_box, now):
         if track_id not in self.fall_states:
-            self.fall_states[track_id] = {
-                "prev_hip_y": None,
-                "prev_shoulder_y": None,
-                "prev_box_h": None,
-                "prev_center_y": None,
-                "stand_box_h": None,
-                "stand_hip_y": None,
-                "stand_shoulder_y": None,
-                "stand_center_y": None,
-                "stand_count": 0,
-                "fall_count": 0,
-                "clear_count": 0,
-                "recover_count": 0,
-                "fallen": False,
-                "alert_until": 0.0,
-                "last_seen": now,
-                "last_box": det_box.copy(),
-                "last_fall_mode": None
-            }
+            self.fall_states[track_id] = self.create_fall_state(det_box, now)
 
     def mark_visible_tracks(self, detections, now):
         for det in detections:
             tid = det["id"]
-            self.ensure_fall_state(tid, det["box"], now)
+            new_box = det["box"]
+
+            if tid in self.fall_states:
+                state = self.fall_states[tid]
+                old_box = state.get("last_box", None)
+
+                if old_box is not None and (state["fallen"] or now < state["alert_until"]):
+                    old_x1, old_y1, old_x2, old_y2 = map(float, old_box)
+                    new_x1, new_y1, new_x2, new_y2 = map(float, new_box)
+
+                    old_cx = (old_x1 + old_x2) * 0.5
+                    old_cy = (old_y1 + old_y2) * 0.5
+
+                    new_cx = (new_x1 + new_x2) * 0.5
+                    new_cy = (new_y1 + new_y2) * 0.5
+
+                    dx = new_cx - old_cx
+                    dy = new_cy - old_cy
+
+                    center_dist = math.sqrt(dx * dx + dy * dy)
+
+                    old_h = max(1.0, old_y2 - old_y1)
+                    new_h = max(1.0, new_y2 - new_y1)
+
+                    height_ratio = new_h / old_h
+
+                    id_switch_like = (
+                        center_dist >= self.cfg_value("ID_SWITCH_CENTER_DIST_PX", 140.0)
+                        or height_ratio <= self.cfg_value("ID_SWITCH_HEIGHT_RATIO_MIN", 0.55)
+                        or height_ratio >= self.cfg_value("ID_SWITCH_HEIGHT_RATIO_MAX", 1.80)
+                    )
+
+                    if id_switch_like:
+                        self.fall_states[tid] = self.create_fall_state(new_box, now)
+                        continue
+
+            self.ensure_fall_state(tid, new_box, now)
+
             self.fall_states[tid]["last_seen"] = now
-            self.fall_states[tid]["last_box"] = det["box"].copy()
+            self.fall_states[tid]["last_box"] = new_box.copy()
 
     def update_standing_baseline(self, state, feats):
         torso_angle = feats["torso_angle"]
@@ -314,6 +395,7 @@ class FallDetector:
 
         if torso_angle is None or hip_ratio is None or shoulder_ratio is None:
             return
+
         if hip_mid is None or shoulder_mid is None:
             return
 
@@ -326,6 +408,7 @@ class FallDetector:
 
         if not upright_like:
             return
+
         if state["fallen"] or state["fall_count"] > 0:
             return
 
@@ -348,15 +431,19 @@ class FallDetector:
 
     def update_single_fall_state(self, track_id, det_box, feats, now):
         state = self.fall_states[track_id]
+
         hip_mid = feats["hip_mid"]
         shoulder_mid = feats["shoulder_mid"]
+
         torso_angle = feats["torso_angle"]
         hip_ratio = feats["hip_ratio"]
         shoulder_ratio = feats["shoulder_ratio"]
         box_aspect = feats["box_aspect"]
+
         hip_above_knee = feats["hip_above_knee"]
         compact_ratio = feats["compact_ratio"]
         torso_depth_tilt = feats["torso_depth_tilt"]
+
         box_h = feats["box_h"]
         center_y_ratio = feats["center_y_ratio"]
 
@@ -366,8 +453,10 @@ class FallDetector:
 
         if hip_mid is not None and state["prev_hip_y"] is not None:
             hip_drop_px = float(hip_mid[1] - state["prev_hip_y"])
+
         if shoulder_mid is not None and state["prev_shoulder_y"] is not None:
             shoulder_drop_px = float(shoulder_mid[1] - state["prev_shoulder_y"])
+
         if state["prev_center_y"] is not None:
             center_drop_ratio = float(center_y_ratio - state["prev_center_y"])
 
@@ -378,10 +467,12 @@ class FallDetector:
         )
 
         height_shrink_ratio = 1.0
+
         if state["prev_box_h"] is not None and state["prev_box_h"] > 0:
             height_shrink_ratio = box_h / float(state["prev_box_h"])
 
         baseline_ready = state.get("stand_count", 0) >= self.cfg_value("FORWARD_MIN_STAND_FRAMES", 6)
+
         base_height_ratio = 1.0
         base_center_drop_ratio = 0.0
         base_hip_drop_ratio = 0.0
@@ -389,10 +480,13 @@ class FallDetector:
 
         if baseline_ready and state["stand_box_h"] is not None:
             base_height_ratio = box_h / float(max(1.0, state["stand_box_h"]))
+
             if state["stand_center_y"] is not None:
                 base_center_drop_ratio = center_y_ratio - state["stand_center_y"]
+
             if hip_mid is not None and state["stand_hip_y"] is not None:
                 base_hip_drop_ratio = (hip_mid[1] - state["stand_hip_y"]) / float(max(1.0, state["stand_box_h"]))
+
             if shoulder_mid is not None and state["stand_shoulder_y"] is not None:
                 base_shoulder_drop_ratio = (shoulder_mid[1] - state["stand_shoulder_y"]) / float(max(1.0, state["stand_box_h"]))
 
@@ -470,10 +564,9 @@ class FallDetector:
             and hip_ratio is not None
             and torso_angle >= cfg.SIT_TORSO_MIN_DEG
             and hip_ratio >= cfg.SIT_LOW_HIP_RATIO
-            and hip_above_knee is True
-            and not rapid_drop
-            and base_height_ratio >= self.cfg_value("SIT_MIN_HEIGHT_RATIO", 0.58)
-            and (torso_depth_tilt is None or torso_depth_tilt < 140.0)
+            and (hip_above_knee is True or box_aspect < 1.05)
+            and base_height_ratio >= self.cfg_value("SIT_MIN_HEIGHT_RATIO", 0.42)
+            and (torso_depth_tilt is None or torso_depth_tilt < 220.0)
         )
 
         bend_like = (
@@ -491,7 +584,7 @@ class FallDetector:
             and hip_ratio >= 0.52
             and box_aspect < 1.15
             and not rapid_drop
-            and base_height_ratio >= self.cfg_value("KNEEL_MIN_HEIGHT_RATIO", 0.55)
+            and base_height_ratio >= self.cfg_value("KNEEL_MIN_HEIGHT_RATIO", 0.45)
         )
 
         fall_candidate = (
@@ -511,10 +604,14 @@ class FallDetector:
 
         if fall_candidate:
             state["clear_count"] = 0
+
             add_count = 2 if rapid_drop else 1
+
             if vertical_forward_fall or depth_only_forward_fall:
                 add_count = max(add_count, 2)
+
             state["fall_count"] = min(cfg.FALL_CONFIRM_FRAMES + 3, state["fall_count"] + add_count)
+
             if fall_mode is not None:
                 state["last_fall_mode"] = fall_mode
         else:
@@ -533,14 +630,17 @@ class FallDetector:
         recovered_like = (
             torso_angle is not None
             and hip_ratio is not None
-            and torso_angle >= 60.0
-            and hip_ratio < 0.58
-            and box_aspect < 0.95
-            and base_height_ratio >= self.cfg_value("RECOVER_MIN_HEIGHT_RATIO", 0.80)
+            and torso_angle >= self.cfg_value("RECOVER_TORSO_MIN_DEG", 55.0)
+            and hip_ratio < self.cfg_value("RECOVER_HIP_RATIO_MAX", 0.64)
+            and box_aspect < self.cfg_value("RECOVER_BOX_ASPECT_MAX", 1.05)
+            and (
+                base_height_ratio >= self.cfg_value("RECOVER_MIN_HEIGHT_RATIO", 0.60)
+                or not baseline_ready
+            )
         )
 
         if state["fallen"]:
-            if recovered_like and now >= state["alert_until"]:
+            if recovered_like:
                 state["recover_count"] += 1
             else:
                 state["recover_count"] = 0
@@ -548,19 +648,26 @@ class FallDetector:
             if state["recover_count"] >= cfg.RECOVER_CONFIRM_FRAMES:
                 state["fallen"] = False
                 state["fall_count"] = 0
+                state["clear_count"] = 0
+                state["recover_count"] = 0
+                state["alert_until"] = 0.0
+                state["last_fall_mode"] = None
 
         self.update_standing_baseline(state, feats)
 
         if hip_mid is not None:
             state["prev_hip_y"] = hip_mid[1]
+
         if shoulder_mid is not None:
             state["prev_shoulder_y"] = shoulder_mid[1]
+
         state["prev_box_h"] = box_h
         state["prev_center_y"] = center_y_ratio
 
     def cleanup(self, now):
         for tid in list(self.fall_states.keys()):
             state = self.fall_states[tid]
+
             if (now - state["last_seen"]) > cfg.STATE_TRACK_TIMEOUT:
                 if now >= state["alert_until"]:
                     del self.fall_states[tid]
@@ -571,13 +678,16 @@ class FallDetector:
 
     def get_active_fall_map(self, now):
         active = {}
+
         for tid, state in self.fall_states.items():
             alert_active = state["fallen"] or (now < state["alert_until"])
+
             if alert_active:
                 active[tid] = {
                     "box": state["last_box"],
                     "fall_mode": state["last_fall_mode"]
                 }
+
         return active
 
     def update(self, frame, depth, detections, center_x, center_y, frame_h, frame_count, now):
@@ -589,15 +699,25 @@ class FallDetector:
 
         if frame_count % cfg.POSE_RUN_INTERVAL == 0 and len(detections) > 0:
             frame_w = frame.shape[1]
-            pose_targets = self.choose_pose_targets(detections, center_x, center_y, frame_h, now, frame_count)
+
+            pose_targets = self.choose_pose_targets(
+                detections,
+                center_x,
+                center_y,
+                frame_h,
+                now,
+                frame_count
+            )
 
             for det in pose_targets:
                 expanded_box = self.expand_box(det["box"], frame_w, frame_h)
                 crop, clipped_box = crop_from_box(frame, expanded_box)
+
                 if crop is None:
                     continue
 
                 pose_info = self.run_pose_on_crop(crop, clipped_box)
+
                 if pose_info is None:
                     continue
 
@@ -608,9 +728,11 @@ class FallDetector:
                     frame_h,
                     depth
                 )
+
                 self.update_single_fall_state(det["id"], det["box"], feats, now)
 
         self.cleanup(now)
+
         active_fall_map = self.get_active_fall_map(now)
 
         for det in detections:
