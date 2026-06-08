@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os
-from PIL import Image
+from PIL import Image, ImageFilter # Thêm ImageFilter
 import qrcode
 
 # =====================================================================
@@ -29,7 +29,7 @@ def create_qr_fixed_paths():
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_H, 
-            box_size=10,
+            box_size=40,
             border=4,
         )
         qr.add_data(WEBSITE_URL)
@@ -47,6 +47,7 @@ def create_qr_fixed_paths():
         
         # Thay đổi kích thước logo nhưng vẫn giữ nguyên tỷ lệ gốc của logo (không bị méo ảnh)
         logo.thumbnail((logo_max_size, logo_max_size), Image.LANCZOS)
+        logo = logo.filter(ImageFilter.SHARPEN)
         logo_width, logo_height = logo.size
 
         # Tính toán tọa độ (x, y) để đặt logo chính xác vào trung tâm của mã QR
