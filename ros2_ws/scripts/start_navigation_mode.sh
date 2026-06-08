@@ -5,6 +5,13 @@ WS="$HOME/mobile_robot/ros2_ws"
 SESSION="amr_navigation"
 ACTIVE_MAP_FILE="$WS/config/active_fusion_map.env"
 
+# ==========================================================
+# ESP32 Alert Display config
+# ==========================================================
+ESP32_ALERT_IP="${ESP32_ALERT_IP:-192.168.0.146}"
+ESP32_ALERT_UDP_PORT="${ESP32_ALERT_UDP_PORT:-4210}"
+ESP32_ALERT_TCP_PORT="${ESP32_ALERT_TCP_PORT:-4211}"
+
 source "$HOME/mobile_robot/ai_ros_venv/bin/activate"
 source /opt/ros/humble/setup.bash
 source "$WS/install/setup.bash"
@@ -130,6 +137,30 @@ start_ai_detector:=true \
 start_auto_initial_pose:=true \
 start_auto_localizer:=true \
 start_esp32_gateway:=true" C-m
+
+sleep 3
+
+tmux new-window -t "$SESSION" -n esp32_alert
+
+tmux send-keys -t "$SESSION:esp32_alert" \
+"cd $WS && \
+source $HOME/mobile_robot/ai_ros_venv/bin/activate && \
+source /opt/ros/humble/setup.bash && \
+source install/setup.bash && \
+export ROS_DOMAIN_ID=0 && \
+export ROS_LOCALHOST_ONLY=0 && \
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp && \
+ros2 run amr_ai esp32_alert_bridge --ros-args \
+-p esp32_ip:=$ESP32_ALERT_IP \
+-p esp32_udp_port:=$ESP32_ALERT_UDP_PORT \
+-p esp32_tcp_port:=$ESP32_ALERT_TCP_PORT \
+-p alert_topic:=/amr_ai/alert \
+-p debug_image_topic:=/amr_ai/debug/alert/image" C-m
+
+echo "[INFO] Started esp32_alert_bridge:"
+echo "       ESP32 IP   = $ESP32_ALERT_IP"
+echo "       UDP port   = $ESP32_ALERT_UDP_PORT"
+echo "       TCP port   = $ESP32_ALERT_TCP_PORT"
 
 # ==========================================================
 # Alert / Tracker web streams: chỉ chạy trong NAVIGATION

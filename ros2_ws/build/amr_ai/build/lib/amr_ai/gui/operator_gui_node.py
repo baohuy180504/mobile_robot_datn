@@ -19,7 +19,7 @@ from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 
-from amr_interfaces.msg import AiMode, PersonTarget
+from amr_interfaces.msg import AiMode, PersonTarget, AiAlert
 from amr_interfaces.srv import SetAiMode, SelectZone
 
 
@@ -30,6 +30,9 @@ class OperatorGuiNode(Node):
         self.declare_parameter('debug_image_topic', '/amr_ai/debug/person_tracker/image')
         self.declare_parameter('mode_topic', '/amr_ai/mode')
         self.declare_parameter('person_target_topic', '/amr_ai/person_target')
+        self.declare_parameter('alert_topic', '/amr_ai/alert')
+        self.declare_parameter('alert_image_topic', '/amr_ai/debug/alert/image')
+        self.declare_parameter('alert_hold_sec', 3.0)
 
         self.declare_parameter(
             'start_script',
@@ -43,6 +46,9 @@ class OperatorGuiNode(Node):
         self.debug_image_topic = self.get_parameter('debug_image_topic').value
         self.mode_topic = self.get_parameter('mode_topic').value
         self.person_target_topic = self.get_parameter('person_target_topic').value
+        self.alert_topic = self.get_parameter('alert_topic').value
+        self.alert_image_topic = self.get_parameter('alert_image_topic').value
+        self.alert_hold_sec = float(self.get_parameter('alert_hold_sec').value)
 
         self.start_script = self.get_parameter('start_script').value
         self.stop_script = self.get_parameter('stop_script').value
@@ -50,8 +56,19 @@ class OperatorGuiNode(Node):
         self.bridge = CvBridge()
         self.lock = threading.Lock()
 
+        # Ảnh debug follow: chỉ dùng để hiển thị khi mode FOLLOW_DETECTING/FOLLOW_ACTIVE.
         self.latest_frame = None
         self.latest_frame_time = 0.0
+
+        # Ảnh debug cảnh báo: chỉ ưu tiên hiển thị khi có alert active.
+        self.latest_alert_frame = None
+        self.latest_alert_frame_time = 0.0
+
+        self.latest_alert_type = 'NORMAL'
+        self.latest_alert_message = 'No AI alert'
+        self.latest_alert_confidence = 0.0
+        self.latest_alert_active = False
+        self.latest_alert_time = 0.0
 
         self.current_mode = AiMode.IDLE
         self.current_mode_name = 'IDLE'
@@ -84,6 +101,20 @@ class OperatorGuiNode(Node):
             10
         )
 
+        self.alert_sub = self.create_subscription(
+            AiAlert,
+            self.alert_topic,
+            self.alert_callback,
+            10
+        )
+
+        self.alert_image_sub = self.create_subscription(
+            Image,
+            self.alert_image_topic,
+            self.alert_image_callback,
+            qos_profile_sensor_data
+        )
+
         self.set_mode_client = self.create_client(SetAiMode, '/amr_ai/set_mode')
         self.select_zone_client = self.create_client(SelectZone, '/amr_ai/select_zone')
 
@@ -96,12 +127,37 @@ class OperatorGuiNode(Node):
         try:
             frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         except Exception as exc:
-            self.get_logger().warn(f'Failed to convert debug image: {exc}')
+            self.get_logger().warn(f'Failed to convert follow debug image: {exc}')
             return
 
         with self.lock:
             self.latest_frame = frame
             self.latest_frame_time = time.time()
+
+    def alert_image_callback(self, msg: Image):
+        try:
+            frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        except Exception as exc:
+            self.get_logger().warn(f'Failed to convert alert debug image: {exc}')
+            return
+
+        with self.lock:
+            self.latest_alert_frame = frame
+            self.latest_alert_frame_time = time.time()
+
+    def alert_callback(self, msg: AiAlert):
+        alert_type = str(msg.alert_type).strip().upper()
+        now = time.time()
+
+        with self.lock:
+            if msg.active and alert_type not in ['', 'NORMAL']:
+                self.latest_alert_type = alert_type
+                self.latest_alert_message = str(msg.message).strip()
+                self.latest_alert_confidence = float(msg.confidence)
+                self.latest_alert_active = True
+                self.latest_alert_time = now
+            elif alert_type == 'NORMAL' and (now - self.latest_alert_time) > self.alert_hold_sec:
+                self.latest_alert_active = False
 
     def mode_callback(self, msg: AiMode):
         mode = int(msg.mode)
@@ -110,7 +166,12 @@ class OperatorGuiNode(Node):
             self.current_mode = mode
             self.current_mode_name = str(msg.mode_name) if msg.mode_name else self.mode_to_name(mode)
 
-            if mode == AiMode.FOLLOW_ACTIVE:
+            if mode == AiMode.IDLE:
+                self.follow_button_text = 'FOLLOW'
+                self.follow_button_color = '#ffff00'
+                self.status_text = 'NAV READY'
+                self.status_color = '#0ea5e9'
+            elif mode == AiMode.FOLLOW_ACTIVE:
                 self.follow_button_text = 'FOLLOWING'
                 self.follow_button_color = '#22c55e'
                 self.status_text = 'FOLLOWING'
@@ -283,6 +344,21 @@ class OperatorGuiNode(Node):
         except Exception as exc:
             self.set_status('ZONE ERROR', '#dc2626')
             self.get_logger().error(f'select_zone failed: {exc}')
+
+
+    def get_active_alert_snapshot(self):
+        with self.lock:
+            age = time.time() - self.latest_alert_time
+
+            if not self.latest_alert_active or age > self.alert_hold_sec:
+                return None
+
+            return {
+                'type': self.latest_alert_type,
+                'message': self.latest_alert_message,
+                'confidence': self.latest_alert_confidence,
+                'age': age,
+            }
 
 
 class OperatorGuiApp:
@@ -604,8 +680,22 @@ class OperatorGuiApp:
             follow_text = self.node.follow_button_text
             follow_color = self.node.follow_button_color
             mode = self.node.current_mode
+            alert_active = self.node.latest_alert_active
+            alert_age = time.time() - self.node.latest_alert_time
+            alert_type = self.node.latest_alert_type
+            alert_message = self.node.latest_alert_message
+            alert_conf = self.node.latest_alert_confidence
 
-        self.status_label.configure(text=status_text, bg=status_color)
+        if alert_active and alert_age <= self.node.alert_hold_sec:
+            alert_text, alert_color = self.format_alert_status(
+                alert_type,
+                alert_message,
+                alert_conf
+            )
+            self.status_label.configure(text=alert_text, bg=alert_color)
+        else:
+            self.status_label.configure(text=status_text, bg=status_color)
+
         self.follow_btn.configure(text=follow_text, bg=follow_color, activebackground=follow_color)
 
         # Disable zone buttons while following/detecting
@@ -615,15 +705,73 @@ class OperatorGuiApp:
         for btn in [self.zone_a_btn, self.zone_b_btn, self.zone_h_btn]:
             btn.configure(state=state)
 
+    def format_alert_status(self, alert_type: str, alert_message: str, alert_conf: float):
+        alert_type = str(alert_type).upper()
+
+        if alert_type == 'FALL':
+            text = 'CANH BAO: TE NGA'
+            color = '#dc2626'
+        elif alert_type == 'FIRE':
+            text = 'CANH BAO: LUA'
+            color = '#dc2626'
+        elif alert_type == 'SMOKE':
+            text = 'CANH BAO: KHOI'
+            color = '#f97316'
+        else:
+            text = f'CANH BAO: {alert_type}'
+            color = '#dc2626'
+
+        if alert_conf > 0.0:
+            text = f'{text} {alert_conf:.2f}'
+
+        if alert_message:
+            msg = alert_message[:32]
+            text = f'{text} - {msg}'
+
+        return text, color
+
     def update_image(self):
         with self.node.lock:
-            frame = None if self.node.latest_frame is None else self.node.latest_frame.copy()
-            age = time.time() - self.node.latest_frame_time
+            mode = self.node.current_mode
 
-        if frame is None or age > 2.0:
-            self.show_no_image()
+            follow_frame = None if self.node.latest_frame is None else self.node.latest_frame.copy()
+            follow_age = time.time() - self.node.latest_frame_time
+
+            alert_frame = None if self.node.latest_alert_frame is None else self.node.latest_alert_frame.copy()
+            alert_frame_age = time.time() - self.node.latest_alert_frame_time
+
+            alert_active = self.node.latest_alert_active
+            alert_age = time.time() - self.node.latest_alert_time
+            alert_type = self.node.latest_alert_type
+            alert_message = self.node.latest_alert_message
+            alert_conf = self.node.latest_alert_confidence
+
+        # Ưu tiên cao nhất: cảnh báo sự cố. AI detector chạy nền trong Navigation.
+        if alert_active and alert_age <= self.node.alert_hold_sec:
+            if alert_frame is not None and alert_frame_age <= 2.0:
+                self.show_frame(alert_frame)
+            else:
+                self.show_alert_screen(alert_type, alert_message, alert_conf)
             return
 
+        # Chỉ hiển thị camera follow khi công nhân đã nhấn FOLLOW.
+        if mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]:
+            if follow_frame is None or follow_age > 2.0:
+                self.show_message(
+                    'FOLLOW CAMERA\nWAITING IMAGE',
+                    bg='#ffffff',
+                    fg='#111827',
+                    font=('Arial', 22, 'bold')
+                )
+                return
+
+            self.show_frame(follow_frame)
+            return
+
+        # Navigation bình thường: không hiện camera AI để tránh gây rối cho công nhân.
+        self.show_navigation_screen(mode)
+
+    def show_frame(self, frame):
         # Sửa hướng hiển thị trái/phải cho màn hình công nhân
         frame = cv2.flip(frame, 1)
 
@@ -650,17 +798,76 @@ class OperatorGuiApp:
         canvas.paste(img, (left, top))
 
         self.photo = ImageTk.PhotoImage(canvas)
-        self.image_label.configure(image=self.photo, text='')
+        self.image_label.configure(image=self.photo, text='', bg='#ffffff')
 
-    def show_no_image(self):
+    def show_navigation_screen(self, mode: int):
+        if mode in [AiMode.NAV_TO_ZONE, AiMode.RETURN_TO_ZONE]:
+            text = 'NAVIGATION\nRUNNING'
+        elif mode == AiMode.FOLLOW_STOPPED:
+            text = 'FOLLOW STOPPED\nSELECT WP/HOME'
+        elif mode == AiMode.EMERGENCY_STOP:
+            text = 'EMERGENCY STOP'
+        else:
+            text = 'NAVIGATION READY\nHOME POSE SET'
+
+        self.show_message(
+            text,
+            bg='#ffffff',
+            fg='#111827',
+            font=('Arial', 24, 'bold')
+        )
+
+    def show_alert_screen(self, alert_type: str, alert_message: str, alert_conf: float):
+        alert_type = str(alert_type).upper()
+
+        if alert_type == 'FALL':
+            main_text = 'CANH BAO\nTE NGA'
+            bg = '#fee2e2'
+            fg = '#991b1b'
+        elif alert_type == 'FIRE':
+            main_text = 'CANH BAO\nCO LUA'
+            bg = '#fee2e2'
+            fg = '#991b1b'
+        elif alert_type == 'SMOKE':
+            main_text = 'CANH BAO\nCO KHOI'
+            bg = '#ffedd5'
+            fg = '#9a3412'
+        else:
+            main_text = f'CANH BAO\n{alert_type}'
+            bg = '#fee2e2'
+            fg = '#991b1b'
+
+        if alert_conf > 0.0:
+            main_text += f'\nCONF {alert_conf:.2f}'
+
+        if alert_message:
+            main_text += f'\n{alert_message[:36]}'
+
+        self.show_message(
+            main_text,
+            bg=bg,
+            fg=fg,
+            font=('Arial', 24, 'bold')
+        )
+
+    def show_message(self, text: str, bg: str, fg: str, font):
         self.image_label.configure(
             image='',
-            text='No Image',
+            text=text,
+            bg=bg,
+            fg=fg,
+            font=font,
+            justify='center'
+        )
+        self.photo = None
+
+    def show_no_image(self):
+        self.show_message(
+            'No Image',
             bg='#ffffff',
             fg='#111827',
             font=('Arial', 22)
         )
-        self.photo = None
 
     def on_close(self):
         self.root.destroy()
