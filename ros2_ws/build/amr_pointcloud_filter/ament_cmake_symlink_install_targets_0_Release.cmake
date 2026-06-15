@@ -1,1 +1,1 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter/depth_cloud_filter" "TARGETS" "depth_cloud_filter" "DESTINATION" "lib/amr_pointcloud_filter")
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter/depth_cloud_filter" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter/height_risk_projector" "TARGETS" "depth_cloud_filter" "height_risk_projector" "DESTINATION" "lib/amr_pointcloud_filter")

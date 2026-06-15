@@ -315,7 +315,7 @@ message(STATUS "Execute custom install script")
 
 # begin of custom install code
 
-# install("TARGETS" "depth_cloud_filter" "DESTINATION" "lib/amr_pointcloud_filter")
+# install("TARGETS" "depth_cloud_filter" "height_risk_projector" "DESTINATION" "lib/amr_pointcloud_filter")
 include("/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
 # install(FILES "/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/amr_pointcloud_filter" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")

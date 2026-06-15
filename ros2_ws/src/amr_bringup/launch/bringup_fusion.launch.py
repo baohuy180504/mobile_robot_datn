@@ -66,8 +66,9 @@ def generate_launch_description():
         name='arduino_bridge',
         output='screen',
         parameters=[{
-            'distance_per_tick': 0.000055185,
-            'wheel_separation': 0.322,
+            'distance_per_tick': 0.000055185,  # [CALIBRATED] đo thực tế 10 lần, giảm 1.70% từ 0.000056,
+            #'distance_per_tick': 0.000054245,  # [CALIBRATED] đo thực tế 10 lần, giảm 1.70% từ 0.000055185,
+            'wheel_separation': 0.33,
             'encoder_yaw_sign': 1.0,
             'imu_yaw_filter_alpha': 0.25,
             'imu_yaw_deadband_rad': 0.0015,

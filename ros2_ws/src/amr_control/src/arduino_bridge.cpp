@@ -20,8 +20,9 @@ public:
     : Node("arduino_bridge")
     {
         serial_port_ = this->declare_parameter<std::string>("serial_port", "/dev/arduino_mega");
+        //distance_per_tick_ = this->declare_parameter<double>("distance_per_tick", 0.000054245);
         distance_per_tick_ = this->declare_parameter<double>("distance_per_tick", 0.000055185);
-        wheel_separation_ = this->declare_parameter<double>("wheel_separation", 0.347);
+        wheel_separation_ = this->declare_parameter<double>("wheel_separation", 0.33);
         encoder_yaw_sign_ = this->declare_parameter<double>("encoder_yaw_sign", 1.0);
 
         imu_yaw_filter_alpha_ = this->declare_parameter<double>("imu_yaw_filter_alpha", 0.25);
@@ -60,8 +61,9 @@ private:
     std::string serial_port_;
     std::string serial_buffer_;
 
-    double distance_per_tick_{0.000055185};
-    double wheel_separation_{0.347};
+    //double distance_per_tick_{0.000054245};
+    double distance_per_tick_{0.000055185}; 
+    double wheel_separation_{0.33};
     double encoder_yaw_sign_{1.0};
 
     double imu_yaw_filter_alpha_{0.25};
@@ -336,13 +338,18 @@ private:
         imu.linear_acceleration.z = 0.0;
 
         // Chỉ yaw đáng dùng; roll/pitch đặt covariance rất lớn.
-        imu.orientation_covariance[0] = 1e6;   // roll
-        imu.orientation_covariance[4] = 1e6;   // pitch
-        imu.orientation_covariance[8] = 0.08;  // yaw
+        // Giảm covariance yaw và angular velocity để EKF tin tưởng IMU cao:
+        //   orientation[8]  = 0.005 : BNO055 absolute yaw ~2-3° sai số → tin cao (R nhỏ → K lớn)
+        //   angular_vel[8]  = 0.01  (real gyro_z) / 0.05 (derived từ đạo hàm yaw)
+        imu.orientation_covariance[0] = 1e6;    // roll  (không dùng)
+        imu.orientation_covariance[4] = 1e6;    // pitch (không dùng)
+        imu.orientation_covariance[8] = 0.005;  // yaw   ← tin cao (giảm từ 0.08)
 
         imu.angular_velocity_covariance[0] = 1e6;
         imu.angular_velocity_covariance[4] = 1e6;
-        imu.angular_velocity_covariance[8] = has_real_gyro_z ? 0.05 : 0.20;
+        imu.angular_velocity_covariance[8] = has_real_gyro_z ? 0.01 : 0.05;
+        //   real gyro_z BNO055: 0.01 (tin cao)
+        //   derived từ đạo hàm yaw: 0.05 (tin vừa phải, nhiễu hơn)
 
         // Không dùng linear acceleration ở giai đoạn đầu.
         imu.linear_acceleration_covariance[0] = -1.0;

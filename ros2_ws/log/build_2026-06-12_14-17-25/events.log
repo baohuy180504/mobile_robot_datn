@@ -1,0 +1,232 @@
+[0.000000] (-) TimerEvent: {}
+[0.000970] (-) JobUnselected: {'identifier': 'amr_ai'}
+[0.001714] (-) JobUnselected: {'identifier': 'amr_bringup'}
+[0.002065] (-) JobUnselected: {'identifier': 'amr_control'}
+[0.002413] (-) JobUnselected: {'identifier': 'amr_description'}
+[0.002551] (-) JobUnselected: {'identifier': 'amr_interfaces'}
+[0.002655] (-) JobUnselected: {'identifier': 'amr_navigation'}
+[0.002750] (-) JobUnselected: {'identifier': 'amr_sensors'}
+[0.002844] (-) JobUnselected: {'identifier': 'amr_slam'}
+[0.002937] (-) JobUnselected: {'identifier': 'astra_camera'}
+[0.003029] (-) JobUnselected: {'identifier': 'astra_camera_msgs'}
+[0.003123] (-) JobUnselected: {'identifier': 'explore_lite'}
+[0.003373] (-) JobUnselected: {'identifier': 'explore_lite_msgs'}
+[0.003473] (-) JobUnselected: {'identifier': 'multirobot_map_merge'}
+[0.003610] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.003722] (amr_pointcloud_filter) JobQueued: {'identifier': 'amr_pointcloud_filter', 'dependencies': OrderedDict()}
+[0.003837] (amr_pointcloud_filter) JobStarted: {'identifier': 'amr_pointcloud_filter'}
+[0.026151] (amr_pointcloud_filter) JobProgress: {'identifier': 'amr_pointcloud_filter', 'progress': 'cmake'}
+[0.028654] (amr_pointcloud_filter) JobProgress: {'identifier': 'amr_pointcloud_filter', 'progress': 'build'}
+[0.030719] (amr_pointcloud_filter) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter', '--', '-j6', '-l6'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.224 44772 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson'), ('SSH_TTY', '/dev/pts/1'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '4'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.224 44772 192.168.0.184 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[0.098931] (-) TimerEvent: {}
+[0.155165] (amr_pointcloud_filter) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target depth_cloud_filter\x1b[0m\n'}
+[0.156282] (amr_pointcloud_filter) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target height_risk_projector\x1b[0m\n'}
+[0.199211] (-) TimerEvent: {}
+[0.209938] (amr_pointcloud_filter) StdoutLine: {'line': b'[ 50%] Built target depth_cloud_filter\n'}
+[0.211397] (amr_pointcloud_filter) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o\x1b[0m\n'}
+[0.299439] (-) TimerEvent: {}
+[0.400514] (-) TimerEvent: {}
+[0.501709] (-) TimerEvent: {}
+[0.602907] (-) TimerEvent: {}
+[0.704154] (-) TimerEvent: {}
+[0.805363] (-) TimerEvent: {}
+[0.906619] (-) TimerEvent: {}
+[1.007869] (-) TimerEvent: {}
+[1.109104] (-) TimerEvent: {}
+[1.210410] (-) TimerEvent: {}
+[1.311621] (-) TimerEvent: {}
+[1.412839] (-) TimerEvent: {}
+[1.514074] (-) TimerEvent: {}
+[1.615282] (-) TimerEvent: {}
+[1.716502] (-) TimerEvent: {}
+[1.817682] (-) TimerEvent: {}
+[1.918916] (-) TimerEvent: {}
+[2.020162] (-) TimerEvent: {}
+[2.121300] (-) TimerEvent: {}
+[2.222617] (-) TimerEvent: {}
+[2.323843] (-) TimerEvent: {}
+[2.425027] (-) TimerEvent: {}
+[2.526259] (-) TimerEvent: {}
+[2.627462] (-) TimerEvent: {}
+[2.728661] (-) TimerEvent: {}
+[2.829876] (-) TimerEvent: {}
+[2.931100] (-) TimerEvent: {}
+[3.032289] (-) TimerEvent: {}
+[3.133562] (-) TimerEvent: {}
+[3.234779] (-) TimerEvent: {}
+[3.335990] (-) TimerEvent: {}
+[3.437199] (-) TimerEvent: {}
+[3.538384] (-) TimerEvent: {}
+[3.639532] (-) TimerEvent: {}
+[3.740669] (-) TimerEvent: {}
+[3.841875] (-) TimerEvent: {}
+[3.943080] (-) TimerEvent: {}
+[4.044301] (-) TimerEvent: {}
+[4.145474] (-) TimerEvent: {}
+[4.246603] (-) TimerEvent: {}
+[4.348189] (-) TimerEvent: {}
+[4.449372] (-) TimerEvent: {}
+[4.550671] (-) TimerEvent: {}
+[4.651934] (-) TimerEvent: {}
+[4.753220] (-) TimerEvent: {}
+[4.854488] (-) TimerEvent: {}
+[4.955708] (-) TimerEvent: {}
+[5.056896] (-) TimerEvent: {}
+[5.158134] (-) TimerEvent: {}
+[5.259319] (-) TimerEvent: {}
+[5.360537] (-) TimerEvent: {}
+[5.461803] (-) TimerEvent: {}
+[5.563045] (-) TimerEvent: {}
+[5.664220] (-) TimerEvent: {}
+[5.765510] (-) TimerEvent: {}
+[5.866717] (-) TimerEvent: {}
+[5.967895] (-) TimerEvent: {}
+[6.069061] (-) TimerEvent: {}
+[6.170271] (-) TimerEvent: {}
+[6.271507] (-) TimerEvent: {}
+[6.372714] (-) TimerEvent: {}
+[6.474285] (-) TimerEvent: {}
+[6.575541] (-) TimerEvent: {}
+[6.676823] (-) TimerEvent: {}
+[6.778426] (-) TimerEvent: {}
+[6.879681] (-) TimerEvent: {}
+[6.980962] (-) TimerEvent: {}
+[7.082221] (-) TimerEvent: {}
+[7.183473] (-) TimerEvent: {}
+[7.284722] (-) TimerEvent: {}
+[7.386008] (-) TimerEvent: {}
+[7.487223] (-) TimerEvent: {}
+[7.588470] (-) TimerEvent: {}
+[7.689717] (-) TimerEvent: {}
+[7.790953] (-) TimerEvent: {}
+[7.892188] (-) TimerEvent: {}
+[7.993436] (-) TimerEvent: {}
+[8.094700] (-) TimerEvent: {}
+[8.195874] (-) TimerEvent: {}
+[8.297103] (-) TimerEvent: {}
+[8.320095] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<PointXYZ> HeightRiskProjector::processCloud(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr, const tf2::Transform&, const rclcpp::Time&, size_t&, size_t&, size_t&, size_t&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[8.320972] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:326:9:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kmin_observed_z\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[8.321303] (amr_pointcloud_filter) StderrLine: {'line': b'  326 |         \x1b[01;31m\x1b[Kmin_observed_z\x1b[m\x1b[K = std::min(min_observed_z, z);\n'}
+[8.321635] (amr_pointcloud_filter) StderrLine: {'line': b'      |         \x1b[01;31m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[8.344104] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:327:9:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kmax_observed_z\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[8.344577] (amr_pointcloud_filter) StderrLine: {'line': b'  327 |         \x1b[01;31m\x1b[Kmax_observed_z\x1b[m\x1b[K = std::max(max_observed_z, z);\n'}
+[8.344852] (amr_pointcloud_filter) StderrLine: {'line': b'      |         \x1b[01;31m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[8.375322] (amr_pointcloud_filter) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24\x1b[m\x1b[K,\n'}
+[8.376035] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40\x1b[m\x1b[K,\n'}
+[8.376571] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24\x1b[m\x1b[K,\n'}
+[8.376868] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20\x1b[m\x1b[K,\n'}
+[8.377133] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25\x1b[m\x1b[K,\n'}
+[8.377386] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18\x1b[m\x1b[K,\n'}
+[8.377698] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20\x1b[m\x1b[K,\n'}
+[8.377957] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37\x1b[m\x1b[K,\n'}
+[8.378205] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25\x1b[m\x1b[K,\n'}
+[8.378458] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21\x1b[m\x1b[K,\n'}
+[8.378701] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155\x1b[m\x1b[K,\n'}
+[8.378938] (amr_pointcloud_filter) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:1\x1b[m\x1b[K:\n'}
+[8.379187] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:386:7:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kmin_observed_z\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[8.379436] (amr_pointcloud_filter) StderrLine: {'line': b'  386 |       \x1b[01;31m\x1b[Kmin_observed_z\x1b[m\x1b[K,\n'}
+[8.379676] (amr_pointcloud_filter) StderrLine: {'line': b'      |       \x1b[01;31m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[8.395514] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:387:7:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kmax_observed_z\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[8.395814] (amr_pointcloud_filter) StderrLine: {'line': b'  387 |       \x1b[01;31m\x1b[Kmax_observed_z\x1b[m\x1b[K);\n'}
+[8.396063] (amr_pointcloud_filter) StderrLine: {'line': b'      |       \x1b[01;31m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[8.397124] (-) TimerEvent: {}
+[8.412853] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid HeightRiskProjector::cloudCallback(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[8.413435] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:532:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[Kmin_observed_z\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[8.413826] (amr_pointcloud_filter) StderrLine: {'line': b'  532 |     double \x1b[01;35m\x1b[Kmin_observed_z\x1b[m\x1b[K = std::numeric_limits<double>::max();\n'}
+[8.414112] (amr_pointcloud_filter) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[8.414374] (amr_pointcloud_filter) StderrLine: {'line': b'\x1b[01m\x1b[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:533:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[Kmax_observed_z\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[8.414690] (amr_pointcloud_filter) StderrLine: {'line': b'  533 |     double \x1b[01;35m\x1b[Kmax_observed_z\x1b[m\x1b[K = std::numeric_limits<double>::lowest();\n'}
+[8.414947] (amr_pointcloud_filter) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[8.497339] (-) TimerEvent: {}
+[8.598292] (-) TimerEvent: {}
+[8.699488] (-) TimerEvent: {}
+[8.800655] (-) TimerEvent: {}
+[8.901867] (-) TimerEvent: {}
+[9.003078] (-) TimerEvent: {}
+[9.104296] (-) TimerEvent: {}
+[9.205564] (-) TimerEvent: {}
+[9.306774] (-) TimerEvent: {}
+[9.408041] (-) TimerEvent: {}
+[9.509251] (-) TimerEvent: {}
+[9.610496] (-) TimerEvent: {}
+[9.711720] (-) TimerEvent: {}
+[9.812891] (-) TimerEvent: {}
+[9.914100] (-) TimerEvent: {}
+[10.015306] (-) TimerEvent: {}
+[10.116761] (-) TimerEvent: {}
+[10.218169] (-) TimerEvent: {}
+[10.319452] (-) TimerEvent: {}
+[10.420724] (-) TimerEvent: {}
+[10.522086] (-) TimerEvent: {}
+[10.623360] (-) TimerEvent: {}
+[10.724585] (-) TimerEvent: {}
+[10.825833] (-) TimerEvent: {}
+[10.927098] (-) TimerEvent: {}
+[11.028283] (-) TimerEvent: {}
+[11.129484] (-) TimerEvent: {}
+[11.230625] (-) TimerEvent: {}
+[11.331778] (-) TimerEvent: {}
+[11.432952] (-) TimerEvent: {}
+[11.534243] (-) TimerEvent: {}
+[11.635438] (-) TimerEvent: {}
+[11.736662] (-) TimerEvent: {}
+[11.837913] (-) TimerEvent: {}
+[11.939093] (-) TimerEvent: {}
+[12.040275] (-) TimerEvent: {}
+[12.141490] (-) TimerEvent: {}
+[12.242716] (-) TimerEvent: {}
+[12.343903] (-) TimerEvent: {}
+[12.445119] (-) TimerEvent: {}
+[12.546347] (-) TimerEvent: {}
+[12.647542] (-) TimerEvent: {}
+[12.748735] (-) TimerEvent: {}
+[12.849944] (-) TimerEvent: {}
+[12.951120] (-) TimerEvent: {}
+[13.052242] (-) TimerEvent: {}
+[13.153371] (-) TimerEvent: {}
+[13.254589] (-) TimerEvent: {}
+[13.355791] (-) TimerEvent: {}
+[13.456981] (-) TimerEvent: {}
+[13.558193] (-) TimerEvent: {}
+[13.659365] (-) TimerEvent: {}
+[13.760554] (-) TimerEvent: {}
+[13.861774] (-) TimerEvent: {}
+[13.963263] (-) TimerEvent: {}
+[14.064494] (-) TimerEvent: {}
+[14.166004] (-) TimerEvent: {}
+[14.267207] (-) TimerEvent: {}
+[14.368382] (-) TimerEvent: {}
+[14.469622] (-) TimerEvent: {}
+[14.571076] (-) TimerEvent: {}
+[14.672244] (-) TimerEvent: {}
+[14.773439] (-) TimerEvent: {}
+[14.874620] (-) TimerEvent: {}
+[14.975780] (-) TimerEvent: {}
+[15.077000] (-) TimerEvent: {}
+[15.178187] (-) TimerEvent: {}
+[15.279387] (-) TimerEvent: {}
+[15.380607] (-) TimerEvent: {}
+[15.481843] (-) TimerEvent: {}
+[15.583027] (-) TimerEvent: {}
+[15.684263] (-) TimerEvent: {}
+[15.785490] (-) TimerEvent: {}
+[15.886714] (-) TimerEvent: {}
+[15.988060] (-) TimerEvent: {}
+[16.089253] (-) TimerEvent: {}
+[16.190450] (-) TimerEvent: {}
+[16.291956] (-) TimerEvent: {}
+[16.393154] (-) TimerEvent: {}
+[16.494359] (-) TimerEvent: {}
+[16.595512] (-) TimerEvent: {}
+[16.696650] (-) TimerEvent: {}
+[16.797797] (-) TimerEvent: {}
+[16.898970] (-) TimerEvent: {}
+[17.000116] (-) TimerEvent: {}
+[17.101304] (-) TimerEvent: {}
+[17.167739] (amr_pointcloud_filter) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/height_risk_projector.dir/build.make:76: CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o] Error 1\n'}
+[17.168783] (amr_pointcloud_filter) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/height_risk_projector.dir/all] Error 2\n'}
+[17.169611] (amr_pointcloud_filter) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[17.184833] (amr_pointcloud_filter) CommandEnded: {'returncode': 2}
+[17.201776] (-) TimerEvent: {}
+[17.245588] (amr_pointcloud_filter) JobEnded: {'identifier': 'amr_pointcloud_filter', 'rc': 2}
+[17.258469] (-) EventReactorShutdown: {}

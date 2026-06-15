@@ -10,6 +10,13 @@ setup.py
 ../../build/amr_ai/amr_ai.egg-info/zip-safe
 amr_ai/__init__.py
 amr_ai/esp32_alert_bridge_node.py
+amr_ai.egg-info/PKG-INFO
+amr_ai.egg-info/SOURCES.txt
+amr_ai.egg-info/dependency_links.txt
+amr_ai.egg-info/entry_points.txt
+amr_ai.egg-info/requires.txt
+amr_ai.egg-info/top_level.txt
+amr_ai.egg-info/zip-safe
 amr_ai/core/__init__.py
 amr_ai/core/ai_mode_manager_node.py
 amr_ai/core/auto_initial_pose_node.py
@@ -39,12 +46,10 @@ amr_ai/tracking/person_tracker_node.py
 amr_ai/tracking/reid.py
 amr_ai/web/__init__.py
 amr_ai/web/engineer_web_server.py
+amr_ai/web/web_control.py
 config/ai_params.yaml
 launch/amr_ai.launch.py
 models/fire_smoke_s.engine
 models/yolo26n-pose.engine
 models/yolo26n.engine
 resource/amr_ai
-test/test_copyright.py
-test/test_flake8.py
-test/test_pep257.py

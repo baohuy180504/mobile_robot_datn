@@ -24,9 +24,32 @@ slam_toolbox:
     minimum_travel_heading: 0.08
     max_laser_range: 10.0
 
-    # Xe dùng LiDAR 180 độ nên cho phép odom nhiễu hơn một chút
-    sigma_noise_xy: 0.08
-    sigma_noise_theta: 0.18
+    # [FIX CỐT LÕI - XÂY LẠI MAP]
+    # EKF hiện tại có real gyro BNO055 → heading rất chính xác (covariance 0.005)
+    # Giảm mạnh sigma_noise_theta → SLAM tin tưởng EKF heading nhiều hơn
+    # → Map mới sẽ có walls đúng góc với calibration BNO055 hiện tại
+    # → AMCL sẽ match laser scan đúng → không còn lệch 12° trong RViz
+    #
+    # Trước: sigma_noise_theta: 0.18 (~10.3° std dev) → map sai hướng
+    # Sau:   sigma_noise_theta: 0.05 (~2.9° std dev)  → map khớp EKF
+    sigma_noise_xy: 0.05       # giảm từ 0.08 → position noise nhỏ hơn
+    sigma_noise_theta: 0.05    # giảm từ 0.18 → tin EKF heading nhiều hơn
 
-    # Scan matching
+    # Scan matching - giữ minimumScore để tránh accept scan kém chất lượng
     minimumScore: 50.0
+
+    # Loop closure - giúp map nhất quán khi robot đi qua lại nhiều lần
+    use_scan_matching: true
+    use_scan_barycenter: true
+    minimum_time_interval: 0.10
+
+    # Coresize nhỏ hơn cho robot nhẹ hơn
+    coarse_search_angle_offset: 0.349
+    coarse_angle_resolution: 0.0349
+    minimum_angle_penalty: 0.9
+    minimum_distance_penalty: 0.5
+    fine_search_angle_offset: 0.00349
+    coarse_distance_range: 0.2
+    distance_variance_penalty: 0.5
+    angle_variance_penalty: 1.0
+    use_response_expansion: true

@@ -1,0 +1,34 @@
+[0.029s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6
+[0.148s] [35m[1mConsolidate compiler generated dependencies of target height_risk_projector[0m
+[0.185s] [ 50%] Built target depth_cloud_filter
+[0.204s] [ 75%] [32mBuilding CXX object CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o[0m
+[8.266s] In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24[m[K,
+[8.267s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40[m[K,
+[8.267s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24[m[K,
+[8.268s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20[m[K,
+[8.268s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25[m[K,
+[8.268s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18[m[K,
+[8.268s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20[m[K,
+[8.269s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37[m[K,
+[8.269s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25[m[K,
+[8.269s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21[m[K,
+[8.270s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+[8.270s]                  from [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:1[m[K:
+[8.270s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:[m[K In member function ‘[01m[Kstd::vector<PointXYZ> HeightRiskProjector::processCloud(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr, const tf2::Transform&, const rclcpp::Time&, size_t&, size_t&, size_t&, size_t&)[m[K’:
+[8.270s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:352:11:[m[K [01;31m[Kerror: [m[K‘[01m[Kmin_observed_z[m[K’ was not declared in this scope
+[8.271s]   352 |           [01;31m[Kmin_observed_z[m[K,
+[8.271s]       |           [01;31m[K^~~~~~~~~~~~~~[m[K
+[8.290s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:353:11:[m[K [01;31m[Kerror: [m[K‘[01m[Kmax_observed_z[m[K’ was not declared in this scope
+[8.290s]   353 |           [01;31m[Kmax_observed_z[m[K);
+[8.291s]       |           [01;31m[K^~~~~~~~~~~~~~[m[K
+[8.310s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:[m[K In member function ‘[01m[Kvoid HeightRiskProjector::cloudCallback(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr)[m[K’:
+[8.310s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:530:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kmin_observed_z[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[8.311s]   530 |     double [01;35m[Kmin_observed_z[m[K = std::numeric_limits<double>::max();
+[8.311s]       |            [01;35m[K^~~~~~~~~~~~~~[m[K
+[8.311s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:531:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kmax_observed_z[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[8.311s]   531 |     double [01;35m[Kmax_observed_z[m[K = std::numeric_limits<double>::lowest();
+[8.312s]       |            [01;35m[K^~~~~~~~~~~~~~[m[K
+[16.968s] gmake[2]: *** [CMakeFiles/height_risk_projector.dir/build.make:76: CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o] Error 1
+[16.969s] gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/height_risk_projector.dir/all] Error 2
+[16.970s] gmake: *** [Makefile:146: all] Error 2
+[16.978s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6

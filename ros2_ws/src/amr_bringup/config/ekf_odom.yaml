@@ -33,14 +33,16 @@ ekf_filter_node:
     #  vroll, vpitch, vyaw,
     #  ax, ay, az]
     #
-    # Dùng vx, vy=0 constraint, và vyaw từ encoder.
-    # Không dùng pose x/y/yaw của wheel odom để tránh tin quá mức odom tích phân.
+    # CHỈ dùng vx từ encoder (tốc độ tiến đáng tin).
+    # - vy bỏ: robot vi sai không trượt ngang, IMU + 2D mode tự ràng buộc.
+    # - vyaw bỏ: nhường hoàn toàn cho IMU (BNO055 chính xác hơn encoder khi trượt bánh).
+    # Không dùng pose x/y/yaw của wheel odom để tránh tích lũy lỗi drift.
     # ------------------------------------------------------------------
     odom0: /wheel/odom
     odom0_config: [false, false, false,
                    false, false, false,
-                   true,  true,  false,
-                   false, false, true,
+                   true,  false, false,
+                   false, false, false,
                    false, false, false]
     odom0_queue_size: 10
     odom0_nodelay: false
@@ -48,18 +50,22 @@ ekf_filter_node:
     odom0_relative: false
 
     # ------------------------------------------------------------------
-    # Input 2: BNO055 yaw từ /imu/data.
+    # Input 2: BNO055 từ /imu/data — nguồn CHÍNH cho góc quay và vận tốc góc.
     #
-    # Giai đoạn 1 chỉ dùng yaw orientation.
-    # Chưa dùng angular_velocity.z vì hiện tại bridge đang suy ra từ đạo hàm yaw,
-    # chưa phải gyro_z thật từ BNO055.
-    # Khi Arduino gửi gyro_z thật, sẽ bật thêm vyaw ở imu0_config.
+    # Bật cả 2 kênh:
+    #   - yaw (orientation):         absolute heading của BNO055, rất đáng tin.
+    #   - vyaw (angular_velocity.z): gyro_z thật nếu Arduino gửi 4 field,
+    #                                hoặc giá trị suy ra (derived) nếu 3 field.
+    #
+    # Covariance tương ứng được set trong arduino_bridge.cpp:
+    #   orientation_covariance[8]        = 0.005  (yaw tin cao)
+    #   angular_velocity_covariance[8]   = 0.01 / 0.05  (real gyro / derived)
     # ------------------------------------------------------------------
     imu0: /imu/data
     imu0_config: [false, false, false,
                   false, false, true,
                   false, false, false,
-                  false, false, false,
+                  false, false, true,
                   false, false, false]
     imu0_queue_size: 10
     imu0_nodelay: false
@@ -70,20 +76,24 @@ ekf_filter_node:
     # Tránh warning khi một số field covariance rất lớn.
     reset_on_time_jump: true
 
-    # Process noise: bảo thủ để odom không giật.
-    # Nếu EKF phản ứng quá chậm khi quay, tăng nhẹ các giá trị yaw/vyaw ở đây.
+    # Process noise Q: mô tả mức độ "drift" của state giữa các bước predict.
+    # Tăng Q[yaw] và Q[vyaw] → state uncertainty tăng nhanh hơn → Kalman gain K cao hơn
+    # → EKF phản ứng nhanh và mạnh hơn với measurement từ IMU.
+    # - Q[yaw]  (row5, col5)  : 0.03→0.05  (yaw drift nhẹ → IMU correction chiếm ưu thế)
+    # - Q[vyaw] (row11,col11) : 0.04→0.05  (vyaw thay đổi nhanh khi quay → IMU luôn thắng)
+    # - Q[vx]   (row6, col6)  : 0.04       (giữ nguyên, encoder đủ tin cho vx)
     process_noise_covariance: [0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
-                               0.0,  0.0,  0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,  0.0,  0.0,
-                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.05, 0.0,  0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,  0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6, 0.0,
                                0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1e-6]

@@ -75,9 +75,56 @@ def generate_launch_description():
             'min_y': -1.50,
             'max_y': 1.50,
 
-            'restamp': True,
-            'output_frame_id': '',
+            'restamp': False,
+            'output_frame_id': 'odom',
             'log_debug': False,
+            'use_sim_time': False,
+        }]
+    )
+
+
+    height_risk_projector = Node(
+        package='amr_pointcloud_filter',
+        executable='height_risk_projector',
+        name='height_risk_projector',
+        output='screen',
+        parameters=[{
+            # Nhận cloud đã lọc nhẹ từ depth_cloud_filter.
+            'input_topic': '/camera/depth/points_filtered',
+
+            # Cloud này chỉ còn các điểm có nguy cơ va chạm theo chiều cao robot.
+            'output_cloud_topic': '/height_obstacles_cloud',
+            'clearing_cloud_topic': '/height_clearing_cloud',
+            'debug_grid_topic': '/height_risk_grid',
+
+            # Bắt buộc transform về base_footprint để z là chiều cao so với robot.
+            'target_frame': 'base_footprint',
+            'use_latest_tf': False,
+            'tf_timeout_s': 0.15,
+
+            # ROI phía trước robot, chỉnh sau khi xem RViz.
+            'min_x': 0.10,
+            'max_x': 2.50,
+            'min_y': -0.75,
+            'max_y': 0.75,
+
+            # Vùng chiều cao cần bảo vệ của thân xe/hàng hóa.
+            'robot_min_z': -0.20,
+            'robot_max_z': 2.00,
+
+            # Lọc nhiễu theo ô 2D + giữ vật cản ngắn hạn.
+            'grid_resolution': 0.05,
+            'min_points_per_cell': 2,
+            'memory_decay_time': 0.8,
+            'publish_hz': 5.0,
+            'publish_clearing_cloud': True,
+            'clearing_y_step': 0.15,
+            'clearing_z_step': 0.20,
+
+            # Giới hạn số điểm xử lý mỗi frame để tránh tải Jetson quá cao.
+            'max_input_points': 60000,
+            'publish_debug_grid': True,
+            'log_debug': True,
             'use_sim_time': False,
         }]
     )
@@ -144,6 +191,7 @@ def generate_launch_description():
         autostart_arg,
         log_info,
         depth_cloud_filter,
+        #height_risk_projector,
         #octomap_server,
         static_octomap_server,
         nav2_launch,

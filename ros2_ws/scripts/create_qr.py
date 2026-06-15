@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os
-from PIL import Image, ImageFilter # Thêm ImageFilter
+from PIL import Image, ImageFilter 
 import qrcode
 
 # =====================================================================

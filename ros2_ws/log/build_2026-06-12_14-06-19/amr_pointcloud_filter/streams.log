@@ -1,0 +1,17 @@
+[0.035s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6
+[0.559s] [ 25%] [32mBuilding CXX object CMakeFiles/depth_cloud_filter.dir/src/depth_cloud_filter.cpp.o[0m
+[0.643s] [ 50%] [32mBuilding CXX object CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o[0m
+[10.489s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:[m[K In member function ‘[01m[Kstd::vector<PointXYZ> HeightRiskProjector::processCloud(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr, const tf2::Transform&, const rclcpp::Time&, size_t&, size_t&, size_t&, size_t&)[m[K’:
+[10.490s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:331:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kmin_observed_z[m[K’ was not declared in this scope
+[10.490s]   331 |         [01;31m[Kmin_observed_z[m[K = std::min(min_observed_z, z);
+[10.490s]       |         [01;31m[K^~~~~~~~~~~~~~[m[K
+[10.515s] [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:332:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kmax_observed_z[m[K’ was not declared in this scope
+[10.516s]   332 |         [01;31m[Kmax_observed_z[m[K = std::max(max_observed_z, z);
+[10.516s]       |         [01;31m[K^~~~~~~~~~~~~~[m[K
+[19.556s] gmake[2]: *** [CMakeFiles/height_risk_projector.dir/build.make:76: CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o] Error 1
+[19.557s] gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/height_risk_projector.dir/all] Error 2
+[19.557s] gmake[1]: *** Waiting for unfinished jobs....
+[35.707s] [ 75%] [32m[1mLinking CXX executable depth_cloud_filter[0m
+[38.042s] [ 75%] Built target depth_cloud_filter
+[38.044s] gmake: *** [Makefile:146: all] Error 2
+[38.053s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6

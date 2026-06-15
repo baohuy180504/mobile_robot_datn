@@ -1,0 +1,35 @@
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:[m[K In member function ‘[01m[Kstd::vector<PointXYZ> HeightRiskProjector::processCloud(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr, const tf2::Transform&, const rclcpp::Time&, size_t&, size_t&, size_t&, size_t&)[m[K’:
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:326:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kmin_observed_z[m[K’ was not declared in this scope
+  326 |         [01;31m[Kmin_observed_z[m[K = std::min(min_observed_z, z);
+      |         [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:327:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kmax_observed_z[m[K’ was not declared in this scope
+  327 |         [01;31m[Kmax_observed_z[m[K = std::max(max_observed_z, z);
+      |         [01;31m[K^~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:1[m[K:
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:386:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmin_observed_z[m[K’ was not declared in this scope
+  386 |       [01;31m[Kmin_observed_z[m[K,
+      |       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:387:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmax_observed_z[m[K’ was not declared in this scope
+  387 |       [01;31m[Kmax_observed_z[m[K);
+      |       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:[m[K In member function ‘[01m[Kvoid HeightRiskProjector::cloudCallback(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr)[m[K’:
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:532:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kmin_observed_z[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  532 |     double [01;35m[Kmin_observed_z[m[K = std::numeric_limits<double>::max();
+      |            [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:533:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kmax_observed_z[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  533 |     double [01;35m[Kmax_observed_z[m[K = std::numeric_limits<double>::lowest();
+      |            [01;35m[K^~~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/height_risk_projector.dir/build.make:76: CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/height_risk_projector.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

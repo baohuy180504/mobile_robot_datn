@@ -11,4 +11,5 @@ follow_goal = amr_ai.nav2.follow_goal_node:main
 follow_servo = amr_ai.nav2.follow_servo_node:main
 operator_gui = amr_ai.gui.operator_gui_node:main
 person_tracker = amr_ai.tracking.person_tracker_node:main
+web_control = amr_ai.web.web_control:main
 

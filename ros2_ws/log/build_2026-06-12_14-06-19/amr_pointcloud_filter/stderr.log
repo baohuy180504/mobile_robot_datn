@@ -1,0 +1,11 @@
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:[m[K In member function ‘[01m[Kstd::vector<PointXYZ> HeightRiskProjector::processCloud(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr, const tf2::Transform&, const rclcpp::Time&, size_t&, size_t&, size_t&, size_t&)[m[K’:
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:331:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kmin_observed_z[m[K’ was not declared in this scope
+  331 |         [01;31m[Kmin_observed_z[m[K = std::min(min_observed_z, z);
+      |         [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter/src/height_risk_projector.cpp:332:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kmax_observed_z[m[K’ was not declared in this scope
+  332 |         [01;31m[Kmax_observed_z[m[K = std::max(max_observed_z, z);
+      |         [01;31m[K^~~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/height_risk_projector.dir/build.make:76: CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/height_risk_projector.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+gmake: *** [Makefile:146: all] Error 2

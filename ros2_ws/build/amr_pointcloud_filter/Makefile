@@ -210,6 +210,19 @@ depth_cloud_filter/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/depth_cloud_filter.dir/build.make CMakeFiles/depth_cloud_filter.dir/build
 .PHONY : depth_cloud_filter/fast
 
+#=============================================================================
+# Target rules for targets named height_risk_projector
+
+# Build rule for target.
+height_risk_projector: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 height_risk_projector
+.PHONY : height_risk_projector
+
+# fast build rule for target.
+height_risk_projector/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/height_risk_projector.dir/build.make CMakeFiles/height_risk_projector.dir/build
+.PHONY : height_risk_projector/fast
+
 src/depth_cloud_filter.o: src/depth_cloud_filter.cpp.o
 .PHONY : src/depth_cloud_filter.o
 
@@ -234,6 +247,30 @@ src/depth_cloud_filter.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/depth_cloud_filter.dir/build.make CMakeFiles/depth_cloud_filter.dir/src/depth_cloud_filter.cpp.s
 .PHONY : src/depth_cloud_filter.cpp.s
 
+src/height_risk_projector.o: src/height_risk_projector.cpp.o
+.PHONY : src/height_risk_projector.o
+
+# target to build an object file
+src/height_risk_projector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/height_risk_projector.dir/build.make CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o
+.PHONY : src/height_risk_projector.cpp.o
+
+src/height_risk_projector.i: src/height_risk_projector.cpp.i
+.PHONY : src/height_risk_projector.i
+
+# target to preprocess a source file
+src/height_risk_projector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/height_risk_projector.dir/build.make CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.i
+.PHONY : src/height_risk_projector.cpp.i
+
+src/height_risk_projector.s: src/height_risk_projector.cpp.s
+.PHONY : src/height_risk_projector.s
+
+# target to generate assembly for a file
+src/height_risk_projector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/height_risk_projector.dir/build.make CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.s
+.PHONY : src/height_risk_projector.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -250,9 +287,13 @@ help:
 	@echo "... amr_pointcloud_filter_uninstall"
 	@echo "... uninstall"
 	@echo "... depth_cloud_filter"
+	@echo "... height_risk_projector"
 	@echo "... src/depth_cloud_filter.o"
 	@echo "... src/depth_cloud_filter.i"
 	@echo "... src/depth_cloud_filter.s"
+	@echo "... src/height_risk_projector.o"
+	@echo "... src/height_risk_projector.i"
+	@echo "... src/height_risk_projector.s"
 .PHONY : help
 
 

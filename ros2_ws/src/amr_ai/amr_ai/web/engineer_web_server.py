@@ -2472,12 +2472,12 @@ VIEWER_HTML = r'''
 
       <div class="manual-sliders">
         <div class="manual-slider-row">
-          <span>Linear</span>
+          <span>Linear (m/s)</span>
           <input id="manualLinearSlider" type="range" disabled min="0.03" max="0.40" step="0.01" value="0.12" oninput="updateManualSliderLabels()">
           <span id="manualLinearValue" class="manual-value">0.12</span>
         </div>
         <div class="manual-slider-row">
-          <span>Angular</span>
+          <span>Angular (rad/s)</span>
           <input id="manualAngularSlider" type="range" disabled min="0.05" max="0.80" step="0.01" value="0.28" oninput="updateManualSliderLabels()">
           <span id="manualAngularValue" class="manual-value">0.28</span>
         </div>
