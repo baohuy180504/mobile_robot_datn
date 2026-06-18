@@ -12,7 +12,7 @@ from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-from amr_interfaces.msg import AiAlert
+from amr_interfaces.msg import AiAlert, AiMode
 
 
 class Esp32AlertBridgeNode(Node):
@@ -25,6 +25,7 @@ class Esp32AlertBridgeNode(Node):
 
         self.declare_parameter('alert_topic', '/amr_ai/alert')
         self.declare_parameter('debug_image_topic', '/amr_ai/debug/alert/image')
+        self.declare_parameter('mode_topic', '/amr_ai/mode')
 
         self.declare_parameter('snapshot_width', 296)
         self.declare_parameter('snapshot_height', 296)
@@ -33,7 +34,6 @@ class Esp32AlertBridgeNode(Node):
         self.declare_parameter('image_send_delay_s', 0.35)
         self.declare_parameter('image_wait_timeout_s', 2.0)
 
-        # AI NORMAL chỉ dùng để reset latch nội bộ, KHÔNG gửi N về ESP32
         self.declare_parameter('normal_reset_sec', 1.0)
 
         self.declare_parameter('socket_timeout_s', 5.0)
@@ -44,6 +44,7 @@ class Esp32AlertBridgeNode(Node):
 
         self.alert_topic = self.get_parameter('alert_topic').value
         self.debug_image_topic = self.get_parameter('debug_image_topic').value
+        self.mode_topic = self.get_parameter('mode_topic').value
 
         self.snapshot_width = int(self.get_parameter('snapshot_width').value)
         self.snapshot_height = int(self.get_parameter('snapshot_height').value)
@@ -59,6 +60,12 @@ class Esp32AlertBridgeNode(Node):
 
         self.latest_debug_image = None
         self.latest_debug_stamp_sec = 0.0
+
+        # Theo dõi mode hiện tại để biết xe có đang THỰC SỰ bám người
+        # (FOLLOW_ACTIVE) hay chỉ mới đang dò/khóa target (FOLLOW_DETECTING).
+        # PPE warning chỉ gửi ra ESP32 khi đã FOLLOW_ACTIVE.
+        self.current_mode = AiMode.IDLE
+        self.PPE_ALERT_TYPES = {'MISSING_HELMET', 'MISSING_VEST', 'MISSING_PPE'}
 
         # Latch incident
         self.latched_alert_type = None
@@ -77,6 +84,13 @@ class Esp32AlertBridgeNode(Node):
             10
         )
 
+        self.mode_sub = self.create_subscription(
+            AiMode,
+            self.mode_topic,
+            self.mode_callback,
+            10
+        )
+
         self.image_sub = self.create_subscription(
             Image,
             self.debug_image_topic,
@@ -92,6 +106,10 @@ class Esp32AlertBridgeNode(Node):
         self.get_logger().info(f'TCP image port: {self.esp32_tcp_port}')
         self.get_logger().info(f'Alert topic: {self.alert_topic}')
         self.get_logger().info(f'Debug image topic: {self.debug_image_topic}')
+        self.get_logger().info(f'Mode topic: {self.mode_topic}')
+
+    def mode_callback(self, msg: AiMode):
+        self.current_mode = int(msg.mode)
 
     def debug_image_callback(self, msg: Image):
         try:
@@ -111,6 +129,21 @@ class Esp32AlertBridgeNode(Node):
             cmd = 'B'
         elif alert_type == 'SMOKE':
             cmd = 'C'
+        elif alert_type in self.PPE_ALERT_TYPES:
+            self.get_logger().info(
+                f'PPE alert received: type={alert_type}, current_mode={self.current_mode} '
+                f'(FOLLOW_ACTIVE={AiMode.FOLLOW_ACTIVE})'
+            )
+
+            # Lúc đang FOLLOW_DETECTING (chờ khóa target + xác nhận PPE
+            # trước khi bắt đầu bám) thì KHÔNG gửi cảnh báo này ra ESP32,
+            # và cũng không động vào latch đang có (không coi là NORMAL).
+            if self.current_mode != AiMode.FOLLOW_ACTIVE:
+                self.get_logger().warn(
+                    f'PPE alert BLOCKED: mode is {self.current_mode}, not FOLLOW_ACTIVE'
+                )
+                return
+            cmd = 'D'
         else:
             # NORMAL chỉ reset latch nội bộ, không gửi N về ESP32
             self.handle_normal(now)

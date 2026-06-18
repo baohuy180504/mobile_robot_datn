@@ -1,0 +1,10 @@
+<library path="amr_costmap_plugins">
+  <class type="amr_costmap_plugins::GHRFLayer" base_class_type="nav2_costmap_2d::Layer">
+    <description>
+      GHRF (Gaussian Height Risk Field) layer: đọc OccupancyGrid risk liên tục [0-100]
+      do height_risk_projector publish (đã relabel sẵn sang global frame), nhân với
+      max_cost_scale để ra cost costmap, dùng để phát hiện vật cản cao hơn tầm quét
+      LiDAR thông qua depth camera.
+    </description>
+  </class>
+</library>

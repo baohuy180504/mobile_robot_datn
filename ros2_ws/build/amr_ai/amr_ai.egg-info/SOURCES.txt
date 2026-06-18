@@ -30,6 +30,7 @@ amr_ai/detectors/__init__.py
 amr_ai/detectors/ai_detector_node.py
 amr_ai/detectors/fall_detector.py
 amr_ai/detectors/fire_smoke_detector.py
+amr_ai/detectors/ppe_detector.py
 amr_ai/gui/__init__.py
 amr_ai/gui/ai_gui_node.py
 amr_ai/gui/gui_astra_jetson.py
@@ -50,6 +51,7 @@ amr_ai/web/web_control.py
 config/ai_params.yaml
 launch/amr_ai.launch.py
 models/fire_smoke_s.engine
+models/ppe_s.engine
 models/yolo26n-pose.engine
 models/yolo26n.engine
 resource/amr_ai

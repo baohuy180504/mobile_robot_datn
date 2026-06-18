@@ -20,3 +20,4 @@ ros2 launch amr_ai amr_ai.launch.py \
   start_auto_initial_pose:=true \
   start_auto_localizer:=true \
   start_esp32_gateway:=true
+

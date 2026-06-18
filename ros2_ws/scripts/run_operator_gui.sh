@@ -6,6 +6,6 @@ source /opt/ros/humble/setup.bash
 source ~/mobile_robot/ros2_ws/install/setup.bash
 
 ros2 run amr_ai operator_gui
-#~/mobile_robot/ros2_ws/scripts/run_operator_gui.sh
+#./scripts/run_operator_gui.sh
 
 

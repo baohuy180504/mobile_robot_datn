@@ -20,22 +20,33 @@ LOG="/tmp/amr_operator_stack_stop.log"
   export ROS_LOCALHOST_ONLY="${ROS_LOCALHOST_ONLY:-0}"
   export RMW_IMPLEMENTATION="${RMW_IMPLEMENTATION:-rmw_cyclonedds_cpp}"
 
-  echo "[1/4] Stop follow mode..."
+  echo "[1/5] Stop follow mode..."
   timeout 2 ros2 service call /amr_ai/set_mode amr_interfaces/srv/SetAiMode "{mode: 0, command: 'STOP_FOLLOW'}" >/dev/null 2>&1 || true
 
-  echo "[2/4] Publish zero velocity..."
+  echo "[2/5] Publish zero velocity..."
   for i in 1 2 3 4 5; do
     timeout 1 ros2 topic pub /cmd_vel_safe geometry_msgs/msg/Twist "{}" --once >/dev/null 2>&1 || true
     timeout 1 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{}" --once >/dev/null 2>&1 || true
     sleep 0.05
   done
 
-  echo "[3/4] Kill tmux session: ${SESSION}"
+  echo "[3/5] Kill tmux sessions..."
   tmux kill-session -t "${SESSION}" 2>/dev/null || true
+  tmux kill-session -t amr_navigation 2>/dev/null || true
+  tmux kill-session -t amr_slam 2>/dev/null || true
+  tmux kill-session -t amr_device 2>/dev/null || true
+
+  echo "[4/5] Stop rosbridge web viewer..."
+  ROSBRIDGE_STOP_SCRIPT="$WS/scripts/stop_web_rosbridge.sh"
+  if [ -f "$ROSBRIDGE_STOP_SCRIPT" ]; then
+    bash "$ROSBRIDGE_STOP_SCRIPT" >/dev/null 2>&1 || true
+  else
+    tmux kill-session -t amr_web_rosbridge 2>/dev/null || true
+  fi
 
   sleep 0.5
 
-  echo "[4/4] Publish zero velocity after kill..."
+  echo "[5/5] Publish zero velocity after kill..."
   for i in 1 2 3; do
     timeout 1 ros2 topic pub /cmd_vel_safe geometry_msgs/msg/Twist "{}" --once >/dev/null 2>&1 || true
     timeout 1 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{}" --once >/dev/null 2>&1 || true

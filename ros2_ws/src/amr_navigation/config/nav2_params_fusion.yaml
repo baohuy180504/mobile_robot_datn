@@ -134,8 +134,8 @@ controller_server:
     general_goal_checker:
       stateful: False 
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.05
-      yaw_goal_tolerance: 0.05
+      xy_goal_tolerance: 0.08
+      yaw_goal_tolerance: 0.15
 
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
@@ -153,7 +153,7 @@ controller_server:
       vy_max: 0.0
       vy_min: 0.0
 
-      wz_max: 0.25  # [FIX quán tính] giảm từ 0.35 → xe nặng ít overshoot góc hơn
+      wz_max: 0.15  
 
       iteration_count: 1
       prune_distance: 1.7
@@ -190,10 +190,10 @@ controller_server:
       PathAlignCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 10.0 
+        cost_weight: 5.0 
         max_path_occupancy_ratio: 0.05
         trajectory_point_step: 4
-        threshold_to_consider: 0.45 #0.5
+        threshold_to_consider: 0.5 #0.5
         offset_from_furthest: 20
         use_path_orientations: false #fasle nếu muốn chỉ bám sát path mà không quan tâm hướng đi, true nếu muốn bám sát cả hướng đi của path
          # Nếu use_path_orientations = true thì sẽ có thêm 2 critic là PathAngleCritic và GoalAngleCritic để đánh giá hướng đi của path và goal
@@ -204,14 +204,14 @@ controller_server:
         cost_power: 1
         cost_weight: 5.0
         offset_from_furthest: 5
-        threshold_to_consider: 0.8  # [FIX chậm ở 1.2m] giảm từ 1.4 → vẫn active ở 1.2m
+        threshold_to_consider: 1.4  # [FIX chậm ở 1.2m] giảm từ 1.4 → vẫn active ở 1.2m
       
       PathAngleCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 1.5 #2
+        cost_weight: 2.0
         offset_from_furthest: 4
-        threshold_to_consider: 0.25
+        threshold_to_consider: 0.5
         max_angle_to_furthest: 1.0
         mode: 0 
         forward_preference: true
@@ -219,18 +219,18 @@ controller_server:
       GoalCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 9.0
-        threshold_to_consider: 1.0  # [FIX chậm ở 1.2m] sớm hơn từ 0.7→1.0, overlap với PathFollow
+        cost_weight: 8.0
+        threshold_to_consider: 1.4  # [FIX chậm ở 1.2m] sớm hơn từ 0.7→1.0, overlap với PathFollow
 
       GoalAngleCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 3.5  # [FIX góc goal] tăng vừa từ 2.4→3.5 (không quá aggressive)
-        threshold_to_consider: 0.25  # [FIX góc goal] sớm hơn từ 0.12→0.25m
+        cost_weight: 7.0  # [FIX góc goal] tăng vừa từ 2.4→3.5 (không quá aggressive)
+        threshold_to_consider: 0.2  # [FIX góc goal] sớm hơn từ 0.12→0.25m
       PreferForwardCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 5.0       
+        cost_weight: 8.0       
         threshold_to_consider: 0.5
         
       ObstaclesCritic:
@@ -268,9 +268,9 @@ local_costmap:
       footprint: "[[-0.22, -0.19], [0.32, -0.19], [0.32, 0.19], [-0.22, 0.19]]"
       footprint_padding: 0.01
 
-      # obstacle_layer: LiDAR 2D. height_voxel_layer: tắt tạm, bật khi depth ổn định.
-      # plugins: ["obstacle_layer", "height_voxel_layer", "inflation_layer"]
-      plugins: ["obstacle_layer", "inflation_layer"]
+      # Trước chỉ có voxel_layer ở global_costmap → global planner né được nhưng
+      # MPPI (đọc local_costmap) không thấy vật cao → không né real-time. Bật thêm ở đây.
+      plugins: ["obstacle_layer", "voxel_layer", "inflation_layer"]
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -286,48 +286,30 @@ local_costmap:
           obstacle_max_range: 10.0    #2.5
           obstacle_min_range: 0.0
 
-      height_voxel_layer:
+      voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
-        publish_voxel_map: False #True
+        publish_voxel_map: True
         origin_z: 0.0
         z_resolution: 0.05
         z_voxels: 24
-        max_obstacle_height: 1.30
-        mark_threshold: 1
-        observation_sources: height_clearing height_marking
-
-        # Source này chỉ dùng để xóa vật cản cũ trong vùng quan sát của height layer.
-        # Nó không đánh dấu obstacle mới.
-        height_clearing:
-          topic: /height_clearing_cloud
-          max_obstacle_height: 1.30
-          min_obstacle_height: 0.05
+        max_obstacle_height: 1.20
+        mark_threshold: 0
+        unknown_threshold: 15
+        combination_method: 1
+        observation_sources: pointcloud
+        pointcloud:
+          topic: /camera/depth/points_filtered
+          min_obstacle_height: 0.30
+          max_obstacle_height: 1.20
           clearing: True
-          marking: False
-          data_type: "PointCloud2"
-          observation_persistence: 0.0
-          expected_update_rate: 0.0
-          raytrace_max_range: 3.0
-          raytrace_min_range: 0.0
-          obstacle_max_range: 3.0
-          obstacle_min_range: 0.0
-
-        # Source này là kết quả mới của height_risk_projector.
-        # Chỉ còn các điểm đã qua lọc chiều cao, ROI, mật độ và memory ngắn hạn.
-        height_marking:
-          topic: /height_obstacles_cloud
-          max_obstacle_height: 1.30
-          min_obstacle_height: 0.05
-          clearing: False
           marking: True
           data_type: "PointCloud2"
-          observation_persistence: 0.0
-          expected_update_rate: 0.0
           raytrace_max_range: 3.0
-          raytrace_min_range: 0.2
-          obstacle_max_range: 2.8
-          obstacle_min_range: 0.2
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.25
+          expected_update_rate: 0.5
 
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
@@ -372,18 +354,6 @@ global_costmap:
           obstacle_max_range: 10.0    #2.5
           obstacle_min_range: 0.0
 
-      # voxel_layer: (tắt - bật khi camera depth ổn định)
-      #   plugin: "nav2_costmap_2d::VoxelLayer"
-      #   ...
-      #   observation_sources: pointcloud
-      #   pointcloud:
-      #     topic: /camera/depth/points_filtered
-      #     clearing: True
-      #     marking: True
-      #     data_type: "PointCloud2"
-      #     raytrace_max_range: 4.0
-      #     obstacle_max_range: 3.5
-
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
@@ -420,40 +390,6 @@ planner_server:
       tolerance: 0.1
       use_astar: true
       allow_unknown: true
-
-# planner_server:
-#   ros__parameters:
-#     expected_planner_frequency: 20.0
-#     use_sim_time: False
-#     planner_plugins: ["GridBased"]
-#     GridBased:
-#       plugin: "nav2_smac_planner/SmacPlannerHybrid"
-#       downsample_costmap: false
-#       downsampling_factor: 1
-#       tolerance: 0.5
-#       allow_unknown: true
-#       max_iterations: 1000000
-#       max_on_approach_iterations: 1000
-#       max_planning_time: 5.0
-#       motion_model_for_search: "REEDS_SHEPP"  # hoặc "DUBIN" nếu chỉ đi tiến
-#       angle_quantization_bins: 72
-#       analytic_expansion_ratio: 3.5
-#       analytic_expansion_max_length: 3.0
-#       minimum_turning_radius: 0.20
-#       reverse_penalty: 2.1
-#       change_penalty: 0.05
-#       non_straight_penalty: 1.05
-#       cost_penalty: 2.0
-#       retrospective_penalty: 0.015
-#       lookup_table_size: 20.0
-#       cache_obstacle_heuristic: false
-#       smoother:
-#         max_iterations: 1000
-#         w_smooth: 0.3
-#         w_data: 0.2
-#         tolerance: 1.0e-10
-#         do_refinement: true
-#         refinement_num: 2
 
 smoother_server:
   ros__parameters:
@@ -515,7 +451,7 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.15, 0.0, 0.30]  # [FIX quán tính] angular 0.45→0.30 đồng bộ wz_max=0.25
+    max_velocity: [0.15, 0.0, 0.20]  
     min_velocity: [-0.15, 0.0, -0.30]
     max_accel: [0.25, 0.0, 0.35]    # [FIX quán tính] angular accel vừa phải cho xe nặng
     max_decel: [-0.35, 0.0, -0.35]  # [FIX quán tính] angular decel nhẹ hơn, tránh jerk

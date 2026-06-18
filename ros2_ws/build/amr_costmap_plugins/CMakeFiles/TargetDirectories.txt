@@ -1,0 +1,10 @@
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/uninstall.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/amr_costmap_plugins_uninstall.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/amr_costmap_plugins.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/test.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/edit_cache.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/rebuild_cache.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/list_install_components.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/install.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/install/local.dir
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/CMakeFiles/install/strip.dir

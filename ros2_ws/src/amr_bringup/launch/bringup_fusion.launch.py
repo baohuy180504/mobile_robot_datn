@@ -122,11 +122,11 @@ def generate_launch_description():
             # Nếu Jetson/USB tải nặng, giảm fps xuống 10.
             'depth_width': 640,
             'depth_height': 480,
-            'depth_fps': 15,
+            'depth_fps': 30,
 
             'color_width': 640,
             'color_height': 480,
-            'color_fps': 15,
+            'color_fps': 30,
 
             # Frame ID thống nhất với URDF + static TF.
             'camera_link_frame_id': 'camera_link',

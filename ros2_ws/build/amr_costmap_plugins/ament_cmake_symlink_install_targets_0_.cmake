@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins/libamr_costmap_plugins.so" "TARGETS" "amr_costmap_plugins" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

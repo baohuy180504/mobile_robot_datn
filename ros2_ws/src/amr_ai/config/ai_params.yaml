@@ -78,7 +78,22 @@ person_tracker_node:
     enroll_frames: 30
     target_lost_timeout_s: 3.0
 
-    process_every_n_frames: 1
+    process_every_n_frames: 2
+
+    enable_ppe_check: true
+    ppe_model_path: "models/ppe_s.engine"
+    ppe_imgsz: 512
+    ppe_conf: 0.12
+    ppe_iou: 0.50
+    ppe_helmet_ok_conf: 0.18
+    ppe_vest_ok_conf: 0.45
+    ppe_run_interval: 20
+    ppe_confirm_frames: 2
+    ppe_clear_frames: 4
+
+    follow_detecting_timeout_s: 30.0
+
+    alert_topic: "/amr_ai/alert"
 
     enable_debug_image: true
     debug_image_topic: "/amr_ai/debug/person_tracker/image"
@@ -87,7 +102,7 @@ person_tracker_node:
 
 follow_servo_node:
   ros__parameters:
-    follow_distance_m: 2.0
+    follow_distance_m: 2.5
     distance_tolerance_m: 0.18
 
     k_linear: 0.30
@@ -165,6 +180,10 @@ ai_detector_node:
 
     enable_fall_alert: true
     enable_fire_smoke_alert: true
+
+    mode_topic: "/amr_ai/mode"
+    suppress_fire_smoke_in_follow: true
+    suppress_fall_in_follow: true
 
     fire_smoke_run_interval: 5
     fire_alert_hold_sec: 2.0

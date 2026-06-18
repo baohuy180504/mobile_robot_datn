@@ -189,6 +189,45 @@ ros2 run amr_ai esp32_alert_bridge --ros-args \
   echo "       UDP port   = $ESP32_ALERT_UDP_PORT"
   echo "       TCP port   = $ESP32_ALERT_TCP_PORT"
 
+  # ==========================================================
+  # Dong bo voi web: chay them rosbridge + camera/alert/tracker
+  # web stream, giong nhu khi START/NAVIGATION duoc bam tu web.
+  # Nho vay engineer_web_server có the xem map/camera/alert/
+  # tracker truc tiep ngay ca khi he thong duoc START tu man hinh.
+  # ==========================================================
+  ROSBRIDGE_SCRIPT="$WS/scripts/start_web_rosbridge.sh"
+  if [ -f "$ROSBRIDGE_SCRIPT" ]; then
+    if tmux has-session -t amr_web_rosbridge 2>/dev/null; then
+      echo "[INFO] amr_web_rosbridge already running"
+    else
+      bash "$ROSBRIDGE_SCRIPT" >>"$LOG" 2>&1 || true
+      echo "[INFO] Started amr_web_rosbridge"
+    fi
+  else
+    echo "[WARN] start_web_rosbridge.sh not found, skip rosbridge"
+  fi
+
+  if ! tmux has-session -t amr_camera_web 2>/dev/null; then
+    tmux new-session -d -s amr_camera_web "$WS/scripts/run_camera_web.sh"
+    echo "[INFO] Started amr_camera_web"
+  else
+    echo "[INFO] amr_camera_web already running"
+  fi
+
+  if ! tmux has-session -t amr_alert_web 2>/dev/null; then
+    tmux new-session -d -s amr_alert_web "$WS/scripts/run_alert_web.sh"
+    echo "[INFO] Started amr_alert_web"
+  else
+    echo "[INFO] amr_alert_web already running"
+  fi
+
+  if ! tmux has-session -t amr_tracker_web 2>/dev/null; then
+    tmux new-session -d -s amr_tracker_web "$WS/scripts/run_tracker_web.sh"
+    echo "[INFO] Started amr_tracker_web"
+  else
+    echo "[INFO] amr_tracker_web already running"
+  fi
+
   echo "[OK] AMR operator stack started."
   echo "[INFO] View logs: tmux attach -t ${SESSION}"
 

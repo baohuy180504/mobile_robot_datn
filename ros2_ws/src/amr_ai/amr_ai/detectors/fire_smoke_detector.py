@@ -8,7 +8,7 @@ class FireSmokeDetector:
         model_path,
         infer_device=0,
         imgsz=640,
-        fire_conf=0.40,
+        fire_conf=0.50,
         smoke_conf=0.60
     ):
         self.model = YOLO(model_path)

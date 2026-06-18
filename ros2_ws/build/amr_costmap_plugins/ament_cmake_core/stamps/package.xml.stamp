@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://download.ros.org/schema/package_format3.xsd"?>
+<package format="3">
+  <name>amr_costmap_plugins</name>
+  <version>0.1.0</version>
+  <description>
+    Plugin costmap Nav2 (GHRFLayer) đọc OccupancyGrid risk liên tục [0-100] do
+    amr_pointcloud_filter/height_risk_projector publish, dùng để phát hiện vật
+    cản cao hơn tầm quét LiDAR thông qua depth camera (Gaussian Height Risk Field).
+  </description>
+  <maintainer email="dev@example.com">amr_dev</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>nav2_costmap_2d</depend>
+  <depend>nav_msgs</depend>
+  <depend>pluginlib</depend>
+  <depend>tf2</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <nav2_costmap_2d plugin="${prefix}/costmap_plugins.xml" />
+  </export>
+</package>

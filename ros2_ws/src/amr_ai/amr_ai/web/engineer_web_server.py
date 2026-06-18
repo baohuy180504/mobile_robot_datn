@@ -448,7 +448,13 @@ def get_system_state() -> Dict[str, Any]:
     slam = tmux_session_running("amr_slam")
     rosbridge = tmux_session_running("amr_web_rosbridge")
 
-    if navigation:
+    # "amr_operator" la session do man hinh tren xe (operator_gui_node) tao ra
+    # khi nhan START (start_amr_operator_stack.sh). No gom chung bringup +
+    # navigation + ai trong 1 session, nen phai coi nhu tuong duong voi
+    # device+navigation dang chay de web bao trang thai dung thuc te.
+    operator = tmux_session_running("amr_operator")
+
+    if navigation or operator:
         active_mode = "NAVIGATION"
     elif slam:
         active_mode = "SLAM"
@@ -458,10 +464,11 @@ def get_system_state() -> Dict[str, Any]:
         active_mode = "STOPPED"
 
     return {
-        "device": device,
-        "navigation": navigation,
+        "device": device or operator,
+        "navigation": navigation or operator,
         "slam": slam,
         "rosbridge": rosbridge,
+        "operator": operator,
         "active_mode": active_mode,
     }
 

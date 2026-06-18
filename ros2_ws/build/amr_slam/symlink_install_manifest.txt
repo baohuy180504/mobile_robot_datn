@@ -3,6 +3,9 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/fusion_slam.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/launch/slam.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/rviz/view_vslam_teleop.rviz
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map1.pgm
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map1.yaml
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map1_3d.bt
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map3.pgm
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map3.yaml
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_slam/share/amr_slam/maps/map3_3d.bt

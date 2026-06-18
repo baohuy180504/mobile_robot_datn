@@ -76,7 +76,7 @@ def generate_launch_description():
             'max_y': 1.50,
 
             'restamp': False,
-            'output_frame_id': 'odom',
+            'output_frame_id': '',
             'log_debug': False,
             'use_sim_time': False,
         }]
