@@ -1,6 +1,6 @@
 {
   "frame_id": "map",
-  "updated_at": "2026-06-12 16:50:02",
+  "updated_at": "2026-06-18 17:24:46",
   "mapping_note": "WP0=HOME=(0,0,0) fixed. ESP32 sends WP1/WP2/WP3/... directly.",
   "home": {
     "name": "WP0",

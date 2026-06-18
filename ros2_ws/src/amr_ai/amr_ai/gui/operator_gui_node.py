@@ -320,12 +320,17 @@ class OperatorGuiNode(Node):
         with self.lock:
             mode = self.current_mode
 
+        self.get_logger().warn(f'Calling /amr_ai/select_zone zone={zone}')
+
         if mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]:
             self.set_status('STOP FOLLOW FIRST', '#f97316')
             return
 
-        if not self.select_zone_client.wait_for_service(timeout_sec=1.0):
+        # Đồng bộ với call_set_mode: 1.0s từng quá ngắn lúc máy đang tải
+        # nặng (Nav2 + AI stack), khiến WP1/WP2/HOME bị bỏ qua âm thầm.
+        if not self.select_zone_client.wait_for_service(timeout_sec=2.5):
             self.set_status('SELECT_ZONE NOT READY', '#dc2626')
+            self.get_logger().error('/amr_ai/select_zone service not ready')
             return
 
         req = SelectZone.Request()

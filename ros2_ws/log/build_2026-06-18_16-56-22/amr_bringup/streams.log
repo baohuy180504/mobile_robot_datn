@@ -1,0 +1,17 @@
+[2.170s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup': PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build --no-deps symlink_data
+[2.698s] running develop
+[3.048s] running egg_info
+[3.048s] writing amr_bringup.egg-info/PKG-INFO
+[3.049s] writing dependency_links to amr_bringup.egg-info/dependency_links.txt
+[3.049s] writing entry points to amr_bringup.egg-info/entry_points.txt
+[3.049s] writing requirements to amr_bringup.egg-info/requires.txt
+[3.049s] writing top-level names to amr_bringup.egg-info/top_level.txt
+[3.054s] reading manifest file 'amr_bringup.egg-info/SOURCES.txt'
+[3.056s] writing manifest file 'amr_bringup.egg-info/SOURCES.txt'
+[3.059s] running build_ext
+[3.059s] Creating /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages/amr-bringup.egg-link (link to .)
+[3.066s] Installing cloud_qos_relay.py script to /home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/amr_bringup
+[3.067s] 
+[3.067s] Installed /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup
+[3.067s] running symlink_data
+[3.151s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup' returned '0': PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup/build --no-deps symlink_data

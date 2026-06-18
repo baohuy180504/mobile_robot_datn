@@ -22,7 +22,10 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     desc_pkg = get_package_share_directory('amr_description')
     bringup_pkg = get_package_share_directory('amr_bringup')
+    # amr_ai_pkg = get_package_share_directory('amr_ai')
+
     ekf_params_file = os.path.join(bringup_pkg, 'config', 'ekf_odom.yaml')
+    # ai_params_file = os.path.join(amr_ai_pkg, 'config', 'ai_params.yaml')
 
     urdf_file = os.path.join(desc_pkg, 'urdf', 'robot.urdf')
     with open(urdf_file, 'r') as f:
@@ -77,6 +80,19 @@ def generate_launch_description():
             ('cmd_vel', '/cmd_vel_safe'),
         ]
     )
+
+    # # Luon chay cung arduino_bridge bat ke dang SLAM hay Navigation, de
+    # # Manual Control (qua /cmd_vel_manual + /amr_ai/manual_override) hoat
+    # # dong moi luc, khong chi rieng khi da vao Navigation. Truoc day node
+    # # nay chi duoc khai bao trong amr_ai_launch.py (chi chay khi Navigation),
+    # # nen Manual Control bi "vo nghia" trong SLAM / bringup don thuan.
+    # cmd_vel_safety_mux = Node(
+    #     package='amr_ai',
+    #     executable='cmd_vel_safety_mux',
+    #     name='cmd_vel_safety_mux_node',
+    #     output='screen',
+    #     parameters=[ai_params_file],
+    # )
 
     # EKF odometry:
     # arduino_bridge mới chỉ publish /wheel/odom + /imu/data, không publish /odom và không publish TF.
@@ -204,6 +220,7 @@ def generate_launch_description():
         robot_state_publisher,
         lidar_node,
         arduino_driver,
+        # cmd_vel_safety_mux,
         ekf_filter_node,
         scan_filter_node,
         astra_camera_node,
