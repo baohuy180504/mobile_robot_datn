@@ -475,22 +475,31 @@ def get_system_state() -> Dict[str, Any]:
 
 def choose_manual_teleop_topic() -> str:
     """
-    Chọn topic teleop theo graph hiện tại:
-    - Nếu /cmd_vel_safe có subscriber thì ưu tiên /cmd_vel_safe.
-      Trường hợp này đúng với bringup_fusion, arduino_bridge đang nghe /cmd_vel_safe.
-    - Nếu không có /cmd_vel_safe subscriber thì dùng /cmd_vel.
-      Trường hợp này đúng với bringup_fusion_direct, arduino_bridge đang nghe /cmd_vel.
+    Phat hien dong dua tren node thuc te dang chay, khong dua vao so luong
+    subscriber cua /cmd_vel_safe (arduino_bridge luon nghe topic do bat ke
+    mode nao, nen dem subscriber khong phan biet duoc Navigation/SLAM).
+
+    cmd_vel_safety_mux_node CHI duoc amr_ai_launch.py khoi dong, tuc la
+    CHI ton tai khi da vao NAVIGATION. Dung dieu nay de chon duong:
+
+    - Co cmd_vel_safety_mux_node (NAVIGATION): ghi vao /cmd_vel_manual,
+      mux se uu tien lenh tay tren Nav2 (xem manual_override trong
+      cmd_vel_safety_mux_node.py). Khong ghi thang /cmd_vel_safe vi Nav2
+      cung dang ghi lien tuc vao do qua mux, se danh nhau.
+
+    - Khong co node nay (SLAM hoac chi bringup co ban): ghi thang vao
+      /cmd_vel_safe nhu truoc gio - khong co ai khac dang ghi vao do nen
+      khong xung dot, giu nguyen hanh vi dang chay tot.
     """
-    code, out = run_cmd("ros2 topic info /cmd_vel_safe", timeout=2.0)
-    if code == 0 and "Subscription count:" in out:
-        match = re.search(r"Subscription count:\s*(\d+)", out)
-        if match and int(match.group(1)) > 0:
-            return "/cmd_vel_safe"
-    return "/cmd_vel"
+    code, out = run_cmd("ros2 node list", timeout=2.0)
+    if code == 0 and "cmd_vel_safety_mux_node" in out:
+        return "/cmd_vel_manual"
+    return "/cmd_vel_safe"
 
 
 def publish_zero_twist_once(topic_name: str) -> None:
-    safe_topic = "/cmd_vel_safe" if topic_name == "/cmd_vel_safe" else "/cmd_vel"
+    allowed_topics = {"/cmd_vel", "/cmd_vel_safe", "/cmd_vel_manual"}
+    safe_topic = topic_name if topic_name in allowed_topics else "/cmd_vel_safe"
     run_cmd(
         f"timeout 1 ros2 topic pub {safe_topic} geometry_msgs/msg/Twist '{{}}' --once >/dev/null 2>&1 || true",
         timeout=2.0,
@@ -500,6 +509,53 @@ def publish_zero_twist_once(topic_name: str) -> None:
 def publish_zero_twist_all() -> None:
     publish_zero_twist_once("/cmd_vel")
     publish_zero_twist_once("/cmd_vel_safe")
+    publish_zero_twist_once("/cmd_vel_manual")
+
+
+MANUAL_OVERRIDE_TOPIC = "/amr_ai/manual_override"
+MANUAL_OVERRIDE_HB_SESSION = "amr_web_teleop_hb"
+
+
+def start_manual_override_heartbeat() -> None:
+    """
+    Chi can thiet khi teleop dang ghi vao /cmd_vel_manual (tuc dang
+    Navigation, cmd_vel_safety_mux_node dang chay). Giu publish True lien
+    tuc 5Hz de mux biet lenh tay con "song" va tiep tuc uu tien tren Nav2.
+    """
+    if tmux_session_running(MANUAL_OVERRIDE_HB_SESSION):
+        return
+
+    cmd = (
+        f"tmux new-session -d -s {MANUAL_OVERRIDE_HB_SESSION} -n hb "
+        + shlex.quote(
+            f"cd {WORKSPACE} && "
+            f"source {HOME_PATH}/mobile_robot/ai_ros_venv/bin/activate && "
+            "source /opt/ros/humble/setup.bash && "
+            "source install/setup.bash && "
+            "export ROS_DOMAIN_ID=0 && "
+            "export ROS_LOCALHOST_ONLY=0 && "
+            "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp && "
+            f"ros2 topic pub {MANUAL_OVERRIDE_TOPIC} std_msgs/msg/Bool "
+            "'{data: true}' -r 5"
+        )
+    )
+    run_cmd(cmd, timeout=2.0, source_ros=False)
+
+
+def stop_manual_override_heartbeat() -> None:
+    run_cmd(
+        f"tmux kill-session -t {MANUAL_OVERRIDE_HB_SESSION} 2>/dev/null || true",
+        timeout=1.0,
+        source_ros=False,
+    )
+    # Bao ngay cho mux biet lenh tay da het hieu luc, khong cho mux cho
+    # het manual_override_timeout_s moi quay lai Nav2.
+    run_cmd(
+        f"timeout 1 ros2 topic pub {MANUAL_OVERRIDE_TOPIC} std_msgs/msg/Bool "
+        "'{data: false}' --once >/dev/null 2>&1 || true",
+        timeout=2.0,
+        source_ros=False,
+    )
 
 
 def tmux_send_key(session: str, key: str) -> Tuple[int, str]:
@@ -893,6 +949,7 @@ def api_manual_control_status():
         "running": tmux_session_running("amr_web_teleop"),
         "topic": choose_manual_teleop_topic(),
         "session": "amr_web_teleop",
+        "manual_override_heartbeat_running": tmux_session_running(MANUAL_OVERRIDE_HB_SESSION),
     })
 
 
@@ -915,6 +972,9 @@ def api_start_manual_control():
         })
 
     publish_zero_twist_all()
+
+    if topic == "/cmd_vel_manual":
+        start_manual_override_heartbeat()
 
     cmd = (
         f"tmux new-session -d -s amr_web_teleop -n teleop "
@@ -951,6 +1011,7 @@ def api_stop_manual_control():
 
     publish_zero_twist_all()
     run_cmd("tmux kill-session -t amr_web_teleop 2>/dev/null || true", timeout=1.0, source_ros=False)
+    stop_manual_override_heartbeat()
     publish_zero_twist_all()
 
     return JSONResponse({

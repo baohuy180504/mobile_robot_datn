@@ -2,7 +2,7 @@
 set -e
 
 WS="$HOME/mobile_robot/ros2_ws"
-CMD_TOPIC="/cmd_vel_safe"
+CMD_TOPIC="${1:-/cmd_vel_safe}"
 
 cd "$WS"
 

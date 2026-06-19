@@ -7,13 +7,13 @@ import qrcode
 # CẤU HÌNH ĐƯỜNG DẪN TẠI ĐÂY (Thay đổi các giá trị này theo ý bạn)
 # =====================================================================
 # 1. Đường link trang webserver của bạn
-WEBSITE_URL = "http://192.168.0.184:8080/login?next=%2F"  
+WEBSITE_URL = "http://192.168.0.185:8090/login?next=%2F"  
 
 # 2. Đường dẫn đến file ảnh logo (Dùng os.path.expanduser để Python hiểu dấu ~)
 LOGO_PATH = os.path.expanduser("~/mobile_robot/ros2_ws/src/amr_ai/amr_ai/web/static/picqr.png")
 
 # 3. Đường dẫn và tên file bạn muốn lưu mã QR
-SAVE_PATH = os.path.expanduser("~/mobile_robot/ros2_ws/src/amr_ai/amr_ai/web/static/qr.png")
+SAVE_PATH = os.path.expanduser("~/mobile_robot/ros2_ws/src/amr_ai/amr_ai/web/static/qr_control.png")
 # =====================================================================
 
 def create_qr_fixed_paths():

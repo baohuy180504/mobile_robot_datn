@@ -26,6 +26,7 @@ import fcntl
 import math
 import os
 import secrets
+import select
 import struct
 import subprocess
 import termios
@@ -40,6 +41,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Resp
 
 
 APP_TITLE = "AMR Emergency Control"
+FILE_VERSION = "2026-06-19-v7-no-write-until-active"
 
 # ==========================================================
 # Config (override bang environment variable, khong can sua code)
@@ -57,6 +59,15 @@ ANGULAR_MIN, ANGULAR_MAX, ANGULAR_DEFAULT = 0.05, 0.80, 0.28
 
 CMD_TIMEOUT_S = 0.4       # khong co lenh moi trong khoang nay -> tu dong ve 0
 LOOP_HZ = 20.0
+ARDUINO_READY_TIMEOUT_S = 8.0  # cho toi da ngan nay giay de thay telemetry
+                                # that tu Arduino truoc khi cho phep dieu
+                                # khien (xem wait_until_telemetry_seen).
+                                # Thay the cho STARTUP_SETTLE_S co dinh truoc
+                                # day - vi mo cong serial co the khien Arduino
+                                # tu reset (DTR->RESET), va thoi gian boot lai
+                                # (gom ca khoi tao BNO055 qua I2C) dao dong,
+                                # khong doan truoc duoc mot con so co dinh nao
+                                # la chac chan du moi luc.
 
 
 def clamp(value: float, lo: float, hi: float) -> float:
@@ -102,6 +113,15 @@ class ArduinoSerialLink:
                 cflag &= ~termios.CSTOPB
                 cflag &= ~termios.CSIZE
                 cflag |= termios.CS8
+                # QUAN TRONG: tat hardware flow control (RTS/CTS). Arduino
+                # chi noi day TX/RX/GND, khong co RTS/CTS. Neu CRTSCTS con
+                # bat (mac dinh tuy driver USB-serial), kernel se cho doi
+                # tin hieu CTS truoc khi day byte ra day TX that - os.write()
+                # van bao thanh cong (vao buffer) nhung byte khong bao gio
+                # ra toi Arduino. Loi nay khong the phat hien qua test bang
+                # pty vi pty khong co co che bat tay phan cung.
+                if hasattr(termios, "CRTSCTS"):
+                    cflag &= ~termios.CRTSCTS
                 attrs[2] = cflag
 
                 lflag = attrs[3]
@@ -119,10 +139,21 @@ class ArduinoSerialLink:
                 termios.tcsetattr(fd, termios.TCSANOW, attrs)
                 termios.tcflush(fd, termios.TCIOFLUSH)
 
-                # Co gang xin quyen truy cap doc quyen (best-effort). Khong
-                # bao ve duoc truong hop arduino_bridge.cpp da mo cong TRUOC
-                # do roi (no khong dung TIOCEXCL), nhung ngan duoc tien trinh
-                # MOI khac mo trung trong luc tool nay dang chay.
+                # QUAN TRONG: O_NONBLOCK chi can luc open() de tranh treo
+                # neu modem-control line chua san sang. Sau khi da bat
+                # CLOCAL (bo qua modem-control), PHAI go O_NONBLOCK de cac
+                # lan write() sau do quay lai kieu blocking binh thuong.
+                # Neu de sot O_NONBLOCK (loi truoc day): khi buffer driver
+                # USB-serial tam day (de xay ra khi gui lien tuc 20 lan/giay
+                # trong luc Arduino dang ban doc 3 cam bien sieu am), write()
+                # co the chi ghi duoc MOT PHAN chuoi lenh roi tra ve ngay,
+                # phan con thieu bi mat - Arduino nhan dong lenh bi cat cut,
+                # khong co dau ',' hop le nen bo qua am tham. Day chinh la
+                # ly do "sending linear=..." luon bao thanh cong nhung xe
+                # khong chay: lenh gui xuong qua serial bi gay giua chung.
+                fd_flags = fcntl.fcntl(fd, fcntl.F_GETFL)
+                fcntl.fcntl(fd, fcntl.F_SETFL, fd_flags & ~os.O_NONBLOCK)
+
                 try:
                     fcntl.ioctl(fd, termios.TIOCEXCL)
                 except Exception:
@@ -136,7 +167,10 @@ class ArduinoSerialLink:
 
             self.fd = fd
             self.last_error = ""
-            print(f"[web_control] Serial OPENED OK: {self.port}", flush=True)
+            crtscts_state = "khong ro (Python termios khong co hang so nay)"
+            if hasattr(termios, "CRTSCTS"):
+                crtscts_state = "DA TAT (ok)" if not (cflag & termios.CRTSCTS) else "VAN BAT (loi!)"
+            print(f"[web_control] Serial OPENED OK: {self.port} | CRTSCTS: {crtscts_state}", flush=True)
             return True
 
     def write_twist(self, linear_x: float, angular_z: float) -> bool:
@@ -145,7 +179,14 @@ class ArduinoSerialLink:
                 return False
             try:
                 line = f"{linear_x:.6f},{angular_z:.6f}\n".encode("ascii")
-                os.write(self.fd, line)
+                total_written = 0
+                while total_written < len(line):
+                    n = os.write(self.fd, line[total_written:])
+                    if n <= 0:
+                        self.last_error = "Write tra ve 0 byte, dung lai de tranh treo"
+                        print(f"[web_control] WRITE STALLED: {self.last_error}", flush=True)
+                        return False
+                    total_written += n
                 return True
             except OSError as exc:
                 self.last_error = f"Loi viet serial: {exc}"
@@ -160,6 +201,85 @@ class ArduinoSerialLink:
                 except OSError:
                     pass
                 self.fd = None
+
+    def read_raw_for_diagnosis(self, timeout_s: float = 1.5) -> bytes:
+        """
+        Tu doc thu vai trieu telemetry qua DUNG fd va cau hinh ma chinh
+        code nay vua thiet lap - khong qua cat/stty/tien trinh nao khac.
+        Day la cach duy nhat xac nhan chac chan baud/parity ma code Python
+        nay tu cau hinh la dung, vi cat doc duoc khong co nghia gi neu no
+        chi dang ke thua cau hinh sot lai tu lan stty thu cong truoc do.
+        Dung select() vi fd hien dang o che do blocking (da go O_NONBLOCK).
+        """
+        if self.fd is None:
+            return b""
+        try:
+            collected = b""
+            deadline = time.monotonic() + timeout_s
+            while time.monotonic() < deadline:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    break
+                ready, _, _ = select.select([self.fd], [], [], remaining)
+                if not ready:
+                    break
+                chunk = os.read(self.fd, 256)
+                if not chunk:
+                    break
+                collected += chunk
+                if len(collected) >= 256:
+                    break
+            return collected
+        except OSError as exc:
+            print(f"[web_control] DIAG READ FAILED: {exc}", flush=True)
+            return b""
+
+    def wait_until_telemetry_seen(self, max_wait_s: float = 8.0) -> bool:
+        """
+        Cho TICH CUC toi khi thuc su thay duoc 1 dong telemetry hop le
+        ('e:' o dau dong) tu Arduino, thay vi doan mot khoang thoi gian co
+        dinh roi hy vong la du. Mo cong serial co the khien Arduino tu
+        RESET (mach DTR->RESET pho bien tren cac board dung adapter
+        USB-serial CH340/CP2102), va thoi gian boot lai (gom ca khoi tao
+        cam bien BNO055 qua I2C trong setup()) co the dao dong, khong co
+        gia tri co dinh nao chac chan du moi luc. Cho toi khi thay du lieu
+        that, hoac het max_wait_s thi bao that bai ro rang - khong bao gio
+        am tham coi nhu "chac la xong roi" khi chua co bang chung.
+        """
+        if self.fd is None:
+            return False
+
+        buffer = b""
+        deadline = time.monotonic() + max_wait_s
+
+        while time.monotonic() < deadline:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                break
+            try:
+                ready, _, _ = select.select([self.fd], [], [], min(remaining, 0.5))
+            except OSError:
+                return False
+
+            if not ready:
+                continue
+
+            try:
+                chunk = os.read(self.fd, 256)
+            except OSError:
+                return False
+
+            if not chunk:
+                continue
+
+            buffer += chunk
+            if len(buffer) > 1024:
+                buffer = buffer[-1024:]
+
+            if b"e:" in buffer:
+                return True
+
+        return False
 
 
 serial_link = ArduinoSerialLink(SERIAL_PORT)
@@ -216,7 +336,15 @@ def serial_writer_loop():
         active, lin, ang, last_time = control_state.read()
 
         if not active:
-            serial_link.write_twist(0.0, 0.0)
+            # KHONG gui gi ca khi chua active - truoc day o day co
+            # write_twist(0,0) lien tuc 20Hz ngay khi cong vua mo, kha
+            # nang cao day chinh la nguyen nhan goc: no chay CHONG LEN
+            # giai doan wait_until_telemetry_seen() dang co doc "yen
+            # lang", doi lien tuc hang nghin lenh vao dung luc Arduino
+            # con dang khoi dong lai / con dang duoc cho phep on dinh.
+            # Watchdog 1 giay co san tren Arduino (lastCmdTime) da tu lo
+            # viec dung dong co khi khong co lenh - khong can gia vo gui
+            # 0 lien tuc o day.
             continue
 
         if last_time <= 0.0 or (time.monotonic() - last_time) > CMD_TIMEOUT_S:
@@ -267,13 +395,15 @@ LOGIN_HTML = r'''
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>AMR Emergency Control - Login</title>
 <style>
   :root{--bg:#020617;--card:rgba(15,23,42,.9);--border:#334155;--red:#ef4444;--text:#e5e7eb;--muted:#94a3b8;}
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-    background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;}
+  body{margin:0;min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);color:var(--text);font-family:-apple-system,Arial,Helvetica,sans-serif;
+    padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right))
+      max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));}
   .gate{width:min(380px,88vw);padding:26px 24px;border:1px solid var(--border);
     border-radius:18px;background:var(--card);box-shadow:0 14px 42px rgba(0,0,0,.4);}
   h1{margin:0 0 4px;text-align:center;font-size:22px;color:var(--red);}
@@ -326,90 +456,99 @@ CONTROL_HTML = r'''
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>AMR Emergency Control</title>
 <style>
-  :root{--bg:#020617;--card:rgba(15,23,42,.9);--border:#334155;--red:#ef4444;--green:#22c55e;
+  :root{--bg:#020617;--card:rgba(15,23,42,.92);--border:#334155;--red:#ef4444;--green:#22c55e;
     --text:#e5e7eb;--muted:#94a3b8;--amber:#f59e0b;}
-  *{box-sizing:border-box;-webkit-user-select:none;user-select:none;}
-  body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);
-    font-family:Arial,Helvetica,sans-serif;display:flex;flex-direction:column;align-items:center;
-    padding:18px 14px 30px;}
-  h1{color:var(--red);font-size:19px;margin:4px 0 2px;text-align:center;}
-  .warn{color:var(--amber);font-size:12px;text-align:center;max-width:420px;margin:0 0 14px;line-height:1.4;}
-  .panel{width:min(420px,94vw);border:1px solid var(--border);border-radius:18px;
-    background:var(--card);padding:18px;margin-bottom:14px;}
-  .row{display:flex;gap:10px;margin-bottom:14px;}
-  .startstop{flex:1;padding:14px;border:0;border-radius:12px;font-weight:900;font-size:15px;
-    letter-spacing:.5px;cursor:pointer;color:white;}
-  #btnStart{background:linear-gradient(90deg,#15803d,#22c55e);}
+  *{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+  html,body{height:100%;}
+  body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--text);
+    font-family:-apple-system,Arial,Helvetica,sans-serif;display:flex;flex-direction:column;
+    align-items:center;overscroll-behavior:none;
+    padding:max(10px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right))
+      max(12px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));}
+  .page{width:min(420px,96vw);display:flex;flex-direction:column;gap:8px;}
+  h1{color:var(--red);font-size:17px;margin:2px 0 0;text-align:center;letter-spacing:.5px;}
+  .warn{color:var(--amber);font-size:11px;text-align:center;margin:0 0 2px;line-height:1.35;opacity:.9;}
+  .status-banner{text-align:center;font-size:13px;font-weight:600;padding:9px 10px;border-radius:10px;
+    min-height:18px;background:#0b1220;color:var(--muted);border:1px solid var(--border);
+    transition:background .15s,color .15s;}
+  .status-banner.bad{color:#fecaca;background:#3f1212;border-color:#7f1d1d;}
+  .status-banner.good{color:#bbf7d0;background:#0f2d1a;border-color:#14532d;}
+  .status-banner.busy{color:#fde68a;background:#3a2c0a;border-color:#78350f;}
+  .row{display:flex;gap:10px;}
+  .startstop{flex:1;padding:16px 8px;border:0;border-radius:14px;font-weight:900;font-size:17px;
+    letter-spacing:.5px;cursor:pointer;color:white;touch-action:manipulation;}
+  .startstop:disabled{opacity:.5;cursor:not-allowed;}
+  #btnStart{background:linear-gradient(180deg,#22c55e,#15803d);}
   #btnStart.active{background:#14532d;color:#86efac;}
-  #btnStop{background:linear-gradient(90deg,#b91c1c,#ef4444);}
-  .status-line{text-align:center;font-size:13px;color:var(--muted);margin-bottom:14px;min-height:18px;}
-  .status-line.bad{color:var(--red);}
-  .status-line.good{color:var(--green);}
-  .pad{display:grid;grid-template-columns:64px 64px 64px;grid-template-rows:64px 64px 64px;
-    gap:8px;justify-content:center;margin-bottom:18px;}
+  #btnStop{background:linear-gradient(180deg,#ef4444,#b91c1c);}
+  .pad{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;
+    gap:9px;margin:4px 0;aspect-ratio:1/1;}
   .pad .blank{visibility:hidden;}
-  .pad button{font-size:22px;border-radius:14px;border:1px solid var(--border);
-    background:#0b1220;color:var(--text);cursor:pointer;}
-  .pad button:disabled{opacity:.35;cursor:not-allowed;}
-  .pad button:active:not(:disabled){background:#1e293b;}
-  .pad .stop-symbol{color:var(--red);font-size:20px;}
-  .sliders{display:flex;flex-direction:column;gap:14px;}
-  .slider-row label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
-  .slider-row input[type="range"]{width:100%;}
+  .pad button{font-size:30px;border-radius:16px;border:1px solid var(--border);
+    background:#0b1220;color:var(--text);cursor:pointer;touch-action:none;
+    display:flex;align-items:center;justify-content:center;}
+  .pad button:disabled{opacity:.3;cursor:not-allowed;}
+  .pad button:active:not(:disabled){background:#1e293b;transform:scale(.96);}
+  .pad .stop-symbol{color:var(--red);font-size:24px;}
+  .sliders{display:flex;flex-direction:column;gap:10px;background:var(--card);
+    border:1px solid var(--border);border-radius:14px;padding:12px 14px;}
+  .slider-row label{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;color:var(--muted);}
+  .slider-row label span:last-child{color:var(--text);font-weight:700;}
+  .slider-row input[type="range"]{width:100%;height:30px;touch-action:manipulation;}
   .slider-row input:disabled{opacity:.4;}
 </style>
 </head>
 <body>
+<div class="page">
   <h1>AMR EMERGENCY CONTROL</h1>
   <div class="warn">
-    Gui lenh thang xuong Arduino qua serial, khong qua lidar/camera/Nav2.
-    Khong con lop an toan tu dong nao - chi dung khi can thiet va luon quan
-    sat truc tiep xe.
+    Gui lenh thang xuong Arduino qua serial - khong qua lidar/camera/Nav2,
+    khong con lop an toan tu dong. Luon quan sat truc tiep xe.
   </div>
 
-  <div class="panel">
-    <div class="row">
-      <button id="btnStart" class="startstop" onclick="startControl()">START</button>
-      <button id="btnStop" class="startstop" onclick="stopControl()">STOP</button>
+  <div class="status-banner" id="statusLine">Chua bat dieu khien.</div>
+
+  <div class="row">
+    <button id="btnStart" class="startstop" onclick="startControl()">START</button>
+    <button id="btnStop" class="startstop" onclick="stopControl()">STOP</button>
+  </div>
+
+  <div class="pad" oncontextmenu="return false;">
+    <div class="blank"></div>
+    <button id="btnUp" disabled title="Tien"
+      onpointerdown="beginMove('forward')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9650;</button>
+    <div class="blank"></div>
+
+    <button id="btnLeft" disabled title="Quay trai"
+      onpointerdown="beginMove('left')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9664;</button>
+    <button id="btnCenterStop" disabled class="stop-symbol" title="Dung" onclick="endMove(true)">&#9632;</button>
+    <button id="btnRight" disabled title="Quay phai"
+      onpointerdown="beginMove('right')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9654;</button>
+
+    <div class="blank"></div>
+    <button id="btnDown" disabled title="Lui"
+      onpointerdown="beginMove('backward')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9660;</button>
+    <div class="blank"></div>
+  </div>
+
+  <div class="sliders">
+    <div class="slider-row">
+      <label><span>Toc do tien/lui (linear)</span><span id="linearValue">__LINEAR_DEFAULT__</span></label>
+      <input id="linearSlider" type="range" disabled
+        min="__LINEAR_MIN__" max="__LINEAR_MAX__" step="0.01" value="__LINEAR_DEFAULT__"
+        oninput="document.getElementById('linearValue').textContent=this.value">
     </div>
-    <div class="status-line" id="statusLine">Chua bat dieu khien.</div>
-
-    <div class="pad">
-      <div class="blank"></div>
-      <button id="btnUp" disabled title="Tien"
-        onpointerdown="beginMove('forward')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9650;</button>
-      <div class="blank"></div>
-
-      <button id="btnLeft" disabled title="Quay trai"
-        onpointerdown="beginMove('left')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9664;</button>
-      <button id="btnCenterStop" disabled class="stop-symbol" title="Dung" onclick="endMove(true)">&#9632;</button>
-      <button id="btnRight" disabled title="Quay phai"
-        onpointerdown="beginMove('right')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9654;</button>
-
-      <div class="blank"></div>
-      <button id="btnDown" disabled title="Lui"
-        onpointerdown="beginMove('backward')" onpointerup="endMove()" onpointerleave="endMove()" onpointercancel="endMove()">&#9660;</button>
-      <div class="blank"></div>
-    </div>
-
-    <div class="sliders">
-      <div class="slider-row">
-        <label><span>Toc do tien/lui (linear)</span><span id="linearValue">__LINEAR_DEFAULT__</span></label>
-        <input id="linearSlider" type="range" disabled
-          min="__LINEAR_MIN__" max="__LINEAR_MAX__" step="0.01" value="__LINEAR_DEFAULT__"
-          oninput="document.getElementById('linearValue').textContent=this.value">
-      </div>
-      <div class="slider-row">
-        <label><span>Toc do xoay (angular)</span><span id="angularValue">__ANGULAR_DEFAULT__</span></label>
-        <input id="angularSlider" type="range" disabled
-          min="__ANGULAR_MIN__" max="__ANGULAR_MAX__" step="0.01" value="__ANGULAR_DEFAULT__"
-          oninput="document.getElementById('angularValue').textContent=this.value">
-      </div>
+    <div class="slider-row">
+      <label><span>Toc do xoay (angular)</span><span id="angularValue">__ANGULAR_DEFAULT__</span></label>
+      <input id="angularSlider" type="range" disabled
+        min="__ANGULAR_MIN__" max="__ANGULAR_MAX__" step="0.01" value="__ANGULAR_DEFAULT__"
+        oninput="document.getElementById('angularValue').textContent=this.value">
     </div>
   </div>
+</div>
 
 <script>
 let controlActive = false;
@@ -417,6 +556,8 @@ let moveTimer = null;
 
 const padButtons = ["btnUp","btnDown","btnLeft","btnRight","btnCenterStop"];
 const sliderInputs = ["linearSlider","angularSlider"];
+
+document.addEventListener("touchmove", function(e){ e.preventDefault(); }, {passive:false});
 
 function setControlsEnabled(enabled){
   for(const id of padButtons){ document.getElementById(id).disabled = !enabled; }
@@ -426,22 +567,28 @@ function setControlsEnabled(enabled){
 function setStatus(text, kind){
   const el = document.getElementById("statusLine");
   el.textContent = text;
-  el.className = "status-line" + (kind ? " " + kind : "");
+  el.className = "status-banner" + (kind ? " " + kind : "");
 }
 
 async function startControl(){
+  const btnStart = document.getElementById("btnStart");
+  const btnStop = document.getElementById("btnStop");
+  btnStart.disabled = true;
+  btnStop.disabled = true;
+  setStatus("Dang doi Arduino san sang (toi da 8s)...", "busy");
   try{
     const res = await fetch("/api/start", {method:"POST"});
     const data = await res.json();
     if(data.ok){
       controlActive = true;
-      document.getElementById("btnStart").classList.add("active");
+      btnStart.classList.add("active");
       setControlsEnabled(true);
       setStatus(data.message || "Da bat dieu khien.", "good");
     }else{
       setStatus(data.message || "Khong bat duoc dieu khien.", "bad");
     }
   }catch(e){ setStatus("Khong ket noi duoc server.", "bad"); }
+  finally{ btnStart.disabled = false; btnStop.disabled = false; }
 }
 
 async function stopControl(){
@@ -609,11 +756,48 @@ def api_status():
 def api_start():
     conflict = check_arduino_bridge_running()
 
+    was_already_open = serial_link.is_open()
+
     if not serial_link.open():
         return JSONResponse({
             "ok": False,
             "message": f"Khong mo duoc serial: {serial_link.last_error}",
         })
+
+    if not was_already_open:
+        # Cong serial vua mo lan dau. O nhieu board/adapter USB-serial,
+        # hanh dong open() co the khien Arduino TU RESET (mach DTR->RESET
+        # qua tu dien). Thay vi doan mot khoang thoi gian co dinh roi hy
+        # vong la du (co the qua ngan neu BNO055 init lau hon binh
+        # thuong), CHO TICH CUC toi khi thuc su thay duoc telemetry that
+        # tu Arduino - day la bang chung khach quan duy nhat cho biet
+        # Arduino da chay xong setup() va vao den loop().
+        print(
+            f"[web_control] Dang cho Arduino gui telemetry (toi da "
+            f"{ARDUINO_READY_TIMEOUT_S:.0f}s, co the no dang tu reset/khoi dong lai)...",
+            flush=True,
+        )
+        arduino_ready = serial_link.wait_until_telemetry_seen(max_wait_s=ARDUINO_READY_TIMEOUT_S)
+
+        if not arduino_ready:
+            print(
+                "[web_control] KHONG thay telemetry tu Arduino sau "
+                f"{ARDUINO_READY_TIMEOUT_S:.0f}s - TU CHOI bat dieu khien de "
+                "tranh gui lenh vao luc Arduino chua san sang.",
+                flush=True,
+            )
+            return JSONResponse({
+                "ok": False,
+                "message": (
+                    f"Da mo serial nhung khong nhan duoc telemetry tu Arduino "
+                    f"sau {ARDUINO_READY_TIMEOUT_S:.0f}s. Co the Arduino dang "
+                    "tu reset/khoi dong lai cham hon binh thuong, hoac day "
+                    "cam bien/nguon co van de. Thu bam START lai sau vai giay, "
+                    "hoac kiem tra Arduino truc tiep."
+                ),
+            })
+
+        print("[web_control] Da xac nhan Arduino san sang (co telemetry).", flush=True)
 
     control_state.set_active(True)
 
@@ -672,4 +856,5 @@ if __name__ == "__main__":
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", default=8090, type=int)
     args = parser.parse_args()
+    print(f"[web_control] FILE_VERSION = {FILE_VERSION}", flush=True)
     uvicorn.run(app, host=args.host, port=args.port)
