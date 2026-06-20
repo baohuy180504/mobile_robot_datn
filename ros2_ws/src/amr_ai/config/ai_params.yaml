@@ -83,13 +83,13 @@ person_tracker_node:
     enable_ppe_check: true
     ppe_model_path: "models/ppe_s.engine"
     ppe_imgsz: 512
-    ppe_conf: 0.10
+    ppe_conf: 0.15
     ppe_iou: 0.50
     ppe_helmet_ok_conf: 0.15
-    ppe_vest_ok_conf: 0.20
+    ppe_vest_ok_conf: 0.40
     ppe_run_interval: 10
-    ppe_confirm_frames: 2
-    ppe_clear_frames: 4
+    ppe_confirm_frames: 5
+    ppe_clear_frames: 2
 
     follow_detecting_timeout_s: 30.0
 

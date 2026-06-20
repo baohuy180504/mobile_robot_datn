@@ -5,7 +5,7 @@ from amr_ai.core import config as cfg
 def get_cfg(name, default):
     return getattr(cfg, name, default)
 
-
+ 
 class PPEDetector:
     def __init__(
         self,
@@ -21,18 +21,24 @@ class PPEDetector:
         self.infer_device = infer_device if infer_device is not None else get_cfg("PPE_INFER_DEVICE", 0)
 
         self.imgsz = imgsz if imgsz is not None else get_cfg("PPE_IMGSZ", 512)
-        self.conf = conf if conf is not None else get_cfg("PPE_CONF", 0.12)
+        self.conf = conf if conf is not None else get_cfg("PPE_CONF", 0.10)
         self.iou = iou if iou is not None else get_cfg("PPE_IOU", 0.50)
 
-        self.helmet_ok_conf = helmet_ok_conf if helmet_ok_conf is not None else get_cfg("PPE_HELMET_OK_CONF", 0.18)
-        self.vest_ok_conf = vest_ok_conf if vest_ok_conf is not None else get_cfg("PPE_VEST_OK_CONF", 0.45)
+        self.helmet_ok_conf = helmet_ok_conf if helmet_ok_conf is not None else get_cfg("PPE_HELMET_OK_CONF", 0.15)
+        self.vest_ok_conf = vest_ok_conf if vest_ok_conf is not None else get_cfg("PPE_VEST_OK_CONF", 0.20)
+
+        # Bat tam de chan doan: in ra vi tri (%) + diem tin cay cua tung
+        # khung helmet/no_helmet model phat hien duoc, cung voi viec no co
+        # pass vung hinh hoc hay khong. Tat mac dinh de khong spam log
+        # luc van hanh binh thuong.
+        self.debug_geometry = bool(get_cfg("PPE_DEBUG_GEOMETRY", False))
 
         self.model = YOLO(self.model_path, task="detect")
 
-        print("[PPE] model path:", self.model_path)
-        print("[PPE] imgsz:", self.imgsz)
-        print("[PPE] conf:", self.conf)
-        print("[PPE] names:", self.model.names)
+        print("[PPE] model path:", self.model_path, flush=True)
+        print("[PPE] imgsz:", self.imgsz, flush=True)
+        print("[PPE] conf:", self.conf, flush=True)
+        print("[PPE] names:", self.model.names, flush=True)
 
     def _normalize_name(self, raw_name):
         return str(raw_name).lower().replace("_", "-").replace(" ", "-")
@@ -182,6 +188,16 @@ class PPEDetector:
         head_x_margin = get_cfg("PPE_HEAD_X_MARGIN_RATIO", 0.10)
         head_y2_ratio = get_cfg("PPE_HEAD_Y2_RATIO", 0.42)
 
+        # Khi nguoi cui dau xuong (vd nhin xuong, cui nhat do vat, lam
+        # viec ban thap), mu bao hiem van dang doi nhung vi tri trong anh
+        # tut xuong thap hon vung head_region co dinh phia tren, khien
+        # helmet THAT bi _center_inside() loai bo oan -> bao nham "MISSING
+        # HELMET". Dung mot vung RONG HON chi de CHAP NHAN phat hien
+        # "helmet" (positive), trong khi "no_helmet" (bao dong thieu) van
+        # giu vung CHAT nhu cu - tranh lam yeu kha nang bat loi that su
+        # khi dung thang binh thuong ma khong doi mu.
+        head_y2_ratio_helmet_accept = get_cfg("PPE_HEAD_Y2_RATIO_HELMET_ACCEPT", 0.60)
+
         torso_x_margin = get_cfg("PPE_TORSO_X_MARGIN_RATIO", 0.10)
         torso_y1_ratio = get_cfg("PPE_TORSO_Y1_RATIO", 0.22)
         torso_y2_ratio = get_cfg("PPE_TORSO_Y2_RATIO", 0.90)
@@ -191,6 +207,13 @@ class PPEDetector:
             py1,
             px2 - int(person_w * head_x_margin),
             py1 + int(person_h * head_y2_ratio)
+        )
+
+        head_region_helmet_accept = (
+            px1 + int(person_w * head_x_margin),
+            py1,
+            px2 - int(person_w * head_x_margin),
+            py1 + int(person_h * head_y2_ratio_helmet_accept)
         )
 
         torso_region = (
@@ -223,11 +246,35 @@ class PPEDetector:
             item_area = item_w * item_h
 
             if item_type == "helmet":
-                if self._center_inside(item_box, head_region):
+                passes_accept = self._center_inside(item_box, head_region_helmet_accept)
+
+                if self.debug_geometry:
+                    cy_ratio = ((iy1 + iy2) / 2 - py1) / float(person_h)
+                    print(
+                        f"[PPE_DEBUG] helmet conf={score:.2f} "
+                        f"y_center_ratio={cy_ratio:.2f} "
+                        f"(vung chap nhan toi {head_y2_ratio_helmet_accept:.2f}) "
+                        f"pass={passes_accept}",
+                        flush=True
+                    )
+
+                if passes_accept:
                     helmet_score = max(helmet_score, score)
 
             elif item_type == "no_helmet":
-                if self._center_inside(item_box, head_region):
+                passes_strict = self._center_inside(item_box, head_region)
+
+                if self.debug_geometry:
+                    cy_ratio = ((iy1 + iy2) / 2 - py1) / float(person_h)
+                    print(
+                        f"[PPE_DEBUG] no_helmet conf={score:.2f} "
+                        f"y_center_ratio={cy_ratio:.2f} "
+                        f"(vung chat toi {head_y2_ratio:.2f}) "
+                        f"pass={passes_strict}",
+                        flush=True
+                    )
+
+                if passes_strict:
                     no_helmet_score = max(no_helmet_score, score)
 
             elif item_type == "vest":
@@ -247,6 +294,18 @@ class PPEDetector:
 
                 if ratio >= no_vest_inter_ratio:
                     no_vest_score = max(no_vest_score, score)
+
+        if self.debug_geometry:
+            helmet_like_count = sum(
+                1 for it in ppe_items if it["class_name"] in ("helmet", "no_helmet")
+            )
+            if helmet_like_count == 0:
+                print(
+                    "[PPE_DEBUG] Model KHONG detect ra khung helmet/no_helmet "
+                    "nao ca trong frame nay (gioi han model, khong phai loi "
+                    "vung hinh hoc).",
+                    flush=True
+                )
 
         vest_margin_score = get_cfg("PPE_VEST_MARGIN_SCORE", 0.08)
 
@@ -329,7 +388,7 @@ class TargetPPEMonitor:
         else:
             self.detector = None
 
-        self.run_interval = run_interval if run_interval is not None else get_cfg("PPE_RUN_INTERVAL", 25)
+        self.run_interval = run_interval if run_interval is not None else get_cfg("PPE_RUN_INTERVAL", 10)
         self.confirm_frames = confirm_frames if confirm_frames is not None else get_cfg("PPE_CONFIRM_FRAMES", 2)
         self.clear_frames = clear_frames if clear_frames is not None else get_cfg("PPE_CLEAR_FRAMES", 4)
 
@@ -506,6 +565,6 @@ class TargetPPEMonitor:
             return self._make_result("PPE OK")
 
         except Exception as exc:
-            print("[PPE ERROR]", exc)
+            print("[PPE ERROR]", exc, flush=True)
             self._attach_to_target(selected_target)
             return self._make_result("PPE error")

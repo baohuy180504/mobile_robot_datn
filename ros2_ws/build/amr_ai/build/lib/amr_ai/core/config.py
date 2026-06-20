@@ -160,15 +160,15 @@ PPE_MODEL_PATH = "models/ppe_s.engine"
 PPE_INFER_DEVICE = 0
 
 PPE_IMGSZ = 512
-PPE_CONF = 0.12
+PPE_CONF = 0.15
 PPE_IOU = 0.40
 
-PPE_HELMET_OK_CONF = 0.18
-PPE_VEST_OK_CONF = 0.45
+PPE_HELMET_OK_CONF = 0.15
+PPE_VEST_OK_CONF = 0.40
 
 PPE_RUN_INTERVAL = 25
 PPE_CONFIRM_FRAMES = 2
-PPE_CLEAR_FRAMES = 4
+PPE_CLEAR_FRAMES = 2
 
 PPE_EDGE_MARGIN = 12
 PPE_MIN_TARGET_H_RATIO = 0.18
@@ -177,14 +177,26 @@ PPE_PAD_RATIO = 0.08
 PPE_HEAD_X_MARGIN_RATIO = 0.10
 PPE_HEAD_Y2_RATIO = 0.42
 
+# Vung RONG HON chi danh rieng cho viec CHAP NHAN phat hien "helmet"
+# (khong dung cho "no_helmet") - giup khong bao nham MISSING HELMET khi
+# nguoi cui dau xuong lam mu tut thap hon vung PPE_HEAD_Y2_RATIO co dinh.
+# Tang gia tri nay (vd 0.70) neu van con bao nham luc cui sau hon.
+PPE_HEAD_Y2_RATIO_HELMET_ACCEPT = 0.60
+
+# Bat de chan doan: in ra terminal vi tri (%) + diem tin cay tung khung
+# helmet/no_helmet model phat hien duoc trong moi frame, cung voi viec no
+# co pass vung hinh hoc hay khong. Tat (False) khi van hanh binh thuong
+# de khong spam log.
+PPE_DEBUG_GEOMETRY = True
+
 PPE_TORSO_X_MARGIN_RATIO = 0.10
 PPE_TORSO_Y1_RATIO = 0.22
 PPE_TORSO_Y2_RATIO = 0.90
 
-PPE_VEST_INTER_RATIO = 0.45
-PPE_NO_VEST_INTER_RATIO = 0.35
+PPE_VEST_INTER_RATIO = 0.52
+PPE_NO_VEST_INTER_RATIO = 0.45
 
-PPE_VEST_MIN_AREA_RATIO = 0.035
-PPE_VEST_MIN_H_RATIO = 0.16
-PPE_VEST_MIN_W_RATIO = 0.20
+PPE_VEST_MIN_AREA_RATIO = 0.050
+PPE_VEST_MIN_H_RATIO = 0.22
+PPE_VEST_MIN_W_RATIO = 0.28
 PPE_VEST_MARGIN_SCORE = 0.08

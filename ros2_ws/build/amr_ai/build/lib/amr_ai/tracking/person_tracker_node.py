@@ -68,7 +68,10 @@ class PersonTrackerNode(Node):
     - Publish ảnh debug:
         + /amr_ai/debug/person_tracker/image
         + khung xám: người detect được
-        + khung xanh: target đang bám.
+        + khung xanh: target đang bám VÀ đã đủ bảo hộ (PPE OK)
+        + khung đỏ + chữ "THIEU BAO HO" góc trái: target đang bám
+          nhưng chưa/không đủ bảo hộ (áp dụng cả lúc đang chờ mở khóa
+          follow lẫn lúc đang follow mà PPE bị mất giữa chừng).
     """
 
     def __init__(self):
@@ -466,9 +469,28 @@ class PersonTrackerNode(Node):
         )
 
         ppe_result = None
+        # ppe_ready: dung NGHIEM NGAT cho viec mo khoa follow (giu nguyen
+        # logic cu, khong doi) - yeu cau is_confirmed_ok() (du clear_frames
+        # lan OK lien tiep). Mac dinh True khi khong bat PPE check hoac
+        # chua co target.
+        ppe_ready = True
+
+        # ppe_box_alarm: dung RIENG cho mau khung + chu canh bao debug
+        # image - dong bo voi alarm_active that su (sau du confirm_frames
+        # lan vi pham lien tiep, dung luc canh bao that duoc gui ESP32).
+        # Truoc day dung chung voi ppe_ready (is_confirmed_ok() tra ve
+        # False ngay tu lan vi pham DAU TIEN, chua can du confirm_frames),
+        # khien khung do/chu do hien SOM HON luc canh bao that duoc gui -
+        # khong hop ly khi confirm_frames duoc tang len (vd 5) de chiu
+        # duoc cui dau thoang qua.
+        ppe_box_alarm = False
+
         if self.enable_ppe_check and self.ppe_monitor is not None and selected_target is not None:
             ppe_result = self.ppe_monitor.update(frame, selected_target)
             self.publish_ppe_alert(stamp, ppe_result)
+
+            ppe_ready = self.ppe_monitor.is_confirmed_ok()
+            ppe_box_alarm = self.ppe_monitor.alarm_active
 
             target_id = selected_target.get('id')
             self.log_info_throttle(
@@ -491,12 +513,6 @@ class PersonTrackerNode(Node):
                 self.current_mode == AiMode.FOLLOW_DETECTING
                 and not self.target_locked_reported
             ):
-                ppe_ready = (
-                    not self.enable_ppe_check
-                    or self.ppe_monitor is None
-                    or self.ppe_monitor.is_confirmed_ok()
-                )
-
                 if ppe_ready:
                     self.request_follow_active()
                 else:
@@ -527,7 +543,7 @@ class PersonTrackerNode(Node):
                 f'Target lost. lost_duration={lost_duration:.1f}s'
             )
 
-        self.publish_debug_image(frame, detections, selected_target, stamp)
+        self.publish_debug_image(frame, detections, selected_target, stamp, not ppe_box_alarm)
 
     def run_detection(self, frame, center_x, center_y):
         detections = []
@@ -626,7 +642,7 @@ class PersonTrackerNode(Node):
     # ==========================================================
     # Debug image
     # ==========================================================
-    def publish_debug_image(self, frame, detections, selected_target, stamp):
+    def publish_debug_image(self, frame, detections, selected_target, stamp, ppe_box_ok=True):
         if not self.enable_debug_image:
             return
 
@@ -666,6 +682,13 @@ class PersonTrackerNode(Node):
             )
 
         # Vẽ target đang bám.
+        # Khung XANH/ĐỎ dong bo voi alarm_active THAT (sau du
+        # ppe_confirm_frames lan vi pham lien tiep) - dung luc canh bao
+        # that duoc gui ESP32, KHONG dong bo voi ppe_ready (nghiem ngat
+        # hon, dung rieng de mo khoa follow). Truoc day dung chung 1 bien,
+        # khien khung do/chu do hien SOM HON luc canh bao that duoc gui -
+        # dac biet ro khi tang ppe_confirm_frames len de chiu cui dau
+        # thoang qua.
         if selected_target is not None:
             box = selected_target.get("box", None)
 
@@ -674,8 +697,12 @@ class PersonTrackerNode(Node):
                 tid = int(selected_target.get("id", -1))
                 conf = float(selected_target.get("conf", 0.0))
 
-                color = (0, 255, 0)
-                label = f"FOLLOW TARGET ID {tid} {conf:.2f}"
+                if ppe_box_ok:
+                    color = (0, 255, 0)
+                    label = f"FOLLOW TARGET ID {tid} {conf:.2f}"
+                else:
+                    color = (0, 0, 255)
+                    label = f"ID {tid} {conf:.2f} - THIEU BAO HO"
 
                 cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 3)
                 cv2.putText(
@@ -691,6 +718,17 @@ class PersonTrackerNode(Node):
                 cx = int((x1 + x2) / 2)
                 cy = int((y1 + y2) / 2)
                 cv2.circle(annotated, (cx, cy), 5, color, -1)
+
+                if not ppe_box_ok:
+                    cv2.putText(
+                        annotated,
+                        'THIEU BAO HO',
+                        (20, 35),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.9,
+                        (0, 0, 255),
+                        3
+                    )
 
         # Vẽ tâm ảnh camera.
         h, w = annotated.shape[:2]
