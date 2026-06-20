@@ -1,4 +1,1 @@
-
-bool accepted
-string message
-geometry_msgs/PoseStamped goal
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_cmake/srv/SelectZone_Response.msg

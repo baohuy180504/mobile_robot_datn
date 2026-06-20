@@ -82,12 +82,12 @@ class AiDetectorNode(Node):
         self.declare_parameter('suppress_fire_smoke_in_follow', True)
         self.declare_parameter('suppress_fall_in_follow', True)
 
-        self.declare_parameter('fire_smoke_run_interval', 5)
+        self.declare_parameter('fire_smoke_run_interval', 8)
         self.declare_parameter('fire_alert_hold_sec', 2.0)
         self.declare_parameter('smoke_alert_hold_sec', 2.0)
 
-        self.declare_parameter('fire_conf', 0.5)
-        self.declare_parameter('smoke_conf', 0.8)
+        self.declare_parameter('fire_conf', 0.90)
+        self.declare_parameter('smoke_conf', 0.90)
         self.declare_parameter('fire_smoke_imgsz', 640)
 
         self.declare_parameter('alert_topic', '/amr_ai/alert')

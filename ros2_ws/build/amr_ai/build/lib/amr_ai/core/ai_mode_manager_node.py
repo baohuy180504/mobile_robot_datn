@@ -15,7 +15,7 @@ from action_msgs.msg import GoalStatus
 from geometry_msgs.msg import PoseStamped
 from nav2_msgs.action import NavigateToPose
 
-from amr_interfaces.msg import AiMode
+from amr_interfaces.msg import AiMode, AiAlert
 from amr_interfaces.srv import SetAiMode, SelectZone
 
 
@@ -44,6 +44,8 @@ class AiModeManager(Node):
         # =========================
         self.declare_parameter('frame_id', 'map')
         self.declare_parameter('runtime_waypoints_file', '~/mobile_robot/ros2_ws/config/waypoints_runtime.json')
+        self.declare_parameter('alert_topic', '/amr_ai/alert')
+        self.declare_parameter('alert_stop_types', ['FALL', 'FIRE', 'SMOKE'])
 
         # Waypoint A
         self.declare_parameter('A.x', 1.5)
@@ -61,6 +63,11 @@ class AiModeManager(Node):
         self.declare_parameter('H.yaw', 0.0)
 
         self.frame_id = self.get_parameter('frame_id').value
+        self.alert_topic = self.get_parameter('alert_topic').value
+        self.alert_stop_types = {
+            str(t).strip().upper()
+            for t in self.get_parameter('alert_stop_types').value
+        }
 
         self.fallback_waypoints = {
             'A': (
@@ -107,6 +114,13 @@ class AiModeManager(Node):
             self.handle_select_zone
         )
 
+        self.alert_sub = self.create_subscription(
+            AiAlert,
+            self.alert_topic,
+            self.alert_callback,
+            10
+        )
+
         self.nav_client = ActionClient(
             self,
             NavigateToPose,
@@ -117,6 +131,9 @@ class AiModeManager(Node):
 
         self.get_logger().info('AI Mode Manager started')
         self.get_logger().info(f'Runtime waypoint file: {self.runtime_waypoints_file}')
+        self.get_logger().info(
+            f'Alert topic: {self.alert_topic} | stop on: {sorted(self.alert_stop_types)}'
+        )
         self.publish_mode()
 
     # ==========================================================
@@ -131,6 +148,7 @@ class AiModeManager(Node):
             AiMode.FOLLOW_STOPPED: 'FOLLOW_STOPPED',
             AiMode.RETURN_TO_ZONE: 'RETURN_TO_ZONE',
             AiMode.EMERGENCY_STOP: 'EMERGENCY_STOP',
+            AiMode.ALERT_STOPPED: 'ALERT_STOPPED',
         }
         return names.get(mode, f'UNKNOWN_{mode}')
 
@@ -326,6 +344,7 @@ class AiModeManager(Node):
             AiMode.FOLLOW_ACTIVE,
             AiMode.FOLLOW_STOPPED,
             AiMode.EMERGENCY_STOP,
+            AiMode.ALERT_STOPPED,
         ]:
             self.set_mode(requested_mode, f'Set directly by service command={command}')
             response.success = True
@@ -595,6 +614,47 @@ class AiModeManager(Node):
 
         self.current_goal_handle = None
         self.current_zone = None
+
+    # ==========================================================
+    # AI alert (té ngã / lửa / khói) trong lúc đang chạy Nav2
+    # ==========================================================
+    def alert_callback(self, msg: AiAlert):
+        """
+        Chỉ can thiệp khi: alert dang active, alert_type nam trong
+        alert_stop_types (mac dinh FALL/FIRE/SMOKE), VA dang o
+        NAV_TO_ZONE/RETURN_TO_ZONE. Dieu kien "dang o NAV_TO_ZONE/
+        RETURN_TO_ZONE" tu nhien chong lap goi lien tuc: sau khi da
+        chuyen sang ALERT_STOPPED, cac alert active tiep theo (van duoc
+        ai_detector_node publish lien tuc moi frame trong luc con active)
+        se khong con khop dieu kien nay nua nen khong goi set_mode lap lai.
+
+        Khong dung lai EMERGENCY_STOP de giu nguyen y nghia "dung khan
+        cap do nguoi van hanh chu dong bam" - ALERT_STOPPED la mode rieng,
+        cho phep chon waypoint moi de chay tiep ngay (giong pattern
+        FOLLOW_STOPPED da co), khong can lenh "clear emergency" rieng.
+        """
+        if not bool(msg.active):
+            return
+
+        alert_type = str(msg.alert_type).strip().upper()
+        if alert_type not in self.alert_stop_types:
+            return
+
+        if self.current_mode not in [AiMode.NAV_TO_ZONE, AiMode.RETURN_TO_ZONE]:
+            return
+
+        previous_mode_name = self.mode_name(self.current_mode)
+
+        self.get_logger().warn(
+            f'AI alert {alert_type} nhan duoc trong luc {previous_mode_name} - '
+            f'dung xe tai vi tri hien tai va xoa goal Nav2.'
+        )
+
+        self.cancel_current_nav_goal()
+        self.set_mode(
+            AiMode.ALERT_STOPPED,
+            f'Stopped due to {alert_type} alert during {previous_mode_name}'
+        )
 
 
 def main(args=None):

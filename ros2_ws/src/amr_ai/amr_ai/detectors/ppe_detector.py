@@ -5,7 +5,7 @@ from amr_ai.core import config as cfg
 def get_cfg(name, default):
     return getattr(cfg, name, default)
 
-
+ 
 class PPEDetector:
     def __init__(
         self,
@@ -21,11 +21,11 @@ class PPEDetector:
         self.infer_device = infer_device if infer_device is not None else get_cfg("PPE_INFER_DEVICE", 0)
 
         self.imgsz = imgsz if imgsz is not None else get_cfg("PPE_IMGSZ", 512)
-        self.conf = conf if conf is not None else get_cfg("PPE_CONF", 0.12)
+        self.conf = conf if conf is not None else get_cfg("PPE_CONF", 0.10)
         self.iou = iou if iou is not None else get_cfg("PPE_IOU", 0.50)
 
-        self.helmet_ok_conf = helmet_ok_conf if helmet_ok_conf is not None else get_cfg("PPE_HELMET_OK_CONF", 0.18)
-        self.vest_ok_conf = vest_ok_conf if vest_ok_conf is not None else get_cfg("PPE_VEST_OK_CONF", 0.45)
+        self.helmet_ok_conf = helmet_ok_conf if helmet_ok_conf is not None else get_cfg("PPE_HELMET_OK_CONF", 0.15)
+        self.vest_ok_conf = vest_ok_conf if vest_ok_conf is not None else get_cfg("PPE_VEST_OK_CONF", 0.20)
 
         self.model = YOLO(self.model_path, task="detect")
 
@@ -329,7 +329,7 @@ class TargetPPEMonitor:
         else:
             self.detector = None
 
-        self.run_interval = run_interval if run_interval is not None else get_cfg("PPE_RUN_INTERVAL", 25)
+        self.run_interval = run_interval if run_interval is not None else get_cfg("PPE_RUN_INTERVAL", 10)
         self.confirm_frames = confirm_frames if confirm_frames is not None else get_cfg("PPE_CONFIRM_FRAMES", 2)
         self.clear_frames = clear_frames if clear_frames is not None else get_cfg("PPE_CLEAR_FRAMES", 4)
 

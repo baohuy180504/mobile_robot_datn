@@ -65,6 +65,12 @@ enum
   amr_interfaces__msg__AiMode__LOCALIZING = 7
 };
 
+/// Constant 'ALERT_STOPPED'.
+enum
+{
+  amr_interfaces__msg__AiMode__ALERT_STOPPED = 8
+};
+
 // Include directives for member types
 // Member 'stamp'
 #include "builtin_interfaces/msg/detail/time__struct.h"

@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_generator_py/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so" "TARGETS" "amr_interfaces__rosidl_typesupport_c__pyext" "DESTINATION" "lib/python3.10/site-packages/amr_interfaces")

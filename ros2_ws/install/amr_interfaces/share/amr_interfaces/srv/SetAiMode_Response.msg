@@ -1,4 +1,1 @@
-
-bool success
-string message
-uint8 current_mode
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_cmake/srv/SetAiMode_Response.msg

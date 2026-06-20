@@ -173,7 +173,7 @@ rosidl_typesupport_cpp/amr_interfaces/msg/ai_alert__type_support.cpp: /opt/ros/h
 rosidl_typesupport_cpp/amr_interfaces/msg/ai_alert__type_support.cpp: /opt/ros/humble/share/sensor_msgs/msg/TimeReference.idl
 rosidl_typesupport_cpp/amr_interfaces/msg/ai_alert__type_support.cpp: /opt/ros/humble/share/sensor_msgs/srv/SetCameraInfo.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ type support dispatch for ROS interfaces"
-	/usr/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_cpp/rosidl_typesupport_cpp --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_typesupport_cpp__arguments.json --typesupports rosidl_typesupport_fastrtps_cpp rosidl_typesupport_introspection_cpp
+	/home/huyjetson/mobile_robot/ai_ros_venv/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_cpp/rosidl_typesupport_cpp --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_typesupport_cpp__arguments.json --typesupports rosidl_typesupport_fastrtps_cpp rosidl_typesupport_introspection_cpp
 
 rosidl_typesupport_cpp/amr_interfaces/msg/ai_mode__type_support.cpp: rosidl_typesupport_cpp/amr_interfaces/msg/ai_alert__type_support.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_cpp/amr_interfaces/msg/ai_mode__type_support.cpp

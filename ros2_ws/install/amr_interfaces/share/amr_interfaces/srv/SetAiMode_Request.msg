@@ -1,2 +1,1 @@
-uint8 mode
-string command
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_cmake/srv/SetAiMode_Request.msg

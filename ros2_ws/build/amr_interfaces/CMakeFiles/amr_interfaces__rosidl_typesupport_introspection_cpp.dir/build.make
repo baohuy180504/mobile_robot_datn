@@ -175,7 +175,7 @@ rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_alert__rosidl_
 rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_introspection_cpp.hpp: /opt/ros/humble/share/sensor_msgs/msg/TimeReference.idl
 rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_introspection_cpp.hpp: /opt/ros/humble/share/sensor_msgs/srv/SetCameraInfo.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ introspection for ROS interfaces"
-	/usr/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_introspection_cpp/rosidl_typesupport_introspection_cpp --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_typesupport_introspection_cpp__arguments.json
+	/home/huyjetson/mobile_robot/ai_ros_venv/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_introspection_cpp/rosidl_typesupport_introspection_cpp --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_typesupport_introspection_cpp__arguments.json
 
 rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_introspection_cpp.hpp: rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_introspection_cpp.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_introspection_cpp.hpp

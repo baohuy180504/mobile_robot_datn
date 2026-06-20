@@ -206,7 +206,7 @@ rosidl_generator_cpp/amr_interfaces/msg/ai_alert.hpp: /opt/ros/humble/share/sens
 rosidl_generator_cpp/amr_interfaces/msg/ai_alert.hpp: /opt/ros/humble/share/sensor_msgs/msg/TimeReference.idl
 rosidl_generator_cpp/amr_interfaces/msg/ai_alert.hpp: /opt/ros/humble/share/sensor_msgs/srv/SetCameraInfo.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
-	/usr/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_generator_cpp__arguments.json
+	/home/huyjetson/mobile_robot/ai_ros_venv/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_generator_cpp__arguments.json
 
 rosidl_generator_cpp/amr_interfaces/msg/detail/ai_alert__builder.hpp: rosidl_generator_cpp/amr_interfaces/msg/ai_alert.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/amr_interfaces/msg/detail/ai_alert__builder.hpp

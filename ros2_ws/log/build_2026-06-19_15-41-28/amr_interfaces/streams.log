@@ -1,0 +1,313 @@
+[0.019s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces -- -j6 -l6
+[0.070s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.343s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.377s] -- Found rosidl_default_generators: 1.2.1 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[0.391s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.400s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.463s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.508s] -- Found std_msgs: 4.9.1 (/opt/ros/humble/share/std_msgs/cmake)
+[0.545s] -- Found geometry_msgs: 4.9.1 (/opt/ros/humble/share/geometry_msgs/cmake)
+[0.564s] -- Found sensor_msgs: 4.9.1 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.328s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[1.974s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.864s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.939s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[3.014s] -- Using PYTHON_EXECUTABLE: /home/huyjetson/mobile_robot/ai_ros_venv/bin/python3
+[3.014s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[3.014s] -- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.10.so
+[3.362s] -- Configuring done
+[3.464s] -- Generating done
+[3.488s] -- Build files have been written to: /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces
+[3.551s] [  1%] [34m[1mGenerating C code for ROS interfaces[0m
+[3.569s] [  3%] [34m[1mGenerating Rust code for ROS interfaces[0m
+[3.578s] [  4%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[3.589s] [  4%] Built target ament_cmake_python_symlink_amr_interfaces
+[4.137s] running egg_info
+[4.138s] writing amr_interfaces.egg-info/PKG-INFO
+[4.138s] writing dependency_links to amr_interfaces.egg-info/dependency_links.txt
+[4.139s] writing top-level names to amr_interfaces.egg-info/top_level.txt
+[4.144s] reading manifest file 'amr_interfaces.egg-info/SOURCES.txt'
+[4.145s] writing manifest file 'amr_interfaces.egg-info/SOURCES.txt'
+[4.216s] [  4%] Built target ament_cmake_python_build_amr_interfaces_egg
+[4.329s] [  4%] Built target amr_interfaces__rs
+[4.775s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_generator_c[0m
+[4.796s] [  4%] Built target amr_interfaces__cpp
+[4.805s] [ 10%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/msg/detail/person_target__functions.c.o[0m
+[4.805s] [ 10%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/srv/detail/set_ai_mode__functions.c.o[0m
+[4.805s] [ 10%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/msg/detail/ai_mode__functions.c.o[0m
+[4.805s] [ 10%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/msg/detail/ai_alert__functions.c.o[0m
+[4.808s] [ 12%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_c.dir/rosidl_generator_c/amr_interfaces/srv/detail/select_zone__functions.c.o[0m
+[4.819s] [ 14%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[4.977s] [ 15%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[5.033s] [ 17%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[5.075s] [ 18%] [32m[1mLinking C shared library libamr_interfaces__rosidl_generator_c.so[0m
+[5.153s] [ 18%] Built target amr_interfaces__rosidl_generator_c
+[5.175s] [ 23%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[5.175s] [ 23%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[5.175s] [ 23%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[5.903s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_cpp[0m
+[5.935s] [ 25%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/msg/ai_alert__type_support.cpp.o[0m
+[5.953s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_fastrtps_cpp[0m
+[6.004s] [ 26%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/msg/detail/dds_fastrtps/ai_alert__type_support.cpp.o[0m
+[6.006s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_introspection_cpp[0m
+[6.027s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_c[0m
+[6.039s] [ 28%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_alert__type_support.cpp.o[0m
+[6.075s] [ 29%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/msg/ai_alert__type_support.cpp.o[0m
+[6.151s] [ 31%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/msg/ai_mode__type_support.cpp.o[0m
+[6.217s] [ 32%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/msg/person_target__type_support.cpp.o[0m
+[6.269s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_introspection_c[0m
+[6.283s] [ 34%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/srv/set_ai_mode__type_support.cpp.o[0m
+[6.314s] [ 35%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/msg/detail/ai_alert__type_support.c.o[0m
+[6.342s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_fastrtps_c[0m
+[6.349s] [ 37%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/amr_interfaces/srv/select_zone__type_support.cpp.o[0m
+[6.388s] [ 39%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__type_support_c.cpp.o[0m
+[6.402s] [ 40%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/msg/detail/ai_mode__type_support.c.o[0m
+[6.427s] [ 42%] [32m[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_c.so[0m
+[6.494s] [ 43%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/msg/detail/person_target__type_support.c.o[0m
+[6.519s] [ 43%] Built target amr_interfaces__rosidl_typesupport_c
+[6.533s] [ 45%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/msg/ai_mode__type_support.cpp.o[0m
+[6.538s] [ 46%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_mode__type_support_c.cpp.o[0m
+[6.578s] [ 48%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/srv/detail/set_ai_mode__type_support.c.o[0m
+[6.654s] [ 50%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/amr_interfaces/srv/detail/select_zone__type_support.c.o[0m
+[6.738s] [ 51%] [32m[1mLinking C shared library libamr_interfaces__rosidl_typesupport_introspection_c.so[0m
+[6.815s] [ 53%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/msg/detail/dds_fastrtps/ai_mode__type_support.cpp.o[0m
+[6.819s] [ 53%] Built target amr_interfaces__rosidl_typesupport_introspection_c
+[6.837s] [ 54%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/ai_mode__type_support.cpp.o[0m
+[6.854s] [ 56%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/person_target__type_support_c.cpp.o[0m
+[7.132s] [ 57%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/msg/person_target__type_support.cpp.o[0m
+[7.160s] [ 59%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/srv/detail/set_ai_mode__type_support_c.cpp.o[0m
+[7.273s] [ 60%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/srv/set_ai_mode__type_support.cpp.o[0m
+[7.615s] [ 62%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/amr_interfaces/srv/select_zone__type_support.cpp.o[0m
+[7.616s] [ 64%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/msg/detail/dds_fastrtps/person_target__type_support.cpp.o[0m
+[7.634s] [ 65%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/msg/detail/person_target__type_support.cpp.o[0m
+[7.720s] [ 67%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/srv/detail/set_ai_mode__type_support.cpp.o[0m
+[7.843s] [ 68%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/srv/detail/dds_fastrtps/set_ai_mode__type_support.cpp.o[0m
+[7.916s] [ 70%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/amr_interfaces/srv/detail/select_zone__type_support_c.cpp.o[0m
+[8.164s] [ 71%] [32m[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_cpp.so[0m
+[8.243s] [ 71%] Built target amr_interfaces__rosidl_typesupport_cpp
+[8.262s] [ 73%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/amr_interfaces/srv/detail/select_zone__type_support.cpp.o[0m
+[8.411s] [ 75%] [32mBuilding CXX object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/amr_interfaces/srv/detail/dds_fastrtps/select_zone__type_support.cpp.o[0m
+[8.662s] [ 76%] [32m[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_fastrtps_c.so[0m
+[8.812s] [ 76%] Built target amr_interfaces__rosidl_typesupport_fastrtps_c
+[9.049s] [ 78%] [32m[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_introspection_cpp.so[0m
+[9.181s] [ 78%] Built target amr_interfaces__rosidl_typesupport_introspection_cpp
+[9.243s] [ 79%] [32m[1mLinking CXX shared library libamr_interfaces__rosidl_typesupport_fastrtps_cpp.so[0m
+[9.413s] [ 79%] Built target amr_interfaces__rosidl_typesupport_fastrtps_cpp
+[9.473s] [ 79%] Built target amr_interfaces
+[9.527s] [ 81%] [34m[1mGenerating Python code for ROS interfaces[0m
+[11.315s] [ 81%] Built target amr_interfaces__py
+[11.348s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_generator_py[0m
+[11.385s] [ 85%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/msg/_ai_mode_s.c.o[0m
+[11.385s] [ 87%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/msg/_ai_alert_s.c.o[0m
+[11.385s] [ 87%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/srv/_set_ai_mode_s.c.o[0m
+[11.387s] [ 87%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/msg/_person_target_s.c.o[0m
+[11.388s] [ 89%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_generator_py.dir/rosidl_generator_py/amr_interfaces/srv/_select_zone_s.c.o[0m
+[11.613s] [ 90%] [32m[1mLinking C shared library rosidl_generator_py/amr_interfaces/libamr_interfaces__rosidl_generator_py.so[0m
+[11.713s] [ 90%] Built target amr_interfaces__rosidl_generator_py
+[11.736s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_fastrtps_c__pyext[0m
+[11.737s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_introspection_c__pyext[0m
+[11.737s] [35m[1mConsolidate compiler generated dependencies of target amr_interfaces__rosidl_typesupport_c__pyext[0m
+[11.768s] [ 95%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[11.768s] [ 95%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[11.768s] [ 95%] [32mBuilding C object CMakeFiles/amr_interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_c.c.o[0m
+[12.003s] [100%] [32m[1mLinking C shared library rosidl_generator_py/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so[0m
+[12.004s] [100%] [32m[1mLinking C shared library rosidl_generator_py/amr_interfaces/amr_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so[0m
+[12.004s] [100%] [32m[1mLinking C shared library rosidl_generator_py/amr_interfaces/amr_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so[0m
+[12.122s] [100%] Built target amr_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[12.123s] [100%] Built target amr_interfaces__rosidl_typesupport_introspection_c__pyext
+[12.123s] [100%] Built target amr_interfaces__rosidl_typesupport_c__pyext
+[12.137s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces -- -j6 -l6
+[12.173s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces
+[12.205s] -- Install configuration: ""
+[12.206s] -- Execute custom install script
+[12.207s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/rosidl_interfaces/amr_interfaces
+[12.208s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_alert.h
+[12.208s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_mode.h
+[12.209s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__functions.h
+[12.209s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__struct.h
+[12.209s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__type_support.h
+[12.210s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__functions.h
+[12.210s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__struct.h
+[12.210s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__type_support.h
+[12.210s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__functions.h
+[12.210s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__struct.h
+[12.211s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__type_support.h
+[12.211s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/person_target.h
+[12.211s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_generator_c__visibility_control.h
+[12.211s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__functions.h
+[12.212s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__struct.h
+[12.212s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__type_support.h
+[12.212s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__functions.h
+[12.212s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__struct.h
+[12.213s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__type_support.h
+[12.213s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/select_zone.h
+[12.213s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/set_ai_mode.h
+[12.213s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/library_path.sh
+[12.214s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/library_path.dsv
+[12.215s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_fastrtps_c.h
+[12.215s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_fastrtps_c.h
+[12.216s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_fastrtps_c.h
+[12.216s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[12.216s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_fastrtps_c.h
+[12.216s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_fastrtps_c.h
+[12.217s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_introspection_c.h
+[12.217s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_introspection_c.h
+[12.218s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_introspection_c.h
+[12.218s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[12.218s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_introspection_c.h
+[12.218s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_introspection_c.h
+[12.219s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_alert.hpp
+[12.220s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/ai_mode.hpp
+[12.220s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__builder.hpp
+[12.220s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__struct.hpp
+[12.220s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__traits.hpp
+[12.220s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__type_support.hpp
+[12.221s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__builder.hpp
+[12.221s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__struct.hpp
+[12.221s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__traits.hpp
+[12.221s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__type_support.hpp
+[12.222s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__builder.hpp
+[12.222s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__struct.hpp
+[12.222s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__traits.hpp
+[12.222s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__type_support.hpp
+[12.222s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/person_target.hpp
+[12.223s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
+[12.223s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__builder.hpp
+[12.223s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__struct.hpp
+[12.223s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__traits.hpp
+[12.223s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__type_support.hpp
+[12.224s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__builder.hpp
+[12.224s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__struct.hpp
+[12.224s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__traits.hpp
+[12.224s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__type_support.hpp
+[12.225s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/select_zone.hpp
+[12.225s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/set_ai_mode.hpp
+[12.226s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_fastrtps_cpp.hpp
+[12.226s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_fastrtps_cpp.hpp
+[12.226s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_fastrtps_cpp.hpp
+[12.227s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[12.227s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_fastrtps_cpp.hpp
+[12.227s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_fastrtps_cpp.hpp
+[12.228s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_introspection_cpp.hpp
+[12.228s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/ai_mode__rosidl_typesupport_introspection_cpp.hpp
+[12.228s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/msg/detail/person_target__rosidl_typesupport_introspection_cpp.hpp
+[12.228s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/select_zone__rosidl_typesupport_introspection_cpp.hpp
+[12.229s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/include/amr_interfaces/amr_interfaces/srv/detail/set_ai_mode__rosidl_typesupport_introspection_cpp.hpp
+[12.229s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/pythonpath.sh
+[12.229s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/pythonpath.dsv
+[12.230s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces-0.0.1-py3.10.egg-info/PKG-INFO
+[12.230s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces-0.0.1-py3.10.egg-info/SOURCES.txt
+[12.230s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces-0.0.1-py3.10.egg-info/dependency_links.txt
+[12.230s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces-0.0.1-py3.10.egg-info/top_level.txt
+[12.231s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/__init__.py
+[12.232s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_c.c
+[12.232s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[12.232s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/_amr_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[12.232s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so
+[12.232s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so
+[12.233s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so
+[12.233s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/libamr_interfaces__rosidl_generator_py.so
+[12.233s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/__init__.py
+[12.233s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_ai_alert.py
+[12.233s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_ai_alert_s.c
+[12.234s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_ai_mode.py
+[12.234s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_ai_mode_s.c
+[12.234s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_person_target.py
+[12.235s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_person_target_s.c
+[12.235s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/__init__.py
+[12.235s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/_select_zone.py
+[12.235s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/_select_zone_s.c
+[12.235s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/_set_ai_mode.py
+[12.236s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/_set_ai_mode_s.c
+[12.236s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so
+[12.236s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so
+[12.236s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/amr_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so
+[12.237s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/rust_packages/amr_interfaces
+[12.237s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/Cargo.toml
+[12.238s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/build.rs
+[12.238s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/lib.rs
+[12.238s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/msg.rs
+[12.238s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/msg/rmw.rs
+[12.238s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/srv.rs
+[12.239s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/rust/src/srv/rmw.rs
+[12.239s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiAlert.idl
+[12.239s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiMode.idl
+[12.239s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/PersonTarget.idl
+[12.240s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode.idl
+[12.240s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone.idl
+[12.240s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiAlert.msg
+[12.240s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/AiMode.msg
+[12.241s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/msg/PersonTarget.msg
+[12.241s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode.srv
+[12.241s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode_Request.msg
+[12.241s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SetAiMode_Response.msg
+[12.242s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone.srv
+[12.242s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone_Request.msg
+[12.242s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/srv/SelectZone_Response.msg
+[12.242s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/package_run_dependencies/amr_interfaces
+[12.243s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/parent_prefix_path/amr_interfaces
+[12.243s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/ament_prefix_path.sh
+[12.243s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/ament_prefix_path.dsv
+[12.244s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/path.sh
+[12.244s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/environment/path.dsv
+[12.244s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.bash
+[12.244s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.sh
+[12.244s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.zsh
+[12.245s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/local_setup.dsv
+[12.245s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/package.dsv
+[12.272s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/ament_index/resource_index/packages/amr_interfaces
+[12.272s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/rosidl_cmake-extras.cmake
+[12.273s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[12.273s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[12.273s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[12.274s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[12.274s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[12.274s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[12.275s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfacesConfig.cmake
+[12.275s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfacesConfig-version.cmake
+[12.275s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/package.xml
+[12.276s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_c.so
+[12.277s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_c.so" to ""
+[12.277s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_c.so
+[12.279s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_c.so" to ""
+[12.279s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_c.so
+[12.280s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_c.so" to ""
+[12.280s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_c.so
+[12.281s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_c.so" to ""
+[12.282s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[12.283s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""
+[12.283s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_cpp.so
+[12.284s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_introspection_cpp.so" to ""
+[12.285s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_cpp.so
+[12.286s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_typesupport_cpp.so" to ""
+[12.376s] Listing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces'...
+[12.376s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/__init__.py'...
+[12.376s] Listing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg'...
+[12.376s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/__init__.py'...
+[12.376s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_ai_alert.py'...
+[12.377s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_ai_mode.py'...
+[12.377s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/msg/_person_target.py'...
+[12.377s] Listing '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv'...
+[12.377s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/__init__.py'...
+[12.377s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/_select_zone.py'...
+[12.377s] Compiling '/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages/amr_interfaces/srv/_set_ai_mode.py'...
+[12.387s] -- Installing: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_py.so
+[12.388s] -- Set runtime path of "/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/libamr_interfaces__rosidl_generator_py.so" to ""
+[12.389s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_cExport.cmake
+[12.389s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_cExport-noconfig.cmake
+[12.390s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[12.390s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[12.390s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cExport.cmake
+[12.390s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[12.391s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cExport.cmake
+[12.391s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cExport-noconfig.cmake
+[12.392s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_cppExport.cmake
+[12.392s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[12.392s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[12.392s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[12.393s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[12.393s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cppExport.cmake
+[12.393s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/amr_interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+[12.393s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_pyExport.cmake
+[12.394s] -- Up-to-date: /home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/share/amr_interfaces/cmake/export_amr_interfaces__rosidl_generator_pyExport-noconfig.cmake
+[12.409s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces

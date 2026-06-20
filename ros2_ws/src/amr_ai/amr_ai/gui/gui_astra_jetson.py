@@ -37,8 +37,8 @@ FIRE_RUN_INTERVAL = 5
 FIRE_ALERT_HOLD_SEC = 2.0
 
 FIRE_IMGSZ = 640
-FIRE_CONF = 0.5
-SMOKE_CONF = 0.8
+FIRE_CONF = 0.87
+SMOKE_CONF = 0.87
 
 
 def get_nearest_track(boxes_xyxy, ids, center_x, center_y):

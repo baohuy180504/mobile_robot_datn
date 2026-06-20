@@ -175,7 +175,7 @@ rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__rosidl_typesup
 rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_fastrtps_c.h: /opt/ros/humble/share/sensor_msgs/msg/TimeReference.idl
 rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_fastrtps_c.h: /opt/ros/humble/share/sensor_msgs/srv/SetCameraInfo.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C type support for eProsima Fast-RTPS"
-	/usr/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_fastrtps_c/rosidl_typesupport_fastrtps_c --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_typesupport_fastrtps_c__arguments.json
+	/home/huyjetson/mobile_robot/ai_ros_venv/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_fastrtps_c/rosidl_typesupport_fastrtps_c --generator-arguments-file /home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_typesupport_fastrtps_c__arguments.json
 
 rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__type_support_c.cpp: rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__rosidl_typesupport_fastrtps_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/amr_interfaces/msg/detail/ai_alert__type_support_c.cpp

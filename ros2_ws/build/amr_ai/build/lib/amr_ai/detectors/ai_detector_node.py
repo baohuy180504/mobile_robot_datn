@@ -17,7 +17,7 @@ from cv_bridge import CvBridge
 from ultralytics import YOLO
 from ament_index_python.packages import get_package_share_directory
 
-from amr_interfaces.msg import AiAlert
+from amr_interfaces.msg import AiAlert, AiMode
 
 from amr_ai.core import config as cfg
 from amr_ai.core.utils import valid_box_size, center_distance_sq
@@ -78,12 +78,16 @@ class AiDetectorNode(Node):
         self.declare_parameter('enable_fall_alert', True)
         self.declare_parameter('enable_fire_smoke_alert', True)
 
-        self.declare_parameter('fire_smoke_run_interval', 5)
+        self.declare_parameter('mode_topic', '/amr_ai/mode')
+        self.declare_parameter('suppress_fire_smoke_in_follow', True)
+        self.declare_parameter('suppress_fall_in_follow', True)
+
+        self.declare_parameter('fire_smoke_run_interval', 8)
         self.declare_parameter('fire_alert_hold_sec', 2.0)
         self.declare_parameter('smoke_alert_hold_sec', 2.0)
 
-        self.declare_parameter('fire_conf', 0.5)
-        self.declare_parameter('smoke_conf', 0.8)
+        self.declare_parameter('fire_conf', 0.90)
+        self.declare_parameter('smoke_conf', 0.90)
         self.declare_parameter('fire_smoke_imgsz', 640)
 
         self.declare_parameter('alert_topic', '/amr_ai/alert')
@@ -103,6 +107,14 @@ class AiDetectorNode(Node):
 
         self.enable_fall_alert = bool(self.get_parameter('enable_fall_alert').value)
         self.enable_fire_smoke_alert = bool(self.get_parameter('enable_fire_smoke_alert').value)
+
+        self.mode_topic = self.get_parameter('mode_topic').value
+        self.suppress_fire_smoke_in_follow = bool(
+            self.get_parameter('suppress_fire_smoke_in_follow').value
+        )
+        self.suppress_fall_in_follow = bool(
+            self.get_parameter('suppress_fall_in_follow').value
+        )
 
         self.fire_smoke_run_interval = max(1, int(self.get_parameter('fire_smoke_run_interval').value))
         self.fire_alert_hold_sec = float(self.get_parameter('fire_alert_hold_sec').value)
@@ -169,6 +181,8 @@ class AiDetectorNode(Node):
         self.frame_count = 0
         self.last_depth_msg = None
 
+        self.current_mode = AiMode.IDLE
+
         self.last_fire_smoke_detections = []
         self.last_fire_time = 0.0
         self.last_smoke_time = 0.0
@@ -183,6 +197,13 @@ class AiDetectorNode(Node):
         # ======================================================
         self.alert_pub = self.create_publisher(AiAlert, self.alert_topic, 10)
         self.debug_image_pub = self.create_publisher(Image, self.debug_image_topic, 1)
+
+        self.mode_sub = self.create_subscription(
+            AiMode,
+            self.mode_topic,
+            self.mode_callback,
+            10
+        )
 
         self.color_sub = self.create_subscription(
             Image,
@@ -216,6 +237,9 @@ class AiDetectorNode(Node):
     def depth_callback(self, msg: Image):
         self.last_depth_msg = msg
 
+    def mode_callback(self, msg: AiMode):
+        self.current_mode = int(msg.mode)
+
     def color_callback(self, msg: Image):
         self.frame_count += 1
 
@@ -242,12 +266,21 @@ class AiDetectorNode(Node):
         now = time.time()
         stamp = msg.header.stamp
 
+        in_follow_mode = self.current_mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]
+
         detections = []
         fall_active = False
         fall_conf = 0.0
         fall_message = ''
 
-        if self.enable_fall_alert and self.person_model is not None and self.fall_detector is not None:
+        run_fall = (
+            self.enable_fall_alert
+            and self.person_model is not None
+            and self.fall_detector is not None
+            and not (self.suppress_fall_in_follow and in_follow_mode)
+        )
+
+        if run_fall:
             detections = self.run_person_detection(frame)
             detections = self.run_fall_detection(frame, depth, detections, now)
 
@@ -269,7 +302,13 @@ class AiDetectorNode(Node):
         fire_conf = 0.0
         smoke_conf = 0.0
 
-        if self.enable_fire_smoke_alert and self.fire_smoke_detector is not None:
+        run_fire_smoke = (
+            self.enable_fire_smoke_alert
+            and self.fire_smoke_detector is not None
+            and not (self.suppress_fire_smoke_in_follow and in_follow_mode)
+        )
+
+        if run_fire_smoke:
             fire_detections, fire_active, smoke_active, fire_conf, smoke_conf = (
                 self.run_fire_smoke_detection(frame, now)
             )

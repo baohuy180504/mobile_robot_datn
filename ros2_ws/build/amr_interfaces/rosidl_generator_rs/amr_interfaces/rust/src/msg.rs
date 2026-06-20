@@ -161,6 +161,11 @@ impl AiMode {
     #[allow(missing_docs)]
     pub const LOCALIZING: u8 = 7;
 
+
+    // This constant is not documented.
+    #[allow(missing_docs)]
+    pub const ALERT_STOPPED: u8 = 8;
+
 }
 
 

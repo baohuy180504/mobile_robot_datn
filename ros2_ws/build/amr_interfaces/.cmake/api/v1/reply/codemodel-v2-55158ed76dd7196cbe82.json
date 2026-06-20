@@ -1,0 +1,258 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-c62819956e993a2b6f68.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "amr_interfaces__py",
+					"jsonFile" : "directory-amr_interfaces__py-afa40070d9de57632460.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/amr_interfaces__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "amr_interfaces__rs",
+					"jsonFile" : "directory-amr_interfaces__rs-136990302f25f67828c3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/amr_interfaces__rs",
+					"targetIndexes" : 
+					[
+						16
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "amr_interfaces",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_amr_interfaces_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_amr_interfaces_egg-91203fe71e6038c3cc24.json",
+					"name" : "ament_cmake_python_build_amr_interfaces_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_amr_interfaces::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_amr_interfaces-86244332960dc2e709cd.json",
+					"name" : "ament_cmake_python_symlink_amr_interfaces",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces-9fb3bf8c285ec170f45f.json",
+					"name" : "amr_interfaces",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__cpp-a8098c6e20483800f79e.json",
+					"name" : "amr_interfaces__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "amr_interfaces__py::@eb8551a313152a2a24ac",
+					"jsonFile" : "target-amr_interfaces__py-6f0754b48dd190072418.json",
+					"name" : "amr_interfaces__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_generator_c-2b0920f05cb5667f67a1.json",
+					"name" : "amr_interfaces__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_generator_py-6f491a011e129d887b65.json",
+					"name" : "amr_interfaces__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_c-af9e7d72cc7d4cde6235.json",
+					"name" : "amr_interfaces__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_c__pyext-ad6518141551f8f5a629.json",
+					"name" : "amr_interfaces__rosidl_typesupport_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_cpp-a7d14278d908b237a06e.json",
+					"name" : "amr_interfaces__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_fastrtps_c-d270a0945e3e8e901d16.json",
+					"name" : "amr_interfaces__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_fastrtps_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_fastrtps_c__pyext-58cf0946de297c1de759.json",
+					"name" : "amr_interfaces__rosidl_typesupport_fastrtps_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_fastrtps_cpp-64d687b6fd58dea7e8e1.json",
+					"name" : "amr_interfaces__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_introspection_c-488eccd4ea85ad9c7bd2.json",
+					"name" : "amr_interfaces__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_introspection_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_introspection_c__pyext-6ab92fc5a0b844b54c8d.json",
+					"name" : "amr_interfaces__rosidl_typesupport_introspection_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces__rosidl_typesupport_introspection_cpp-c220e9a48287b70cb40f.json",
+					"name" : "amr_interfaces__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "amr_interfaces__rs::@2cf74ce01d9bc56a08b1",
+					"jsonFile" : "target-amr_interfaces__rs-c8076d339133f0b785b8.json",
+					"name" : "amr_interfaces__rs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "amr_interfaces_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-amr_interfaces_uninstall-a80a46a913c2680f36c6.json",
+					"name" : "amr_interfaces_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-8f639def1ae77c917cd1.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces",
+		"source" : "/home/huyjetson/mobile_robot/ros2_ws/src/amr_interfaces"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

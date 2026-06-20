@@ -1,1 +1,1 @@
-prepend-non-duplicate;LD_LIBRARY_PATH;lib
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/ament_cmake_environment_hooks/library_path.dsv

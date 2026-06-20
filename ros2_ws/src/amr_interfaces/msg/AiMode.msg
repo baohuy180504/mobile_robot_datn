@@ -8,6 +8,7 @@ uint8 FOLLOW_STOPPED=4
 uint8 RETURN_TO_ZONE=5
 uint8 EMERGENCY_STOP=6
 uint8 LOCALIZING=7
+uint8 ALERT_STOPPED=8
 
 builtin_interfaces/Time stamp
 uint8 mode

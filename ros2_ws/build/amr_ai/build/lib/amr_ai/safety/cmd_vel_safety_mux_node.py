@@ -10,6 +10,7 @@ from rclpy.node import Node
 
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+from std_msgs.msg import Bool
 
 from amr_interfaces.msg import AiMode, PersonTarget
 
@@ -51,11 +52,13 @@ class CmdVelSafetyMuxNode(Node):
         self.declare_parameter('nav_cmd_topic', '/cmd_vel')
         self.declare_parameter('follow_cmd_topic', '/cmd_vel_follow')
         self.declare_parameter('localize_cmd_topic', '/cmd_vel_localize')
+        self.declare_parameter('manual_cmd_topic', '/cmd_vel_manual')
         self.declare_parameter('output_cmd_topic', '/cmd_vel_safe')
 
         self.declare_parameter('mode_topic', '/amr_ai/mode')
         self.declare_parameter('target_topic', '/amr_ai/person_target')
         self.declare_parameter('scan_topic', '/scan_filtered')
+        self.declare_parameter('manual_override_topic', '/amr_ai/manual_override')
 
         self.declare_parameter('mux_rate_hz', 20.0)
 
@@ -63,6 +66,7 @@ class CmdVelSafetyMuxNode(Node):
         self.declare_parameter('command_timeout_s', 0.5)
         self.declare_parameter('scan_timeout_s', 0.5)
         self.declare_parameter('require_scan_for_motion', True)
+        self.declare_parameter('manual_override_timeout_s', 0.5)
 
         self.declare_parameter('front_center_angle_rad', 0.0)
         self.declare_parameter('front_angle_deg', 35.0)
@@ -72,11 +76,13 @@ class CmdVelSafetyMuxNode(Node):
         self.nav_cmd_topic = self.get_parameter('nav_cmd_topic').value
         self.follow_cmd_topic = self.get_parameter('follow_cmd_topic').value
         self.localize_cmd_topic = self.get_parameter('localize_cmd_topic').value
+        self.manual_cmd_topic = self.get_parameter('manual_cmd_topic').value
         self.output_cmd_topic = self.get_parameter('output_cmd_topic').value
 
         self.mode_topic = self.get_parameter('mode_topic').value
         self.target_topic = self.get_parameter('target_topic').value
         self.scan_topic = self.get_parameter('scan_topic').value
+        self.manual_override_topic = self.get_parameter('manual_override_topic').value
 
         self.mux_rate_hz = float(self.get_parameter('mux_rate_hz').value)
 
@@ -84,6 +90,7 @@ class CmdVelSafetyMuxNode(Node):
         self.command_timeout_s = float(self.get_parameter('command_timeout_s').value)
         self.scan_timeout_s = float(self.get_parameter('scan_timeout_s').value)
         self.require_scan_for_motion = bool(self.get_parameter('require_scan_for_motion').value)
+        self.manual_override_timeout_s = float(self.get_parameter('manual_override_timeout_s').value)
 
         self.front_center_angle_rad = float(self.get_parameter('front_center_angle_rad').value)
         self.front_angle_rad = math.radians(float(self.get_parameter('front_angle_deg').value))
@@ -100,6 +107,11 @@ class CmdVelSafetyMuxNode(Node):
 
         self.last_localize_cmd: Optional[Twist] = None
         self.last_localize_cmd_time = 0.0
+
+        self.last_manual_cmd: Optional[Twist] = None
+        self.last_manual_cmd_time = 0.0
+        self.manual_override_active = False
+        self.last_manual_override_time = 0.0
 
         self.last_target: Optional[PersonTarget] = None
         self.last_target_time = 0.0
@@ -148,6 +160,20 @@ class CmdVelSafetyMuxNode(Node):
             10
         )
 
+        self.manual_cmd_sub = self.create_subscription(
+            Twist,
+            self.manual_cmd_topic,
+            self.manual_cmd_callback,
+            10
+        )
+
+        self.manual_override_sub = self.create_subscription(
+            Bool,
+            self.manual_override_topic,
+            self.manual_override_callback,
+            10
+        )
+
         self.scan_sub = self.create_subscription(
             LaserScan,
             self.scan_topic,
@@ -162,6 +188,8 @@ class CmdVelSafetyMuxNode(Node):
         self.get_logger().warn(f'Nav2 cmd      : {self.nav_cmd_topic}')
         self.get_logger().warn(f'Follow cmd    : {self.follow_cmd_topic}')
         self.get_logger().warn(f'Localize cmd  : {self.localize_cmd_topic}')
+        self.get_logger().warn(f'Manual cmd    : {self.manual_cmd_topic}')
+        self.get_logger().warn(f'Manual override: {self.manual_override_topic}')
         self.get_logger().warn(f'Output cmd    : {self.output_cmd_topic}')
         self.get_logger().warn(f'Scan topic  : {self.scan_topic}')
         self.get_logger().warn(f'front_center_angle_rad={self.front_center_angle_rad:.2f}')
@@ -217,6 +245,14 @@ class CmdVelSafetyMuxNode(Node):
         self.last_localize_cmd = msg
         self.last_localize_cmd_time = time.time()
 
+    def manual_cmd_callback(self, msg: Twist):
+        self.last_manual_cmd = msg
+        self.last_manual_cmd_time = time.time()
+
+    def manual_override_callback(self, msg: Bool):
+        self.manual_override_active = bool(msg.data)
+        self.last_manual_override_time = time.time()
+
     def scan_callback(self, msg: LaserScan):
         self.front_min_distance = self.compute_front_min_distance(msg)
         self.last_scan_time = time.time()
@@ -226,6 +262,20 @@ class CmdVelSafetyMuxNode(Node):
     # ==========================================================
     def timer_callback(self):
         now = time.time()
+
+        manual_fresh = (
+            self.manual_override_active
+            and self.last_manual_cmd is not None
+            and (now - self.last_manual_override_time) <= self.manual_override_timeout_s
+            and self.is_command_recent(self.last_manual_cmd_time, now)
+        )
+
+        if manual_fresh:
+            manual_cmd = self.copy_twist(self.last_manual_cmd)
+            safe_cmd = self.apply_lidar_safety(manual_cmd, 'manual', now)
+            self.output_pub.publish(safe_cmd)
+            return
+
         selected_cmd = Twist()
         source = 'zero'
 

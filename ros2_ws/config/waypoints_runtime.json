@@ -13,9 +13,9 @@
   "waypoints": [
     {
       "name": "WP1",
-      "x": 3.619,
-      "y": -0.611,
-      "yaw": 1.594,
+      "x": 0.03,
+      "y": -0.05,
+      "yaw": 0.0,
       "locked": false,
       "source": "WP1"
     },

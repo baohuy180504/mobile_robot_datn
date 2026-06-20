@@ -1,1 +1,1 @@
-string zone_name
+/home/huyjetson/mobile_robot/ros2_ws/build/amr_interfaces/rosidl_cmake/srv/SelectZone_Request.msg
