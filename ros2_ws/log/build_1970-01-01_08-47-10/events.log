@@ -1,0 +1,18 @@
+[0.000000] (-) TimerEvent: {}
+[0.001219] (-) JobUnselected: {'identifier': 'amr_ai'}
+[0.001504] (-) JobUnselected: {'identifier': 'amr_bringup'}
+[0.001605] (-) JobUnselected: {'identifier': 'amr_control'}
+[0.001669] (-) JobUnselected: {'identifier': 'amr_costmap_plugins'}
+[0.001710] (-) JobUnselected: {'identifier': 'amr_description'}
+[0.001828] (-) JobUnselected: {'identifier': 'amr_interfaces'}
+[0.001935] (-) JobUnselected: {'identifier': 'amr_navigation'}
+[0.002058] (-) JobUnselected: {'identifier': 'amr_pointcloud_filter'}
+[0.002117] (-) JobUnselected: {'identifier': 'amr_sensors'}
+[0.002151] (-) JobUnselected: {'identifier': 'amr_slam'}
+[0.002182] (-) JobUnselected: {'identifier': 'astra_camera'}
+[0.002213] (-) JobUnselected: {'identifier': 'astra_camera_msgs'}
+[0.002243] (-) JobUnselected: {'identifier': 'explore_lite'}
+[0.002273] (-) JobUnselected: {'identifier': 'explore_lite_msgs'}
+[0.002302] (-) JobUnselected: {'identifier': 'multirobot_map_merge'}
+[0.002331] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.002361] (-) EventReactorShutdown: {}

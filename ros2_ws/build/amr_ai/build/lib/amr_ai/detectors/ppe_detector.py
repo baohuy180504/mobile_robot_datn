@@ -21,11 +21,11 @@ class PPEDetector:
         self.infer_device = infer_device if infer_device is not None else get_cfg("PPE_INFER_DEVICE", 0)
 
         self.imgsz = imgsz if imgsz is not None else get_cfg("PPE_IMGSZ", 512)
-        self.conf = conf if conf is not None else get_cfg("PPE_CONF", 0.10)
+        self.conf = conf if conf is not None else get_cfg("PPE_CONF", 0.15)
         self.iou = iou if iou is not None else get_cfg("PPE_IOU", 0.50)
 
         self.helmet_ok_conf = helmet_ok_conf if helmet_ok_conf is not None else get_cfg("PPE_HELMET_OK_CONF", 0.15)
-        self.vest_ok_conf = vest_ok_conf if vest_ok_conf is not None else get_cfg("PPE_VEST_OK_CONF", 0.20)
+        self.vest_ok_conf = vest_ok_conf if vest_ok_conf is not None else get_cfg("PPE_VEST_OK_CONF", 0.35)
 
         # Bat tam de chan doan: in ra vi tri (%) + diem tin cay cua tung
         # khung helmet/no_helmet model phat hien duoc, cung voi viec no co
@@ -389,8 +389,8 @@ class TargetPPEMonitor:
             self.detector = None
 
         self.run_interval = run_interval if run_interval is not None else get_cfg("PPE_RUN_INTERVAL", 10)
-        self.confirm_frames = confirm_frames if confirm_frames is not None else get_cfg("PPE_CONFIRM_FRAMES", 2)
-        self.clear_frames = clear_frames if clear_frames is not None else get_cfg("PPE_CLEAR_FRAMES", 4)
+        self.confirm_frames = confirm_frames if confirm_frames is not None else get_cfg("PPE_CONFIRM_FRAMES", 5)
+        self.clear_frames = clear_frames if clear_frames is not None else get_cfg("PPE_CLEAR_FRAMES", 1)
 
         self.edge_margin = edge_margin if edge_margin is not None else get_cfg("PPE_EDGE_MARGIN", 12)
         self.min_target_h_ratio = (

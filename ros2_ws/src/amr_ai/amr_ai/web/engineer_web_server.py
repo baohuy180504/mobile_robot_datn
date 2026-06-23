@@ -773,6 +773,67 @@ async def api_toggle_follow(request: Request):
         "state": state,
     })
 
+@app.post("/api/select_zone")
+async def api_select_zone(request: Request):
+    """
+    Chay xe toi 1 waypoint da luu (HOME/WP1/WP2/...) tu web GUI.
+
+    Goi DUNG service /amr_ai/select_zone - y het duong di nut vat ly ESP32
+    va GUI man hinh gan tren xe dang dung (xem esp32_waypoint_server.py:
+    handle_zone_command()). KHONG dung duong /api/send_nav_goal (gui
+    thang ros2 action send_goal /navigate_to_pose) vi cach do bo qua hoan
+    toan ai_mode_manager_node - khong cap nhat AiMode nen
+    cmd_vel_safety_mux_node se khong forward lenh Nav2, va khong tuong
+    thich voi co che ALERT_STOPPED (huy goal khi co canh bao te
+    nga/lua/khoi).
+
+    Service: /amr_ai/select_zone amr_interfaces/srv/SelectZone
+      request: {zone_name: 'WP0' | 'WP1' | 'WP2' | ...}
+    """
+    state = get_system_state()
+
+    if not state.get("navigation", False):
+        return JSONResponse({
+            "ok": False,
+            "message": "Chạy waypoint chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.",
+            "state": state,
+        })
+
+    try:
+        data = await request.json()
+        zone_name = str(data.get("zone_name", "")).strip().upper()
+    except Exception as exc:
+        return JSONResponse({
+            "ok": False,
+            "message": f"Invalid request: {exc}",
+        })
+
+    if not zone_name:
+        return JSONResponse({
+            "ok": False,
+            "message": "Thiếu zone_name.",
+        })
+
+    service_cmd = (
+        "ros2 service call /amr_ai/select_zone "
+        "amr_interfaces/srv/SelectZone "
+        f"\"{{zone_name: '{zone_name}'}}\""
+    )
+
+    code, out = run_cmd(service_cmd, timeout=8.0)
+
+    ok = (code == 0) and (
+        "accepted=True" in out
+        or "accepted: true" in out
+    )
+
+    return JSONResponse({
+        "ok": ok,
+        "zone_name": zone_name,
+        "message": out if out else ("Zone command sent" if ok else "Zone command failed"),
+        "state": state,
+    })
+
 @app.get("/api/status")
 def api_status():
     state = get_system_state()
@@ -2119,6 +2180,27 @@ VIEWER_HTML = r'''
     }
     .waypoint-row.locked { border-color:#64748b; background:#0f172a; }
     .waypoint-row.locked .waypoint-name { color:#facc15; }
+    .waypoint-go {
+      background:var(--blue);
+      color:#ffffff;
+      font-weight:bold;
+      white-space:nowrap;
+      border:none;
+      border-radius:6px;
+      padding:7px 4px;
+      font-size:12px;
+      cursor:pointer;
+    }
+    .waypoint-go:hover:not(:disabled) { filter:brightness(1.12); }
+    .waypoint-go:disabled {
+      opacity:0.4;
+      cursor:not-allowed;
+      filter:grayscale(0.3);
+    }
+    .waypoint-go.home {
+      background:#facc15;
+      color:#1f2937;
+    }
     .waypoint-row {
       display:grid;
       grid-template-columns:82px 1fr 46px 32px;
@@ -3891,9 +3973,14 @@ function renderWaypointList(){
       div.classList.add("locked");
     }
 
-    const name=document.createElement("div");
-    name.className="waypoint-name";
+    const name=document.createElement("button");
+    name.className="waypoint-go"+(row.locked ? " home" : "");
     name.textContent=rowLabel(row);
+    name.disabled=!row.confirmed;
+    name.title=row.confirmed
+      ? "Chạy xe tới "+rowLabel(row)
+      : "Bấm SET trước khi chạy waypoint này";
+    name.onclick=()=>goToWaypoint(row);
 
     const input=document.createElement("input");
     input.className="waypoint-input";
@@ -3928,6 +4015,46 @@ function renderWaypointList(){
     div.appendChild(rmBtn);
     list.appendChild(div);
   });
+}
+
+async function goToWaypoint(row){
+  if(!row.confirmed){
+    log(row.name+": chưa SET, hãy bấm SET trước khi chạy waypoint này.");
+    return;
+  }
+
+  log("Đang gửi lệnh chạy tới "+row.name+"...");
+
+  const status=document.getElementById("mapToolStatus");
+  if(status){
+    status.textContent=`WAYPOINT: đang gửi lệnh chạy tới ${row.name}...`;
+  }
+
+  try{
+    const res=await fetch("/api/select_zone",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({zone_name: row.name})
+    });
+    const data=await res.json();
+
+    if(data.ok){
+      log(row.name+": đã gửi lệnh chạy. "+(data.message||""));
+      if(status){
+        status.textContent=`WAYPOINT: xe đang chạy tới ${row.name}.`;
+      }
+    }else{
+      log(row.name+": lệnh chạy thất bại - "+(data.message||""));
+      if(status){
+        status.textContent=`WAYPOINT: chạy tới ${row.name} thất bại - ${data.message||""}`;
+      }
+    }
+  }catch(e){
+    log(row.name+": lỗi kết nối server - "+e);
+    if(status){
+      status.textContent=`WAYPOINT: lỗi kết nối server khi chạy tới ${row.name}.`;
+    }
+  }
 }
 
 function getActiveWaypointRow(){

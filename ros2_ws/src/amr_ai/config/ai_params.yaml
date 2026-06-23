@@ -86,10 +86,10 @@ person_tracker_node:
     ppe_conf: 0.15
     ppe_iou: 0.50
     ppe_helmet_ok_conf: 0.15
-    ppe_vest_ok_conf: 0.40
+    ppe_vest_ok_conf: 0.35
     ppe_run_interval: 10
     ppe_confirm_frames: 5
-    ppe_clear_frames: 2
+    ppe_clear_frames: 1
 
     follow_detecting_timeout_s: 30.0
 
@@ -102,7 +102,7 @@ person_tracker_node:
 
 follow_servo_node:
   ros__parameters:
-    follow_distance_m: 2.5
+    follow_distance_m: 2.0
     distance_tolerance_m: 0.18
 
     k_linear: 0.30
