@@ -19,7 +19,7 @@ class Esp32AlertBridgeNode(Node):
     def __init__(self):
         super().__init__('esp32_alert_bridge_node')
 
-        self.declare_parameter('esp32_ip', '192.168.0.146')
+        self.declare_parameter('esp32_ip', '192.168.1.36')
         self.declare_parameter('esp32_udp_port', 4210)
         self.declare_parameter('esp32_tcp_port', 4211)
 

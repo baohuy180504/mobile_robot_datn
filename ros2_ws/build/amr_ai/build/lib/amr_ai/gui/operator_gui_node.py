@@ -460,7 +460,7 @@ class OperatorGuiApp:
             self.right,
             'STOP',
             '#ff0000',
-            self.node.stop_stack
+            self._on_stop_btn   # ← wrapper chạy thread nền, tránh block GUI
         )
 
         self.zone_a_btn = self.make_button(
@@ -873,6 +873,69 @@ class OperatorGuiApp:
             fg='#111827',
             font=('Arial', 22)
         )
+
+    def _on_stop_btn(self):
+        """
+        Handler cho nút STOP — khởi động thread nền để tránh 2 lỗi:
+
+        Lỗi 1 (nhấn 2 lần):
+          call_set_mode → wait_for_service(2s) block main thread → GUI đơ →
+          user nhấn lại → lần 2 mới thực sự dừng.
+
+        Lỗi 2 (status vẫn hiện NAV READY):
+          stop script gửi STOP_FOLLOW → mode → IDLE → mode_callback đặt
+          'NAV READY' → stack bị kill → không có msg nào nữa → status kẹt.
+
+        Giải pháp: chạy toàn bộ quá trình dừng ở thread nền.
+          - GUI không bị block → nhấn 1 lần là đủ.
+          - Sau khi proc.wait() (script xong), ghi đè status → 'SYSTEM STOPPED'.
+        """
+        # Disable ngay để tránh double-click trong khi đang chạy stop script
+        self.stop_btn.configure(state=tk.DISABLED)
+        threading.Thread(target=self._stop_stack_thread, daemon=True).start()
+
+    def _stop_stack_thread(self):
+        """Chạy toàn bộ quy trình STOP ở thread nền."""
+        try:
+            self.node.publish_zero_velocity()
+
+            # wait_for_service(2s) ổn ở thread nền, không block GUI
+            self.node.call_set_mode('STOP_FOLLOW')
+
+            script = os.path.expanduser(self.node.stop_script)
+            if not os.path.exists(script):
+                self.node.set_status('STOP SCRIPT NOT FOUND', '#dc2626')
+                self.node.get_logger().error(f'Stop script not found: {script}')
+                return
+
+            log_file = '/tmp/amr_operator_stopping.log'
+            self.node.set_status('STOPPING...', '#f97316')
+            self.node.get_logger().warn(f'Running stop script: {script}')
+
+            with open(log_file, 'a') as log:
+                proc = subprocess.Popen(
+                    ['bash', script],
+                    stdout=log,
+                    stderr=log,
+                    stdin=subprocess.DEVNULL,
+                    start_new_session=True,
+                )
+                proc.wait()  # Chờ script xong ở thread nền (không block GUI)
+
+            # Script hoàn thành → override 'NAV READY' mà mode_callback IDLE để lại
+            with self.node.lock:
+                self.node.status_text = 'SYSTEM STOPPED'
+                self.node.status_color = '#6b7280'
+
+            self.node.get_logger().warn('Stop stack completed.')
+
+        except Exception as exc:
+            self.node.set_status('STOP ERROR', '#dc2626')
+            self.node.get_logger().error(f'_stop_stack_thread error: {exc}')
+
+        finally:
+            # Mở lại nút STOP qua root.after — tkinter không thread-safe
+            self.root.after(0, lambda: self.stop_btn.configure(state=tk.NORMAL))
 
     def on_close(self):
         self.root.destroy()

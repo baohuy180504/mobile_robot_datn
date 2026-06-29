@@ -57,6 +57,13 @@ ROS_SETUP = (
 
 app = FastAPI(title=APP_TITLE)
 
+# ==========================================================
+# Manual control lock
+# True khi teleop đang active. Ngăn WP/NAV GOAL gửi lệnh
+# xung đột với điều khiển tay trong lúc đang lấy điểm WP.
+# ==========================================================
+_manual_control_active: bool = False
+
 
 # ==========================================================
 # Static assets + password gate
@@ -470,6 +477,7 @@ def get_system_state() -> Dict[str, Any]:
         "rosbridge": rosbridge,
         "operator": operator,
         "active_mode": active_mode,
+        "manual_control": _manual_control_active,
     }
 
 
@@ -773,6 +781,76 @@ async def api_toggle_follow(request: Request):
         "state": state,
     })
 
+@app.post("/api/select_zone")
+async def api_select_zone(request: Request):
+    """
+    Chay xe toi 1 waypoint da luu (HOME/WP1/WP2/...) tu web GUI.
+
+    Goi DUNG service /amr_ai/select_zone - y het duong di nut vat ly ESP32
+    va GUI man hinh gan tren xe dang dung (xem esp32_waypoint_server.py:
+    handle_zone_command()). KHONG dung duong /api/send_nav_goal (gui
+    thang ros2 action send_goal /navigate_to_pose) vi cach do bo qua hoan
+    toan ai_mode_manager_node - khong cap nhat AiMode nen
+    cmd_vel_safety_mux_node se khong forward lenh Nav2, va khong tuong
+    thich voi co che ALERT_STOPPED (huy goal khi co canh bao te
+    nga/lua/khoi).
+
+    Service: /amr_ai/select_zone amr_interfaces/srv/SelectZone
+      request: {zone_name: 'WP0' | 'WP1' | 'WP2' | ...}
+    """
+    state = get_system_state()
+
+    if not state.get("navigation", False):
+        return JSONResponse({
+            "ok": False,
+            "message": "Chạy waypoint chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.",
+            "state": state,
+        })
+
+    # Khóa WP khi teleop đang bật — tránh xung đột lệnh vận tốc
+    if _manual_control_active:
+        return JSONResponse({
+            "ok": False,
+            "message": "Đang điều khiển tay (teleop) — WP bị khóa. Nhấn STOP CONTROL trước.",
+            "manual_control": True,
+            "state": state,
+        })
+
+    try:
+        data = await request.json()
+        zone_name = str(data.get("zone_name", "")).strip().upper()
+    except Exception as exc:
+        return JSONResponse({
+            "ok": False,
+            "message": f"Invalid request: {exc}",
+        })
+
+    if not zone_name:
+        return JSONResponse({
+            "ok": False,
+            "message": "Thiếu zone_name.",
+        })
+
+    service_cmd = (
+        "ros2 service call /amr_ai/select_zone "
+        "amr_interfaces/srv/SelectZone "
+        f"\"{{zone_name: '{zone_name}'}}\""
+    )
+
+    code, out = run_cmd(service_cmd, timeout=8.0)
+
+    ok = (code == 0) and (
+        "accepted=True" in out
+        or "accepted: true" in out
+    )
+
+    return JSONResponse({
+        "ok": ok,
+        "zone_name": zone_name,
+        "message": out if out else ("Zone command sent" if ok else "Zone command failed"),
+        "state": state,
+    })
+
 @app.get("/api/status")
 def api_status():
     state = get_system_state()
@@ -881,12 +959,35 @@ def api_active_fusion_map():
 
 @app.post("/api/send_nav_goal")
 async def api_send_nav_goal(request: Request):
+    """
+    Gửi nav goal tùy ý (từ NAV GOAL tool trên bản đồ) qua ai_mode_manager.
+
+    KHÔNG gửi trực tiếp ros2 action send_goal /navigate_to_pose vì:
+      - Bỏ qua ai_mode_manager → AiMode vẫn IDLE
+      - cmd_vel_safety_mux_node không forward /cmd_vel (chỉ forward khi
+        mode là NAV_TO_ZONE/RETURN_TO_ZONE)
+      - Robot không chạy dù Nav2 plan path và vẽ path trên map
+
+    Giải pháp: gọi /amr_ai/set_mode với command 'NAV_TO_POSE:x=..,y=..,yaw=..'
+    → ai_mode_manager parse pose, gọi send_nav2_goal() → set mode NAV_TO_ZONE
+    → mux forward Nav2 cmd_vel → robot chạy.
+    Cùng luồng với WP1/WP2, nên ALERT_STOPPED/cancel/result cũng hoạt động.
+    """
     state = get_system_state()
 
     if not state.get("navigation", False):
         return JSONResponse({
             "ok": False,
             "message": "NAV GOAL chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.",
+            "state": state,
+        })
+
+    # Khóa NAV GOAL khi teleop đang bật
+    if _manual_control_active:
+        return JSONResponse({
+            "ok": False,
+            "message": "Đang điều khiển tay (teleop) — NAV GOAL bị khóa. Nhấn STOP CONTROL trước.",
+            "manual_control": True,
             "state": state,
         })
 
@@ -902,43 +1003,38 @@ async def api_send_nav_goal(request: Request):
             "state": state,
         })
 
-    z = math.sin(yaw / 2.0)
-    w = math.cos(yaw / 2.0)
-
-    goal_yaml = (
-        "{pose: {"
-        "header: {frame_id: 'map'}, "
-        "pose: {"
-        f"position: {{x: {x:.6f}, y: {y:.6f}, z: 0.0}}, "
-        f"orientation: {{x: 0.0, y: 0.0, z: {z:.8f}, w: {w:.8f}}}"
-        "}"
-        "}}"
+    # Gọi /amr_ai/set_mode với command NAV_TO_POSE — ai_mode_manager sẽ:
+    #   1. Parse x, y, yaw
+    #   2. Cancel goal cũ nếu đang chạy
+    #   3. Gọi send_nav2_goal() → set AiMode = NAV_TO_ZONE → mux forward
+    #   4. Track goal handle, tự về IDLE khi done/cancel/abort
+    service_cmd = (
+        "ros2 service call /amr_ai/set_mode "
+        "amr_interfaces/srv/SetAiMode "
+        f"\"{{mode: 0, command: 'NAV_TO_POSE:x={x:.6f},y={y:.6f},yaw={yaw:.6f}'}}\""
     )
 
-    goal_cmd = (
-        "ros2 action send_goal "
-        "/navigate_to_pose "
-        "nav2_msgs/action/NavigateToPose "
-        f"{shlex.quote(goal_yaml)}"
-    )
+    code, out = run_cmd(service_cmd, timeout=8.0)
 
-    bg_cmd = (
-        "nohup bash -lc "
-        + shlex.quote(ROS_SETUP + goal_cmd)
-        + " > /tmp/amr_web_nav_goal.log 2>&1 &"
+    ok = (code == 0) and (
+        "success=True" in out
+        or "success: true" in out
+        or "response:" in out
+        or "SetAiMode_Response" in out
     )
-
-    code, out = run_cmd(bg_cmd, timeout=2.0, source_ros=False)
 
     return JSONResponse({
-        "ok": code == 0,
-        "message": "NAV GOAL sent." if code == 0 else "Failed to send NAV GOAL.",
+        "ok": ok,
+        "message": (
+            f"NAV GOAL gửi qua ai_mode_manager: x={x:.3f}, y={y:.3f}, yaw={yaw:.3f}"
+            if ok else
+            f"Gửi NAV GOAL thất bại: {out}"
+        ),
         "x": x,
         "y": y,
         "yaw": yaw,
         "returncode": code,
         "output": out,
-        "log_file": "/tmp/amr_web_nav_goal.log",
         "state": get_system_state(),
     })
 
@@ -955,6 +1051,8 @@ def api_manual_control_status():
 
 @app.post("/api/start_manual_control")
 def api_start_manual_control():
+    global _manual_control_active
+
     if not TELEOP_SCRIPT.exists():
         return JSONResponse({
             "ok": False,
@@ -964,11 +1062,13 @@ def api_start_manual_control():
     topic = choose_manual_teleop_topic()
 
     if tmux_session_running("amr_web_teleop"):
+        _manual_control_active = True
         return JSONResponse({
             "ok": True,
             "message": "Manual teleop already running.",
             "topic": topic,
             "session": "amr_web_teleop",
+            "manual_control": True,
         })
 
     publish_zero_twist_all()
@@ -992,6 +1092,9 @@ def api_start_manual_control():
 
     code, out = run_cmd(cmd, timeout=2.0, source_ros=False)
 
+    if code == 0:
+        _manual_control_active = True
+
     return JSONResponse({
         "ok": code == 0,
         "message": "Web manual teleop node started." if code == 0 else "Failed to start web manual teleop node.",
@@ -999,11 +1102,14 @@ def api_start_manual_control():
         "session": "amr_web_teleop",
         "returncode": code,
         "output": out,
+        "manual_control": _manual_control_active,
     })
 
 
 @app.post("/api/stop_manual_control")
 def api_stop_manual_control():
+    global _manual_control_active
+
     if tmux_session_running("amr_web_teleop"):
         for _ in range(3):
             tmux_send_key("amr_web_teleop", "k")
@@ -1014,10 +1120,13 @@ def api_stop_manual_control():
     stop_manual_override_heartbeat()
     publish_zero_twist_all()
 
+    _manual_control_active = False
+
     return JSONResponse({
         "ok": True,
-        "message": "Manual teleop stopped.",
+        "message": "Manual teleop stopped. Navigation sẵn sàng nhận WP/goal.",
         "session": "amr_web_teleop",
+        "manual_control": False,
     })
 
 
@@ -1296,9 +1405,10 @@ def api_start_system():
 
 @app.post("/api/stop_system")
 def api_stop_system():
+    global _manual_control_active
     stop_result = run_script(STOP_SYSTEM_SCRIPT, timeout=15.0)
     rosbridge_result = run_script(STOP_ROSBRIDGE_SCRIPT, timeout=10.0)
-
+    _manual_control_active = False
     return JSONResponse({
         "ok": bool(stop_result.get("ok")),
         "message": "STOP executed: navigation/slam/device stopped; web viewer bridge stopped.",
@@ -2119,6 +2229,27 @@ VIEWER_HTML = r'''
     }
     .waypoint-row.locked { border-color:#64748b; background:#0f172a; }
     .waypoint-row.locked .waypoint-name { color:#facc15; }
+    .waypoint-go {
+      background:var(--blue);
+      color:#ffffff;
+      font-weight:bold;
+      white-space:nowrap;
+      border:none;
+      border-radius:6px;
+      padding:7px 4px;
+      font-size:12px;
+      cursor:pointer;
+    }
+    .waypoint-go:hover:not(:disabled) { filter:brightness(1.12); }
+    .waypoint-go:disabled {
+      opacity:0.4;
+      cursor:not-allowed;
+      filter:grayscale(0.3);
+    }
+    .waypoint-go.home {
+      background:#facc15;
+      color:#1f2937;
+    }
     .waypoint-row {
       display:grid;
       grid-template-columns:82px 1fr 46px 32px;
@@ -2744,6 +2875,11 @@ function setViewerControlsEnabled(enabled){
   if(typeof updateWaypointActionButtons === "function"){
     updateWaypointActionButtons();
   }
+
+  // Sau khi reconnect, khôi phục đúng trạng thái lock
+  if(viewerRosConnected && typeof applyNavGoalLock === "function"){
+    applyNavGoalLock(manualControlStarted);
+  }
 }
 
 function defaultWsUrl(){
@@ -2757,6 +2893,41 @@ function setDefaultRosbridgeUrl(){
   }
 }
 setDefaultRosbridgeUrl();
+
+// ==========================================================
+// Khóa WP + NAV GOAL khi manual teleop đang bật
+// ==========================================================
+function applyNavGoalLock(locked){
+  // NAV GOAL tool button
+  const navGoalBtn=document.getElementById("toolNavGoalBtn");
+  if(navGoalBtn){
+    const can=viewerRosConnected && !locked;
+    navGoalBtn.disabled=!can;
+    navGoalBtn.style.opacity=can ? 1.0 : 0.45;
+    navGoalBtn.title=locked
+      ? "Manual Control đang bật — nhấn STOP CONTROL để dùng NAV GOAL."
+      : "";
+  }
+  // Nếu đang dùng NAV_GOAL tool mà bị lock → về PAN
+  if(locked && activeMapTool==="NAV_GOAL"){
+    setMapTool("PAN");
+  }
+
+  // WP GO buttons — re-render list để disabled state được áp dụng
+  // (renderWaypointList đọc manualControlStarted tại thời điểm render)
+  renderWaypointList();
+
+  // viewerModeText
+  const modeText=document.getElementById("viewerModeText");
+  if(modeText){
+    if(locked){
+      modeText.textContent="🔴 Manual Control ON — WP và NAV GOAL bị khóa. Nhấn STOP CONTROL để quay lại navigation.";
+      modeText.style.color="#ef4444";
+    }else if(typeof refreshViewerSaveState==="function"){
+      refreshViewerSaveState();
+    }
+  }
+}
 
 function rosTypeToRoslibType(type){
   if(!type) return "";
@@ -3344,6 +3515,7 @@ function publishManualZeroAll(){
   if(!ros){ return; }
   publishZeroToTopic("/cmd_vel");
   publishZeroToTopic("/cmd_vel_safe");
+  publishZeroToTopic("/cmd_vel_manual");
 }
 
 function burstStopZero(count=8){
@@ -3450,6 +3622,7 @@ async function startManualControlSystem(){
     manualKeySet.clear();
 
     setManualUiEnabled(true);
+    applyNavGoalLock(true);   // khóa WP + NAV GOAL
 
     publishTeleopSpeed();
     await sendTeleopKey("k");
@@ -3489,6 +3662,7 @@ async function stopManualControlSystem(){
   manualSpeedPub=null;
 
   setManualUiEnabled(false);
+  applyNavGoalLock(false);   // mở khóa WP + NAV GOAL
 
   if(status){
     status.textContent="Teleop OFF. Nút điều khiển và bàn phím đã khóa.";
@@ -3891,9 +4065,17 @@ function renderWaypointList(){
       div.classList.add("locked");
     }
 
-    const name=document.createElement("div");
-    name.className="waypoint-name";
+    const name=document.createElement("button");
+    name.className="waypoint-go"+(row.locked ? " home" : "");
     name.textContent=rowLabel(row);
+    // Khóa GO khi: chưa SET hoặc manual control đang bật
+    const wpGoEnabled = row.confirmed && !manualControlStarted;
+    name.disabled = !wpGoEnabled;
+    name.style.opacity = wpGoEnabled ? 1.0 : 0.45;
+    name.title = manualControlStarted
+      ? "Tắt Manual Control (STOP CONTROL) trước khi chạy waypoint"
+      : (row.confirmed ? "Chạy xe tới "+rowLabel(row) : "Bấm SET trước khi chạy waypoint này");
+    name.onclick=()=>goToWaypoint(row);
 
     const input=document.createElement("input");
     input.className="waypoint-input";
@@ -3928,6 +4110,56 @@ function renderWaypointList(){
     div.appendChild(rmBtn);
     list.appendChild(div);
   });
+}
+
+async function goToWaypoint(row){
+  if(!row.confirmed){
+    log(row.name+": chưa SET, hãy bấm SET trước khi chạy waypoint này.");
+    return;
+  }
+
+  // Khóa WP khi teleop đang bật — tránh xung đột lệnh vận tốc với điều khiển tay
+  if(manualControlStarted){
+    log(row.name+": WP bị khóa khi đang Manual Control. Nhấn STOP CONTROL trước.");
+    const status=document.getElementById("mapToolStatus");
+    if(status){
+      status.textContent="⚠️ Manual Control đang bật — WP bị khóa. Nhấn STOP CONTROL trước.";
+    }
+    return;
+  }
+
+  log("Đang gửi lệnh chạy tới "+row.name+"...");
+
+  const status=document.getElementById("mapToolStatus");
+  if(status){
+    status.textContent=`WAYPOINT: đang gửi lệnh chạy tới ${row.name}...`;
+  }
+
+  try{
+    const res=await fetch("/api/select_zone",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({zone_name: row.name})
+    });
+    const data=await res.json();
+
+    if(data.ok){
+      log(row.name+": đã gửi lệnh chạy. "+(data.message||""));
+      if(status){
+        status.textContent=`WAYPOINT: xe đang chạy tới ${row.name}.`;
+      }
+    }else{
+      log(row.name+": lệnh chạy thất bại - "+(data.message||""));
+      if(status){
+        status.textContent=`WAYPOINT: chạy tới ${row.name} thất bại - ${data.message||""}`;
+      }
+    }
+  }catch(e){
+    log(row.name+": lỗi kết nối server - "+e);
+    if(status){
+      status.textContent=`WAYPOINT: lỗi kết nối server khi chạy tới ${row.name}.`;
+    }
+  }
 }
 
 function getActiveWaypointRow(){

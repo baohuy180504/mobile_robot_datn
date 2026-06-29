@@ -8,6 +8,7 @@ import time
 import rclpy
 from rclpy.node import Node
 
+from std_msgs.msg import Bool
 from amr_interfaces.srv import SelectZone, SetAiMode
 
 
@@ -32,12 +33,22 @@ class Esp32WaypointServer(Node):
         self.declare_parameter('host', '0.0.0.0')
         self.declare_parameter('tcp_port', 5000)
         self.declare_parameter('debounce_sec', 0.8)
+        # Timeout đồng bộ với manual_override_timeout_s của mux (mặc định 0.5s).
+        # Đặt hơi cao hơn một chút để tránh nhấp nháy ở ranh giới.
+        self.declare_parameter('manual_override_timeout_s', 0.6)
 
         self.host = self.get_parameter('host').value
         self.tcp_port = int(self.get_parameter('tcp_port').value)
         self.debounce_sec = float(self.get_parameter('debounce_sec').value)
+        self.manual_override_timeout_s = float(
+            self.get_parameter('manual_override_timeout_s').value
+        )
 
         self.last_cmd_time = {}
+
+        # Manual override state — sync với /amr_ai/manual_override
+        self.manual_override_active: bool = False
+        self.last_manual_override_time: float = 0.0
 
         # =========================
         # Service clients to AI mode manager
@@ -50,6 +61,17 @@ class Esp32WaypointServer(Node):
         self.set_mode_client = self.create_client(
             SetAiMode,
             '/amr_ai/set_mode'
+        )
+
+        # Subscribe /amr_ai/manual_override để biết khi nào teleop đang bật.
+        # Khi engineer bấm START CONTROL trên web, web server publish Bool(True)
+        # liên tục 5Hz. Khi STOP CONTROL, publish Bool(False) rồi ngừng.
+        # Ta cũng check timeout để tự reset nếu heartbeat mất đột ngột.
+        self.manual_override_sub = self.create_subscription(
+            Bool,
+            '/amr_ai/manual_override',
+            self.manual_override_callback,
+            10
         )
 
         # =========================
@@ -66,6 +88,9 @@ class Esp32WaypointServer(Node):
         )
         self.get_logger().info(
             'Commands: WP0/WP1/WP2/... -> /amr_ai/select_zone, S/STOP -> /amr_ai/set_mode STOP'
+        )
+        self.get_logger().info(
+            'Manual override: /amr_ai/manual_override — WP bị khóa khi teleop đang bật'
         )
 
     # ==========================================================
@@ -144,6 +169,22 @@ class Esp32WaypointServer(Node):
         return re.fullmatch(r'WP[0-9]+', cmd.strip().upper()) is not None
 
     # ==========================================================
+    # Manual override callback
+    # ==========================================================
+    def manual_override_callback(self, msg: Bool):
+        self.manual_override_active = bool(msg.data)
+        self.last_manual_override_time = time.time()
+
+    def is_manual_override_active(self) -> bool:
+        """
+        True nếu teleop đang bật (web server publish Bool(True) < timeout_s trước).
+        Dùng timeout để tự reset nếu heartbeat mất đột ngột (web server crash).
+        """
+        if not self.manual_override_active:
+            return False
+        return (time.time() - self.last_manual_override_time) <= self.manual_override_timeout_s
+
+    # ==========================================================
     # Common debounce
     # ==========================================================
     def is_debounced(self, cmd: str) -> bool:
@@ -162,6 +203,15 @@ class Esp32WaypointServer(Node):
     # ==========================================================
     def handle_zone_command(self, cmd: str):
         if not self.is_debounced(cmd):
+            return
+
+        # Khóa nút vật lý khi engineer đang điều khiển tay qua web teleop.
+        # Tránh ESP32 gửi WP làm xung đột với lệnh vận tốc từ teleop.
+        if self.is_manual_override_active():
+            self.get_logger().warn(
+                f'Ignore zone command {cmd}: manual teleop override is active '
+                '(engineer is driving via web control — press STOP CONTROL first)'
+            )
             return
 
         zone_name = cmd.strip().upper()

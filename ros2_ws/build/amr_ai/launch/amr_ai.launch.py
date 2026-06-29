@@ -1,1 +1,0 @@
-/home/huyjetson/mobile_robot/ros2_ws/src/amr_ai/launch/amr_ai.launch.py

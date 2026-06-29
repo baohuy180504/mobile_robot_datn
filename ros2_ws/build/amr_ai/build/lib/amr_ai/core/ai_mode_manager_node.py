@@ -337,6 +337,15 @@ class AiModeManager(Node):
         if command in ['IDLE', 'RESET', 'CLEAR']:
             return self.force_idle(response)
 
+        # NAV_TO_POSE: điều hướng tới tọa độ tùy ý từ web engineer UI.
+        # Format: "NAV_TO_POSE:x=1.500000,y=2.300000,yaw=0.785398"
+        # QUAN TRỌNG: phải đặt TRƯỚC block requested_mode bên dưới,
+        # vì web server gửi mode=0 (= AiMode.IDLE) nên nếu để sau,
+        # block requested_mode sẽ match AiMode.IDLE và return sớm,
+        # code không bao giờ chạm tới handler này.
+        if command.startswith('NAV_TO_POSE'):
+            return self.nav_to_pose_direct(request.command.strip(), response)
+
         # Cho phép test nhanh bằng mode số, nhưng vẫn kiểm soát cơ bản
         if requested_mode in [
             AiMode.IDLE,
@@ -528,6 +537,89 @@ class AiModeManager(Node):
     # ==========================================================
     # Nav2
     # ==========================================================
+    def nav_to_pose_direct(self, command_raw: str, response):
+        """
+        Điều hướng tới tọa độ tùy ý từ web engineer UI (NAV GOAL tool trên map).
+        Được gọi từ handle_set_mode khi command bắt đầu bằng 'NAV_TO_POSE'.
+        Format: 'NAV_TO_POSE:x=1.500000,y=2.300000,yaw=0.785398'
+
+        Dùng ĐÚNG send_nav2_goal() — cùng cơ chế với select_zone/WP1/WP2:
+          - Set AiMode → NAV_TO_ZONE  →  mux forward /cmd_vel → robot chạy
+          - Track goal handle          →  cancel được, ALERT_STOPPED hoạt động
+          - Tự về IDLE khi goal done/cancel/abort
+        """
+        if self.current_mode == AiMode.EMERGENCY_STOP:
+            response.success = False
+            response.message = 'Cannot navigate while EMERGENCY_STOP is active'
+            response.current_mode = int(self.current_mode)
+            return response
+
+        if self.current_mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]:
+            response.success = False
+            response.message = (
+                f'Cannot navigate while in {self.mode_name(self.current_mode)}'
+            )
+            response.current_mode = int(self.current_mode)
+            return response
+
+        # Parse x, y, yaw từ chuỗi "NAV_TO_POSE:x=1.5,y=2.3,yaw=0.0"
+        try:
+            param_str = re.sub(
+                r'^NAV_TO_POSE[:\s]*', '', command_raw, flags=re.IGNORECASE
+            ).strip()
+            params: Dict[str, float] = {}
+            for pair in re.split(r'[,\s]+', param_str):
+                pair = pair.strip()
+                if '=' in pair:
+                    k, v = pair.split('=', 1)
+                    params[k.strip().lower()] = float(v.strip())
+            x = params.get('x', 0.0)
+            y = params.get('y', 0.0)
+            yaw = params.get('yaw', 0.0)
+        except Exception as exc:
+            response.success = False
+            response.message = f'Failed to parse NAV_TO_POSE: {exc} | raw={command_raw!r}'
+            response.current_mode = int(self.current_mode)
+            return response
+
+        # Cancel goal đang chạy nếu có (web gửi goal mới)
+        if self.current_mode in [AiMode.NAV_TO_ZONE, AiMode.RETURN_TO_ZONE]:
+            self.cancel_current_nav_goal()
+
+        # Build PoseStamped
+        pose = PoseStamped()
+        pose.header.stamp = self.get_clock().now().to_msg()
+        pose.header.frame_id = self.frame_id
+        pose.pose.position.x = float(x)
+        pose.pose.position.y = float(y)
+        pose.pose.position.z = 0.0
+        qx, qy, qz, qw = yaw_to_quaternion(float(yaw))
+        pose.pose.orientation.x = qx
+        pose.pose.orientation.y = qy
+        pose.pose.orientation.z = qz
+        pose.pose.orientation.w = qw
+
+        label = f'WEB_GOAL({x:.3f},{y:.3f},{yaw:.3f})'
+
+        ok = self.send_nav2_goal(
+            label,
+            pose,
+            AiMode.NAV_TO_ZONE,
+            f'Web direct nav goal → {label}'
+        )
+
+        if not ok:
+            self.set_mode(AiMode.IDLE, 'Nav2 server unavailable for web direct goal')
+            response.success = False
+            response.message = 'Nav2 action server not available'
+            response.current_mode = int(self.current_mode)
+            return response
+
+        response.success = True
+        response.message = f'NAV_TO_POSE accepted: x={x:.3f}, y={y:.3f}, yaw={yaw:.3f}'
+        response.current_mode = int(self.current_mode)
+        return response
+
     def send_nav2_goal(self, zone: str, pose: PoseStamped, next_mode: int, detail: str) -> bool:
         if not self.nav_client.wait_for_server(timeout_sec=2.0):
             self.get_logger().error('Nav2 action server /navigate_to_pose is not available')

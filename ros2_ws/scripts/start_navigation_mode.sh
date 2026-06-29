@@ -8,7 +8,7 @@ ACTIVE_MAP_FILE="$WS/config/active_fusion_map.env"
 # ==========================================================
 # ESP32 Alert Display config
 # ==========================================================
-ESP32_ALERT_IP="${ESP32_ALERT_IP:-192.168.0.146}"
+ESP32_ALERT_IP="${ESP32_ALERT_IP:-192.168.1.36}"
 ESP32_ALERT_UDP_PORT="${ESP32_ALERT_UDP_PORT:-4210}"
 ESP32_ALERT_TCP_PORT="${ESP32_ALERT_TCP_PORT:-4211}"
 
