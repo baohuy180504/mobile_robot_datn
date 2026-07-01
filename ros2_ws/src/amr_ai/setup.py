@@ -44,6 +44,7 @@ setup(
             'auto_localizer = amr_ai.core.auto_localizer_node:main',
             'engineer_web = amr_ai.web.engineer_web_server:main',
             'web_control = amr_ai.web.web_control:main',
+            'nav_ppe_monitor = amr_ai.nav2.nav_ppe_monitor_node:main',
             'esp32_alert_bridge = amr_ai.esp32_alert_bridge_node:main',
         ],
     },

@@ -4,6 +4,10 @@ ai_mode_manager:
 
     frame_id: "map"
 
+    # Không dừng xe khi nhận bất kỳ alert nào.
+    # nav_ppe_monitor_node chỉ gửi cảnh báo PPE về màn hình, không dừng.
+    alert_stop_types: ["NONE"]
+
     A.x: 1.5
     A.y: 0.0
     A.yaw: 0.0
@@ -48,8 +52,8 @@ amr_ai:
     min_goal_update_distance_m: 0.3
 
     # Safety
-    enable_fall_alert: true
-    enable_fire_smoke_alert: true
+    enable_fall_alert: false
+    enable_fire_smoke_alert: false
     alert_confidence_threshold: 0.5
 
     # Zone names
@@ -82,7 +86,7 @@ person_tracker_node:
 
     enable_ppe_check: true
     ppe_model_path: "models/ppe_s.engine"
-    ppe_imgsz: 512
+    ppe_imgsz: 640
     ppe_conf: 0.15
     ppe_iou: 0.50
     ppe_helmet_ok_conf: 0.15
@@ -178,12 +182,15 @@ ai_detector_node:
     detect_conf: 0.4
     process_every_n_frames: 2
 
-    enable_fall_alert: true
-    enable_fire_smoke_alert: true
+    enable_fall_alert: false
+    enable_fire_smoke_alert: false
 
     mode_topic: "/amr_ai/mode"
     suppress_fire_smoke_in_follow: true
     suppress_fall_in_follow: true
+    # Trong NAV2: tắt FALL/FIRE/SMOKE — nav_ppe_monitor_node đảm nhận PPE thay thế
+    suppress_fall_in_nav: true
+    suppress_fire_smoke_in_nav: true
 
     fire_smoke_run_interval: 5
     fire_alert_hold_sec: 2.0
@@ -247,3 +254,144 @@ esp32_alert_bridge_node:
   ros__parameters:
     esp32_ip: "192.168.1.36"
 
+nav_ppe_monitor_node:
+  ros__parameters:
+    color_topic: "/camera/color/image_raw"
+    mode_topic:  "/amr_ai/mode"
+    alert_topic: "/amr_ai/alert"
+
+    # [LEGACY — không còn dùng để load model, giữ tương thích]
+    person_model_path: "models/yolo26n.engine"
+    ppe_model_path:    "models/ppe_s.engine"
+
+    # Pose model — THAY THẾ person_model, dùng keypoint COCO 17 điểm
+    # để lọc tay/chân lẻ và xác định đầu có nhìn rõ hay không (thay vì
+    # đoán qua geometry/PPE-model-confidence như trước)
+    pose_model_path: "models/yolo26n-pose.engine"
+
+    # Ngưỡng confidence để coi 1 keypoint là "nhìn thấy được"
+    kpt_conf_threshold: 0.30
+
+    # Số keypoint thân (mũi+2 vai+2 hông) tối thiểu để chấp nhận là
+    # người thật (loại tay/chân lẻ lọt vào khung)
+    min_valid_body_kpts: 2
+
+    # Box conf cao → tin trực tiếp, không cần thêm điều kiện keypoint
+    # (bù trừ góc nghiêng/che khuất khiến mọi keypoint đều mờ)
+    high_conf_box_threshold: 0.60
+
+    # Ngưỡng conf keypoint vùng đầu (mũi/2 mắt/2 tai) để coi "đầu nhìn rõ"
+    head_kpt_conf_threshold: 0.30
+
+    # Overlap tối thiểu (item ∩ person / item) để match PPE — dùng
+    # overlap thay tâm-điểm, không bỏ sót vest khi nghiêng/cầm vật
+    ppe_match_min_overlap: 0.30
+
+    # Góc nghiêng thân tối thiểu (độ) để báo thiếu áo — 90=thẳng đứng.
+    # Nghiêng/cúi dưới ngưỡng → vùng áo co ngắn, model khó detect → bỏ qua
+    min_torso_angle_for_vest_check: 90.0
+
+    # Box aspect (h/w) tối thiểu coi người đứng thẳng (nguồn tín hiệu
+    # thẳng đứng độc lập với hông keypoint — cho case đứng thẳng hông mờ)
+    upright_box_aspect_min: 1.80
+
+    # Mũi cao hơn vai tối thiểu (tỉ lệ khoảng vai) để coi đầu ngẩng
+    # (không cúi gục) — loại trường hợp ngồi xổm gục đầu vẫn báo thiếu nón
+    head_above_shoulder_ratio: 0.15
+
+    # Tỉ lệ dọc/ngang tối thiểu (vai-hông) coi thân ĐỨNG THẲNG — robust
+    # với đứng nghiêng/xoay lưng/side-view (thay torso_angle atan2 vốn bị
+    # lệch khi xoay hướng). Giảm → chấp nhận nghiêng nhiều hơn.
+    torso_vertical_ratio_min: 1.0
+
+    # Bề rộng cho phép (tỉ lệ khoảng vai) coi cổ tay/khuỷu tay "gần trục
+    # giữa thân" khi phát hiện tay ôm/bê vật che thân. Lớn hơn → nhạy hơn.
+    hands_cover_x_ratio: 0.60
+
+    # Bật log chẩn đoán chi tiết để tinh chỉnh ngưỡng theo dữ liệu thật
+    diag_logging: false
+
+    # Ngưỡng MẠNH cho keypoint đầu — chỉ đầu thật rõ mới xét mũ
+    # (tránh báo thiếu nón oan khi cúi còn ló 1 tai/mắt)
+    head_kpt_strong_conf: 0.50
+    min_head_kpts_visible: 2
+
+    # Ngưỡng cao cho hông — pose hay nội suy hông conf cao dù bị che
+    # (ôm thùng trước bụng). Ngưỡng cao phân biệt hông thật thấy vs đoán
+    hip_kpt_conf_threshold: 0.95
+
+    # Số keypoint vai/hông tối thiểu để phân loại FULL_BODY (thay vì
+    # HEAD_ONLY)
+    # [LEGACY — không còn dùng, giữ tương thích]
+    min_torso_kpts_for_full_body: 2
+
+    # Số keypoint HÔNG tối thiểu để coi là FULL_BODY (đáng tin cậy hơn
+    # vai — vai lộ không đủ chứng minh vùng áo cũng lộ theo)
+    min_hip_kpts_for_full_body: 1
+
+    # Cổ tay (proxy bàn tay) — điều kiện xét THIẾU GĂNG TAY
+    wrist_kpt_conf_threshold: 0.50
+    min_wrist_kpts_visible: 1
+
+    # Làm mượt (EMA) confidence keypoint đầu — giảm chập chờn lúc cúi đầu
+    head_conf_smoothing_alpha: 0.4
+
+    detect_conf:  0.4
+    max_persons:  3          # tối đa 3 công nhân cùng lúc
+
+    # PPE inference chạy mỗi N frame nhận được
+    ppe_run_interval: 10
+
+    # PPE model params
+    ppe_imgsz:          640
+    ppe_conf:           0.15
+    ppe_iou:            0.50
+    ppe_helmet_ok_conf: 0.15
+    ppe_vest_ok_conf:   0.35
+    ppe_gloves_ok_conf: 0.30
+
+    # Bật/tắt detect từng loại PPE độc lập (tiện test).
+    # Tắt loại nào → không bao giờ báo thiếu loại đó.
+    enable_helmet_check: true
+    enable_vest_check:   true
+    enable_gloves_check: false
+
+    # Hysteresis: tránh báo nhầm khi người quay lưng thoáng qua
+    confirm_frames: 7    # cần 3 lần vi phạm liên tiếp mới bật alarm
+    clear_frames:   3    # cần 5 lần OK liên tiếp mới tắt alarm
+
+    # ----------------------------------------------------------
+    # Geometry filter — lọc box bộ phận cơ thể (tay/chân/thân không đầu)
+    # ----------------------------------------------------------
+    min_person_height_ratio: 0.03   # noise floor — chỉ loại detection siêu nhỏ/nhiễu
+    min_person_aspect_ratio: 0.70   # h/w thấp hơn 0.70 → loại (box nằm ngang rõ ràng)
+
+    # Đầu sát/ngoài mép trên frame → không thể check mũ
+    head_clip_margin_ratio: 0.05
+
+    # Chỉ suppress "uncertain" (cả 2 score=0) khi box NHỎ hơn ngưỡng này
+    # (full body). Box LỚN mà vẫn uncertain → giữ missing=True (vi phạm thật).
+    uncertain_suppress_max_height_ratio: 0.35
+
+    # ----------------------------------------------------------
+    # Head-only classification — thân bị che, chỉ lộ đầu (ngồi sau bàn/vật cản)
+    # ----------------------------------------------------------
+    # h/w >= ngưỡng này → FULL BODY (check cả mũ + áo)
+    # h/w <  ngưỡng này → HEAD_ONLY (chỉ check mũ trên toàn bộ box)
+    # [LEGACY — không còn dùng để phân loại chính, xem head_occupancy_ratio_threshold]
+    full_body_aspect_min: 1.30
+
+    # Phân loại chính: tỉ lệ (chiều cao helmet/no_helmet detect được) /
+    # (chiều cao person box). >= ngưỡng này → HEAD_ONLY (đầu chiếm phần
+    # lớn box, thân bị che). Nhỏ hơn → FULL_BODY. Không tìm thấy mũ/đầu
+    # nào trong box → UNCERTAIN (bỏ qua, không báo gì).
+    head_occupancy_ratio_threshold: 0.30
+
+    # Ngưỡng suppress uncertain riêng cho box HEAD_ONLY (nhỏ hơn ngưỡng
+    # full-body vì box đầu vốn nhỏ hơn box toàn thân một cách tự nhiên)
+    uncertain_suppress_max_height_ratio_head_only: 0.12
+
+    publish_debug_image:    true
+    debug_image_topic:      "/amr_ai/debug/nav_ppe/image"
+    debug_image_publish_hz: 3.0
+    debug_image_scale:      0.5

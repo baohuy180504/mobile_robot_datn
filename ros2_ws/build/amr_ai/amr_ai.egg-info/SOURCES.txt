@@ -10,6 +10,13 @@ setup.py
 ../../build/amr_ai/amr_ai.egg-info/zip-safe
 amr_ai/__init__.py
 amr_ai/esp32_alert_bridge_node.py
+amr_ai.egg-info/PKG-INFO
+amr_ai.egg-info/SOURCES.txt
+amr_ai.egg-info/dependency_links.txt
+amr_ai.egg-info/entry_points.txt
+amr_ai.egg-info/requires.txt
+amr_ai.egg-info/top_level.txt
+amr_ai.egg-info/zip-safe
 amr_ai/core/__init__.py
 amr_ai/core/ai_mode_manager_node.py
 amr_ai/core/auto_initial_pose_node.py
@@ -32,6 +39,8 @@ amr_ai/nav2/__init__.py
 amr_ai/nav2/backup.py
 amr_ai/nav2/follow_goal_node.py
 amr_ai/nav2/follow_servo_node.py
+amr_ai/nav2/nav_ppe_monitor_node.py
+amr_ai/nav2/nav_ppe_monitor_node_backup.py
 amr_ai/safety/__init__.py
 amr_ai/safety/ai_alert_node.py
 amr_ai/safety/cmd_vel_safety_mux_node.py
@@ -42,12 +51,11 @@ amr_ai/web/__init__.py
 amr_ai/web/engineer_web_server.py
 amr_ai/web/web_control.py
 config/ai_params.yaml
+config/ai_params_backup.yaml
 launch/amr_ai.launch.py
 models/fire_smoke_s.engine
 models/ppe_s.engine
+models/ppe_s1.engine
 models/yolo26n-pose.engine
 models/yolo26n.engine
 resource/amr_ai
-test/test_copyright.py
-test/test_flake8.py
-test/test_pep257.py

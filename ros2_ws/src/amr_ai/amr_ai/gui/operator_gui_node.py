@@ -277,6 +277,17 @@ class OperatorGuiNode(Node):
             self.set_status('SEND START FOLLOW', '#f59e0b')
             self.call_set_mode('START_FOLLOW')
 
+    def pause_nav(self):
+        """Dừng navigation đang chạy đến WP — gửi lệnh CANCEL."""
+        with self.lock:
+            mode = self.current_mode
+
+        self.get_logger().warn(
+            f'PAUSE button pressed. current_mode={mode} ({self.mode_to_name(mode)})'
+        )
+        self.set_status('SEND PAUSE...', '#f59e0b')
+        self.call_set_mode('CANCEL')
+
     def call_set_mode(self, command: str):
         self.get_logger().warn(f'Calling /amr_ai/set_mode command={command}')
 
@@ -492,6 +503,14 @@ class OperatorGuiApp:
             fg='#000000'
         )
 
+        self.pause_btn = self.make_button(
+            self.right,
+            'PAUSE',
+            '#f59e0b',
+            self.node.pause_nav,
+            fg='#000000'
+        )
+
         self.status_label = tk.Label(
             self.outer,
             text='READY',
@@ -622,14 +641,26 @@ class OperatorGuiApp:
             height=zone_h
         )
 
-        follow_w = int(rp_w * 0.42)
-        follow_h = 60
+        # FOLLOW (trái) và PAUSE (phải) ngang hàng nhau
+        follow_pause_y = int(rp_h * 0.72)
+        follow_pause_h = 60
+        each_w = int(rp_w * 0.42)
+        gap = int(rp_w * 0.06)
+        total_w = each_w * 2 + gap
+        start_x = int((rp_w - total_w) / 2)
 
         self.follow_btn.place(
-            x=int((rp_w - follow_w) / 2),
-            y=int(rp_h * 0.72),
-            width=follow_w,
-            height=follow_h
+            x=start_x,
+            y=follow_pause_y,
+            width=each_w,
+            height=follow_pause_h
+        )
+
+        self.pause_btn.place(
+            x=start_x + each_w + gap,
+            y=follow_pause_y,
+            width=each_w,
+            height=follow_pause_h
         )
 
     def toggle_fullscreen(self):

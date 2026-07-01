@@ -79,6 +79,18 @@ def generate_launch_description():
         description='Start ESP32 waypoint gateway'
     )
 
+    start_nav_ppe_monitor_arg = DeclareLaunchArgument(
+        'start_nav_ppe_monitor',
+        default_value='true',
+        description='Start NAV PPE monitor node (PPE check for up to 3 workers during NAV2)'
+    )
+
+    start_esp32_alert_bridge_arg = DeclareLaunchArgument(
+        'start_esp32_alert_bridge',
+        default_value='true',
+        description='Start ESP32 alert bridge node (forward alerts to ESP32 display)'
+    )
+
     params_file = LaunchConfiguration('params_file')
 
     ai_mode_manager = Node(
@@ -161,6 +173,24 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration('start_esp32_gateway'))
     )
 
+    nav_ppe_monitor = Node(
+        package='amr_ai',
+        executable='nav_ppe_monitor',
+        name='nav_ppe_monitor_node',
+        output='screen',
+        parameters=[params_file],
+        condition=IfCondition(LaunchConfiguration('start_nav_ppe_monitor'))
+    )
+
+    esp32_alert_bridge = Node(
+        package='amr_ai',
+        executable='esp32_alert_bridge',
+        name='esp32_alert_bridge_node',
+        output='screen',
+        parameters=[params_file],
+        condition=IfCondition(LaunchConfiguration('start_esp32_alert_bridge'))
+    )
+
     log_info = LogInfo(msg=[
         '\n',
         '╔════════════════════════════════════════════════════════════╗\n',
@@ -184,6 +214,8 @@ def generate_launch_description():
         start_auto_initial_pose_arg,
         start_auto_localizer_arg,
         start_esp32_gateway_arg,
+        start_nav_ppe_monitor_arg,
+        start_esp32_alert_bridge_arg,
 
         log_info,
 
@@ -196,4 +228,6 @@ def generate_launch_description():
         auto_initial_pose,
         auto_localizer,
         esp32_gateway,
+        nav_ppe_monitor,
+        esp32_alert_bridge,
     ])

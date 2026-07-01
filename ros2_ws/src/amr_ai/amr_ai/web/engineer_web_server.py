@@ -781,6 +781,45 @@ async def api_toggle_follow(request: Request):
         "state": state,
     })
 
+
+@app.post("/api/pause_nav")
+async def api_pause_nav():
+    """
+    Dừng navigation đang chạy đến WP (cancel current Nav2 goal → mode về IDLE).
+
+    Dùng command 'CANCEL' của ai_mode_manager.handle_set_mode →
+    gọi stop_or_cancel() → cancel_current_nav_goal() → set_mode(IDLE).
+    """
+    state = get_system_state()
+
+    if not state.get("navigation", False):
+        return JSONResponse({
+            "ok": False,
+            "message": "PAUSE chỉ hoạt động khi hệ thống đang ở chế độ NAVIGATION.",
+            "state": state,
+        })
+
+    service_cmd = (
+        "ros2 service call /amr_ai/set_mode "
+        "amr_interfaces/srv/SetAiMode "
+        "\"{ mode: 0, command: 'CANCEL'}\""
+    )
+
+    code, out = run_cmd(service_cmd, timeout=8.0)
+
+    ok = (code == 0) and (
+        "success=True" in out
+        or "success: true" in out
+        or "response:" in out
+        or "SetAiMode_Response" in out
+    )
+
+    return JSONResponse({
+        "ok": ok,
+        "message": out if out else ("Navigation paused" if ok else "Pause failed"),
+        "state": state,
+    })
+
 @app.post("/api/select_zone")
 async def api_select_zone(request: Request):
     """
@@ -2650,6 +2689,11 @@ VIEWER_HTML = r'''
       <div class="hint">Chưa có waypoint. Nhấn ADD hoặc chọn WAYPOINT rồi click/kéo trên map.</div>
     </div>
 
+    <button id="pauseNavBtn" class="manual-start-btn" onclick="pauseNavigation()"
+      style="background:#f59e0b; margin-top:10px;">
+      ⏸ PAUSE
+    </button>
+
 
     <div class="manual-control">
       <div class="section-title">Manual Control</div>
@@ -3589,6 +3633,25 @@ function publishTeleopSpeed(){
     linear:{x:sp.linear, y:0.0, z:0.0},
     angular:{x:0.0, y:0.0, z:sp.angular}
   }));
+}
+
+async function pauseNavigation() {
+  const btn = document.getElementById('pauseNavBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Đang dừng...'; }
+  try {
+    const r = await fetch('/api/pause_nav', { method: 'POST' });
+    const d = await r.json();
+    log('PAUSE: ' + JSON.stringify(d));
+    if (d.ok) {
+      log('Navigation đã dừng (PAUSE OK).');
+    } else {
+      log('PAUSE failed: ' + (d.message || 'unknown error'));
+    }
+  } catch(e) {
+    log('PAUSE error: ' + e);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '⏸ PAUSE'; }
+  }
 }
 
 async function startManualControlSystem(){

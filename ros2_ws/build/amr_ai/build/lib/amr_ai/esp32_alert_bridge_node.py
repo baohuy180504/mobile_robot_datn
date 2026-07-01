@@ -132,15 +132,25 @@ class Esp32AlertBridgeNode(Node):
         elif alert_type in self.PPE_ALERT_TYPES:
             self.get_logger().info(
                 f'PPE alert received: type={alert_type}, current_mode={self.current_mode} '
-                f'(FOLLOW_ACTIVE={AiMode.FOLLOW_ACTIVE})'
+                f'(FOLLOW_ACTIVE={AiMode.FOLLOW_ACTIVE}, '
+                f'NAV_TO_ZONE={AiMode.NAV_TO_ZONE}, '
+                f'RETURN_TO_ZONE={AiMode.RETURN_TO_ZONE})'
             )
 
-            # Lúc đang FOLLOW_DETECTING (chờ khóa target + xác nhận PPE
-            # trước khi bắt đầu bám) thì KHÔNG gửi cảnh báo này ra ESP32,
-            # và cũng không động vào latch đang có (không coi là NORMAL).
-            if self.current_mode != AiMode.FOLLOW_ACTIVE:
+            # Cho phép PPE alert khi:
+            #   - FOLLOW_ACTIVE : cảnh báo thiếu bảo hộ người đang bám
+            #   - NAV_TO_ZONE   : cảnh báo công nhân thiếu bảo hộ trong NAV2
+            #   - RETURN_TO_ZONE: tương tự NAV_TO_ZONE
+            # Chặn ở mọi mode khác (IDLE, FOLLOW_DETECTING, ALERT_STOPPED...)
+            PPE_ALLOWED_MODES = {
+                AiMode.FOLLOW_ACTIVE,
+                AiMode.NAV_TO_ZONE,
+                AiMode.RETURN_TO_ZONE,
+            }
+            if self.current_mode not in PPE_ALLOWED_MODES:
                 self.get_logger().warn(
-                    f'PPE alert BLOCKED: mode is {self.current_mode}, not FOLLOW_ACTIVE'
+                    f'PPE alert BLOCKED: mode is {self.current_mode}, '
+                    f'not in {[AiMode.FOLLOW_ACTIVE, AiMode.NAV_TO_ZONE, AiMode.RETURN_TO_ZONE]}'
                 )
                 return
             cmd = 'D'

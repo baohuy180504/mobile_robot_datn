@@ -37,7 +37,7 @@ class Esp32AlertBridgeNode(Node):
         self.declare_parameter('normal_reset_sec', 1.0)
 
         self.declare_parameter('socket_timeout_s', 5.0)
-
+ 
         self.esp32_ip = self.get_parameter('esp32_ip').value
         self.esp32_udp_port = int(self.get_parameter('esp32_udp_port').value)
         self.esp32_tcp_port = int(self.get_parameter('esp32_tcp_port').value)
@@ -67,9 +67,14 @@ class Esp32AlertBridgeNode(Node):
         self.current_mode = AiMode.IDLE
         self.PPE_ALERT_TYPES = {'MISSING_HELMET', 'MISSING_VEST', 'MISSING_PPE'}
 
-        # Latch incident
+        # Latch incident (dùng cho FALL / FIRE / SMOKE)
         self.latched_alert_type = None
         self.normal_since = None
+
+        # PPE dùng cooldown riêng — gửi lại mỗi ppe_resend_cooldown_s giây
+        # khi còn vi phạm, không phụ thuộc vào NORMAL để reset latch
+        self.last_ppe_cmd_time = 0.0
+        self.ppe_resend_cooldown_s = 1.5   # gửi mỗi 1.5 giây khi có vi phạm
 
         # Pending image one-shot
         self.pending_image_cmd = None
@@ -130,20 +135,35 @@ class Esp32AlertBridgeNode(Node):
         elif alert_type == 'SMOKE':
             cmd = 'C'
         elif alert_type in self.PPE_ALERT_TYPES:
-            self.get_logger().info(
-                f'PPE alert received: type={alert_type}, current_mode={self.current_mode} '
-                f'(FOLLOW_ACTIVE={AiMode.FOLLOW_ACTIVE})'
-            )
-
-            # Lúc đang FOLLOW_DETECTING (chờ khóa target + xác nhận PPE
-            # trước khi bắt đầu bám) thì KHÔNG gửi cảnh báo này ra ESP32,
-            # và cũng không động vào latch đang có (không coi là NORMAL).
-            if self.current_mode != AiMode.FOLLOW_ACTIVE:
+            PPE_ALLOWED_MODES = {
+                AiMode.IDLE,
+                AiMode.FOLLOW_ACTIVE,
+                AiMode.NAV_TO_ZONE,
+                AiMode.RETURN_TO_ZONE,
+            }
+            if self.current_mode not in PPE_ALLOWED_MODES:
                 self.get_logger().warn(
-                    f'PPE alert BLOCKED: mode is {self.current_mode}, not FOLLOW_ACTIVE'
+                    f'PPE alert BLOCKED: mode={self.current_mode}'
                 )
                 return
-            cmd = 'D'
+
+            # PPE dùng cooldown riêng thay vì latch chung.
+            # Gửi lại mỗi ppe_resend_cooldown_s giây → liên tục khi còn vi phạm.
+            if now - self.last_ppe_cmd_time < self.ppe_resend_cooldown_s:
+                return
+
+            self.last_ppe_cmd_time = now
+            self.send_udp_cmd('D')
+
+            self.pending_image_cmd = 'D'
+            self.pending_image_alert_type = alert_type
+            self.pending_image_start_time = now
+            self.pending_image_due_time = now + self.image_send_delay_s
+
+            self.get_logger().info(
+                f'PPE alert sent: {alert_type}, next in {self.ppe_resend_cooldown_s}s'
+            )
+            return  # không đi qua latch bên dưới
         else:
             # NORMAL chỉ reset latch nội bộ, không gửi N về ESP32
             self.handle_normal(now)

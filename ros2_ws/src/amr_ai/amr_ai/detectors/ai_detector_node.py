@@ -81,6 +81,10 @@ class AiDetectorNode(Node):
         self.declare_parameter('mode_topic', '/amr_ai/mode')
         self.declare_parameter('suppress_fire_smoke_in_follow', True)
         self.declare_parameter('suppress_fall_in_follow', True)
+        # Suppress trong NAV2 (NAV_TO_ZONE / RETURN_TO_ZONE) —
+        # nav_ppe_monitor_node đảm nhận PPE check thay thế.
+        self.declare_parameter('suppress_fall_in_nav', True)
+        self.declare_parameter('suppress_fire_smoke_in_nav', True)
 
         self.declare_parameter('fire_smoke_run_interval', 8)
         self.declare_parameter('fire_alert_hold_sec', 2.0)
@@ -114,6 +118,12 @@ class AiDetectorNode(Node):
         )
         self.suppress_fall_in_follow = bool(
             self.get_parameter('suppress_fall_in_follow').value
+        )
+        self.suppress_fall_in_nav = bool(
+            self.get_parameter('suppress_fall_in_nav').value
+        )
+        self.suppress_fire_smoke_in_nav = bool(
+            self.get_parameter('suppress_fire_smoke_in_nav').value
         )
 
         self.fire_smoke_run_interval = max(1, int(self.get_parameter('fire_smoke_run_interval').value))
@@ -267,6 +277,7 @@ class AiDetectorNode(Node):
         stamp = msg.header.stamp
 
         in_follow_mode = self.current_mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]
+        in_nav_mode    = self.current_mode in [AiMode.NAV_TO_ZONE, AiMode.RETURN_TO_ZONE]
 
         detections = []
         fall_active = False
@@ -278,6 +289,7 @@ class AiDetectorNode(Node):
             and self.person_model is not None
             and self.fall_detector is not None
             and not (self.suppress_fall_in_follow and in_follow_mode)
+            and not (self.suppress_fall_in_nav    and in_nav_mode)
         )
 
         if run_fall:
@@ -306,6 +318,7 @@ class AiDetectorNode(Node):
             self.enable_fire_smoke_alert
             and self.fire_smoke_detector is not None
             and not (self.suppress_fire_smoke_in_follow and in_follow_mode)
+            and not (self.suppress_fire_smoke_in_nav    and in_nav_mode)
         )
 
         if run_fire_smoke:
