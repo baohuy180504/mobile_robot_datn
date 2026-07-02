@@ -1612,40 +1612,19 @@ class NavPPEMonitorNode(Node):
                 else None
             )
 
+            # Chỉ tô MÀU box theo trạng thái, KHÔNG vẽ nhãn text trên
+            # đầu box người (theo yêu cầu bỏ nhãn "THIEU N+A").
+            #   xám  = chưa xét xong
+            #   đỏ   = có vi phạm (thiếu bảo hộ)
+            #   xanh = đủ bảo hộ / không có vi phạm
             if status is None:
                 color = (128, 128, 128)
-                label = f'P{i+1} CHECK...'
             elif status.get('violation', False):
                 color = (0, 0, 255)
-                missing = []
-                if status.get('missing_helmet'):
-                    missing.append('NON')
-                if status.get('missing_vest'):
-                    missing.append('AO')
-                if status.get('missing_gloves'):
-                    missing.append('GANG')
-                label = f'P{i+1} THIEU ' + '+'.join(missing)
             else:
                 color = (0, 255, 0)
-                # Hiển thị vùng nào đã được xét (nhìn rõ) để debug dễ hơn.
-                # Chỉ hiện loại đang BẬT check (tắt thì không xét nên
-                # không hiển thị).
-                seen = []
-                if self.enable_helmet_check and status.get('head_visible'):
-                    seen.append('N')   # đầu nhìn rõ → có xét mũ
-                if self.enable_vest_check and status.get('torso_visible'):
-                    seen.append('A')   # thân nhìn rõ → có xét áo
-                if self.enable_gloves_check and status.get('hands_visible'):
-                    seen.append('G')   # tay nhìn rõ → có xét găng
-                tag = (' [' + '+'.join(seen) + ']') if seen else ''
-                label = f'P{i+1} PPE OK' + tag
 
             cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 2)
-            cv2.putText(
-                annotated, label,
-                (x1, max(22, y1 - 8)),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.65, color, 2
-            )
 
         # Header cảnh báo
         if self.alarm_active:

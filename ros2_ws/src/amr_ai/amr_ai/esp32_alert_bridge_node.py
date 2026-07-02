@@ -25,6 +25,9 @@ class Esp32AlertBridgeNode(Node):
 
         self.declare_parameter('alert_topic', '/amr_ai/alert')
         self.declare_parameter('debug_image_topic', '/amr_ai/debug/alert/image')
+        # Ảnh riêng cho cảnh báo PPE: đã vẽ sẵn box đỏ vi phạm
+        # (publish bởi nav_ppe_monitor_node)
+        self.declare_parameter('ppe_image_topic', '/amr_ai/debug/nav_ppe/image')
         self.declare_parameter('mode_topic', '/amr_ai/mode')
 
         self.declare_parameter('snapshot_width', 296)
@@ -44,6 +47,7 @@ class Esp32AlertBridgeNode(Node):
 
         self.alert_topic = self.get_parameter('alert_topic').value
         self.debug_image_topic = self.get_parameter('debug_image_topic').value
+        self.ppe_image_topic = self.get_parameter('ppe_image_topic').value
         self.mode_topic = self.get_parameter('mode_topic').value
 
         self.snapshot_width = int(self.get_parameter('snapshot_width').value)
@@ -60,6 +64,11 @@ class Esp32AlertBridgeNode(Node):
 
         self.latest_debug_image = None
         self.latest_debug_stamp_sec = 0.0
+
+        # Frame mới nhất từ nav_ppe (có box đỏ vi phạm PPE) — chỉ dùng
+        # cho ảnh one-shot của cảnh báo PPE, không đụng tới FALL/FIRE/SMOKE.
+        self.latest_ppe_image = None
+        self.latest_ppe_stamp_sec = 0.0
 
         # Theo dõi mode hiện tại để biết xe có đang THỰC SỰ bám người
         # (FOLLOW_ACTIVE) hay chỉ mới đang dò/khóa target (FOLLOW_DETECTING).
@@ -103,6 +112,13 @@ class Esp32AlertBridgeNode(Node):
             qos_profile_sensor_data
         )
 
+        self.ppe_image_sub = self.create_subscription(
+            Image,
+            self.ppe_image_topic,
+            self.ppe_image_callback,
+            qos_profile_sensor_data
+        )
+
         self.timer = self.create_timer(0.05, self.timer_callback)
 
         self.get_logger().warn('ESP32 Alert Bridge started - LATCH mode')
@@ -111,6 +127,7 @@ class Esp32AlertBridgeNode(Node):
         self.get_logger().info(f'TCP image port: {self.esp32_tcp_port}')
         self.get_logger().info(f'Alert topic: {self.alert_topic}')
         self.get_logger().info(f'Debug image topic: {self.debug_image_topic}')
+        self.get_logger().info(f'PPE image topic: {self.ppe_image_topic}')
         self.get_logger().info(f'Mode topic: {self.mode_topic}')
 
     def mode_callback(self, msg: AiMode):
@@ -123,6 +140,14 @@ class Esp32AlertBridgeNode(Node):
             self.latest_debug_stamp_sec = time.time()
         except Exception as exc:
             self.get_logger().warn(f'Failed to convert debug image: {exc}')
+
+    def ppe_image_callback(self, msg: Image):
+        try:
+            frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+            self.latest_ppe_image = frame
+            self.latest_ppe_stamp_sec = time.time()
+        except Exception as exc:
+            self.get_logger().warn(f'Failed to convert PPE image: {exc}')
 
     def alert_callback(self, msg: AiAlert):
         alert_type = str(msg.alert_type).upper().strip()
@@ -218,27 +243,50 @@ class Esp32AlertBridgeNode(Node):
         if now < self.pending_image_due_time:
             return
 
-        # Chờ debug image mới hơn thời điểm alert một chút
-        if self.latest_debug_image is None:
-            if now - self.pending_image_start_time > self.image_wait_timeout_s:
+        # PPE dùng ảnh từ nav_ppe (đã vẽ sẵn box đỏ vi phạm),
+        # FALL/FIRE/SMOKE giữ nguyên ảnh debug chung như cũ.
+        is_ppe = self.pending_image_alert_type in self.PPE_ALERT_TYPES
+        timed_out = (now - self.pending_image_start_time) > self.image_wait_timeout_s
+
+        if is_ppe:
+            img = self.latest_ppe_image
+            stamp = self.latest_ppe_stamp_sec
+            src_name = 'nav_ppe'
+        else:
+            img = self.latest_debug_image
+            stamp = self.latest_debug_stamp_sec
+            src_name = 'debug'
+
+        # Fallback an toàn: hết thời gian chờ mà CHƯA TỪNG nhận frame
+        # nav_ppe nào (node PPE không chạy / sai topic) thì dùng tạm ảnh
+        # debug cũ để không mất hẳn ảnh sự cố.
+        if is_ppe and img is None and timed_out:
+            img = self.latest_debug_image
+            stamp = self.latest_debug_stamp_sec
+            src_name = 'debug (fallback: no nav_ppe frame)'
+
+        # Chờ ảnh nguồn phù hợp
+        if img is None:
+            if timed_out:
                 self.get_logger().warn(
-                    f'No debug image for {self.pending_image_alert_type}, skip one-shot image'
+                    f'No {src_name} image for {self.pending_image_alert_type}, skip one-shot image'
                 )
                 self.clear_pending_image()
             return
 
-        if self.latest_debug_stamp_sec < self.pending_image_start_time:
-            if now - self.pending_image_start_time <= self.image_wait_timeout_s:
+        # Chờ ảnh mới hơn thời điểm alert một chút
+        if stamp < self.pending_image_start_time:
+            if not timed_out:
                 return
 
             self.get_logger().warn(
-                f'Debug image not updated after alert, sending latest old frame anyway'
+                f'{src_name} image not updated after alert, sending latest old frame anyway'
             )
 
         cmd = self.pending_image_cmd
         alert_type = self.pending_image_alert_type
 
-        ok = self.send_latest_image(cmd)
+        ok = self.send_image(cmd, img)
 
         if ok:
             self.get_logger().warn(f'One-shot image sent for {alert_type}')
@@ -263,14 +311,14 @@ class Esp32AlertBridgeNode(Node):
         except Exception as exc:
             self.get_logger().warn(f'Failed to send UDP cmd {cmd}: {exc}')
 
-    def send_latest_image(self, cmd: str) -> bool:
-        if self.latest_debug_image is None:
-            self.get_logger().warn('No debug image available, skip TCP image')
+    def send_image(self, cmd: str, img_bgr) -> bool:
+        if img_bgr is None:
+            self.get_logger().warn('No image available, skip TCP image')
             return False
 
         try:
             img = self.letterbox_bgr(
-                self.latest_debug_image,
+                img_bgr,
                 self.snapshot_width,
                 self.snapshot_height
             )

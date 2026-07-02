@@ -1,6 +1,6 @@
 {
   "frame_id": "map",
-  "updated_at": "2026-06-30 09:45:38",
+  "updated_at": "1970-01-01 08:14:36",
   "mapping_note": "WP0=HOME=(0,0,0) fixed. ESP32 sends WP1/WP2/WP3/... directly.",
   "home": {
     "name": "WP0",
@@ -13,17 +13,17 @@
   "waypoints": [
     {
       "name": "WP1",
-      "x": 1.0,
-      "y": 0.0,
-      "yaw": 0.0,
+      "x": 6.038,
+      "y": -0.357,
+      "yaw": 1.57,
       "locked": false,
       "source": "WP1"
     },
     {
       "name": "WP2",
-      "x": 3.038,
-      "y": -0.201,
-      "yaw": 0.036,
+      "x": 2.806,
+      "y": 4.076,
+      "yaw": 1.483,
       "locked": false,
       "source": "WP2"
     }
@@ -52,16 +52,16 @@
     },
     {
       "name": "WP1",
-      "x": 1.0,
-      "y": 0.0,
-      "yaw": 0.0,
+      "x": 6.038,
+      "y": -0.357,
+      "yaw": 1.57,
       "source": "WP1"
     },
     {
       "name": "WP2",
-      "x": 3.038,
-      "y": -0.201,
-      "yaw": 0.036,
+      "x": 2.806,
+      "y": 4.076,
+      "yaw": 1.483,
       "source": "WP2"
     }
   ]

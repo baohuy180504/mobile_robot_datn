@@ -306,10 +306,10 @@ nav_ppe_monitor_node:
 
     # Bề rộng cho phép (tỉ lệ khoảng vai) coi cổ tay/khuỷu tay "gần trục
     # giữa thân" khi phát hiện tay ôm/bê vật che thân. Lớn hơn → nhạy hơn.
-    hands_cover_x_ratio: 0.60
+    hands_cover_x_ratio: 1.00
 
     # Bật log chẩn đoán chi tiết để tinh chỉnh ngưỡng theo dữ liệu thật
-    diag_logging: false
+    diag_logging: true
 
     # Ngưỡng MẠNH cho keypoint đầu — chỉ đầu thật rõ mới xét mũ
     # (tránh báo thiếu nón oan khi cúi còn ló 1 tai/mắt)
@@ -319,6 +319,13 @@ nav_ppe_monitor_node:
     # Ngưỡng cao cho hông — pose hay nội suy hông conf cao dù bị che
     # (ôm thùng trước bụng). Ngưỡng cao phân biệt hông thật thấy vs đoán
     hip_kpt_conf_threshold: 0.95
+
+    # Dịch điểm hông ảo lên trên theo tỉ lệ khoảng cách vai-hông.
+    # Chỉ dùng cho _is_torso_vertical và vùng thân khi kiểm tra che thân,
+    # KHÔNG thay đổi hip_visible/luồng A-B.
+    # Gợi ý test: 0.15-0.30. Tăng lên nếu vẫn báo thiếu áo khi nâng vật;
+    # giảm xuống nếu áo bị bỏ qua quá nhiều khi người đứng bình thường.
+    hip_shift_up_ratio: 0.90
 
     # Số keypoint vai/hông tối thiểu để phân loại FULL_BODY (thay vì
     # HEAD_ONLY)
@@ -340,7 +347,7 @@ nav_ppe_monitor_node:
     max_persons:  3          # tối đa 3 công nhân cùng lúc
 
     # PPE inference chạy mỗi N frame nhận được
-    ppe_run_interval: 10
+    ppe_run_interval: 5
 
     # PPE model params
     ppe_imgsz:          640
