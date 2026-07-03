@@ -345,8 +345,8 @@ global_costmap:
       track_unknown_space: true
 
       # FUSION: giữ static map 2D và LiDAR như file gốc, chỉ thêm voxel_layer từ camera.
-      #plugins: ["static_layer", "obstacle_layer", "voxel_layer", "inflation_layer"]
-      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      plugins: ["static_layer", "obstacle_layer", "voxel_layer", "inflation_layer"]
+      #plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -361,7 +361,40 @@ global_costmap:
           raytrace_min_range: 0.0
           obstacle_max_range: 10.0    #2.5
           obstacle_min_range: 0.0
-
+          
+      voxel_layer:
+        plugin: "spatio_temporal_voxel_layer/SpatioTemporalVoxelLayer"
+        enabled: True
+        voxel_decay: 1.0             # giây — voxel không được xác nhận lại sẽ TỰ XÓA
+                                      # tăng nếu vật cản thật bị xóa nhầm quá sớm
+                                      # giảm nếu muốn xóa nhanh hơn nữa
+        decay_model: 0                # 0=Linear (xóa dần đều), 1=Exponential, 2=Persistent (không decay, như cũ)
+        voxel_size: 0.05              # kích thước voxel 3D (mịn, không cần ép 1 bin như trước)
+        track_unknown_space: true
+        mark_threshold: 0
+        update_footprint_enabled: true
+        combination_method: 1
+        origin_z: 0.0
+        publish_voxel_map: True
+        transform_tolerance: 0.2
+        mapping_mode: false
+        map_save_duration: 60.0
+        observation_sources: pointcloud
+        pointcloud:
+          data_type: "PointCloud2"
+          topic: /camera/depth/points_filtered
+          marking: true
+          clearing: true
+          obstacle_range: 2.5
+          min_obstacle_height: 0.30   # > lidar height (0.2657m), chỉ bắt vật lidar không thấy
+          max_obstacle_height: 1.20   # camera mount 0.79m, FOV phủ lên tới ~1.2m
+          expected_update_rate: 0.5
+          observation_persistence: 0.0
+          inf_is_valid: false
+          filter: "voxel"
+          voxel_min_points: 0
+          clear_after_reading: true   # xóa buffer sau khi xử lý, tránh dữ liệu cũ tồn đọng
+          
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
