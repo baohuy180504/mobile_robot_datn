@@ -14,6 +14,7 @@ find_package(nav2_costmap_2d REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 set(dependencies
   rclcpp
@@ -21,6 +22,7 @@ set(dependencies
   nav_msgs
   pluginlib
   tf2
+  tf2_geometry_msgs
 )
 
 include_directories(include)

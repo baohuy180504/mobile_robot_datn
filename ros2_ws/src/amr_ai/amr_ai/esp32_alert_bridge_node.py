@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import ipaddress
+import os
+import re
 import socket
 import time
 import cv2
@@ -12,23 +15,48 @@ from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-from amr_interfaces.msg import AiAlert, AiMode
+from amr_interfaces.msg import AiAlert
 
 
 class Esp32AlertBridgeNode(Node):
+    """
+    Chuyển cảnh báo TÉ NGÃ (alert_type='FALL') từ /amr_ai/alert sang ESP32:
+      - UDP  : mã lệnh 'A' (ESP32 hiển thị cảnh báo)
+      - TCP  : 1 ảnh snapshot RGB565 (lấy từ ảnh debug của ai_detector_node)
+
+    Cảnh báo được gửi ở MỌI chế độ (IDLE, NAV_*, FOLLOW_*, ALERT_STOPPED...).
+    Đã bỏ cảnh báo lửa/khói/bảo hộ (mã B, C, D không còn được gửi).
+
+    Địa chỉ ESP32 KHÔNG hardcode trong code/yaml. Thứ tự ưu tiên:
+      1) tham số esp32_ip (nếu khác rỗng, dùng để debug/ghi đè tạm)
+      2) file network.env:  ESP32_ALERT_IP=..., (tùy chọn) ESP32_ALERT_UDP_PORT,
+         ESP32_ALERT_TCP_PORT. File được đọc lại MỖI LẦN có sự cố mới nên đổi
+         IP xong không cần restart node. Chưa có IP -> ghi cảnh báo, không gửi.
+    ESP32_ALERT_IP có thể là IPv4 HOẶC hostname mDNS (vd amr-display.local, tên do
+    firmware màn hình tự quảng bá): khi đó đổi WiFi không phải sửa gì trên Jetson.
+    Hostname được phân giải mỗi sự cố mới; nếu lần này phân giải thất bại thì dùng
+    lại IP của lần thành công gần nhất.
+
+    Latch: mỗi sự cố FALL chỉ gửi 1 lần (UDP + ảnh). Khi ai_detector trả về
+    NORMAL liên tục >= normal_reset_sec thì latch nội bộ được reset để sự cố
+    tiếp theo gửi lại được. Màn hình ESP32 KHÔNG tự xóa.
+    """
+
+    FALL_CMD = 'A'
+    DEFAULT_ENV_FILE = '~/mobile_robot/ros2_ws/config/network.env'
+    HOSTNAME_RE = re.compile(r'^[A-Za-z0-9]([A-Za-z0-9.-]*[A-Za-z0-9])?$')
+
     def __init__(self):
         super().__init__('esp32_alert_bridge_node')
 
-        self.declare_parameter('esp32_ip', '192.168.1.36')
+        # Để trống: lấy từ network.env. Chỉ điền khi cần ghi đè tạm để debug.
+        self.declare_parameter('esp32_ip', '')
         self.declare_parameter('esp32_udp_port', 4210)
         self.declare_parameter('esp32_tcp_port', 4211)
+        self.declare_parameter('network_env_file', self.DEFAULT_ENV_FILE)
 
         self.declare_parameter('alert_topic', '/amr_ai/alert')
         self.declare_parameter('debug_image_topic', '/amr_ai/debug/alert/image')
-        # Ảnh riêng cho cảnh báo PPE: đã vẽ sẵn box đỏ vi phạm
-        # (publish bởi nav_ppe_monitor_node)
-        self.declare_parameter('ppe_image_topic', '/amr_ai/debug/nav_ppe/image')
-        self.declare_parameter('mode_topic', '/amr_ai/mode')
 
         self.declare_parameter('snapshot_width', 296)
         self.declare_parameter('snapshot_height', 296)
@@ -40,15 +68,16 @@ class Esp32AlertBridgeNode(Node):
         self.declare_parameter('normal_reset_sec', 1.0)
 
         self.declare_parameter('socket_timeout_s', 5.0)
- 
-        self.esp32_ip = self.get_parameter('esp32_ip').value
+
+        self.esp32_ip_param = str(self.get_parameter('esp32_ip').value).strip()
         self.esp32_udp_port = int(self.get_parameter('esp32_udp_port').value)
         self.esp32_tcp_port = int(self.get_parameter('esp32_tcp_port').value)
+        self.network_env_path = os.path.expanduser(
+            str(self.get_parameter('network_env_file').value)
+        )
 
         self.alert_topic = self.get_parameter('alert_topic').value
         self.debug_image_topic = self.get_parameter('debug_image_topic').value
-        self.ppe_image_topic = self.get_parameter('ppe_image_topic').value
-        self.mode_topic = self.get_parameter('mode_topic').value
 
         self.snapshot_width = int(self.get_parameter('snapshot_width').value)
         self.snapshot_height = int(self.get_parameter('snapshot_height').value)
@@ -65,43 +94,27 @@ class Esp32AlertBridgeNode(Node):
         self.latest_debug_image = None
         self.latest_debug_stamp_sec = 0.0
 
-        # Frame mới nhất từ nav_ppe (có box đỏ vi phạm PPE) — chỉ dùng
-        # cho ảnh one-shot của cảnh báo PPE, không đụng tới FALL/FIRE/SMOKE.
-        self.latest_ppe_image = None
-        self.latest_ppe_stamp_sec = 0.0
-
-        # Theo dõi mode hiện tại để biết xe có đang THỰC SỰ bám người
-        # (FOLLOW_ACTIVE) hay chỉ mới đang dò/khóa target (FOLLOW_DETECTING).
-        # PPE warning chỉ gửi ra ESP32 khi đã FOLLOW_ACTIVE.
-        self.current_mode = AiMode.IDLE
-        self.PPE_ALERT_TYPES = {'MISSING_HELMET', 'MISSING_VEST', 'MISSING_PPE'}
-
-        # Latch incident (dùng cho FALL / FIRE / SMOKE)
+        # Latch incident
         self.latched_alert_type = None
         self.normal_since = None
-
-        # PPE dùng cooldown riêng — gửi lại mỗi ppe_resend_cooldown_s giây
-        # khi còn vi phạm, không phụ thuộc vào NORMAL để reset latch
-        self.last_ppe_cmd_time = 0.0
-        self.ppe_resend_cooldown_s = 1.5   # gửi mỗi 1.5 giây khi có vi phạm
 
         # Pending image one-shot
         self.pending_image_cmd = None
         self.pending_image_alert_type = None
         self.pending_image_start_time = 0.0
         self.pending_image_due_time = 0.0
+        self.pending_target = None
+
+        # Địa chỉ ESP32 lần gần nhất (để log khi thay đổi) và chống spam cảnh báo
+        self.last_target = None
+        self.host_ip_cache = {}
+        self.retry_after = 0.0
+        self._last_warn_time = {}
 
         self.alert_sub = self.create_subscription(
             AiAlert,
             self.alert_topic,
             self.alert_callback,
-            10
-        )
-
-        self.mode_sub = self.create_subscription(
-            AiMode,
-            self.mode_topic,
-            self.mode_callback,
             10
         )
 
@@ -112,26 +125,140 @@ class Esp32AlertBridgeNode(Node):
             qos_profile_sensor_data
         )
 
-        self.ppe_image_sub = self.create_subscription(
-            Image,
-            self.ppe_image_topic,
-            self.ppe_image_callback,
-            qos_profile_sensor_data
-        )
-
         self.timer = self.create_timer(0.05, self.timer_callback)
 
-        self.get_logger().warn('ESP32 Alert Bridge started - LATCH mode')
-        self.get_logger().info(f'ESP32 IP: {self.esp32_ip}')
-        self.get_logger().info(f'UDP port: {self.esp32_udp_port}')
-        self.get_logger().info(f'TCP image port: {self.esp32_tcp_port}')
+        self.get_logger().warn('ESP32 Alert Bridge started - FALL only, LATCH mode')
+        self.get_logger().info(f'Network env file: {self.network_env_path}')
         self.get_logger().info(f'Alert topic: {self.alert_topic}')
         self.get_logger().info(f'Debug image topic: {self.debug_image_topic}')
-        self.get_logger().info(f'PPE image topic: {self.ppe_image_topic}')
-        self.get_logger().info(f'Mode topic: {self.mode_topic}')
 
-    def mode_callback(self, msg: AiMode):
-        self.current_mode = int(msg.mode)
+        if self.resolve_target() is None:
+            self.get_logger().warn(
+                'ESP32 alert IP chưa được cấu hình. Sửa ESP32_ALERT_IP trong '
+                f'{self.network_env_path} (không cần restart node).'
+            )
+
+    # ==========================================================
+    # Địa chỉ ESP32 (network.env)
+    # ==========================================================
+    def warn_throttled(self, key: str, message: str, period_s: float = 10.0):
+        now = time.time()
+        if now - self._last_warn_time.get(key, 0.0) >= period_s:
+            self._last_warn_time[key] = now
+            self.get_logger().warn(message)
+
+    @staticmethod
+    def parse_env_file(path: str) -> dict:
+        """Đọc file KEY=VALUE (bỏ dòng trống, comment #, 'export ', dấu nháy)."""
+        values = {}
+        with open(path, 'r', encoding='utf-8') as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith('#'):
+                    continue
+                if line.startswith('export '):
+                    line = line[len('export '):].strip()
+                if '=' not in line:
+                    continue
+                key, val = line.split('=', 1)
+                val = re.split(r'\s#', val, maxsplit=1)[0]      # bỏ comment cuối dòng
+                values[key.strip()] = val.strip().strip('"').strip("'")
+        return values
+
+    @staticmethod
+    def to_port(value, default: int) -> int:
+        try:
+            port = int(value)
+            if 1 <= port <= 65535:
+                return port
+        except (TypeError, ValueError):
+            pass
+        return default
+
+    def is_valid_host(self, host: str) -> bool:
+        try:
+            ipaddress.IPv4Address(host)
+            return True
+        except ValueError:
+            return bool(self.HOSTNAME_RE.match(host)) and not host.replace('.', '').isdigit()
+
+    def resolve_ip(self, host: str):
+        """IPv4 -> giữ nguyên. Hostname (vd amr-display.local) -> IPv4; lỗi thì dùng IP gần nhất."""
+        try:
+            ipaddress.IPv4Address(host)
+            return host
+        except ValueError:
+            pass
+
+        try:
+            ip = socket.gethostbyname(host)
+            if self.host_ip_cache.get(host) != ip:
+                self.get_logger().warn(f'Phân giải {host} -> {ip}')
+            self.host_ip_cache[host] = ip
+            return ip
+        except OSError as exc:
+            cached = self.host_ip_cache.get(host)
+            if cached:
+                self.warn_throttled(
+                    'resolve_cached',
+                    f'Không phân giải được {host} ({exc}); dùng IP lần trước: {cached}'
+                )
+                return cached
+            self.warn_throttled(
+                'resolve_fail',
+                f'Không phân giải được {host}: {exc}. Kiểm tra mDNS trên Jetson '
+                f'(avahi-daemon + libnss-mdns) hoặc điền IP vào network.env.'
+            )
+            return None
+
+    def resolve_target(self):
+        """
+        Trả về (host, udp_port, tcp_port) hoặc None nếu chưa có / sai cấu hình.
+        Đọc lại network.env ở mỗi lần gọi -> đổi IP không cần restart.
+        """
+        env = {}
+        try:
+            env = self.parse_env_file(self.network_env_path)
+        except FileNotFoundError:
+            if not self.esp32_ip_param:
+                self.warn_throttled(
+                    'env_missing',
+                    f'Không thấy file {self.network_env_path}. '
+                    f'Tạo file với dòng ESP32_ALERT_IP=<ip màn hình ESP32>.'
+                )
+        except Exception as exc:
+            self.warn_throttled('env_error', f'Không đọc được {self.network_env_path}: {exc}')
+
+        host = self.esp32_ip_param or env.get('ESP32_ALERT_IP', '').strip()
+        source = 'param esp32_ip' if self.esp32_ip_param else self.network_env_path
+
+        if not host:
+            return None
+
+        if not self.is_valid_host(host):
+            self.warn_throttled(
+                'bad_host', f'ESP32_ALERT_IP không hợp lệ: {host!r} (nguồn: {source})'
+            )
+            return None
+
+        ip = self.resolve_ip(host)
+        if ip is None:
+            return None
+
+        target = (
+            ip,
+            self.to_port(env.get('ESP32_ALERT_UDP_PORT'), self.esp32_udp_port),
+            self.to_port(env.get('ESP32_ALERT_TCP_PORT'), self.esp32_tcp_port),
+        )
+
+        if target != self.last_target:
+            self.last_target = target
+            shown = host if host == ip else f'{host} -> {ip}'
+            self.get_logger().warn(
+                f'ESP32 alert target: {shown} (UDP {target[1]}, TCP {target[2]}) | nguồn: {source}'
+            )
+
+        return target
 
     def debug_image_callback(self, msg: Image):
         try:
@@ -141,79 +268,53 @@ class Esp32AlertBridgeNode(Node):
         except Exception as exc:
             self.get_logger().warn(f'Failed to convert debug image: {exc}')
 
-    def ppe_image_callback(self, msg: Image):
-        try:
-            frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            self.latest_ppe_image = frame
-            self.latest_ppe_stamp_sec = time.time()
-        except Exception as exc:
-            self.get_logger().warn(f'Failed to convert PPE image: {exc}')
-
     def alert_callback(self, msg: AiAlert):
         alert_type = str(msg.alert_type).upper().strip()
         now = time.time()
 
-        if alert_type == 'FALL':
-            cmd = 'A'
-        elif alert_type == 'FIRE':
-            cmd = 'B'
-        elif alert_type == 'SMOKE':
-            cmd = 'C'
-        elif alert_type in self.PPE_ALERT_TYPES:
-            PPE_ALLOWED_MODES = {
-                AiMode.IDLE,
-                AiMode.FOLLOW_ACTIVE,
-                AiMode.NAV_TO_ZONE,
-                AiMode.RETURN_TO_ZONE,
-            }
-            if self.current_mode not in PPE_ALLOWED_MODES:
-                self.get_logger().warn(
-                    f'PPE alert BLOCKED: mode={self.current_mode}'
-                )
-                return
-
-            # PPE dùng cooldown riêng thay vì latch chung.
-            # Gửi lại mỗi ppe_resend_cooldown_s giây → liên tục khi còn vi phạm.
-            if now - self.last_ppe_cmd_time < self.ppe_resend_cooldown_s:
-                return
-
-            self.last_ppe_cmd_time = now
-            self.send_udp_cmd('D')
-
-            self.pending_image_cmd = 'D'
-            self.pending_image_alert_type = alert_type
-            self.pending_image_start_time = now
-            self.pending_image_due_time = now + self.image_send_delay_s
-
-            self.get_logger().info(
-                f'PPE alert sent: {alert_type}, next in {self.ppe_resend_cooldown_s}s'
-            )
-            return  # không đi qua latch bên dưới
-        else:
-            # NORMAL chỉ reset latch nội bộ, không gửi N về ESP32
+        if alert_type == 'FALL' and bool(msg.active):
+            self.handle_fall(alert_type, now)
+        elif alert_type == 'NORMAL':
+            # NORMAL chỉ reset latch nội bộ, không gửi gì về ESP32
             self.handle_normal(now)
-            return
+        # Loại khác (FIRE/SMOKE/PPE cũ...): bỏ qua hoàn toàn.
 
+    def handle_fall(self, alert_type: str, now: float):
         self.normal_since = None
 
-        # Nếu cùng loại cảnh báo đang latch rồi thì không gửi lại A/B/C và không gửi lại ảnh
+        # Cùng sự cố đang latch rồi thì không gửi lại lệnh và ảnh
         if self.latched_alert_type == alert_type:
+            return
+
+        # Chưa có địa chỉ ESP32 hợp lệ: KHÔNG latch, để khi cấu hình xong thì
+        # sự cố đang diễn ra vẫn được gửi. Thử lại tối đa 1 lần/giây.
+        if now < self.retry_after:
+            return
+
+        target = self.resolve_target()
+        if target is None:
+            self.retry_after = now + 1.0
+            self.warn_throttled(
+                'no_target',
+                f'Có cảnh báo {alert_type} nhưng chưa có IP ESP32 hợp lệ -> chưa gửi được.'
+            )
             return
 
         # Cảnh báo mới
         self.latched_alert_type = alert_type
+        self.pending_target = target
 
-        self.send_udp_cmd(cmd)
+        self.send_udp_cmd(self.FALL_CMD, target)
 
         # Đặt lịch gửi ảnh 1 lần sau một khoảng delay ngắn,
         # để debug image mới nhất kịp publish sau alert.
-        self.pending_image_cmd = cmd
+        self.pending_image_cmd = self.FALL_CMD
         self.pending_image_alert_type = alert_type
         self.pending_image_start_time = now
         self.pending_image_due_time = now + self.image_send_delay_s
 
         self.get_logger().warn(
-            f'NEW INCIDENT: {alert_type}, sent cmd={cmd}, image scheduled'
+            f'NEW INCIDENT: {alert_type}, sent cmd={self.FALL_CMD}, image scheduled'
         )
 
     def handle_normal(self, now):
@@ -233,6 +334,7 @@ class Esp32AlertBridgeNode(Node):
             self.normal_since = None
             self.pending_image_cmd = None
             self.pending_image_alert_type = None
+            self.pending_target = None
 
     def timer_callback(self):
         if self.pending_image_cmd is None:
@@ -243,50 +345,30 @@ class Esp32AlertBridgeNode(Node):
         if now < self.pending_image_due_time:
             return
 
-        # PPE dùng ảnh từ nav_ppe (đã vẽ sẵn box đỏ vi phạm),
-        # FALL/FIRE/SMOKE giữ nguyên ảnh debug chung như cũ.
-        is_ppe = self.pending_image_alert_type in self.PPE_ALERT_TYPES
         timed_out = (now - self.pending_image_start_time) > self.image_wait_timeout_s
 
-        if is_ppe:
-            img = self.latest_ppe_image
-            stamp = self.latest_ppe_stamp_sec
-            src_name = 'nav_ppe'
-        else:
-            img = self.latest_debug_image
-            stamp = self.latest_debug_stamp_sec
-            src_name = 'debug'
-
-        # Fallback an toàn: hết thời gian chờ mà CHƯA TỪNG nhận frame
-        # nav_ppe nào (node PPE không chạy / sai topic) thì dùng tạm ảnh
-        # debug cũ để không mất hẳn ảnh sự cố.
-        if is_ppe and img is None and timed_out:
-            img = self.latest_debug_image
-            stamp = self.latest_debug_stamp_sec
-            src_name = 'debug (fallback: no nav_ppe frame)'
-
-        # Chờ ảnh nguồn phù hợp
-        if img is None:
+        # Chờ có ảnh debug
+        if self.latest_debug_image is None:
             if timed_out:
                 self.get_logger().warn(
-                    f'No {src_name} image for {self.pending_image_alert_type}, skip one-shot image'
+                    f'No debug image for {self.pending_image_alert_type}, skip one-shot image'
                 )
                 self.clear_pending_image()
             return
 
         # Chờ ảnh mới hơn thời điểm alert một chút
-        if stamp < self.pending_image_start_time:
+        if self.latest_debug_stamp_sec < self.pending_image_start_time:
             if not timed_out:
                 return
 
             self.get_logger().warn(
-                f'{src_name} image not updated after alert, sending latest old frame anyway'
+                'Debug image not updated after alert, sending latest old frame anyway'
             )
 
         cmd = self.pending_image_cmd
         alert_type = self.pending_image_alert_type
 
-        ok = self.send_image(cmd, img)
+        ok = self.send_image(cmd, self.latest_debug_image, self.pending_target)
 
         if ok:
             self.get_logger().warn(f'One-shot image sent for {alert_type}')
@@ -300,21 +382,26 @@ class Esp32AlertBridgeNode(Node):
         self.pending_image_alert_type = None
         self.pending_image_start_time = 0.0
         self.pending_image_due_time = 0.0
+        self.pending_target = None
 
-    def send_udp_cmd(self, cmd: str):
+    def send_udp_cmd(self, cmd: str, target):
+        host, udp_port, _ = target
         try:
-            self.udp_sock.sendto(
-                cmd.encode('ascii'),
-                (self.esp32_ip, self.esp32_udp_port)
-            )
-            self.get_logger().info(f'Sent UDP alert cmd: {cmd}')
+            self.udp_sock.sendto(cmd.encode('ascii'), (host, udp_port))
+            self.get_logger().info(f'Sent UDP alert cmd: {cmd} -> {host}:{udp_port}')
         except Exception as exc:
-            self.get_logger().warn(f'Failed to send UDP cmd {cmd}: {exc}')
+            self.get_logger().warn(f'Failed to send UDP cmd {cmd} to {host}:{udp_port}: {exc}')
 
-    def send_image(self, cmd: str, img_bgr) -> bool:
+    def send_image(self, cmd: str, img_bgr, target) -> bool:
         if img_bgr is None:
             self.get_logger().warn('No image available, skip TCP image')
             return False
+
+        if target is None:
+            self.get_logger().warn('No ESP32 target, skip TCP image')
+            return False
+
+        host, _, tcp_port = target
 
         try:
             img = self.letterbox_bgr(
@@ -330,13 +417,13 @@ class Esp32AlertBridgeNode(Node):
             ).encode('ascii')
 
             self.get_logger().info(
-                f'Sending one-shot image: cmd={cmd}, '
+                f'Sending one-shot image: cmd={cmd} -> {host}:{tcp_port}, '
                 f'{self.snapshot_width}x{self.snapshot_height}, '
                 f'{len(payload)} bytes'
             )
 
             with socket.create_connection(
-                (self.esp32_ip, self.esp32_tcp_port),
+                (host, tcp_port),
                 timeout=self.socket_timeout_s
             ) as sock:
                 sock.settimeout(self.socket_timeout_s)

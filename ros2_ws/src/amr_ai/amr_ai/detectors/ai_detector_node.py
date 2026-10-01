@@ -4,7 +4,6 @@ import os
 import time
 
 import cv2
-import numpy as np
 import torch
 
 import rclpy
@@ -14,49 +13,41 @@ from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import PoseStamped
 from cv_bridge import CvBridge
-from ultralytics import YOLO
+# TensorRT trực tiếp thay Ultralytics (giảm chi phí Python/framework ngoài phần GPU tính;
+# xem amr_ai/core/trt_yolo.py). TrtYOLO giả lập đúng API .track()/.predict() của YOLO nên
+# phần code bên dưới không cần đổi gì khác.
+from amr_ai.core.trt_yolo import TrtYOLO as YOLO
 from ament_index_python.packages import get_package_share_directory
 
-from amr_interfaces.msg import AiAlert, AiMode
+from amr_interfaces.msg import AiAlert
 
 from amr_ai.core import config as cfg
-from amr_ai.core.utils import valid_box_size, center_distance_sq
 from amr_ai.detectors.fall_detector import FallDetector
-from amr_ai.detectors.fire_smoke_detector import FireSmokeDetector
-
-
-def get_nearest_track(boxes_xyxy, ids, center_x, center_y):
-    nearest_track = None
-    nearest_box = None
-    nearest_dist = 10**18
-
-    for box, tid in zip(boxes_xyxy, ids):
-        if not valid_box_size(box):
-            continue
-
-        dist2 = center_distance_sq(box, center_x, center_y)
-
-        if dist2 < nearest_dist:
-            nearest_dist = dist2
-            nearest_track = tid
-            nearest_box = box
-
-    return nearest_track, nearest_box
 
 
 class AiDetectorNode(Node):
     """
-    AI detector chạy song song với hệ follow/navigation.
+    AI detector chỉ còn nhận diện TÉ NGÃ, chạy song song ở MỌI chế độ
+    (IDLE, NAV_TO_ZONE, RETURN_TO_ZONE, FOLLOW_*, ...).
 
     Chức năng:
     - Subscribe RGB + depth image từ camera ROS2.
-    - Chạy YOLO person để tạo detections đầu vào cho FallDetector.
-    - Chạy FallDetector để phát hiện người té.
-    - Chạy FireSmokeDetector để phát hiện lửa/khói.
-    - Publish /amr_ai/alert.
-    - Publish /amr_ai/debug/alert/image để xem trên RViz.
+    - Chạy YOLO person (có tracking) tạo detections cho FallDetector.
+    - Chạy FallDetector (YOLO pose + depth) để phát hiện người té.
+    - Publish /amr_ai/alert (alert_type='FALL', active=True khi có người té,
+      'NORMAL' định kỳ khi không có).
+    - Publish /amr_ai/debug/alert/image (ảnh có khung + chữ cảnh báo) để
+      esp32_alert_bridge gửi ảnh về thiết bị và để xem trên RViz/web.
+
+    Ai xử lý alert FALL:
+    - ai_mode_manager: đang NAV_TO_ZONE/RETURN_TO_ZONE -> hủy goal, dừng xe
+      (ALERT_STOPPED), chỉ chạy lại khi có lệnh mới.
+    - Đang FOLLOW_*: xe KHÔNG bị dừng, chỉ hiển thị/gửi cảnh báo.
+    - esp32_alert_bridge: gửi cảnh báo + ảnh về ESP32.
 
     Node này KHÔNG publish /cmd_vel và KHÔNG can thiệp điều khiển xe.
+    Đã bỏ hoàn toàn nhận diện lửa/khói và bảo hộ: không import, không load
+    model tương ứng (fire_smoke_detector.py / ppe_detector.py không còn được gọi).
     """
 
     def __init__(self):
@@ -70,29 +61,12 @@ class AiDetectorNode(Node):
 
         self.declare_parameter('person_model_path', 'models/yolo26n.engine')
         self.declare_parameter('pose_model_path', 'models/yolo26n-pose.engine')
-        self.declare_parameter('fire_smoke_model_path', 'models/fire_smoke_s.engine')
 
         self.declare_parameter('detect_conf', 0.4)
         self.declare_parameter('process_every_n_frames', 2)
 
+        # False -> không load model nào, node chỉ publish NORMAL.
         self.declare_parameter('enable_fall_alert', True)
-        self.declare_parameter('enable_fire_smoke_alert', True)
-
-        self.declare_parameter('mode_topic', '/amr_ai/mode')
-        self.declare_parameter('suppress_fire_smoke_in_follow', True)
-        self.declare_parameter('suppress_fall_in_follow', True)
-        # Suppress trong NAV2 (NAV_TO_ZONE / RETURN_TO_ZONE) —
-        # nav_ppe_monitor_node đảm nhận PPE check thay thế.
-        self.declare_parameter('suppress_fall_in_nav', True)
-        self.declare_parameter('suppress_fire_smoke_in_nav', True)
-
-        self.declare_parameter('fire_smoke_run_interval', 8)
-        self.declare_parameter('fire_alert_hold_sec', 2.0)
-        self.declare_parameter('smoke_alert_hold_sec', 2.0)
-
-        self.declare_parameter('fire_conf', 0.90)
-        self.declare_parameter('smoke_conf', 0.90)
-        self.declare_parameter('fire_smoke_imgsz', 640)
 
         self.declare_parameter('alert_topic', '/amr_ai/alert')
         self.declare_parameter('publish_normal_status', True)
@@ -107,32 +81,11 @@ class AiDetectorNode(Node):
         self.depth_topic = self.get_parameter('depth_topic').value
 
         self.detect_conf = float(self.get_parameter('detect_conf').value)
-        self.process_every_n_frames = max(1, int(self.get_parameter('process_every_n_frames').value))
+        self.process_every_n_frames = max(
+            1, int(self.get_parameter('process_every_n_frames').value)
+        )
 
         self.enable_fall_alert = bool(self.get_parameter('enable_fall_alert').value)
-        self.enable_fire_smoke_alert = bool(self.get_parameter('enable_fire_smoke_alert').value)
-
-        self.mode_topic = self.get_parameter('mode_topic').value
-        self.suppress_fire_smoke_in_follow = bool(
-            self.get_parameter('suppress_fire_smoke_in_follow').value
-        )
-        self.suppress_fall_in_follow = bool(
-            self.get_parameter('suppress_fall_in_follow').value
-        )
-        self.suppress_fall_in_nav = bool(
-            self.get_parameter('suppress_fall_in_nav').value
-        )
-        self.suppress_fire_smoke_in_nav = bool(
-            self.get_parameter('suppress_fire_smoke_in_nav').value
-        )
-
-        self.fire_smoke_run_interval = max(1, int(self.get_parameter('fire_smoke_run_interval').value))
-        self.fire_alert_hold_sec = float(self.get_parameter('fire_alert_hold_sec').value)
-        self.smoke_alert_hold_sec = float(self.get_parameter('smoke_alert_hold_sec').value)
-
-        self.fire_conf = float(self.get_parameter('fire_conf').value)
-        self.smoke_conf = float(self.get_parameter('smoke_conf').value)
-        self.fire_smoke_imgsz = int(self.get_parameter('fire_smoke_imgsz').value)
 
         self.alert_topic = self.get_parameter('alert_topic').value
         self.publish_normal_status = bool(self.get_parameter('publish_normal_status').value)
@@ -146,58 +99,43 @@ class AiDetectorNode(Node):
         self.bridge = CvBridge()
         self.share_dir = get_package_share_directory('amr_ai')
 
-        self.person_model_path = self.resolve_model_path(self.get_parameter('person_model_path').value)
-        self.pose_model_path = self.resolve_model_path(self.get_parameter('pose_model_path').value)
-        self.fire_smoke_model_path = self.resolve_model_path(self.get_parameter('fire_smoke_model_path').value)
-
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.infer_device = 0 if torch.cuda.is_available() else 'cpu'
         self.use_half = torch.cuda.is_available()
 
         # ======================================================
-        # Models
+        # Models (chỉ load khi bật fall alert)
         # ======================================================
         self.person_model = None
         self.fall_detector = None
-        self.fire_smoke_detector = None
 
         if self.enable_fall_alert:
+            person_model_path = self.resolve_model_path(
+                self.get_parameter('person_model_path').value
+            )
+            pose_model_path = self.resolve_model_path(
+                self.get_parameter('pose_model_path').value
+            )
+
             self.get_logger().info('Loading person YOLO model for fall detector...')
-            self.get_logger().info(f'Person model path: {self.person_model_path}')
-            self.person_model = YOLO(self.person_model_path)
+            self.get_logger().info(f'Person model path: {person_model_path}')
+            self.person_model = YOLO(person_model_path)
 
             self.get_logger().info('Loading fall pose detector...')
-            self.get_logger().info(f'Pose model path: {self.pose_model_path}')
+            self.get_logger().info(f'Pose model path: {pose_model_path}')
             self.fall_detector = FallDetector(
-                pose_model_path=self.pose_model_path,
+                pose_model_path=pose_model_path,
                 infer_device=self.infer_device,
                 use_half=self.use_half
             )
-
-        if self.enable_fire_smoke_alert:
-            self.get_logger().info('Loading fire/smoke detector...')
-            self.get_logger().info(f'Fire/smoke model path: {self.fire_smoke_model_path}')
-            self.fire_smoke_detector = FireSmokeDetector(
-                model_path=self.fire_smoke_model_path,
-                infer_device=self.infer_device,
-                imgsz=self.fire_smoke_imgsz,
-                fire_conf=self.fire_conf,
-                smoke_conf=self.smoke_conf
-            )
+        else:
+            self.get_logger().warn('Fall alert disabled (enable_fall_alert=false): no model loaded')
 
         # ======================================================
         # State
         # ======================================================
         self.frame_count = 0
         self.last_depth_msg = None
-
-        self.current_mode = AiMode.IDLE
-
-        self.last_fire_smoke_detections = []
-        self.last_fire_time = 0.0
-        self.last_smoke_time = 0.0
-        self.last_fire_conf = 0.0
-        self.last_smoke_conf = 0.0
 
         self.last_normal_publish_time = 0.0
         self.last_debug_image_publish_time = 0.0
@@ -207,13 +145,6 @@ class AiDetectorNode(Node):
         # ======================================================
         self.alert_pub = self.create_publisher(AiAlert, self.alert_topic, 10)
         self.debug_image_pub = self.create_publisher(Image, self.debug_image_topic, 1)
-
-        self.mode_sub = self.create_subscription(
-            AiMode,
-            self.mode_topic,
-            self.mode_callback,
-            10
-        )
 
         self.color_sub = self.create_subscription(
             Image,
@@ -229,7 +160,7 @@ class AiDetectorNode(Node):
             qos_profile_sensor_data
         )
 
-        self.get_logger().warn('AI Detector Node started')
+        self.get_logger().warn('AI Detector Node started (FALL only)')
         self.get_logger().info(f'Color topic: {self.color_topic}')
         self.get_logger().info(f'Depth topic: {self.depth_topic}')
         self.get_logger().info(f'Alert topic: {self.alert_topic}')
@@ -247,13 +178,18 @@ class AiDetectorNode(Node):
     def depth_callback(self, msg: Image):
         self.last_depth_msg = msg
 
-    def mode_callback(self, msg: AiMode):
-        self.current_mode = int(msg.mode)
-
     def color_callback(self, msg: Image):
         self.frame_count += 1
 
         if self.frame_count % self.process_every_n_frames != 0:
+            return
+
+        now = time.time()
+        stamp = msg.header.stamp
+
+        # Tắt fall alert: chỉ giữ heartbeat NORMAL, không đọc/convert ảnh.
+        if not self.enable_fall_alert or self.fall_detector is None:
+            self.publish_normal_status_if_needed(stamp, now)
             return
 
         try:
@@ -273,92 +209,36 @@ class AiDetectorNode(Node):
                 self.get_logger().warn(f'Failed to convert depth image: {exc}')
                 depth = None
 
-        now = time.time()
-        stamp = msg.header.stamp
+        detections = self.run_person_detection(frame)
+        detections = self.run_fall_detection(frame, depth, detections, now)
 
-        in_follow_mode = self.current_mode in [AiMode.FOLLOW_DETECTING, AiMode.FOLLOW_ACTIVE]
-        in_nav_mode    = self.current_mode in [AiMode.NAV_TO_ZONE, AiMode.RETURN_TO_ZONE]
-
-        detections = []
-        fall_active = False
-        fall_conf = 0.0
-        fall_message = ''
-
-        run_fall = (
-            self.enable_fall_alert
-            and self.person_model is not None
-            and self.fall_detector is not None
-            and not (self.suppress_fall_in_follow and in_follow_mode)
-            and not (self.suppress_fall_in_nav    and in_nav_mode)
-        )
-
-        if run_fall:
-            detections = self.run_person_detection(frame)
-            detections = self.run_fall_detection(frame, depth, detections, now)
-
-            fall_dets = [det for det in detections if det.get('falling', False)]
-            if fall_dets:
-                fall_active = True
-                fall_conf = max(float(det.get('conf', 0.0)) for det in fall_dets)
-                modes = sorted({
-                    str(det.get('fall_mode', 'FALL')) for det in fall_dets
-                    if det.get('fall_mode', None) is not None
-                })
-                fall_message = 'FALL detected'
-                if modes:
-                    fall_message += ': ' + ', '.join(modes)
-
-        fire_detections = []
-        fire_active = False
-        smoke_active = False
-        fire_conf = 0.0
-        smoke_conf = 0.0
-
-        run_fire_smoke = (
-            self.enable_fire_smoke_alert
-            and self.fire_smoke_detector is not None
-            and not (self.suppress_fire_smoke_in_follow and in_follow_mode)
-            and not (self.suppress_fire_smoke_in_nav    and in_nav_mode)
-        )
-
-        if run_fire_smoke:
-            fire_detections, fire_active, smoke_active, fire_conf, smoke_conf = (
-                self.run_fire_smoke_detection(frame, now)
-            )
+        fall_dets = [det for det in detections if det.get('falling', False)]
+        fall_active = len(fall_dets) > 0
 
         if fall_active:
+            fall_conf = max(float(det.get('conf', 0.0)) for det in fall_dets)
+            modes = sorted({
+                str(det.get('fall_mode', 'FALL')) for det in fall_dets
+                if det.get('fall_mode', None) is not None
+            })
+            fall_message = 'FALL detected'
+            if modes:
+                fall_message += ': ' + ', '.join(modes)
+
             self.publish_alert(stamp, 'FALL', fall_conf, fall_message, True)
-
-        if fire_active:
-            self.publish_alert(stamp, 'FIRE', fire_conf, 'FIRE detected', True)
-
-        if smoke_active:
-            self.publish_alert(stamp, 'SMOKE', smoke_conf, 'SMOKE detected', True)
-
-        if not fall_active and not fire_active and not smoke_active:
+        else:
             self.publish_normal_status_if_needed(stamp, now)
 
-        annotated = self.draw_debug_image(
-            frame,
-            detections,
-            fire_detections,
-            fall_active,
-            fire_active,
-            smoke_active
-        )
-        self.publish_debug_image(annotated, stamp, msg.header.frame_id)
+        # Chỉ dựng ảnh debug khi tới lượt publish (trước đây vẽ + sao chép ảnh mỗi khung rồi mới bỏ đi).
+        if self.debug_image_due(now):
+            annotated = self.draw_debug_image(frame, detections, fall_active)
+            self.publish_debug_image(annotated, stamp, msg.header.frame_id)
 
     # ==========================================================
     # Detection
     # ==========================================================
-    def run_person_detection(self):
-        pass
-
     def run_person_detection(self, frame):
         detections = []
-        h, w = frame.shape[:2]
-        center_x = w // 2
-        center_y = h // 2
 
         try:
             track_kwargs = {
@@ -397,8 +277,6 @@ class AiDetectorNode(Node):
         )
         confs = boxes.conf.cpu().numpy() if boxes.conf is not None else [0.0] * len(xyxy)
 
-        _, _ = get_nearest_track(xyxy, ids, center_x, center_y)
-
         for box, tid, conf in zip(xyxy, ids, confs):
             detections.append({
                 'id': int(tid),
@@ -436,50 +314,6 @@ class AiDetectorNode(Node):
         except Exception as exc:
             self.get_logger().warn(f'Fall detector update failed: {exc}')
             return detections
-
-    def run_fire_smoke_detection(self, frame, now):
-        run_now = (self.frame_count % self.fire_smoke_run_interval) == 0
-
-        if run_now:
-            try:
-                detections, fire_now, smoke_now = self.fire_smoke_detector.detect(frame)
-                self.last_fire_smoke_detections = detections
-
-                if fire_now:
-                    self.last_fire_time = now
-                    self.last_fire_conf = self.max_conf_for_class(detections, 'fire')
-
-                if smoke_now:
-                    self.last_smoke_time = now
-                    self.last_smoke_conf = self.max_conf_for_class(detections, 'smoke')
-
-            except Exception as exc:
-                self.get_logger().warn(f'Fire/smoke detector failed: {exc}')
-                self.last_fire_smoke_detections = []
-
-        fire_active = (now - self.last_fire_time) <= self.fire_alert_hold_sec
-        smoke_active = (now - self.last_smoke_time) <= self.smoke_alert_hold_sec
-
-        return (
-            self.last_fire_smoke_detections,
-            fire_active,
-            smoke_active,
-            self.last_fire_conf if fire_active else 0.0,
-            self.last_smoke_conf if smoke_active else 0.0
-        )
-
-    @staticmethod
-    def max_conf_for_class(detections, class_name: str) -> float:
-        confs = [
-            float(det.get('conf', 0.0))
-            for det in detections
-            if str(det.get('class_name', '')).lower() == class_name
-        ]
-
-        if not confs:
-            return 0.0
-
-        return max(confs)
 
     # ==========================================================
     # Alert publishing
@@ -520,7 +354,7 @@ class AiDetectorNode(Node):
     # ==========================================================
     # Debug image
     # ==========================================================
-    def draw_debug_image(self, frame, detections, fire_detections, fall_active, fire_active, smoke_active):
+    def draw_debug_image(self, frame, detections, fall_active):
         annotated = frame.copy()
 
         for det in detections:
@@ -549,67 +383,26 @@ class AiDetectorNode(Node):
                 2
             )
 
-        for det in fire_detections:
-            x1, y1, x2, y2 = map(int, det['box'])
-            class_name = str(det.get('class_name', 'unknown')).lower()
-            conf = float(det.get('conf', 0.0))
-
-            if class_name == 'fire':
-                color = (0, 0, 255)
-                label = f'FIRE {conf:.2f}'
-            else:
-                color = (160, 160, 160)
-                label = f'SMOKE {conf:.2f}'
-
-            cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 2)
-            cv2.putText(
-                annotated,
-                label,
-                (x1, max(25, y1 - 10)),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.65,
-                color,
-                2
-            )
-
-        y = 35
         if fall_active:
             cv2.putText(
                 annotated,
                 'CANH BAO: CO NGUOI TE NGA',
-                (20, y),
+                (20, 35),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.85,
                 (0, 0, 255),
                 3
             )
-            y += 35
-
-        if fire_active and smoke_active:
-            text = 'CANH BAO: CO LUA VA KHOI'
-            color = (0, 0, 255)
-        elif fire_active:
-            text = 'CANH BAO: CO LUA'
-            color = (0, 0, 255)
-        elif smoke_active:
-            text = 'CANH BAO: CO KHOI'
-            color = (0, 140, 255)
-        else:
-            text = None
-            color = (255, 255, 255)
-
-        if text is not None:
-            cv2.putText(
-                annotated,
-                text,
-                (20, y),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.85,
-                color,
-                3
-            )
 
         return annotated
+
+    def debug_image_due(self, now):
+        if not self.publish_debug_image_flag:
+            return False
+        if self.debug_image_publish_hz > 0.0:
+            if now - self.last_debug_image_publish_time < 1.0 / self.debug_image_publish_hz:
+                return False
+        return True
 
     def publish_debug_image(self, annotated, stamp, frame_id):
         if not self.publish_debug_image_flag:

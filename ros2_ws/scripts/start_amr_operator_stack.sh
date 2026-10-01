@@ -31,11 +31,18 @@ LOG="/tmp/amr_operator_stack.log"
   AI_PARAMS="$WS/install/amr_ai/share/amr_ai/config/ai_params.yaml"
 
   # ==========================================================
-  # ESP32 Alert Display config
+  # Địa chỉ ESP32 màn hình cảnh báo: KHÔNG cấu hình ở đây.
+  # Sửa ESP32_ALERT_IP trong $WS/config/network.env (không cần restart/build).
+  # Xem thông tin mạng hiện tại: scripts/show_network.sh
   # ==========================================================
-  ESP32_ALERT_IP="${ESP32_ALERT_IP:-192.168.1.36}"
-  ESP32_ALERT_UDP_PORT="${ESP32_ALERT_UDP_PORT:-4210}"
-  ESP32_ALERT_TCP_PORT="${ESP32_ALERT_TCP_PORT:-4211}"
+  NETWORK_ENV="$WS/config/network.env"
+
+  # Đọc ESP32_ALERT_IP từ network.env chỉ để IN RA cho dễ kiểm tra.
+  # (esp32_alert_bridge tự đọc file này, script không truyền IP vào node.)
+  read_esp32_ip() {
+    ( source "$NETWORK_ENV" 2>/dev/null && echo "${ESP32_ALERT_IP:-<chua cau hinh>}" ) \
+      || echo "<khong thay network.env>"
+  }
 
   MAP_NAME=""
   MAP_YAML=""
@@ -164,12 +171,11 @@ start_follow_servo:=true \
 start_cmd_vel_safety_mux:=true \
 start_ai_detector:=true \
 start_auto_initial_pose:=true \
-start_auto_localizer:=true \
 start_esp32_gateway:=true \
-start_nav_ppe_monitor:=true \
 start_esp32_alert_bridge:=true" C-m
 
-  echo "[INFO] AI stack + esp32_alert_bridge + nav_ppe_monitor launched via amr_ai.launch.py"
+  echo "[INFO] AI stack (fall detector + esp32_alert_bridge) launched via amr_ai.launch.py"
+  echo "[INFO] ESP32 IP   = $(read_esp32_ip)  (from $NETWORK_ENV)"
 
   # ==========================================================
   # Dong bo voi web: chay them rosbridge + camera/alert/tracker

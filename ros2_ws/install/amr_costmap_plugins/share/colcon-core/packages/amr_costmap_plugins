@@ -1,1 +1,1 @@
-nav2_costmap_2d:nav_msgs:pluginlib:rclcpp:tf2
+nav2_costmap_2d:nav_msgs:pluginlib:rclcpp:tf2:tf2_geometry_msgs

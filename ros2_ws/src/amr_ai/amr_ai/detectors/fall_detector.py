@@ -6,7 +6,9 @@
 
 import math
 import numpy as np
-from ultralytics import YOLO
+# TensorRT trực tiếp thay Ultralytics (xem amr_ai/core/trt_yolo.py) — giữ nguyên cách gọi
+# .predict()/kết quả .boxes/.keypoints.xy/.keypoints.conf như cũ, không đổi gì khác trong file này.
+from amr_ai.core.trt_yolo import TrtYOLO as YOLO
 
 from amr_ai.core import config as cfg
 from amr_ai.core.utils import (

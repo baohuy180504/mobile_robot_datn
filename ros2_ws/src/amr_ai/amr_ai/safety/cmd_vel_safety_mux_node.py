@@ -37,7 +37,7 @@ class CmdVelSafetyMuxNode(Node):
     - NAV_TO_ZONE / RETURN_TO_ZONE:
         lấy /cmd_vel từ Nav2.
 
-    - IDLE / FOLLOW_STOPPED / EMERGENCY_STOP:
+    - IDLE / FOLLOW_STOPPED / EMERGENCY_STOP / ALERT_STOPPED (té ngã):
         publish zero.
 
     Safety:
@@ -51,7 +51,6 @@ class CmdVelSafetyMuxNode(Node):
 
         self.declare_parameter('nav_cmd_topic', '/cmd_vel')
         self.declare_parameter('follow_cmd_topic', '/cmd_vel_follow')
-        self.declare_parameter('localize_cmd_topic', '/cmd_vel_localize')
         self.declare_parameter('manual_cmd_topic', '/cmd_vel_manual')
         self.declare_parameter('output_cmd_topic', '/cmd_vel_safe')
 
@@ -75,7 +74,6 @@ class CmdVelSafetyMuxNode(Node):
 
         self.nav_cmd_topic = self.get_parameter('nav_cmd_topic').value
         self.follow_cmd_topic = self.get_parameter('follow_cmd_topic').value
-        self.localize_cmd_topic = self.get_parameter('localize_cmd_topic').value
         self.manual_cmd_topic = self.get_parameter('manual_cmd_topic').value
         self.output_cmd_topic = self.get_parameter('output_cmd_topic').value
 
@@ -104,9 +102,6 @@ class CmdVelSafetyMuxNode(Node):
 
         self.last_follow_cmd: Optional[Twist] = None
         self.last_follow_cmd_time = 0.0
-
-        self.last_localize_cmd: Optional[Twist] = None
-        self.last_localize_cmd_time = 0.0
 
         self.last_manual_cmd: Optional[Twist] = None
         self.last_manual_cmd_time = 0.0
@@ -153,13 +148,6 @@ class CmdVelSafetyMuxNode(Node):
             10
         )
 
-        self.localize_cmd_sub = self.create_subscription(
-            Twist,
-            self.localize_cmd_topic,
-            self.localize_cmd_callback,
-            10
-        )
-
         self.manual_cmd_sub = self.create_subscription(
             Twist,
             self.manual_cmd_topic,
@@ -187,7 +175,6 @@ class CmdVelSafetyMuxNode(Node):
         self.get_logger().warn('Cmd Vel Safety Mux started')
         self.get_logger().warn(f'Nav2 cmd      : {self.nav_cmd_topic}')
         self.get_logger().warn(f'Follow cmd    : {self.follow_cmd_topic}')
-        self.get_logger().warn(f'Localize cmd  : {self.localize_cmd_topic}')
         self.get_logger().warn(f'Manual cmd    : {self.manual_cmd_topic}')
         self.get_logger().warn(f'Manual override: {self.manual_override_topic}')
         self.get_logger().warn(f'Output cmd    : {self.output_cmd_topic}')
@@ -241,10 +228,6 @@ class CmdVelSafetyMuxNode(Node):
         self.last_follow_cmd = msg
         self.last_follow_cmd_time = time.time()
 
-    def localize_cmd_callback(self, msg: Twist):
-        self.last_localize_cmd = msg
-        self.last_localize_cmd_time = time.time()
-
     def manual_cmd_callback(self, msg: Twist):
         self.last_manual_cmd = msg
         self.last_manual_cmd_time = time.time()
@@ -297,15 +280,6 @@ class CmdVelSafetyMuxNode(Node):
                 selected_cmd = self.copy_twist(self.last_nav_cmd)
                 source = 'nav2'
             else:
-                self.publish_zero()
-                return
-
-        elif self.current_mode == AiMode.LOCALIZING:
-            if self.is_command_recent(self.last_localize_cmd_time, now):
-                selected_cmd = self.copy_twist(self.last_localize_cmd)
-                source = 'localize'
-            else:
-                self.log_warn_throttle(0.5, 'Localize cmd timeout: stop')
                 self.publish_zero()
                 return
 

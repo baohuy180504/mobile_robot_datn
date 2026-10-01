@@ -1,13 +1,68 @@
 import os
+import shutil
+import re
 
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, LogInfo
+from launch.actions import DeclareLaunchArgument, LogInfo, OpaqueFunction
 from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 
 from launch_ros.actions import Node
+
+
+def _parse_cpu_list(text):
+    """'1' | '1-2' | '0,3-5' -> tập nhân, hoặc None nếu sai cú pháp."""
+    cpus = set()
+    for part in text.split(','):
+        m = re.fullmatch(r'(\d+)(?:-(\d+))?', part.strip())
+        if not m:
+            return None
+        a = int(m.group(1))
+        b = int(m.group(2)) if m.group(2) else a
+        if b < a:
+            return None
+        cpus.update(range(a, b + 1))
+    return cpus
+
+
+def _ai_detector_actions(context, *args, **kwargs):
+    """
+    ai_detector = tiến trình suy luận GPU (YOLO person + pose). Ghim vào nhân CPU ai_cpus bằng
+    "taskset -c": tiến trình bắt đầu đã ở nhân đó nên mọi luồng sinh sau đều thừa hưởng, và
+    khi node khởi động lại vẫn được ghim. ai_cpus rỗng = không ghim.
+    """
+    ai_cpus = LaunchConfiguration('ai_cpus').perform(context).strip()
+    prefix = None
+
+    if not ai_cpus:
+        msg = '[ai_detector] ai_cpus rỗng: KHÔNG ghim nhân CPU'
+    else:
+        cpus = _parse_cpu_list(ai_cpus)
+        n = os.cpu_count() or 1
+        if cpus is None:
+            msg = f'[ai_detector] CẢNH BÁO: ai_cpus="{ai_cpus}" sai cú pháp (vd 1 | 1-2 | 0,3-5) -> KHÔNG ghim'
+        elif max(cpus) >= n:
+            msg = f'[ai_detector] CẢNH BÁO: ai_cpus="{ai_cpus}" vượt số nhân của máy ({n} nhân) -> KHÔNG ghim'
+        elif shutil.which('taskset') is None:
+            msg = '[ai_detector] CẢNH BÁO: không tìm thấy lệnh taskset -> KHÔNG ghim'
+        else:
+            prefix = f'taskset -c {ai_cpus}'
+            msg = f'[ai_detector] ghim vào nhân CPU {ai_cpus} (dùng ai_cpus:= để đổi, để trống để tắt)'
+
+    return [
+        LogInfo(msg=msg),
+        Node(
+            package='amr_ai',
+            executable='ai_detector',
+            name='ai_detector_node',
+            output='screen',
+            parameters=[LaunchConfiguration('params_file')],
+            prefix=prefix,
+            condition=IfCondition(LaunchConfiguration('start_ai_detector'))
+        ),
+    ]
 
 
 def generate_launch_description():
@@ -58,7 +113,13 @@ def generate_launch_description():
     start_ai_detector_arg = DeclareLaunchArgument(
         'start_ai_detector',
         default_value='true',
-        description='Start AI fall/fire/smoke detector node'
+        description='Start AI fall detector node (chi nhan dien te nga)'
+    )
+
+    ai_cpus_arg = DeclareLaunchArgument(
+        'ai_cpus',
+        default_value='1',
+        description='Nhan CPU cho ai_detector (suy luan GPU), vd 1 | 1-2 | 0,3-5. De trong = khong ghim'
     )
 
     start_auto_initial_pose_arg = DeclareLaunchArgument(
@@ -67,22 +128,10 @@ def generate_launch_description():
         description='Publish HOME initial pose for AMCL on startup'
     )
 
-    start_auto_localizer_arg = DeclareLaunchArgument(
-        'start_auto_localizer',
-        default_value='true',
-        description='Start auto global localizer node'
-    )
-
     start_esp32_gateway_arg = DeclareLaunchArgument(
         'start_esp32_gateway',
         default_value='true',
         description='Start ESP32 waypoint gateway'
-    )
-
-    start_nav_ppe_monitor_arg = DeclareLaunchArgument(
-        'start_nav_ppe_monitor',
-        default_value='true',
-        description='Start NAV PPE monitor node (PPE check for up to 3 workers during NAV2)'
     )
 
     start_esp32_alert_bridge_arg = DeclareLaunchArgument(
@@ -138,14 +187,7 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration('start_cmd_vel_safety_mux'))
     )
 
-    ai_detector = Node(
-        package='amr_ai',
-        executable='ai_detector',
-        name='ai_detector_node',
-        output='screen',
-        parameters=[params_file],
-        condition=IfCondition(LaunchConfiguration('start_ai_detector'))
-    )
+    ai_detector = OpaqueFunction(function=_ai_detector_actions)
 
     auto_initial_pose = Node(
         package='amr_ai',
@@ -156,30 +198,12 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration('start_auto_initial_pose'))
     )
 
-    auto_localizer = Node(
-        package='amr_ai',
-        executable='auto_localizer',
-        name='auto_localizer_node',
-        output='screen',
-        parameters=[params_file],
-        condition=IfCondition(LaunchConfiguration('start_auto_localizer'))
-    )
-
     esp32_gateway = Node(
         package='amr_navigation',
         executable='esp32_waypoint_server.py',
         name='esp32_waypoint_server',
         output='screen',
         condition=IfCondition(LaunchConfiguration('start_esp32_gateway'))
-    )
-
-    nav_ppe_monitor = Node(
-        package='amr_ai',
-        executable='nav_ppe_monitor',
-        name='nav_ppe_monitor_node',
-        output='screen',
-        parameters=[params_file],
-        condition=IfCondition(LaunchConfiguration('start_nav_ppe_monitor'))
     )
 
     esp32_alert_bridge = Node(
@@ -196,10 +220,10 @@ def generate_launch_description():
         '╔════════════════════════════════════════════════════════════╗\n',
         '║ AMR AI FOLLOW SYSTEM                                      ║\n',
         '╠════════════════════════════════════════════════════════════╣\n',
-        '║ ai_mode_manager : mode + lock A/B/Home                    ║\n',
+        '║ ai_mode_manager : mode + WP/Home + dung xe khi te nga     ║\n',
         '║ person_tracker  : YOLO + ReID + depth target              ║\n',
-        '║ follow_goal     : person target -> Nav2 goal              ║\n',
-        '║ esp32_gateway   : ESP32 A/B/H/S -> amr_ai services        ║\n',
+        '║ ai_detector     : nhan dien te nga (moi che do)           ║\n',
+        '║ esp32_gateway   : ESP32 WPn/HOME/S -> amr_ai services     ║\n',
         '╚════════════════════════════════════════════════════════════╝\n',
     ])
 
@@ -211,10 +235,9 @@ def generate_launch_description():
         start_follow_servo_arg,
         start_cmd_vel_safety_mux_arg,
         start_ai_detector_arg,
+        ai_cpus_arg,
         start_auto_initial_pose_arg,
-        start_auto_localizer_arg,
         start_esp32_gateway_arg,
-        start_nav_ppe_monitor_arg,
         start_esp32_alert_bridge_arg,
 
         log_info,
@@ -226,8 +249,6 @@ def generate_launch_description():
         cmd_vel_safety_mux,
         ai_detector,
         auto_initial_pose,
-        auto_localizer,
         esp32_gateway,
-        nav_ppe_monitor,
         esp32_alert_bridge,
     ])

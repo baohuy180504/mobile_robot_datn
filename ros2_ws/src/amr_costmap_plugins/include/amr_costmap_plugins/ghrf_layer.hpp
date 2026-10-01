@@ -65,6 +65,11 @@ private:
   std::string risk_topic_;
   double max_cost_scale_;
   double grid_timeout_s_;
+  // Ngưỡng risk [0-100] để coi cell là vật cản chắc chắn: cell có value >= ngưỡng
+  // được ghi LETHAL_OBSTACLE (254) nên inflation_layer bao vùng đệm quanh nó (xe né
+  // an toàn). Cell dưới ngưỡng giữ graded cost (soft) — MPPI vẫn tránh nhẹ nhưng không
+  // inflation. Đặt >100 để tắt (không cell nào thành lethal, quay lại hành vi cũ).
+  double lethal_threshold_;
 };
 
 }  // namespace amr_costmap_plugins

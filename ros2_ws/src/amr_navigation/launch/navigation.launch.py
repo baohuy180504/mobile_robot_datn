@@ -24,7 +24,7 @@ def generate_launch_description():
     # Lấy giá trị map từ Terminal (do script truyền vào)
     map_config = LaunchConfiguration('map')
     # Trỏ đến file cấu hình
-    params_file = os.path.join(amr_nav_dir, 'config', 'nav2_params_MPPI.yaml')
+    params_file = os.path.join(amr_nav_dir, 'config', 'nav2_params_ghrf.yaml')
     # Gọi bộ khung Nav2
     nav2_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(nav2_bringup_dir, 'launch', 'bringup_launch.py')),
@@ -64,5 +64,5 @@ def generate_launch_description():
     return LaunchDescription([
         map_arg,
         nav2_launch,
-        esp32_waypoint_server
+        #esp32_waypoint_server
     ])

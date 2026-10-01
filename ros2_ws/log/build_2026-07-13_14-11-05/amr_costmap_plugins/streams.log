@@ -1,0 +1,33 @@
+[0.072s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins -- -j6 -l6
+[0.656s] [35m[1mConsolidate compiler generated dependencies of target amr_costmap_plugins[0m
+[1.108s] [100%] Built target amr_costmap_plugins
+[1.139s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins -- -j6 -l6
+[1.148s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins
+[1.175s] -- Install configuration: ""
+[1.176s] -- Execute custom install script
+[1.177s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins//costmap_plugins.xml
+[1.178s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/lib/libamr_costmap_plugins.so
+[1.179s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/include/amr_costmap_plugins/ghrf_layer.hpp
+[1.179s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/costmap_plugins.xml
+[1.180s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/library_path.sh
+[1.180s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/library_path.dsv
+[1.181s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/package_run_dependencies/amr_costmap_plugins
+[1.181s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/parent_prefix_path/amr_costmap_plugins
+[1.181s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/ament_prefix_path.sh
+[1.182s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/ament_prefix_path.dsv
+[1.182s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/path.sh
+[1.183s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/path.dsv
+[1.183s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.bash
+[1.184s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.sh
+[1.184s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.zsh
+[1.184s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.dsv
+[1.184s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/package.dsv
+[1.205s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/packages/amr_costmap_plugins
+[1.206s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/nav2_costmap_2d__pluginlib__plugin/amr_costmap_plugins
+[1.206s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/ament_cmake_export_include_directories-extras.cmake
+[1.207s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/ament_cmake_export_libraries-extras.cmake
+[1.207s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/ament_cmake_export_dependencies-extras.cmake
+[1.207s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/amr_costmap_pluginsConfig.cmake
+[1.207s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/amr_costmap_pluginsConfig-version.cmake
+[1.207s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/package.xml
+[1.304s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=(ai_ros_venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ VIRTUAL_ENV_PROMPT=(ai_ros_venv) /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins

@@ -1,1 +1,1 @@
-rclcpp;nav2_costmap_2d;nav_msgs;pluginlib;tf2;ament_lint_auto;ament_lint_common
+rclcpp;nav2_costmap_2d;nav_msgs;pluginlib;tf2;tf2_geometry_msgs;ament_lint_auto;ament_lint_common

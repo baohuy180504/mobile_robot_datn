@@ -10,6 +10,7 @@
 #include "nav2_costmap_2d/cost_values.hpp"
 #include "pluginlib/class_list_macros.hpp"
 #include "tf2/utils.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 
 namespace amr_costmap_plugins
 {
@@ -32,7 +33,8 @@ GHRFLayer::GHRFLayer()
   has_bounds_(false),
   risk_topic_("/ghrf_risk_grid"),
   max_cost_scale_(2.52),
-  grid_timeout_s_(0.6)
+  grid_timeout_s_(0.6),
+  lethal_threshold_(60.0)
 {
 }
 
@@ -49,11 +51,13 @@ void GHRFLayer::onInitialize()
   declareParameter("risk_topic", rclcpp::ParameterValue(risk_topic_));
   declareParameter("max_cost_scale", rclcpp::ParameterValue(max_cost_scale_));
   declareParameter("grid_timeout", rclcpp::ParameterValue(grid_timeout_s_));
+  declareParameter("lethal_threshold", rclcpp::ParameterValue(lethal_threshold_));
 
   node->get_parameter(name_ + "." + "enabled", enabled_);
   node->get_parameter(name_ + "." + "risk_topic", risk_topic_);
   node->get_parameter(name_ + "." + "max_cost_scale", max_cost_scale_);
   node->get_parameter(name_ + "." + "grid_timeout", grid_timeout_s_);
+  node->get_parameter(name_ + "." + "lethal_threshold", lethal_threshold_);
 
   current_ = true;
 
@@ -67,8 +71,8 @@ void GHRFLayer::onInitialize()
 
   RCLCPP_INFO(
     node->get_logger(),
-    "GHRFLayer '%s' đã khởi tạo: risk_topic=%s, max_cost_scale=%.3f, grid_timeout=%.2fs",
-    name_.c_str(), risk_topic_.c_str(), max_cost_scale_, grid_timeout_s_);
+    "GHRFLayer '%s' đã khởi tạo: risk_topic=%s, max_cost_scale=%.3f, grid_timeout=%.2fs, lethal_threshold=%.0f",
+    name_.c_str(), risk_topic_.c_str(), max_cost_scale_, grid_timeout_s_, lethal_threshold_);
 }
 
 void GHRFLayer::riskGridCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg)
@@ -211,9 +215,17 @@ void GHRFLayer::updateCosts(
         continue;
       }
 
-      const double scaled = static_cast<double>(value) * max_cost_scale_;
-      const double clamped = std::min(scaled, static_cast<double>(kMaxRiskCost));
-      const unsigned char new_cost = static_cast<unsigned char>(std::max(1.0, clamped));
+      unsigned char new_cost;
+      if (static_cast<double>(value) >= lethal_threshold_) {
+        // Vật cản đủ chắc chắn -> LETHAL_OBSTACLE để inflation_layer (chạy SAU layer này)
+        // tạo vùng đệm an toàn quanh nó, giúp xe né với khoảng cách, không cắt sát mép.
+        new_cost = nav2_costmap_2d::LETHAL_OBSTACLE;
+      } else {
+        // Risk thấp/chưa chắc -> graded cost (soft), không seed inflation.
+        const double scaled = static_cast<double>(value) * max_cost_scale_;
+        const double clamped = std::min(scaled, static_cast<double>(kMaxRiskCost));
+        new_cost = static_cast<unsigned char>(std::max(1.0, clamped));
+      }
 
       const unsigned char existing = master_grid.getCost(mx, my);
       if (existing == nav2_costmap_2d::NO_INFORMATION || new_cost > existing) {

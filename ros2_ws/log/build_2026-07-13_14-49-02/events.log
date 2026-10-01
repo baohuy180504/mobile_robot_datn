@@ -1,0 +1,355 @@
+[0.000000] (-) TimerEvent: {}
+[0.000846] (-) JobUnselected: {'identifier': 'amr_ai'}
+[0.001115] (-) JobUnselected: {'identifier': 'amr_bringup'}
+[0.001486] (-) JobUnselected: {'identifier': 'amr_control'}
+[0.001577] (-) JobUnselected: {'identifier': 'amr_description'}
+[0.001640] (-) JobUnselected: {'identifier': 'amr_interfaces'}
+[0.001699] (-) JobUnselected: {'identifier': 'amr_navigation'}
+[0.001757] (-) JobUnselected: {'identifier': 'amr_pointcloud_filter'}
+[0.001813] (-) JobUnselected: {'identifier': 'amr_sensors'}
+[0.001868] (-) JobUnselected: {'identifier': 'amr_slam'}
+[0.001924] (-) JobUnselected: {'identifier': 'astra_camera'}
+[0.001979] (-) JobUnselected: {'identifier': 'astra_camera_msgs'}
+[0.002034] (-) JobUnselected: {'identifier': 'explore_lite'}
+[0.002089] (-) JobUnselected: {'identifier': 'explore_lite_msgs'}
+[0.002146] (-) JobUnselected: {'identifier': 'multirobot_map_merge'}
+[0.002203] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.002266] (amr_costmap_plugins) JobQueued: {'identifier': 'amr_costmap_plugins', 'dependencies': OrderedDict()}
+[0.002334] (amr_costmap_plugins) JobStarted: {'identifier': 'amr_costmap_plugins'}
+[0.019262] (amr_costmap_plugins) JobProgress: {'identifier': 'amr_costmap_plugins', 'progress': 'cmake'}
+[0.025074] (amr_costmap_plugins) Command: {'cmd': ['/usr/bin/cmake', '/home/huyjetson/mobile_robot/ros2_ws/src/amr_costmap_plugins', '-DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.105 47376 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/opt/openvdb_vendor/lib:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '9'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.105 47376 192.168.0.100 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[0.099785] (-) TimerEvent: {}
+[0.201184] (-) TimerEvent: {}
+[0.303500] (-) TimerEvent: {}
+[0.405651] (-) TimerEvent: {}
+[0.507554] (-) TimerEvent: {}
+[0.609506] (-) TimerEvent: {}
+[0.710848] (-) TimerEvent: {}
+[0.812332] (-) TimerEvent: {}
+[0.913754] (-) TimerEvent: {}
+[1.014869] (-) TimerEvent: {}
+[9.682196] (-) TimerEvent: {}
+[10.149613] (-) TimerEvent: {}
+[10.251220] (-) TimerEvent: {}
+[10.353527] (-) TimerEvent: {}
+[10.454742] (-) TimerEvent: {}
+[10.556658] (-) TimerEvent: {}
+[10.657771] (-) TimerEvent: {}
+[10.759194] (-) TimerEvent: {}
+[10.860731] (-) TimerEvent: {}
+[10.961794] (-) TimerEvent: {}
+[11.062704] (-) TimerEvent: {}
+[11.163509] (-) TimerEvent: {}
+[11.264443] (-) TimerEvent: {}
+[11.365227] (-) TimerEvent: {}
+[11.466107] (-) TimerEvent: {}
+[11.566950] (-) TimerEvent: {}
+[11.667955] (-) TimerEvent: {}
+[11.768886] (-) TimerEvent: {}
+[11.869584] (-) TimerEvent: {}
+[11.970184] (-) TimerEvent: {}
+[12.070777] (-) TimerEvent: {}
+[12.171491] (-) TimerEvent: {}
+[12.273428] (-) TimerEvent: {}
+[12.374431] (-) TimerEvent: {}
+[12.475964] (-) TimerEvent: {}
+[12.576730] (-) TimerEvent: {}
+[12.677471] (-) TimerEvent: {}
+[12.778424] (-) TimerEvent: {}
+[12.879483] (-) TimerEvent: {}
+[12.980895] (-) TimerEvent: {}
+[13.081962] (-) TimerEvent: {}
+[13.182885] (-) TimerEvent: {}
+[13.283846] (-) TimerEvent: {}
+[13.384954] (-) TimerEvent: {}
+[13.433006] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[13.485197] (-) TimerEvent: {}
+[13.586453] (-) TimerEvent: {}
+[13.687225] (-) TimerEvent: {}
+[13.787892] (-) TimerEvent: {}
+[13.805608] (amr_costmap_plugins) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[13.888432] (-) TimerEvent: {}
+[13.906422] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[13.988822] (-) TimerEvent: {}
+[14.035962] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[14.045106] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[14.064634] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[14.088845] (-) TimerEvent: {}
+[14.094160] (amr_costmap_plugins) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[14.125691] (amr_costmap_plugins) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[14.188939] (-) TimerEvent: {}
+[14.214755] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[14.220986] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)\n'}
+[14.275677] (amr_costmap_plugins) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_cyclonedds_cpp' as default\n"}
+[14.289052] (-) TimerEvent: {}
+[14.389884] (-) TimerEvent: {}
+[14.491018] (-) TimerEvent: {}
+[14.508795] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found nav2_costmap_2d: 1.1.20 (/opt/ros/humble/share/nav2_costmap_2d/cmake)\n'}
+[14.591165] (-) TimerEvent: {}
+[14.691875] (-) TimerEvent: {}
+[14.792882] (-) TimerEvent: {}
+[14.893702] (-) TimerEvent: {}
+[14.994351] (-) TimerEvent: {}
+[15.094893] (-) TimerEvent: {}
+[15.095476] (amr_costmap_plugins) StdoutLine: {'line': b'-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target\n'}
+[15.195036] (-) TimerEvent: {}
+[15.295724] (-) TimerEvent: {}
+[15.396475] (-) TimerEvent: {}
+[15.474395] (amr_costmap_plugins) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[15.496577] (-) TimerEvent: {}
+[15.597284] (-) TimerEvent: {}
+[15.698274] (-) TimerEvent: {}
+[15.735856] (amr_costmap_plugins) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[15.740616] (amr_costmap_plugins) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[15.741683] (amr_costmap_plugins) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/huyjetson/mobile_robot/ros2_ws/src/amr_costmap_plugins/include\n'}
+[15.742281] (amr_costmap_plugins) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[15.745293] (amr_costmap_plugins) StdoutLine: {'line': b"-- Added test 'cpplint' to check C / C++ code against the Google style\n"}
+[15.745722] (amr_costmap_plugins) StdoutLine: {'line': b'-- Configured cpplint exclude dirs and/or files: \n'}
+[15.748360] (amr_costmap_plugins) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[15.752468] (amr_costmap_plugins) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[15.752905] (amr_costmap_plugins) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[15.754270] (amr_costmap_plugins) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[15.774500] (amr_costmap_plugins) StdoutLine: {'line': b'-- Configuring done\n'}
+[15.798387] (-) TimerEvent: {}
+[15.899433] (-) TimerEvent: {}
+[15.984197] (amr_costmap_plugins) StdoutLine: {'line': b'-- Generating done\n'}
+[15.999742] (-) TimerEvent: {}
+[16.010051] (amr_costmap_plugins) StdoutLine: {'line': b'-- Build files have been written to: /home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins\n'}
+[16.050864] (amr_costmap_plugins) CommandEnded: {'returncode': 0}
+[16.053915] (amr_costmap_plugins) JobProgress: {'identifier': 'amr_costmap_plugins', 'progress': 'build'}
+[16.054671] (amr_costmap_plugins) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins', '--', '-j6', '-l6'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.105 47376 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/opt/openvdb_vendor/lib:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '9'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.105 47376 192.168.0.100 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[16.100092] (-) TimerEvent: {}
+[16.174034] (amr_costmap_plugins) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target amr_costmap_plugins\x1b[0m\n'}
+[16.200264] (-) TimerEvent: {}
+[16.222893] (amr_costmap_plugins) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/amr_costmap_plugins.dir/src/ghrf_layer.cpp.o\x1b[0m\n'}
+[16.300584] (-) TimerEvent: {}
+[16.401565] (-) TimerEvent: {}
+[16.502201] (-) TimerEvent: {}
+[16.602862] (-) TimerEvent: {}
+[16.703543] (-) TimerEvent: {}
+[16.804195] (-) TimerEvent: {}
+[16.905339] (-) TimerEvent: {}
+[17.006951] (-) TimerEvent: {}
+[17.109085] (-) TimerEvent: {}
+[17.211077] (-) TimerEvent: {}
+[17.311747] (-) TimerEvent: {}
+[17.412400] (-) TimerEvent: {}
+[17.513062] (-) TimerEvent: {}
+[17.613727] (-) TimerEvent: {}
+[17.714387] (-) TimerEvent: {}
+[17.815038] (-) TimerEvent: {}
+[17.915732] (-) TimerEvent: {}
+[18.016370] (-) TimerEvent: {}
+[18.116989] (-) TimerEvent: {}
+[18.217629] (-) TimerEvent: {}
+[18.318485] (-) TimerEvent: {}
+[18.419133] (-) TimerEvent: {}
+[18.519795] (-) TimerEvent: {}
+[18.641293] (-) TimerEvent: {}
+[18.741992] (-) TimerEvent: {}
+[18.842637] (-) TimerEvent: {}
+[18.943404] (-) TimerEvent: {}
+[19.044254] (-) TimerEvent: {}
+[19.145073] (-) TimerEvent: {}
+[19.245917] (-) TimerEvent: {}
+[19.346754] (-) TimerEvent: {}
+[19.447586] (-) TimerEvent: {}
+[19.548374] (-) TimerEvent: {}
+[19.649082] (-) TimerEvent: {}
+[19.749926] (-) TimerEvent: {}
+[19.850754] (-) TimerEvent: {}
+[19.951523] (-) TimerEvent: {}
+[20.052403] (-) TimerEvent: {}
+[20.153218] (-) TimerEvent: {}
+[20.254051] (-) TimerEvent: {}
+[20.354886] (-) TimerEvent: {}
+[20.455749] (-) TimerEvent: {}
+[20.556589] (-) TimerEvent: {}
+[20.657378] (-) TimerEvent: {}
+[20.758162] (-) TimerEvent: {}
+[20.858978] (-) TimerEvent: {}
+[20.959783] (-) TimerEvent: {}
+[21.060590] (-) TimerEvent: {}
+[21.161344] (-) TimerEvent: {}
+[21.262104] (-) TimerEvent: {}
+[21.362866] (-) TimerEvent: {}
+[21.463593] (-) TimerEvent: {}
+[21.564713] (-) TimerEvent: {}
+[21.665478] (-) TimerEvent: {}
+[21.766317] (-) TimerEvent: {}
+[21.867113] (-) TimerEvent: {}
+[21.967866] (-) TimerEvent: {}
+[22.068644] (-) TimerEvent: {}
+[22.169437] (-) TimerEvent: {}
+[22.270433] (-) TimerEvent: {}
+[22.371226] (-) TimerEvent: {}
+[22.471997] (-) TimerEvent: {}
+[22.572781] (-) TimerEvent: {}
+[22.673565] (-) TimerEvent: {}
+[22.774354] (-) TimerEvent: {}
+[22.875137] (-) TimerEvent: {}
+[22.975873] (-) TimerEvent: {}
+[23.076603] (-) TimerEvent: {}
+[23.177549] (-) TimerEvent: {}
+[23.278306] (-) TimerEvent: {}
+[23.379047] (-) TimerEvent: {}
+[23.479737] (-) TimerEvent: {}
+[23.580477] (-) TimerEvent: {}
+[23.681356] (-) TimerEvent: {}
+[23.782103] (-) TimerEvent: {}
+[23.882840] (-) TimerEvent: {}
+[23.983544] (-) TimerEvent: {}
+[24.084289] (-) TimerEvent: {}
+[24.185019] (-) TimerEvent: {}
+[24.285960] (-) TimerEvent: {}
+[24.386686] (-) TimerEvent: {}
+[24.487386] (-) TimerEvent: {}
+[24.588137] (-) TimerEvent: {}
+[24.688882] (-) TimerEvent: {}
+[24.789679] (-) TimerEvent: {}
+[24.890738] (-) TimerEvent: {}
+[24.991468] (-) TimerEvent: {}
+[25.092299] (-) TimerEvent: {}
+[25.193050] (-) TimerEvent: {}
+[25.294020] (-) TimerEvent: {}
+[25.394752] (-) TimerEvent: {}
+[25.495720] (-) TimerEvent: {}
+[25.596493] (-) TimerEvent: {}
+[25.697267] (-) TimerEvent: {}
+[25.798278] (-) TimerEvent: {}
+[25.899067] (-) TimerEvent: {}
+[26.000020] (-) TimerEvent: {}
+[26.101053] (-) TimerEvent: {}
+[26.201827] (-) TimerEvent: {}
+[26.302787] (-) TimerEvent: {}
+[26.403527] (-) TimerEvent: {}
+[26.504297] (-) TimerEvent: {}
+[26.605038] (-) TimerEvent: {}
+[26.705805] (-) TimerEvent: {}
+[26.806624] (-) TimerEvent: {}
+[26.907420] (-) TimerEvent: {}
+[27.008405] (-) TimerEvent: {}
+[27.109216] (-) TimerEvent: {}
+[27.210033] (-) TimerEvent: {}
+[27.311065] (-) TimerEvent: {}
+[27.412099] (-) TimerEvent: {}
+[27.512910] (-) TimerEvent: {}
+[27.613700] (-) TimerEvent: {}
+[27.714468] (-) TimerEvent: {}
+[27.815488] (-) TimerEvent: {}
+[27.916313] (-) TimerEvent: {}
+[28.017083] (-) TimerEvent: {}
+[28.117868] (-) TimerEvent: {}
+[28.218678] (-) TimerEvent: {}
+[28.319457] (-) TimerEvent: {}
+[28.420280] (-) TimerEvent: {}
+[28.521078] (-) TimerEvent: {}
+[28.621838] (-) TimerEvent: {}
+[28.722609] (-) TimerEvent: {}
+[28.823418] (-) TimerEvent: {}
+[28.924270] (-) TimerEvent: {}
+[29.025068] (-) TimerEvent: {}
+[29.125843] (-) TimerEvent: {}
+[29.226624] (-) TimerEvent: {}
+[29.327412] (-) TimerEvent: {}
+[29.428445] (-) TimerEvent: {}
+[29.529243] (-) TimerEvent: {}
+[29.630059] (-) TimerEvent: {}
+[29.730867] (-) TimerEvent: {}
+[29.831693] (-) TimerEvent: {}
+[29.932465] (-) TimerEvent: {}
+[30.033212] (-) TimerEvent: {}
+[30.133936] (-) TimerEvent: {}
+[30.234695] (-) TimerEvent: {}
+[30.335472] (-) TimerEvent: {}
+[30.436264] (-) TimerEvent: {}
+[30.537292] (-) TimerEvent: {}
+[30.638081] (-) TimerEvent: {}
+[30.738877] (-) TimerEvent: {}
+[30.839715] (-) TimerEvent: {}
+[30.940496] (-) TimerEvent: {}
+[31.041274] (-) TimerEvent: {}
+[31.142277] (-) TimerEvent: {}
+[31.243050] (-) TimerEvent: {}
+[31.343863] (-) TimerEvent: {}
+[31.444626] (-) TimerEvent: {}
+[31.545391] (-) TimerEvent: {}
+[31.646126] (-) TimerEvent: {}
+[31.746863] (-) TimerEvent: {}
+[31.847662] (-) TimerEvent: {}
+[31.948643] (-) TimerEvent: {}
+[32.049411] (-) TimerEvent: {}
+[32.150179] (-) TimerEvent: {}
+[32.250957] (-) TimerEvent: {}
+[32.351766] (-) TimerEvent: {}
+[32.452531] (-) TimerEvent: {}
+[32.553323] (-) TimerEvent: {}
+[32.654102] (-) TimerEvent: {}
+[32.754878] (-) TimerEvent: {}
+[32.855693] (-) TimerEvent: {}
+[32.956460] (-) TimerEvent: {}
+[33.057241] (-) TimerEvent: {}
+[33.158008] (-) TimerEvent: {}
+[33.258705] (-) TimerEvent: {}
+[33.359367] (-) TimerEvent: {}
+[33.460041] (-) TimerEvent: {}
+[33.560704] (-) TimerEvent: {}
+[33.661377] (-) TimerEvent: {}
+[33.762072] (-) TimerEvent: {}
+[33.862704] (-) TimerEvent: {}
+[33.963332] (-) TimerEvent: {}
+[34.063985] (-) TimerEvent: {}
+[34.164619] (-) TimerEvent: {}
+[34.265255] (-) TimerEvent: {}
+[34.366309] (-) TimerEvent: {}
+[34.394139] (amr_costmap_plugins) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libamr_costmap_plugins.so\x1b[0m\n'}
+[34.466369] (-) TimerEvent: {}
+[34.567213] (-) TimerEvent: {}
+[34.668327] (-) TimerEvent: {}
+[34.769177] (-) TimerEvent: {}
+[34.870015] (-) TimerEvent: {}
+[34.970835] (-) TimerEvent: {}
+[35.071673] (-) TimerEvent: {}
+[35.172508] (-) TimerEvent: {}
+[35.273359] (-) TimerEvent: {}
+[35.374199] (-) TimerEvent: {}
+[35.474963] (-) TimerEvent: {}
+[35.575747] (-) TimerEvent: {}
+[35.676525] (-) TimerEvent: {}
+[35.777313] (-) TimerEvent: {}
+[35.814175] (amr_costmap_plugins) StdoutLine: {'line': b'[100%] Built target amr_costmap_plugins\n'}
+[35.852163] (amr_costmap_plugins) CommandEnded: {'returncode': 0}
+[35.853985] (amr_costmap_plugins) JobProgress: {'identifier': 'amr_costmap_plugins', 'progress': 'install'}
+[35.877482] (-) TimerEvent: {}
+[35.885246] (amr_costmap_plugins) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins'], 'cwd': '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'huyjetson'), ('SSH_CLIENT', '192.168.0.105 47376 22'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge/lib:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/opt/openvdb_vendor/lib:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/huyjetson'), ('OLDPWD', '/home/huyjetson/mobile_robot/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '(ai_ros_venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$'), ('LC_MONETARY', 'vi_VN'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'huyjetson'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '9'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/huyjetson/mobile_robot/ai_ros_venv/bin:/home/huyjetson/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'vi_VN'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'vi_VN'), ('VIRTUAL_ENV_PROMPT', '(ai_ros_venv)'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('VIRTUAL_ENV', '/home/huyjetson/mobile_robot/ai_ros_venv'), ('PWD', '/home/huyjetson/mobile_robot/ros2_ws/build/amr_costmap_plugins'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.0.105 47376 192.168.0.100 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs/local/lib/python3.10/dist-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces/lib/python3.10/site-packages:/home/huyjetson/mobile_robot/ros2_ws/build/amr_bringup:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/huyjetson/mobile_robot/ros2_ws/install/sllidar_ros2:/home/huyjetson/mobile_robot/ros2_ws/install/multirobot_map_merge:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite:/home/huyjetson/mobile_robot/ros2_ws/install/explore_lite_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera:/home/huyjetson/mobile_robot/ros2_ws/install/astra_camera_msgs:/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation:/home/huyjetson/mobile_robot/ros2_ws/install/amr_slam:/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter:/home/huyjetson/mobile_robot/ros2_ws/install/amr_interfaces:/home/huyjetson/mobile_robot/ros2_ws/install/amr_description:/home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins:/home/huyjetson/mobile_robot/ros2_ws/install/amr_control:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble')]), 'shell': False}
+[35.904907] (amr_costmap_plugins) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[35.906161] (amr_costmap_plugins) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[35.906682] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins//costmap_plugins.xml\n'}
+[35.907222] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/lib/libamr_costmap_plugins.so\n'}
+[35.908005] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/include/amr_costmap_plugins/ghrf_layer.hpp\n'}
+[35.908339] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/costmap_plugins.xml\n'}
+[35.908714] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/library_path.sh\n'}
+[35.909036] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/library_path.dsv\n'}
+[35.909407] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/package_run_dependencies/amr_costmap_plugins\n'}
+[35.909802] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/parent_prefix_path/amr_costmap_plugins\n'}
+[35.910130] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/ament_prefix_path.sh\n'}
+[35.910447] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/ament_prefix_path.dsv\n'}
+[35.910787] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/path.sh\n'}
+[35.911096] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/environment/path.dsv\n'}
+[35.911391] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.bash\n'}
+[35.911734] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.sh\n'}
+[35.912112] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.zsh\n'}
+[35.912372] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/local_setup.dsv\n'}
+[35.912633] (amr_costmap_plugins) StdoutLine: {'line': b'-- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/package.dsv\n'}
+[35.933728] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/packages/amr_costmap_plugins\n'}
+[35.934216] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/ament_index/resource_index/nav2_costmap_2d__pluginlib__plugin/amr_costmap_plugins\n'}
+[35.934509] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[35.934748] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[35.935022] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[35.935358] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/amr_costmap_pluginsConfig.cmake\n'}
+[35.935597] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/cmake/amr_costmap_pluginsConfig-version.cmake\n'}
+[35.935956] (amr_costmap_plugins) StdoutLine: {'line': b'-- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_costmap_plugins/share/amr_costmap_plugins/package.xml\n'}
+[35.940732] (amr_costmap_plugins) CommandEnded: {'returncode': 0}
+[35.977624] (-) TimerEvent: {}
+[36.036071] (amr_costmap_plugins) JobEnded: {'identifier': 'amr_costmap_plugins', 'rc': 0}
+[36.037873] (-) EventReactorShutdown: {}

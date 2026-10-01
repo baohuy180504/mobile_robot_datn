@@ -1,0 +1,62 @@
+[0.020s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ /usr/bin/cmake /home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter
+[0.069s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.456s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.566s] -- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)
+[0.707s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.718s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.747s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.785s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.824s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.044s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.057s] -- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)
+[1.201s] -- Using RMW implementation 'rmw_cyclonedds_cpp' as default
+[1.626s] -- Found sensor_msgs: 4.9.1 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.699s] -- Found nav_msgs: 4.9.1 (/opt/ros/humble/share/nav_msgs/cmake)
+[1.738s] -- Found tf2: 0.25.20 (/opt/ros/humble/share/tf2/cmake)
+[1.752s] -- Found tf2_ros: 0.25.20 (/opt/ros/humble/share/tf2_ros/cmake)
+[2.058s] -- Found tf2_geometry_msgs: 0.25.20 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[2.071s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[2.075s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[2.079s] -- Found pcl_conversions: 2.4.5 (/opt/ros/humble/share/pcl_conversions/cmake)
+[2.191s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[2.328s] -- FLANN found (include: /usr/include, lib: /usr/lib/aarch64-linux-gnu/libflann_cpp.so)
+[3.673s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[3.689s] -- OpenNI2 found (version: 2.3.0.85, include: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/include/openni2, lib: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib/libOpenNI2.so;libusb::libusb)
+[3.943s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[3.952s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[3.962s] -- OpenNI2 found (version: 2.3.0.85, include: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/include/openni2, lib: /home/huyjetson/mobile_robot/ros2_ws/install/astra_camera/lib/libOpenNI2.so;libusb::libusb)
+[4.200s] -- Found Qhull version 8.0.2
+[4.447s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[4.870s] -- Configuring done
+[4.941s] -- Generating done
+[4.964s] -- Build files have been written to: /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter
+[5.004s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ /usr/bin/cmake /home/huyjetson/mobile_robot/ros2_ws/src/amr_pointcloud_filter -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter
+[5.013s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6
+[5.115s] [35m[1mConsolidate compiler generated dependencies of target depth_cloud_filter[0m
+[5.116s] [35m[1mConsolidate compiler generated dependencies of target height_risk_projector[0m
+[5.157s] [ 50%] Built target depth_cloud_filter
+[5.158s] [ 75%] [32mBuilding CXX object CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o[0m
+[32.286s] [100%] [32m[1mLinking CXX executable height_risk_projector[0m
+[32.887s] [100%] Built target height_risk_projector
+[32.919s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6
+[32.954s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter
+[32.979s] -- Install configuration: "Release"
+[32.980s] -- Execute custom install script
+[32.981s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/lib/amr_pointcloud_filter/depth_cloud_filter
+[32.981s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/lib/amr_pointcloud_filter/height_risk_projector
+[32.981s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/ament_index/resource_index/package_run_dependencies/amr_pointcloud_filter
+[32.982s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/ament_index/resource_index/parent_prefix_path/amr_pointcloud_filter
+[32.982s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/ament_prefix_path.sh
+[32.983s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/ament_prefix_path.dsv
+[32.983s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/path.sh
+[32.983s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/path.dsv
+[32.984s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.bash
+[32.984s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.sh
+[32.984s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.zsh
+[32.984s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.dsv
+[32.985s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/package.dsv
+[33.003s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/ament_index/resource_index/packages/amr_pointcloud_filter
+[33.003s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/cmake/amr_pointcloud_filterConfig.cmake
+[33.003s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/cmake/amr_pointcloud_filterConfig-version.cmake
+[33.003s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/package.xml
+[33.009s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble PS1=\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter

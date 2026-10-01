@@ -196,6 +196,13 @@ class OperatorGuiNode(Node):
                 self.follow_button_color = '#ffff00'
                 self.status_text = 'EMERGENCY STOP'
                 self.status_color = '#dc2626'
+            elif mode == AiMode.ALERT_STOPPED:
+                # Xe dừng do phát hiện té ngã khi đang chạy tới WP.
+                # Chọn WP/HOME hoặc FOLLOW để chạy lại.
+                self.follow_button_text = 'FOLLOW'
+                self.follow_button_color = '#ffff00'
+                self.status_text = 'ALERT STOPPED - SELECT WP/HOME'
+                self.status_color = '#dc2626'
 
     def target_callback(self, msg: PersonTarget):
         with self.lock:
@@ -212,6 +219,7 @@ class OperatorGuiNode(Node):
             AiMode.FOLLOW_STOPPED: 'FOLLOW_STOPPED',
             AiMode.RETURN_TO_ZONE: 'RETURN_TO_ZONE',
             AiMode.EMERGENCY_STOP: 'EMERGENCY_STOP',
+            AiMode.ALERT_STOPPED: 'ALERT_STOPPED',
         }
         return mapping.get(mode, f'MODE_{mode}')
 
@@ -747,12 +755,6 @@ class OperatorGuiApp:
         if alert_type == 'FALL':
             text = 'CANH BAO: TE NGA'
             color = '#dc2626'
-        elif alert_type == 'FIRE':
-            text = 'CANH BAO: LUA'
-            color = '#dc2626'
-        elif alert_type == 'SMOKE':
-            text = 'CANH BAO: KHOI'
-            color = '#f97316'
         else:
             text = f'CANH BAO: {alert_type}'
             color = '#dc2626'
@@ -843,6 +845,8 @@ class OperatorGuiApp:
             text = 'FOLLOW STOPPED\nSELECT WP/HOME'
         elif mode == AiMode.EMERGENCY_STOP:
             text = 'EMERGENCY STOP'
+        elif mode == AiMode.ALERT_STOPPED:
+            text = 'ALERT STOPPED\nSELECT WP/HOME'
         else:
             text = 'NAVIGATION READY\nHOME POSE SET'
 
@@ -860,14 +864,6 @@ class OperatorGuiApp:
             main_text = 'CANH BAO\nTE NGA'
             bg = '#fee2e2'
             fg = '#991b1b'
-        elif alert_type == 'FIRE':
-            main_text = 'CANH BAO\nCO LUA'
-            bg = '#fee2e2'
-            fg = '#991b1b'
-        elif alert_type == 'SMOKE':
-            main_text = 'CANH BAO\nCO KHOI'
-            bg = '#ffedd5'
-            fg = '#9a3412'
         else:
             main_text = f'CANH BAO\n{alert_type}'
             bg = '#fee2e2'

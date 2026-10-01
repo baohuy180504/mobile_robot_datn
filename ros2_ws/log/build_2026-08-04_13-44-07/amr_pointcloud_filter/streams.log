@@ -1,0 +1,29 @@
+[0.053s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6
+[0.797s] [ 25%] [32mBuilding CXX object CMakeFiles/depth_cloud_filter.dir/src/depth_cloud_filter.cpp.o[0m
+[0.925s] [ 50%] [32mBuilding CXX object CMakeFiles/height_risk_projector.dir/src/height_risk_projector.cpp.o[0m
+[28.421s] [ 75%] [32m[1mLinking CXX executable depth_cloud_filter[0m
+[34.284s] [100%] [32m[1mLinking CXX executable height_risk_projector[0m
+[34.546s] [100%] Built target depth_cloud_filter
+[34.959s] [100%] Built target height_risk_projector
+[34.996s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble /usr/bin/cmake --build /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter -- -j6 -l6
+[35.042s] Invoking command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter
+[35.071s] -- Install configuration: "Release"
+[35.072s] -- Execute custom install script
+[35.073s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/lib/amr_pointcloud_filter/depth_cloud_filter
+[35.073s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/lib/amr_pointcloud_filter/height_risk_projector
+[35.073s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/ament_index/resource_index/package_run_dependencies/amr_pointcloud_filter
+[35.074s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/ament_index/resource_index/parent_prefix_path/amr_pointcloud_filter
+[35.074s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/ament_prefix_path.sh
+[35.074s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/ament_prefix_path.dsv
+[35.075s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/path.sh
+[35.075s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/environment/path.dsv
+[35.075s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.bash
+[35.076s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.sh
+[35.077s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.zsh
+[35.077s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/local_setup.dsv
+[35.077s] -- Symlinking: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/package.dsv
+[35.098s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/ament_index/resource_index/packages/amr_pointcloud_filter
+[35.099s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/cmake/amr_pointcloud_filterConfig.cmake
+[35.099s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/cmake/amr_pointcloud_filterConfig-version.cmake
+[35.099s] -- Up-to-date symlink: /home/huyjetson/mobile_robot/ros2_ws/install/amr_pointcloud_filter/share/amr_pointcloud_filter/package.xml
+[35.104s] Invoked command in '/home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/huyjetson/mobile_robot/ros2_ws/install/amr_sensors:/home/huyjetson/mobile_robot/ros2_ws/install/amr_ai:/home/huyjetson/mobile_robot/ros2_ws/install/amr_bringup:/opt/ros/humble /usr/bin/cmake --install /home/huyjetson/mobile_robot/ros2_ws/build/amr_pointcloud_filter

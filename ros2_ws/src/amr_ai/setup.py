@@ -31,7 +31,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            # Sẽ thêm sau khi node đã có main()
             'ai_mode_manager = amr_ai.core.ai_mode_manager_node:main',
             'ai_image_probe = amr_ai.core.image_probe_node:main',
             'ai_detector = amr_ai.detectors.ai_detector_node:main',
@@ -41,10 +40,8 @@ setup(
             'cmd_vel_safety_mux = amr_ai.safety.cmd_vel_safety_mux_node:main',
             'operator_gui = amr_ai.gui.operator_gui_node:main',
             'auto_initial_pose = amr_ai.core.auto_initial_pose_node:main',
-            'auto_localizer = amr_ai.core.auto_localizer_node:main',
             'engineer_web = amr_ai.web.engineer_web_server:main',
             'web_control = amr_ai.web.web_control:main',
-            'nav_ppe_monitor = amr_ai.nav2.nav_ppe_monitor_node:main',
             'esp32_alert_bridge = amr_ai.esp32_alert_bridge_node:main',
         ],
     },

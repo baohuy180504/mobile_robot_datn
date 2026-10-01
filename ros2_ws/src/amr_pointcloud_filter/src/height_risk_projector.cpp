@@ -12,8 +12,10 @@
 #include <tf2_ros/transform_listener.h>
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstring>
+#include <fstream>
 #include <limits>
 #include <string>
 #include <unordered_map>
@@ -122,6 +124,24 @@ public:
     log_debug_ = declare_parameter<bool>("log_debug", true);
     publish_risk_grid_ = declare_parameter<bool>("publish_risk_grid", true);
 
+    // --- Benchmark: đo thời gian xử lý từng tầng, ghi CSV cho paper ---
+    // Để trống timing_csv_path để tắt hoàn toàn (không tốn chi phí ghi file).
+    timing_csv_path_ = declare_parameter<std::string>("timing_csv_path", "");
+    // Tắt cloud XYZI khi benchmark: nó chỉ phục vụ RViz, không thuộc chi phí thuật toán.
+    publish_debug_cloud_ = declare_parameter<bool>("publish_debug_cloud", true);
+
+    if (!timing_csv_path_.empty()) {
+      timing_csv_.open(timing_csv_path_, std::ios::out | std::ios::trunc);
+      if (timing_csv_.is_open()) {
+        timing_csv_ << "stamp_s,n_input,n_processed,t_tf_us,t_process_us,t_prune_us,"
+                    << "t_collect_us,t_grid_us,t_algo_us,t_cloud_us,t_relabel_tf_us,t_wait_us,"
+                    << "finite,roi,gaussian,cells,output\n";
+        RCLCPP_INFO(get_logger(), "Benchmark timing -> %s", timing_csv_path_.c_str());
+      } else {
+        RCLCPP_WARN(get_logger(), "Không mở được timing_csv_path: %s", timing_csv_path_.c_str());
+      }
+    }
+
     if (grid_resolution_ <= 0.0) {
       RCLCPP_WARN(get_logger(), "grid_resolution <= 0. Dùng 0.05 m");
       grid_resolution_ = 0.05;
@@ -209,6 +229,14 @@ private:
   int max_input_points_;
   bool log_debug_;
   bool publish_risk_grid_;
+
+  // Benchmark timing
+  std::string timing_csv_path_;
+  bool publish_debug_cloud_;
+  std::ofstream timing_csv_;
+  // Thời gian TF lookup của bước relabel (đo trong makeRiskGridMsg), tính bằng µs.
+  // Tách riêng vì đây là thời gian CHỜ TF, không phải chi phí tính toán.
+  int64_t last_relabel_tf_us_ = 0;
 
   bool last_publish_valid_ = false;
   bool last_debug_valid_ = false;
@@ -536,7 +564,16 @@ private:
     output.is_dense = true;
 
     sensor_msgs::PointCloud2Modifier modifier(output);
-    modifier.setPointCloud2FieldsByString(2, "xyz", "intensity");
+    // Khai báo tường minh 4 field x/y/z/intensity (float32).
+    // KHÔNG dùng setPointCloud2FieldsByString: hàm đó chỉ hỗ trợ preset "xyz" và
+    // "xyzrgb". Truyền "xyzi" tạo field SAI -> iterator ném runtime_error
+    // "Field xyzi does not exist" -> node abort (SIGABRT, exit -6).
+    modifier.setPointCloud2Fields(
+      4,
+      "x", 1, sensor_msgs::msg::PointField::FLOAT32,
+      "y", 1, sensor_msgs::msg::PointField::FLOAT32,
+      "z", 1, sensor_msgs::msg::PointField::FLOAT32,
+      "intensity", 1, sensor_msgs::msg::PointField::FLOAT32);
     modifier.resize(points.size());
 
     sensor_msgs::PointCloud2Iterator<float> iter_x(output, "x");
@@ -600,6 +637,10 @@ private:
     geometry_msgs::msg::TransformStamped publish_tf;
     bool relabel_ok = false;
 
+    // Đo riêng thời gian TF lookup này: nó là thời gian CHỜ (I/O blocking),
+    // không phải chi phí tính toán của thuật toán. Với use_latest_tf=false,
+    // lookupTransform tại 'stamp' sẽ chặn tới tf_timeout_s_ để đợi TF bắt kịp.
+    const auto tf_t0 = std::chrono::steady_clock::now();
     try {
       if (use_latest_tf_) {
         publish_tf = tf_buffer_.lookupTransform(
@@ -618,6 +659,8 @@ private:
         "layer phía costmap sẽ tự bỏ qua cycle này.",
         target_frame_.c_str(), grid_publish_frame_.c_str(), ex.what(), target_frame_.c_str());
     }
+    last_relabel_tf_us_ = std::chrono::duration_cast<std::chrono::microseconds>(
+      std::chrono::steady_clock::now() - tf_t0).count();
 
     if (relabel_ok) {
       const double yaw = tf2::getYaw(publish_tf.transform.rotation);
@@ -680,10 +723,18 @@ private:
       return;
     }
 
+    using clk = std::chrono::steady_clock;
+    const auto us = [](clk::time_point a, clk::time_point b) {
+        return std::chrono::duration_cast<std::chrono::microseconds>(b - a).count();
+      };
+
+    const auto t0 = clk::now();
+
     tf2::Transform tf;
     if (!lookupTransform(msg, tf)) {
       return;
     }
+    const auto t1 = clk::now();
 
     size_t finite_count = 0;
     size_t roi_count = 0;
@@ -696,21 +747,53 @@ private:
       roi_count,
       gaussian_count,
       accepted_cells);
+    const auto t2 = clk::now();
 
     pruneMemory(now);
+    const auto t3 = clk::now();
 
     const auto active_points = collectActiveRiskPoints(now);
+    const auto t4 = clk::now();
 
-    auto cloud_msg = makeCloudMsg(active_points, now);
-    cloud_pub_->publish(cloud_msg);
+    // Cloud XYZI chỉ phục vụ RViz/debug — tắt khi benchmark để không tính vào chi phí thuật toán.
+    if (publish_debug_cloud_) {
+      auto cloud_msg = makeCloudMsg(active_points, now);
+      cloud_pub_->publish(cloud_msg);
+    }
+    const auto t5 = clk::now();
 
     if (publish_risk_grid_) {
       auto grid_msg = makeRiskGridMsg(active_points, now);
       grid_pub_->publish(grid_msg);
     }
+    const auto t6 = clk::now();
 
     last_publish_valid_ = true;
     last_publish_time_ = now;
+
+    if (timing_csv_.is_open()) {
+      const size_t n_input = static_cast<size_t>(msg->width) * msg->height;
+
+      // Tách bạch hai loại thời gian:
+      //  - t_wait_us : thời gian CHỜ TF (I/O blocking). Phụ thuộc tần số publish TF
+      //                và tf_timeout_s_, KHÔNG phụ thuộc số điểm -> không phải chi phí thuật toán.
+      //  - t_algo_us : chi phí TÍNH TOÁN thuần của GHRF. Đây mới là số dùng cho paper.
+      const auto t_tf_wait = us(t0, t1);                     // lookup cho cloud
+      const auto t_relabel_tf = last_relabel_tf_us_;         // lookup cho relabel grid
+      const auto t_wait = t_tf_wait + t_relabel_tf;
+
+      const auto t_grid_compute = us(t5, t6) - t_relabel_tf; // dựng grid, trừ phần chờ TF
+      const auto t_algo = us(t1, t2) + us(t2, t3) + us(t3, t4) + t_grid_compute;
+
+      timing_csv_ << std::fixed << now.seconds() << ','
+                  << n_input << ',' << finite_count << ','
+                  << t_tf_wait << ',' << us(t1, t2) << ',' << us(t2, t3) << ','
+                  << us(t3, t4) << ',' << t_grid_compute << ',' << t_algo << ','
+                  << us(t4, t5) << ',' << t_relabel_tf << ',' << t_wait << ','
+                  << finite_count << ',' << roi_count << ',' << gaussian_count << ','
+                  << accepted_cells << ',' << active_points.size() << '\n';
+      timing_csv_.flush();
+    }
 
     logStats(now, finite_count, roi_count, gaussian_count, accepted_cells, active_points.size());
   }

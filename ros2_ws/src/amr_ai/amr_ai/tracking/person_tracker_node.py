@@ -13,12 +13,11 @@ from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
 
 from sensor_msgs.msg import Image, CameraInfo
-from geometry_msgs.msg import PoseStamped
 from cv_bridge import CvBridge
 from ultralytics import YOLO
 from ament_index_python.packages import get_package_share_directory
 
-from amr_interfaces.msg import AiMode, PersonTarget, AiAlert
+from amr_interfaces.msg import AiMode, PersonTarget
 from amr_interfaces.srv import SetAiMode
 
 from amr_ai.core import config as cfg
@@ -28,7 +27,6 @@ from amr_ai.core.utils import (
     estimate_depth_distance,
 )
 from amr_ai.tracking.reid import ReIDManager
-from amr_ai.detectors.ppe_detector import PPEDetector, TargetPPEMonitor
 
 
 def get_nearest_track(boxes_xyxy, ids, center_x, center_y):
@@ -65,13 +63,13 @@ class PersonTrackerNode(Node):
     - Khi /amr_ai/mode = FOLLOW_ACTIVE:
         + tiếp tục ReID target
         + publish /amr_ai/person_target.
+    - Enroll xong (target locked) là chuyển sang FOLLOW_ACTIVE ngay,
+      không còn kiểm tra bảo hộ (PPE). Cảnh báo té ngã do ai_detector_node
+      đảm nhiệm.
     - Publish ảnh debug:
         + /amr_ai/debug/person_tracker/image
         + khung xám: người detect được
-        + khung xanh: target đang bám VÀ đã đủ bảo hộ (PPE OK)
-        + khung đỏ + chữ "THIEU BAO HO" góc trái: target đang bám
-          nhưng chưa/không đủ bảo hộ (áp dụng cả lúc đang chờ mở khóa
-          follow lẫn lúc đang follow mà PPE bị mất giữa chừng).
+        + khung xanh: target đang bám
     """
 
     def __init__(self):
@@ -94,24 +92,10 @@ class PersonTrackerNode(Node):
 
         self.declare_parameter('process_every_n_frames', 1)
 
-        # PPE check (helmet + vest) - chỉ chạy khi đang follow (FOLLOW_DETECTING/FOLLOW_ACTIVE)
-        self.declare_parameter('enable_ppe_check', True)
-        self.declare_parameter('ppe_model_path', 'models/ppe_s.engine')
-        self.declare_parameter('ppe_imgsz', 512)
-        self.declare_parameter('ppe_conf', 0.12)
-        self.declare_parameter('ppe_iou', 0.50)
-        self.declare_parameter('ppe_helmet_ok_conf', 0.18)
-        self.declare_parameter('ppe_vest_ok_conf', 0.45)
-        self.declare_parameter('ppe_run_interval', 25)
-        self.declare_parameter('ppe_confirm_frames', 2)
-        self.declare_parameter('ppe_clear_frames', 4)
-
-        # An toàn: nếu vào FOLLOW_DETECTING mà không bao giờ lock được target
-        # hoặc PPE không bao giờ được xác nhận OK, tự hủy về IDLE sau timeout
-        # này để không kẹt vĩnh viễn (kẹt sẽ làm WP1/WP2/HOME bị từ chối).
+        # An toàn: nếu vào FOLLOW_DETECTING mà không bao giờ lock được target,
+        # tự hủy về IDLE sau timeout này để không kẹt vĩnh viễn (kẹt sẽ làm
+        # WP1/WP2/HOME bị từ chối).
         self.declare_parameter('follow_detecting_timeout_s', 30.0)
-
-        self.declare_parameter('alert_topic', '/amr_ai/alert')
 
         # Debug image
         self.declare_parameter('enable_debug_image', True)
@@ -133,21 +117,9 @@ class PersonTrackerNode(Node):
             int(self.get_parameter('process_every_n_frames').value)
         )
 
-        self.enable_ppe_check = bool(self.get_parameter('enable_ppe_check').value)
-        self.ppe_imgsz = int(self.get_parameter('ppe_imgsz').value)
-        self.ppe_conf = float(self.get_parameter('ppe_conf').value)
-        self.ppe_iou = float(self.get_parameter('ppe_iou').value)
-        self.ppe_helmet_ok_conf = float(self.get_parameter('ppe_helmet_ok_conf').value)
-        self.ppe_vest_ok_conf = float(self.get_parameter('ppe_vest_ok_conf').value)
-        self.ppe_run_interval = int(self.get_parameter('ppe_run_interval').value)
-        self.ppe_confirm_frames = int(self.get_parameter('ppe_confirm_frames').value)
-        self.ppe_clear_frames = int(self.get_parameter('ppe_clear_frames').value)
-
         self.follow_detecting_timeout_s = float(
             self.get_parameter('follow_detecting_timeout_s').value
         )
-
-        self.alert_topic = self.get_parameter('alert_topic').value
 
         self.enable_debug_image = bool(self.get_parameter('enable_debug_image').value)
         self.debug_image_topic = self.get_parameter('debug_image_topic').value
@@ -166,7 +138,6 @@ class PersonTrackerNode(Node):
         )
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.infer_device = 0 if torch.cuda.is_available() else "cpu"
 
         self.get_logger().info('Loading person YOLO model...')
         self.get_logger().info(f'Person model path: {self.person_model_path}')
@@ -174,35 +145,6 @@ class PersonTrackerNode(Node):
 
         self.get_logger().info('Loading ReID manager...')
         self.reid = ReIDManager(self.device)
-
-        self.ppe_monitor = None
-        if self.enable_ppe_check:
-            self.ppe_model_path = self.resolve_model_path(
-                self.get_parameter('ppe_model_path').value
-            )
-
-            self.get_logger().info('Loading PPE detector...')
-            self.get_logger().info(f'PPE model path: {self.ppe_model_path}')
-
-            ppe_detector = PPEDetector(
-                model_path=self.ppe_model_path,
-                infer_device=self.infer_device,
-                imgsz=self.ppe_imgsz,
-                conf=self.ppe_conf,
-                iou=self.ppe_iou,
-                helmet_ok_conf=self.ppe_helmet_ok_conf,
-                vest_ok_conf=self.ppe_vest_ok_conf,
-            )
-
-            self.ppe_monitor = TargetPPEMonitor(
-                detector=ppe_detector,
-                enabled=True,
-                run_interval=self.ppe_run_interval,
-                confirm_frames=self.ppe_confirm_frames,
-                clear_frames=self.ppe_clear_frames,
-            )
-        else:
-            self.get_logger().warn('PPE check disabled (enable_ppe_check=false)')
 
         # ======================================================
         # State
@@ -229,12 +171,6 @@ class PersonTrackerNode(Node):
         self.person_target_pub = self.create_publisher(
             PersonTarget,
             '/amr_ai/person_target',
-            10
-        )
-
-        self.alert_pub = self.create_publisher(
-            AiAlert,
-            self.alert_topic,
             10
         )
 
@@ -397,9 +333,6 @@ class PersonTrackerNode(Node):
 
         self.reid.reset()
 
-        if self.ppe_monitor is not None:
-            self.ppe_monitor.reset()
-
         self.prepare_mode = True
         self.enroll_mode = False
         self.prepare_start_time = time.time()
@@ -412,9 +345,6 @@ class PersonTrackerNode(Node):
         self.enroll_mode = False
         self.target_locked_reported = False
         self.detecting_timeout_handled = False
-
-        if self.ppe_monitor is not None:
-            self.ppe_monitor.reset()
 
     # ==========================================================
     # Main processing
@@ -468,37 +398,6 @@ class PersonTrackerNode(Node):
             self.frame_count
         )
 
-        ppe_result = None
-        # ppe_ready: dung NGHIEM NGAT cho viec mo khoa follow (giu nguyen
-        # logic cu, khong doi) - yeu cau is_confirmed_ok() (du clear_frames
-        # lan OK lien tiep). Mac dinh True khi khong bat PPE check hoac
-        # chua co target.
-        ppe_ready = True
-
-        # ppe_box_alarm: dung RIENG cho mau khung + chu canh bao debug
-        # image - dong bo voi alarm_active that su (sau du confirm_frames
-        # lan vi pham lien tiep, dung luc canh bao that duoc gui ESP32).
-        # Truoc day dung chung voi ppe_ready (is_confirmed_ok() tra ve
-        # False ngay tu lan vi pham DAU TIEN, chua can du confirm_frames),
-        # khien khung do/chu do hien SOM HON luc canh bao that duoc gui -
-        # khong hop ly khi confirm_frames duoc tang len (vd 5) de chiu
-        # duoc cui dau thoang qua.
-        ppe_box_alarm = False
-
-        if self.enable_ppe_check and self.ppe_monitor is not None and selected_target is not None:
-            ppe_result = self.ppe_monitor.update(frame, selected_target)
-            self.publish_ppe_alert(stamp, ppe_result)
-
-            ppe_ready = self.ppe_monitor.is_confirmed_ok()
-            ppe_box_alarm = self.ppe_monitor.alarm_active
-
-            target_id = selected_target.get('id')
-            self.log_info_throttle(
-                1.0,
-                f'PPE: text="{ppe_result.get("text")}" alarm={ppe_result.get("alarm")} '
-                f'target_id={target_id}'
-            )
-
         selected_distance_mm = None
 
         if selected_target is not None:
@@ -513,14 +412,8 @@ class PersonTrackerNode(Node):
                 self.current_mode == AiMode.FOLLOW_DETECTING
                 and not self.target_locked_reported
             ):
-                if ppe_ready:
-                    self.request_follow_active()
-                else:
-                    self.log_info_throttle(
-                        1.0,
-                        'Target locked but PPE not confirmed OK yet, '
-                        'waiting before starting follow...'
-                    )
+                # Enroll xong, đã có target -> chuyển FOLLOW_ACTIVE ngay.
+                self.request_follow_active()
 
             self.publish_target(
                 stamp=stamp,
@@ -543,7 +436,7 @@ class PersonTrackerNode(Node):
                 f'Target lost. lost_duration={lost_duration:.1f}s'
             )
 
-        self.publish_debug_image(frame, detections, selected_target, stamp, not ppe_box_alarm)
+        self.publish_debug_image(frame, detections, selected_target, stamp)
 
     def run_detection(self, frame, center_x, center_y):
         detections = []
@@ -642,7 +535,7 @@ class PersonTrackerNode(Node):
     # ==========================================================
     # Debug image
     # ==========================================================
-    def publish_debug_image(self, frame, detections, selected_target, stamp, ppe_box_ok=True):
+    def publish_debug_image(self, frame, detections, selected_target, stamp):
         if not self.enable_debug_image:
             return
 
@@ -682,13 +575,6 @@ class PersonTrackerNode(Node):
             )
 
         # Vẽ target đang bám.
-        # Khung XANH/ĐỎ dong bo voi alarm_active THAT (sau du
-        # ppe_confirm_frames lan vi pham lien tiep) - dung luc canh bao
-        # that duoc gui ESP32, KHONG dong bo voi ppe_ready (nghiem ngat
-        # hon, dung rieng de mo khoa follow). Truoc day dung chung 1 bien,
-        # khien khung do/chu do hien SOM HON luc canh bao that duoc gui -
-        # dac biet ro khi tang ppe_confirm_frames len de chiu cui dau
-        # thoang qua.
         if selected_target is not None:
             box = selected_target.get("box", None)
 
@@ -697,12 +583,8 @@ class PersonTrackerNode(Node):
                 tid = int(selected_target.get("id", -1))
                 conf = float(selected_target.get("conf", 0.0))
 
-                if ppe_box_ok:
-                    color = (0, 255, 0)
-                    label = f"FOLLOW TARGET ID {tid} {conf:.2f}"
-                else:
-                    color = (0, 0, 255)
-                    label = f"ID {tid} {conf:.2f} - THIEU BAO HO"
+                color = (0, 255, 0)
+                label = f"FOLLOW TARGET ID {tid} {conf:.2f}"
 
                 cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 3)
                 cv2.putText(
@@ -718,17 +600,6 @@ class PersonTrackerNode(Node):
                 cx = int((x1 + x2) / 2)
                 cy = int((y1 + y2) / 2)
                 cv2.circle(annotated, (cx, cy), 5, color, -1)
-
-                if not ppe_box_ok:
-                    cv2.putText(
-                        annotated,
-                        'THIEU BAO HO',
-                        (20, 35),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.9,
-                        (0, 0, 255),
-                        3
-                    )
 
         # Vẽ tâm ảnh camera.
         h, w = annotated.shape[:2]
@@ -871,58 +742,6 @@ class PersonTrackerNode(Node):
         return x, y, z
 
     # ==========================================================
-    # PPE alert publishing
-    # ==========================================================
-    def publish_alert(self, stamp, alert_type: str, confidence: float, message: str, active: bool):
-        msg = AiAlert()
-        msg.stamp = stamp
-        msg.alert_type = alert_type
-        msg.confidence = float(confidence)
-        msg.message = message
-        msg.active = bool(active)
-
-        msg.robot_pose = PoseStamped()
-        msg.robot_pose.header.stamp = stamp
-        msg.robot_pose.header.frame_id = 'map'
-
-        msg.image_path = ''
-
-        self.alert_pub.publish(msg)
-
-    def publish_ppe_alert(self, stamp, ppe_result):
-        if ppe_result is None or not ppe_result.get('enabled', False):
-            return
-
-        if not ppe_result.get('alarm', False):
-            return
-
-        status = ppe_result.get('status') or {}
-        missing_helmet = bool(status.get('missing_helmet', False))
-        missing_vest = bool(status.get('missing_vest', False))
-
-        if missing_helmet and missing_vest:
-            alert_type = 'MISSING_PPE'
-        elif missing_helmet:
-            alert_type = 'MISSING_HELMET'
-        elif missing_vest:
-            alert_type = 'MISSING_VEST'
-        else:
-            return
-
-        confidence = max(
-            float(status.get('no_helmet_score', 0.0)),
-            float(status.get('no_vest_score', 0.0))
-        )
-
-        self.publish_alert(
-            stamp=stamp,
-            alert_type=alert_type,
-            confidence=confidence,
-            message=ppe_result.get('alarm_label', 'Missing PPE'),
-            active=True
-        )
-
-    # ==========================================================
     # Mode manager transition
     # ==========================================================
     def abort_follow_detecting(self):
@@ -930,7 +749,7 @@ class PersonTrackerNode(Node):
 
         self.get_logger().warn(
             f'FOLLOW_DETECTING timeout after {self.follow_detecting_timeout_s:.0f}s '
-            f'(không lock được target hoặc PPE không được xác nhận OK). '
+            f'(không lock được target). '
             f'Tự hủy về IDLE để không kẹt nút WP/FOLLOW.'
         )
 

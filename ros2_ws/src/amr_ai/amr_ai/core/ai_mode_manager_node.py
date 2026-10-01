@@ -4,6 +4,7 @@ import math
 import re
 import os
 import json
+import time
 from typing import Optional, Dict, Any, Tuple
 from pathlib import Path
 
@@ -45,7 +46,12 @@ class AiModeManager(Node):
         self.declare_parameter('frame_id', 'map')
         self.declare_parameter('runtime_waypoints_file', '~/mobile_robot/ros2_ws/config/waypoints_runtime.json')
         self.declare_parameter('alert_topic', '/amr_ai/alert')
-        self.declare_parameter('alert_stop_types', ['FALL', 'FIRE', 'SMOKE'])
+        # Chỉ còn cảnh báo té ngã (FALL) làm dừng xe khi đang đi tới goal.
+        self.declare_parameter('alert_stop_types', ['FALL'])
+        # Sau ALERT_STOPPED, khi operator gửi goal mới thì bỏ qua alert trong
+        # khoảng thời gian này để xe kịp rời đi (người té vẫn còn trong ảnh).
+        # Đặt 0.0 để tắt (xe sẽ dừng lại ngay nếu alert vẫn còn active).
+        self.declare_parameter('alert_resume_grace_s', 6.0)
 
         # Waypoint A
         self.declare_parameter('A.x', 1.5)
@@ -68,6 +74,9 @@ class AiModeManager(Node):
             str(t).strip().upper()
             for t in self.get_parameter('alert_stop_types').value
         }
+        self.alert_resume_grace_s = max(
+            0.0, float(self.get_parameter('alert_resume_grace_s').value)
+        )
 
         self.fallback_waypoints = {
             'A': (
@@ -92,6 +101,12 @@ class AiModeManager(Node):
         self.mode_detail = 'System initialized'
         self.current_goal_handle = None
         self.current_zone: Optional[str] = None
+
+        # Mỗi lần gửi/hủy goal thì tăng seq. Callback của goal cũ (kết quả
+        # CANCELED/ABORTED đến muộn) so sánh seq và bị bỏ qua nếu đã "stale",
+        # tránh ghi đè mode hiện tại (vd ALERT_STOPPED -> IDLE).
+        self.nav_goal_seq = 0
+        self.alert_ignore_until = 0.0
 
         # =========================
         # ROS interfaces
@@ -132,7 +147,8 @@ class AiModeManager(Node):
         self.get_logger().info('AI Mode Manager started')
         self.get_logger().info(f'Runtime waypoint file: {self.runtime_waypoints_file}')
         self.get_logger().info(
-            f'Alert topic: {self.alert_topic} | stop on: {sorted(self.alert_stop_types)}'
+            f'Alert topic: {self.alert_topic} | stop on: {sorted(self.alert_stop_types)} '
+            f'| resume grace: {self.alert_resume_grace_s:.1f}s'
         )
         self.publish_mode()
 
@@ -625,6 +641,18 @@ class AiModeManager(Node):
             self.get_logger().error('Nav2 action server /navigate_to_pose is not available')
             return False
 
+        # Goal mới thay thế mọi goal cũ.
+        self.nav_goal_seq += 1
+        seq = self.nav_goal_seq
+
+        # Chạy lại sau ALERT_STOPPED bằng goal mới: bỏ qua alert trong thời
+        # gian ngắn để xe rời khỏi vùng có người té (người đó vẫn còn trong ảnh).
+        if self.current_mode == AiMode.ALERT_STOPPED and self.alert_resume_grace_s > 0.0:
+            self.alert_ignore_until = time.monotonic() + self.alert_resume_grace_s
+            self.get_logger().warn(
+                f'Resume after ALERT_STOPPED: ignore alerts for {self.alert_resume_grace_s:.1f}s'
+            )
+
         self.current_zone = zone
         self.set_mode(next_mode, detail)
 
@@ -637,13 +665,28 @@ class AiModeManager(Node):
         )
 
         send_future.add_done_callback(
-            lambda future: self.nav_goal_response_callback(future, zone)
+            lambda future, s=seq: self.nav_goal_response_callback(future, zone, s)
         )
 
         return True
 
-    def nav_goal_response_callback(self, future, zone: str):
-        goal_handle = future.result()
+    def nav_goal_response_callback(self, future, zone: str, seq: int):
+        try:
+            goal_handle = future.result()
+        except Exception as exc:
+            self.get_logger().error(f'Failed to send goal {zone}: {exc}')
+            if seq == self.nav_goal_seq:
+                self.current_goal_handle = None
+                self.current_zone = None
+                self.set_mode(AiMode.IDLE, f'Failed to send goal {zone}')
+            return
+
+        # Goal đã bị hủy/thay thế trước khi Nav2 kịp phản hồi -> hủy ngay.
+        if seq != self.nav_goal_seq:
+            if goal_handle.accepted:
+                self.get_logger().warn(f'Goal {zone} is outdated, cancel it')
+                goal_handle.cancel_goal_async()
+            return
 
         if not goal_handle.accepted:
             self.get_logger().error(f'Nav2 rejected goal {zone}')
@@ -657,12 +700,20 @@ class AiModeManager(Node):
 
         result_future = goal_handle.get_result_async()
         result_future.add_done_callback(
-            lambda future: self.nav_result_callback(future, zone)
+            lambda fut, s=seq: self.nav_result_callback(fut, zone, s)
         )
 
-    def nav_result_callback(self, future, zone: str):
-        result = future.result()
-        status = result.status
+    def nav_result_callback(self, future, zone: str, seq: int):
+        try:
+            status = future.result().status
+        except Exception as exc:
+            self.get_logger().error(f'Failed to get result of goal {zone}: {exc}')
+            status = GoalStatus.STATUS_UNKNOWN
+
+        # Kết quả của goal cũ (đã bị hủy/thay thế): bỏ qua, không đổi mode.
+        if seq != self.nav_goal_seq:
+            self.get_logger().info(f'Ignore stale result of goal {zone} (status={status})')
+            return
 
         if status == GoalStatus.STATUS_SUCCEEDED:
             self.get_logger().info(f'Goal {zone} reached successfully')
@@ -695,14 +746,17 @@ class AiModeManager(Node):
         )
 
     def cancel_current_nav_goal(self):
-        if self.current_goal_handle is None:
-            return
+        # Luôn tăng seq, kể cả khi goal chưa được Nav2 chấp nhận (handle còn
+        # None): goal đó sẽ bị hủy ngay khi được chấp nhận, và kết quả của nó
+        # bị coi là stale.
+        self.nav_goal_seq += 1
 
-        try:
-            self.get_logger().warn('Cancel current Nav2 goal')
-            self.current_goal_handle.cancel_goal_async()
-        except Exception as exc:
-            self.get_logger().error(f'Failed to cancel Nav2 goal: {exc}')
+        if self.current_goal_handle is not None:
+            try:
+                self.get_logger().warn('Cancel current Nav2 goal')
+                self.current_goal_handle.cancel_goal_async()
+            except Exception as exc:
+                self.get_logger().error(f'Failed to cancel Nav2 goal: {exc}')
 
         self.current_goal_handle = None
         self.current_zone = None
@@ -712,18 +766,19 @@ class AiModeManager(Node):
     # ==========================================================
     def alert_callback(self, msg: AiAlert):
         """
-        Chỉ can thiệp khi: alert dang active, alert_type nam trong
-        alert_stop_types (mac dinh FALL/FIRE/SMOKE), VA dang o
-        NAV_TO_ZONE/RETURN_TO_ZONE. Dieu kien "dang o NAV_TO_ZONE/
-        RETURN_TO_ZONE" tu nhien chong lap goi lien tuc: sau khi da
-        chuyen sang ALERT_STOPPED, cac alert active tiep theo (van duoc
-        ai_detector_node publish lien tuc moi frame trong luc con active)
-        se khong con khop dieu kien nay nua nen khong goi set_mode lap lai.
+        Té ngã (FALL) trong lúc đang chạy tới goal (NAV_TO_ZONE/RETURN_TO_ZONE):
+        hủy goal Nav2, chuyển sang ALERT_STOPPED. Xe đứng yên cho tới khi có
+        lệnh mới (chọn WP/HOME, NAV_TO_POSE, START_FOLLOW...).
 
-        Khong dung lai EMERGENCY_STOP de giu nguyen y nghia "dung khan
-        cap do nguoi van hanh chu dong bam" - ALERT_STOPPED la mode rieng,
-        cho phep chon waypoint moi de chay tiep ngay (giong pattern
-        FOLLOW_STOPPED da co), khong can lenh "clear emergency" rieng.
+        - Chỉ xét alert active và alert_type nằm trong alert_stop_types.
+        - Điều kiện "đang ở NAV_TO_ZONE/RETURN_TO_ZONE" tự chống lặp: sau khi
+          đã sang ALERT_STOPPED các alert tiếp theo không còn khớp nữa.
+        - Khi đang FOLLOW_*: không dừng xe, chỉ để esp32_alert_bridge/GUI
+          hiển thị cảnh báo.
+        - Sau ALERT_STOPPED, goal mới được gửi sẽ có khoảng bỏ qua alert
+          (alert_resume_grace_s) để xe rời đi dù người té vẫn còn trong ảnh.
+        - Không dùng EMERGENCY_STOP: mode đó dành cho nút dừng khẩn cấp do
+          người vận hành bấm.
         """
         if not bool(msg.active):
             return
@@ -733,6 +788,9 @@ class AiModeManager(Node):
             return
 
         if self.current_mode not in [AiMode.NAV_TO_ZONE, AiMode.RETURN_TO_ZONE]:
+            return
+
+        if time.monotonic() < self.alert_ignore_until:
             return
 
         previous_mode_name = self.mode_name(self.current_mode)

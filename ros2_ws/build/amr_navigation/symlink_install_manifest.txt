@@ -1,9 +1,13 @@
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/explore.yaml
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/nav2_params_MPPI.yaml
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/nav2_params_fusion.yaml
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/nav2_params_ghrf.yaml
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/nav2_params_stvl.yaml
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/config/nav2_params_voxel.yaml
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/__pycache__/nav_fusion.launch.cpython-310.pyc
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/explore.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/nav_fusion.launch.py
+/home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/nav_fusion_banckup.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/launch/navigation.launch.py
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/share/amr_navigation/rviz/view_robot.rviz
 /home/huyjetson/mobile_robot/ros2_ws/install/amr_navigation/lib/amr_navigation/auto_map_saver.py
